@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+  <title>Items</title>
+  {% extends "crudbasic/base.html" %}
+    {% block body_block %}
+    <h3 class="">Items</h3>
+    <hr class="">
+      <!-- <button class="btn btn-primary" type="button" name="button">Add Item</button>
+      <button class="btn btn-primary" type="button" name="button">Edit Item</button> -->
+    <form method="POST">
+      <div class="row">
+        <div class="col-md">
+          {{ form.item_line.label }}
+          {{ form.item_line }}
+        </div>
+        <div class="col-md">
+          {{ form.item_description.label }}
+          {{ form.item_description }}
+        </div>
+        <div class="col-md">
+          {{ form.item_uom.label }}
+          {{ form.item_uom }}
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-4">
+          {{ form.item_type.label }}
+          {{ form.item_type }}
+        </div>
+      </div>
+      <hr class="">
+      <div class="row mt-2">
+        <div class="col">
+          <input type="submit" class="btn btn-primary" value="Save">
+        </div>
+      </div>
+        {% csrf_token %}
+    </form>
+    </div>
+    <div class="container border rounded mt-2 pb-3 pt-1">
+      {% if item_data %}
+      <table class="table table-hover mt-2">
+        <thead class="thead-light">
+          <tr>
+            <!-- <th>S.no</th> -->
+            <th>Line No.</th>
+            <th>Item Description</th>
+            <th>Unit</th>
+            <th>Type</th>
+          </tr>
+          {% for item in item_data %}
+          <tr>
+            <td>{{ item.item_line }}</td>
+            <td>{{ item.item_description }}</td>
+            <td>{{ item.item_uom }}</td>
+            <td>{{ item.item_type }}</td>
+          </tr>
+          {% endfor %}
+        </thead>
+      </table>
+      {% else %}
+      <p>No Items Exists!</p>
+      {% endif %}
+    </div>
+    {% endblock %}

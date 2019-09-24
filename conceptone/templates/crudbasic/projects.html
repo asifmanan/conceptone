@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<title>Projects</title>
+  {% extends "crudbasic/base.html" %}
+    {% block body_block %}
+      <h3 class="">New Project</h3>
+      <hr class="">
+
+      <form method="POST">
+        <div class="row">
+          <div class="col-md">
+            {{ form.customer.label}}
+            {{ form.customer }}
+          </div>
+          <div class="col-md">
+            {{ form.project_id.label }}
+            {{ form.project_id }}
+          </div>
+          <div class="col-md">
+            {{ form.project_name.label }}
+            {{ form.project_name }}
+          </div>
+        </div>
+
+        <div class="row mt-2">
+          <div class="col-md col-lg-4">
+            {{ form.project_city.label }}
+            {{ form.project_city }}
+          </div>
+          <div class="col-md col-lg-4">
+            {{ form.project_worth.label }}
+            {{ form.project_worth }}
+          </div>
+        </div>
+        <hr class="">
+        <div class="row mt-2">
+          <div class="col">
+            <input type="submit" class="btn btn-primary" value="Save">
+          </div>
+        </div>
+        {% csrf_token %}
+      </form>
+      {% endblock %}
