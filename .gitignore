@@ -1,4 +1,7 @@
 # Byte-compiled / optimized / DLL files
+conceptone/conceptone/__pycache__/
+conceptone/crudbasic/__pycache__/
+conceptone/crudbasic/migrations/__pycache__/
 __pycache__/
 *.py[cod]
 *$py.class
