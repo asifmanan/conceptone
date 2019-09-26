@@ -29,14 +29,14 @@ def customers(request):
     return render(request,"crudbasic/customers1.html",{'form':form,'search_form':search_form,'customer_data':customers_list})
 
 def projects(request):
-    projects_list = Projects.objects.order_by('customer_name')
+    projects_list = Projects.objects.order_by('project_name')
     form = ProjectForm()
     search_form = BasicSearch()
     if request.method == 'POST':
         if 'search' in request.POST:
             data = request.POST.copy()
             q = data.get('search_for')
-            search_list = (Projects.objects.filter(project_name__contains=q))
+            search_list = Projects.objects.filter(project_name__contains=q)
             projects_list = search_list
         if 'save' in request.POST:
             form = ProjectForm(request.POST)
@@ -45,7 +45,7 @@ def projects(request):
                 return redirect('crudbasic:projects')
             else:
                 print("ERROR! Form is invalid")
-    return render(request,"crudbasic/projects.html",{'form':form,'search_form':search_form,'projects_data':projects_list})
+    return render(request,"crudbasic/projects.html",{'form':form,'search_form':search_form,'project_data':projects_list})
 
 def items(request):
     item_list = Items.objects.order_by('item_line')
