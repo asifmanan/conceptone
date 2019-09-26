@@ -16,7 +16,7 @@ class CustomerForm(forms.ModelForm):
                 'customer_ntn_number':forms.TextInput(attrs={'class':'form-control'}),
         }
 
-class CustomerSearch(forms.Form):
+class BasicSearch(forms.Form):
     search_by = forms.ChoiceField(widget=forms.Select(attrs={'class':'form-control'}))
     search_for = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
 

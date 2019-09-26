@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from crudbasic.models import Customers, Projects, Items
-from crudbasic.forms import CustomerForm, ProjectForm, ItemForm, CustomerSearch
+from crudbasic.forms import CustomerForm, ProjectForm, ItemForm, BasicSearch
 from django.utils import translation
 
 # Create your views here.
@@ -10,7 +10,7 @@ def index(request):
 def customers(request):
     customers_list = Customers.objects.order_by('customer_name')
     form = CustomerForm()
-    search_form = CustomerSearch()
+    search_form = BasicSearch()
     if request.method == 'POST':
         if 'search' in request.POST:
             data = request.POST.copy()
