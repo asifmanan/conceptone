@@ -78,25 +78,25 @@
         <hr class="">
         <div class="row">
           <div class="col-md-8">
-            <div class="mt-2 pb-3 pt-1">
+            <div class="pb-1 pt-1">
               {% if project_data %}
               <table class="table">
                 <thead class="thead-light">
                   <tr>
                     <!-- <th>S.no</th> -->
-                    <th>Customer</th>
-                    <th>Project Id</th>
                     <th>Project Name</th>
+                    <th>Project Id</th>
                     <th>Project City</th>
+                    <th>Customer</th>
                     <th>Project Worth</th>
                   </tr>
                   {% for project in project_data %}
                   <tr>
                     <!-- <td><input type="checkbox" name="" value=""></td> -->
-                    <td>{{ project.customer }}</td>
-                    <td>{{ project.project_id }}</td>
                     <td>{{ project.project_name }}</td>
+                    <td>{{ project.project_id }}</td>
                     <td>{{ project.project_city }}</td>
+                    <td>{{ project.customer }}</td>
                     <td>{{ project.project_worth }}</td>
                   </tr>
                   {% endfor %}
