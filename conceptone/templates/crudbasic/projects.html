@@ -79,32 +79,10 @@
         <div class="row">
           <div class="col-md-8">
             <div class="pb-1 pt-1">
-              {% if project_data %}
-              <table class="table">
-                <thead class="thead-light">
-                  <tr>
-                    <!-- <th>S.no</th> -->
-                    <th>Project Name</th>
-                    <th>Project Id</th>
-                    <th>Project City</th>
-                    <th>Customer</th>
-                    <th>Project Worth</th>
-                  </tr>
-                  {% for project in project_data %}
-                  <tr>
-                    <!-- <td><input type="checkbox" name="" value=""></td> -->
-                    <td>{{ project.project_name }}</td>
-                    <td>{{ project.project_id }}</td>
-                    <td>{{ project.project_city }}</td>
-                    <td>{{ project.customer }}</td>
-                    <td>{{ project.project_worth }}</td>
-                  </tr>
-                  {% endfor %}
-                </thead>
-              </table>
-              {% else %}
-              <p>No Record Found, add Projects to start</p>
-              {% endif %}
+
+              <!-- consider for table block start -->
+              <link src="table-block.html" rel="import">
+              <!-- consider for table block end -->
             </div>
           </div>
         </div>
