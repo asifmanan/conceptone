@@ -37,14 +37,15 @@
                   </div>
 
                   <div class="row mt-2">
-                    <div class="col-md col-lg-4">
+                    <div class="col-md">
                       {{ form.project_city.label }}
                       {{ form.project_city }}
                     </div>
-                    <div class="col-md col-lg-4">
-                      {{ form.project_worth.label }}
-                      {{ form.project_worth }}
+                    <div class="col-md">
+                      {{ form.project_status.label }}
+                      {{ form.project_status }}
                     </div>
+
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -81,8 +82,34 @@
             <div class="pb-1 pt-1">
 
               <!-- consider for table block start -->
-              <link src="table-block.html" rel="import">
+              <!-- <link src="table-block.html" rel="import"> -->
               <!-- consider for table block end -->
+              {% if project_data %}
+              <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <!-- <th>S.no</th> -->
+                    <th>Project Name</th>
+                    <th>Project Id</th>
+                    <th>Project City</th>
+                    <th>Customer</th>
+                    <th>Project Status</th>
+                  </tr>
+                  {% for project in project_data %}
+                  <tr>
+                    <!-- <td><input type="checkbox" name="" value=""></td> -->
+                    <td>{{ project.project_name }}</td>
+                    <td>{{ project.project_id }}</td>
+                    <td>{{ project.project_city }}</td>
+                    <td>{{ project.customer }}</td>
+                    <td>{{ project.project_status }}</td>
+                  </tr>
+                  {% endfor %}
+                </thead>
+              </table>
+              {% else %}
+              <p>Oops! No Record Found</p>
+              {% endif %}
             </div>
           </div>
         </div>

@@ -10,7 +10,7 @@
   <body>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
       <a href="" class="navbar-brand">conceptONE</a>
-      <div class="container pl-0">
+      <!-- <div class="container pl-0"> -->
         <ul class="navbar-nav pl-0 ml-0">
           <li class="nav-item pl-0 ml-0">
             <a class="nav-link" href="{% url 'crudbasic:index' %}">Home</a>
@@ -29,7 +29,6 @@
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Purchases</a>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="#">View Purchase Orders</a>
-                <a class="dropdown-item" href="#">Search Purchase Order</a>
               <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">Payables</a>
             </div>
@@ -50,7 +49,7 @@
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Partners</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="{% url 'crudbasic:customers' %}">View Customers</a>
-              <a class="dropdown-item" href="{% url 'crudbasic:customers' %}">View Suppliers</a>
+              <a class="dropdown-item" href="{% url 'crudbasic:suppliers' %}">View Suppliers</a>
             </div>
           </li>
 <!-- items menu item -->
@@ -62,11 +61,11 @@
             <a class="nav-link" href="#">HR</a>
           </li>
         </ul>
-      </div>
+      <!-- </div> -->
 <!-- End of navigation div -->
     </nav>
       <!-- <div class="container border rounded mt-2 pb-3 pt-1 bg-light"> -->
-      <div class="border pr-3 pl-3 pb-2 pt-2">
+      <div class="pr-3 pl-3 pb-2 pt-2">
         {% block body_block %}
 
         {% endblock %}

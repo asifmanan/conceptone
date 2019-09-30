@@ -16,6 +16,30 @@ class Customers(models.Model):
     def __str__(self):
         return self.customer_name
 
+class Suppliers(models.Model):
+    supplier_id = models.CharField(max_length=16, unique=True)
+    supplier_name = models.CharField(max_length=128, unique=True)
+    supplier_address = models.CharField(max_length=264)
+    supplier_city = models.CharField(max_length=128)
+    supplier_phone = models.CharField(max_length=128, blank=True)
+    supplier_fax = models.CharField(max_length=128, blank=True)
+    supplier_email = models.EmailField(max_length=192, blank=True)
+    supplier_ntn_number = models.CharField(max_length=128, blank=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    # def get_col_heads(self):
+    #     all_fields = self._meta.fields
+    #     field_list = []
+    #     for fields in all_fields:
+    #         column_head = (str(fields)).split(".")
+    #         print(column_head[-1])
+    #         # field_list.append(column_head[-1])
+    #     return field_list
+
+    def __str__(self):
+        return self.partner_name
+
 class Projects(models.Model):
     status_flags = [
         ('Prospective','Prospective'),

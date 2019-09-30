@@ -1,5 +1,6 @@
 from django import forms
-from crudbasic.models import Customers, Projects, Items
+from crudbasic.models import Customers, Suppliers, Projects, Items
+from crudbasic.basic_functions import get_col_heads
 
 class CustomerForm(forms.ModelForm):
     class Meta:
@@ -16,8 +17,25 @@ class CustomerForm(forms.ModelForm):
                 'customer_ntn_number':forms.TextInput(attrs={'class':'form-control'}),
         }
 
+class SupplierForm(forms.ModelForm):
+    class Meta:
+        model = Suppliers
+        fields = '__all__'
+        widgets = {
+                'Supplier_id':forms.TextInput(attrs={'class':'form-control'}),
+                'supplier_name':forms.TextInput(attrs={'class':'form-control'}),
+                'supplier_address':forms.TextInput(attrs={'class':'form-control'}),
+                'supplier_city':forms.TextInput(attrs={'class':'form-control'}),
+                'supplier_phone':forms.TextInput(attrs={'class':'form-control'}),
+                'supplier_fax':forms.TextInput(attrs={'class':'form-control'}),
+                'supplier_email':forms.TextInput(attrs={'class':'form-control'}),
+                'supplier_ntn_number':forms.TextInput(attrs={'class':'form-control'}),
+        }
+
 class BasicSearch(forms.Form):
-    search_by = forms.ChoiceField(widget=forms.Select(attrs={'class':'form-control'}))
+    cu = Customers()
+    field_dct = get_col_heads(cu)
+    search_by = forms.ChoiceField(choices=field_dct,widget=forms.Select(attrs={'class':'form-control'}))
     search_for = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
 
 class ProjectForm(forms.ModelForm):
@@ -29,7 +47,7 @@ class ProjectForm(forms.ModelForm):
                 'project_id':forms.TextInput(attrs={'class':'form-control'}),
                 'project_name':forms.TextInput(attrs={'class':'form-control'}),
                 'project_city':forms.TextInput(attrs={'class':'form-control'}),
-                'project_worth':forms.TextInput(attrs={'class':'form-control'}),
+                'project_status':forms.Select(attrs={'class':'form-control'}),
 
         }
 class ItemForm(forms.ModelForm):

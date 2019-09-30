@@ -1,65 +1,66 @@
 <!DOCTYPE html>
-    <title>New Customer</title>
+    <title>New Supplier</title>
     {% extends "crudbasic/base.html" %}
       {% block body_block %}
-        <h3 class="">Customers</h3>
+        <h3 class="">Suppliers</h3>
         <hr class="">
         <div class="row mb-2">
           <div class="col-md-2 col-sm-5">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#AddCustomer" type="button" name="AddNew">Add New</button>
-            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#SearchCustomer" aria-expanded="false" aria-controls="collapseExample" name="search">Search</button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#AddSupplier" type="button" name="AddNew">Add New</button>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#SearchSupplier" aria-expanded="false" aria-controls="collapseExample" name="search">Search</button>
           </div>
         </div>
 
-<div class="modal fade" tabindex="-1" role="dialog" id="AddCustomer">
+<div class="modal fade" tabindex="-1" role="dialog" id="AddSupplier">
   <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
     <div class="modal-content">
       <form method="POST">
       <div class="modal-header">
-        <h5 class="modal-title">New Customer</h5>
+        <h5 class="modal-title">New Supplier</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
         <div class="modal-body" aria-hidden="true">
+
             <div class="row">
               <div class="col-md-6">
-                {{ form.customer_id.label}}
-                {{ form.customer_id }}
+                {{ form.supplier_id.label}}
+                {{ form.supplier_id }}
               </div>
               <div class="col-md-6">
-                {{ form.customer_name.label }}
-                {{ form.customer_name }}
+                {{ form.supplier_name.label }}
+                {{ form.supplier_name }}
               </div>
             </div>
             <div class="row">
               <div class="col-md-6">
-                {{ form.customer_address.label }}
-                {{ form.customer_address }}
+                {{ form.supplier_address.label }}
+                {{ form.supplier_address }}
               </div>
               <div class="col-md-6">
-                {{ form.customer_city.label }}
-                {{ form.customer_city }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                {{ form.customer_phone.label}}
-                {{ form.customer_phone }}
-              </div>
-              <div class="col-md-6">
-                {{ form.customer_fax.label }}
-                {{ form.customer_fax }}
+                {{ form.supplier_city.label }}
+                {{ form.supplier_city }}
               </div>
             </div>
             <div class="row">
               <div class="col-md-6">
-                {{ form.customer_email.label }}
-                {{ form.customer_email }}
+                {{ form.supplier_phone.label}}
+                {{ form.supplier_phone }}
               </div>
               <div class="col-md-6">
-                {{ form.customer_ntn_number.label }}
-                {{ form.customer_ntn_number }}
+                {{ form.supplier_fax.label }}
+                {{ form.supplier_fax }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                {{ form.supplier_email.label }}
+                {{ form.supplier_email }}
+              </div>
+              <div class="col-md-6">
+                {{ form.supplier_ntn_number.label }}
+                {{ form.supplier_ntn_number }}
               </div>
             </div>
         </div>
@@ -73,7 +74,7 @@
     </div>
   </div>
 
-  <div class="collapse" id="SearchCustomer">
+  <div class="collapse" id="SearchSupplier">
     <form method="POST">{% csrf_token %}
       <div class="row align-items-end">
         <div class="col-md-2">
@@ -97,7 +98,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="mt-2 pb-3 pt-1">
-                {% if customer_data %}
+                {% if supplier_data %}
                 <table class="table">
                   <thead class="thead-light">
                     <tr>
@@ -112,23 +113,23 @@
                       <th>Email</th>
                       <th>NTN</th>
                     </tr>
-                    {% for customer in customer_data %}
+                    {% for supplier in supplier_data %}
                     <tr>
                       <td><input type="checkbox" name="" value=""></td>
-                      <td>{{ customer.customer_id }}</td>
-                      <td>{{ customer.customer_name }}</td>
-                      <td>{{ customer.customer_address }}</td>
-                      <td>{{ customer.customer_city }}</td>
-                      <td>{{ customer.customer_phone }}</td>
-                      <td>{{ customer.customer_fax }}</td>
-                      <td>{{ customer.customer_email }}</td>
-                      <td>{{ customer.customer_ntn_number }}</td>
+                      <td>{{ supplier.supplier_id }}</td>
+                      <td>{{ supplier.supplier_name }}</td>
+                      <td>{{ supplier.supplier_address }}</td>
+                      <td>{{ supplier.supplier_city }}</td>
+                      <td>{{ supplier.supplier_phone }}</td>
+                      <td>{{ supplier.supplier_fax }}</td>
+                      <td>{{ supplier.supplier_email }}</td>
+                      <td>{{ supplier.supplier_ntn_number }}</td>
                     </tr>
                     {% endfor %}
                   </thead>
                 </table>
                 {% else %}
-                <p>No Record Found, add customers to start</p>
+                <p>Oops! No Record Found</p>
                 {% endif %}
               </div>
             </div>
