@@ -2,32 +2,75 @@
 <title>Concept ONE</title>
 {% extends "crudbasic/base.html" %}
   {% block body_block %}
-    <h3 class="">Welcome to conceptONE</h3>
-    <div class="row">
-      <div class="col-md-3">
-        <div class="info-tile">
-          <h2>500</h2>
-          <h3>Receivables In-Process</h3>
+    <section class="section-tiles">
+      <div class="row align-center">
+        <div class="col-md-3">
+          <div class="info-tile tile1">
+            <h2>3</h2>
+            <h3>Invoice Receivables</h3>
+          </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="info-tile">
-          <h2>100</h2>
-          <h3>Receivables</h3>
+        <div class="col-md-3">
+          <div class="info-tile tile2">
+            <h2>5</h2>
+            <h3>Invoice Payables</h3>
+          </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="info-tile">
-          <h2>80</h2>
-          <h3>Receivables In-Process</h3>
+        <div class="col-md-3">
+          <div class="info-tile tile3">
+            <h2>2</h2>
+            <h3>On Going Projects</h3>
+          </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="info-tile">
-          <h2>90</h2>
-          <h3>Payables</h3>
+        <div class="col-md-3">
+          <div class="info-tile tile4">
+            <h2>9</h2>
+            <h3>Prospective Projects</h3>
+          </div>
         </div>
-      </div>
+      </section>
+        <div class="row">
+          <div class="col-md-9">
+            <section class="updates">
+              <p class="header bg-light">Activites and Updates</p>
+              <div class="card mb-2">
+                <div class="card-body">
+                  <blockquote class="blockquote mb-0">
+                    <p>New Project Added</p>
+                    <footer class="blockquote-footer">
+                      <p>Added by xyz</p>
+                    </footer>
+                  </blockquote>
+                </div>
+              </div>
+              <div class="card mb-2">
+                <div class="card-body">
+                  <blockquote class="blockquote mb-0">
+                    <p>New Customer Added</p>
+                    <footer class="blockquote-footer">
+                      <p>Added by abc</p>
+                    </footer>
+                  </blockquote>
+                </div>
+              </div>
+              </div>
+            </section>
+          <div class="col-md-3">
+            <section class="tasks">
+              <!-- style="width: 18rem;" -->
+              <div class="card">
+                <div class="card-header">
+                  Tasks
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Submission of Bids</li>
+                  <li class="list-group-item">Create invoice for Massive Dynamics</li>
+                  <li class="list-group-item">Issue PO to Dyno Systems</li>
+                </ul>
+              </div>
+            </section>
+          </div>
 
+        </div>
     </div>
   {% endblock %}
