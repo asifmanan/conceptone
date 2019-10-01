@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 {% load staticfiles %}
-{% include "navbar.html" %}
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -9,10 +8,8 @@
     <link rel="stylesheet" href="{% static "css/master.css" %}">
   </head>
   <body>
-    {% block navbar %}
-    {% endblock %}
+    {% include "crudbasic/navbar.html" %}
 <!-- nav -->
-      <!-- <div class="container border rounded mt-2 pb-3 pt-1 bg-light"> -->
       <div class="pr-3 pl-3 pb-2 pt-2">
         {% block body_block %}
 

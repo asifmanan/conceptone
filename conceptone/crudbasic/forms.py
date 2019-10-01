@@ -37,6 +37,7 @@ class BasicSearch(forms.Form):
     field_dct = get_col_heads(cu)
     search_by = forms.ChoiceField(choices=field_dct,widget=forms.Select(attrs={'class':'form-control'}))
     search_for = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    # def clean_search_data
 
 class ProjectForm(forms.ModelForm):
     class Meta:

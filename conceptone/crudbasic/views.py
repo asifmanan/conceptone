@@ -15,23 +15,37 @@ def customers(request):
 
     if request.method == 'POST':
         if 'search' in request.POST:
-            data = request.POST.copy()
-            # print(data)
-            qby = data.get('search_by')
-            qstring = data.get('search_for')
-            queryparam = qby+'__'+'contains'
-            # search_list = Customers.objects.filter(customer_name__contains=q)
-            search_list = Customers.objects.filter(**{ queryparam:qstring })
-            customers_list = search_list
+            search_form = BasicSearch(request.POST)
+            if search_form.is_valid():
+                data = request.POST.copy()
+                # print(data)
+                qby = data.get('search_by')
+                qstring = data.get('search_for')
+                queryparam = qby+'__'+'contains'
+                # search_list = Customers.objects.filter(customer_name__contains=q)
+                search_list = Customers.objects.filter(**{ queryparam:qstring })
+                customers_list = search_list
         if 'save' in request.POST:
             form = CustomerForm(request.POST)
-            if form.is_valid:
+            if form.is_valid():
                 form.save(commit=True)
                 return redirect('crudbasic:customers')
             else:
                 print("ERROR! Form is invalid")
     translation.activate('en')
     return render(request,"crudbasic/customers1.html",{'form':form,'search_form':search_form,'customer_data':customers_list})
+
+def AddCustomer(request):
+    form = CustomerForm()
+    if request.method == 'POST':
+        form = CustomerForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect('crudbasic:customers')
+        else:
+            print("ERROR! Form is invalid")
+        translation.activate('en')
+    return render(request,"crudbasic/addcustomer.html",{'form':form})
 
 def suppliers(request):
     suppliers_list = Suppliers.objects.order_by('supplier_name')
