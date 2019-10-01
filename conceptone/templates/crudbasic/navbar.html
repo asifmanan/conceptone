@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% block navbar %}
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <a href="" class="navbar-brand">conceptONE</a>
+  <!-- <div class="container pl-0"> -->
+    <ul class="navbar-nav pl-0 ml-0">
+      <li class="nav-item pl-0 ml-0">
+        <a class="nav-link" href="{% url 'crudbasic:index' %}">Home</a>
+      </li>
+<!-- Sales Dropdown menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sales</a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="newinvoice.html">View Invoces</a>
+          <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Payment Receivable</a>
+        </div>
+      </li>
+<!-- Purchase Dropdown menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Purchases</a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">View Purchase Orders</a>
+          <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Payables</a>
+        </div>
+      </li>
+<!-- Projects Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Projects</a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'crudbasic:projects' %}">View Projects</a>
+          <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Progress</a>
+            <a class="dropdown-item" href="#">Deliverables</a>
+            <a class="dropdown-item" href="#">Receivable Maturity</a>
+        </div>
+      </li>
+<!-- Partners Menu item -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Partners</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="{% url 'crudbasic:customers' %}">View Customers</a>
+          <a class="dropdown-item" href="{% url 'crudbasic:suppliers' %}">View Suppliers</a>
+        </div>
+      </li>
+<!-- items menu item -->
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'crudbasic:items' %}">Items</a>
+      </li>
+<!-- hr menu item -->
+      <li class="nav-item">
+        <a class="nav-link" href="#">HR</a>
+      </li>
+    </ul>
+  <!-- </div> -->
+<!-- End of navigation div -->
+</nav>
+{% endblock %}

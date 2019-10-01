@@ -49,3 +49,15 @@
 .tile4{
   background-color: #1B95FF;
 }
+
+/* table{
+  height: 20px !important;
+  display: block;
+  overflow-y: scroll;
+} */
+
+.table-properties{
+  height: 480px;
+  display: block;
+  overflow-y: scroll;
+}

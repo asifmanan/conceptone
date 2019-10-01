@@ -18,10 +18,10 @@ def customers(request):
             data = request.POST.copy()
             # print(data)
             qby = data.get('search_by')
-            qstr = data.get('search_for')
-            queryparam=qby+'__'+'contains'
+            qstring = data.get('search_for')
+            queryparam = qby+'__'+'contains'
             # search_list = Customers.objects.filter(customer_name__contains=q)
-            search_list = Customers.objects.filter(**{ queryparam:qstr })
+            search_list = Customers.objects.filter(**{ queryparam:qstring })
             customers_list = search_list
         if 'save' in request.POST:
             form = CustomerForm(request.POST)
