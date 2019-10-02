@@ -9,5 +9,5 @@ urlpatterns=[
     path('suppliers/',views.suppliers,name='suppliers'),
     path('projects/',views.projects,name='projects'),
     path('items/',views.items,name='items'),
-    path('addcustomer/',views.AddCustomer,name='addcustomer'),
+    path('createcustomer/',views.CreateCustomer,name='createcustomer'),
 ]
