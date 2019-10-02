@@ -6,75 +6,10 @@
         <hr class="">
         <div class="row mb-2">
           <div class="col-md-2 col-sm-5">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#AddSupplier" type="button" name="AddNew">Add New</button>
-            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#SearchSupplier" aria-expanded="false" aria-controls="collapseExample" name="search">Search</button>
+            <a class="btn btn-primary" href="{% url 'crudbasic:createsupplier' %}">Add New</a>
           </div>
         </div>
 
-<div class="modal fade" tabindex="-1" role="dialog" id="AddSupplier">
-  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-    <div class="modal-content">
-      <form method="POST">
-      <div class="modal-header">
-        <h5 class="modal-title">New Supplier</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-        <div class="modal-body" aria-hidden="true">
-
-            <div class="row">
-              <div class="col-md-6">
-                {{ form.supplier_id.label}}
-                {{ form.supplier_id }}
-              </div>
-              <div class="col-md-6">
-                {{ form.supplier_name.label }}
-                {{ form.supplier_name }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                {{ form.supplier_address.label }}
-                {{ form.supplier_address }}
-              </div>
-              <div class="col-md-6">
-                {{ form.supplier_city.label }}
-                {{ form.supplier_city }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                {{ form.supplier_phone.label}}
-                {{ form.supplier_phone }}
-              </div>
-              <div class="col-md-6">
-                {{ form.supplier_fax.label }}
-                {{ form.supplier_fax }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                {{ form.supplier_email.label }}
-                {{ form.supplier_email }}
-              </div>
-              <div class="col-md-6">
-                {{ form.supplier_ntn_number.label }}
-                {{ form.supplier_ntn_number }}
-              </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary" name="save">Save</button>
-            {% csrf_token %}
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="collapse" id="SearchSupplier">
     <form method="POST">{% csrf_token %}
       <div class="row align-items-end">
         <div class="col-md-2">
@@ -87,19 +22,18 @@
         </div>
         <div class="col-md-2 pl-0">
           <span class="align-bottom">
-          <button class="btn btn-primary" type="submit" value="search" name="search">Go!</button>
+          <button class="btn btn-primary" type="submit" value="search" name="search">Search</button>
           </span>
         </div>
       </form>
     </div>
-  </div>
 
-          <hr class="">
+
           <div class="row">
             <div class="col-md-12">
               <div class="mt-2 pb-3 pt-1">
                 {% if supplier_data %}
-                <table class="table">
+                <table class="table table-bordered table-properties">
                   <thead class="thead-light">
                     <tr>
                       <!-- <th>S.no</th> -->

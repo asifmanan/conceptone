@@ -11,6 +11,7 @@ def index(request):
 def customers(request):
     customers_list = Customers.objects.order_by('customer_name')
     form = CustomerForm()
+    # id = "cu"
     search_form = BasicSearch()
 
     if request.method == 'POST':
@@ -49,6 +50,27 @@ def CreateCustomer(request):
                 print("ERROR! Form is invalid")
     translation.activate('en')
     return render(request,"crudbasic/CreateCustomer.html",{'form':form})
+
+def CreateSupplier(request):
+    form = SupplierForm()
+    if request.method == 'POST':
+        form = SupplierForm(request.POST)
+        if 'save' in request.POST:
+            if form.is_valid():
+                form.save(commit=True)
+                return redirect('crudbasic:suppliers')
+            else:
+                print("ERROR! Form is invalid")
+
+        if 'save-addnew' in request.POST:
+            if form.is_valid():
+                form.save(commit=True)
+                form = CustomerForm()
+                return render(request,'crudbasic/createsustomer.html',{'form':form})
+            else:
+                print("ERROR! Form is invalid")
+    translation.activate('en')
+    return render(request,"crudbasic/createsupplier.html",{'form':form})
 
 def suppliers(request):
     suppliers_list = Suppliers.objects.order_by('supplier_name')
