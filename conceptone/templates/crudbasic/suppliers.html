@@ -10,23 +10,23 @@
           </div>
         </div>
 
-    <form method="POST">{% csrf_token %}
-      <div class="row align-items-end">
-        <div class="col-md-2">
-          {{ search_form.search_by.label }}
-          {{ search_form.search_by}}
+        <div class="row align-items-end">
+          <form method="POST">{% csrf_token %}
+            <div class="col-md-3">
+              {{ search_form.search_by.label }}
+              {{ search_form.search_by}}
+            </div>
+            <div class="col-md-3">
+              {{ search_form.search_for.label }}
+              {{ search_form.search_for }}
+            </div>
+            <div class="col-md-2 pl-0">
+              <span class="align-bottom">
+                <button class="btn btn-primary" type="submit" value="search" name="search">Search</button>
+              </span>
+            </div>
+          </form>
         </div>
-        <div class="col-md-2">
-          {{ search_form.search_for.label }}
-          {{ search_form.search_for }}
-        </div>
-        <div class="col-md-2 pl-0">
-          <span class="align-bottom">
-          <button class="btn btn-primary" type="submit" value="search" name="search">Search</button>
-          </span>
-        </div>
-      </form>
-    </div>
 
 
           <div class="row">

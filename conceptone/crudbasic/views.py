@@ -123,3 +123,24 @@ def items(request):
         else:
             print("ERROR! Form is invalid")
     return render(request,"crudbasic/items.html", {'form':form,'item_data':item_list})
+
+def CreateItem(request):
+    form = ItemForm()
+    if request.method == 'POST':
+        form = ItemForm(request.POST)
+        if 'save' in request.POST:
+            if form.is_valid():
+                form.save(commit=True)
+                return redirect('crudbasic:items')
+            else:
+                print("ERROR! Form is invalid")
+
+        if 'save-addnew' in request.POST:
+            if form.is_valid():
+                form.save(commit=True)
+                form = ItemForm()
+                return render(request,'crudbasic/createitem.html',{'form':form})
+            else:
+                print("ERROR! Form is invalid")
+    translation.activate('en')
+    return render(request,"crudbasic/createitem.html",{'form':form})

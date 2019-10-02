@@ -11,4 +11,5 @@ urlpatterns=[
     path('items/',views.items,name='items'),
     path('createcustomer/',views.CreateCustomer,name='createcustomer'),
     path('createsupplier/',views.CreateSupplier,name='createsupplier'),
+    path('createitem/',views.CreateItem,name='createitem'),
 ]

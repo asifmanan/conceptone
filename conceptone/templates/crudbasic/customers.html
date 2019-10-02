@@ -24,50 +24,49 @@
         </div>
         <div class="col-md-2 pl-0">
           <span class="align-bottom">
-          <button class="btn btn-primary" type="submit" value="search" name="search">Go!</button>
+            <button class="btn btn-primary" type="submit" value="search" name="search">Go!</button>
           </span>
         </div>
-      </form>
+    </div>
+    </form>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="mt-2 pb-3 pt-1">
+        {% if customer_data %}
+        <table class="table table-bordered table-properties">
+          <thead class="thead-light">
+            <tr>
+              <!-- <th>S.no</th> -->
+              <th>Select</th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Address</th>
+              <th>City</th>
+              <th>Phone</th>
+              <th>Fax</th>
+              <th>Email</th>
+              <th>NTN</th>
+            </tr>
+            {% for customer in customer_data %}
+            <tr>
+              <td><input type="checkbox" name="" value=""></td>
+              <td>{{ customer.customer_id }}</td>
+              <td>{{ customer.customer_name }}</td>
+              <td>{{ customer.customer_address }}</td>
+              <td>{{ customer.customer_city }}</td>
+              <td>{{ customer.customer_phone }}</td>
+              <td>{{ customer.customer_fax }}</td>
+              <td>{{ customer.customer_email }}</td>
+              <td>{{ customer.customer_ntn_number }}</td>
+            </tr>
+            {% endfor %}
+          </thead>
+        </table>
+        {% else %}
+        <p>No Record Found, add customers to start</p>
+        {% endif %}
+      </div>
     </div>
   </div>
-
-          <div class="row">
-            <div class="col-md-12">
-              <div class="mt-2 pb-3 pt-1">
-                {% if customer_data %}
-                <table class="table table-bordered table-properties">
-                  <thead class="thead-light">
-                    <tr>
-                      <!-- <th>S.no</th> -->
-                      <th>Select</th>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Address</th>
-                      <th>City</th>
-                      <th>Phone</th>
-                      <th>Fax</th>
-                      <th>Email</th>
-                      <th>NTN</th>
-                    </tr>
-                    {% for customer in customer_data %}
-                    <tr>
-                      <td><input type="checkbox" name="" value=""></td>
-                      <td>{{ customer.customer_id }}</td>
-                      <td>{{ customer.customer_name }}</td>
-                      <td>{{ customer.customer_address }}</td>
-                      <td>{{ customer.customer_city }}</td>
-                      <td>{{ customer.customer_phone }}</td>
-                      <td>{{ customer.customer_fax }}</td>
-                      <td>{{ customer.customer_email }}</td>
-                      <td>{{ customer.customer_ntn_number }}</td>
-                    </tr>
-                    {% endfor %}
-                  </thead>
-                </table>
-                {% else %}
-                <p>No Record Found, add customers to start</p>
-                {% endif %}
-              </div>
-            </div>
-          </div>
-        {% endblock %}
+{% endblock %}
