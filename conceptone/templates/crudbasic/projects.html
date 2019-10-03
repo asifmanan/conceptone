@@ -1,116 +1,53 @@
 <!DOCTYPE html>
-<title>Projects</title>
+<title>Projects - ConceptONE</title>
   {% extends "crudbasic/base.html" %}
     {% block body_block %}
-      <h3 class="">New Project</h3>
+      <h3 class="">Projects</h3>
+      <a class="" href="{% url 'crudbasic:createproject' %}">Create New Project</a>
       <hr class="">
-      <div class="row mb-2">
-        <div class="col-md-2 col-sm-5">
-          <button class="btn btn-primary" data-toggle="modal" data-target="#AddCustomer" type="button" name="AddNew">Add New</button>
-          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#SearchCustomer" aria-expanded="false" aria-controls="collapseExample" name="search">Search</button>
+      <form method="post">
+        <div class="form-group row">
+          <div class="col-xl-2 col-lg-3 col-md-4 mb-2">
+            {{ search_form.search_by }}
+          </div>
+          <div class="col-xl-2 col-lg-3 col-md-4 mb-2">
+            {{ search_form.search_for }}
+          </div>
+          <div class="col-xl-2 col-lg-3 col-md-4 pl-2 mb-1 ml-2">
+            <button class="btn btn-primary" type="submit" value="search" name="search">Search</button>
+          </div>
+        </div>
+      </form>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="mt-2 pb-2 pt-1">
+            {% if project_data %}
+            <table class="table table-bordered table-properties">
+              <thead class="thead-light">
+                <tr>
+                  <!-- <th>S.no</th> -->
+                  <th>Project Name</th>
+                  <th>Project Id</th>
+                  <th>Project City</th>
+                  <th>Customer</th>
+                  <th>Project Status</th>
+                </tr>
+                {% for project in project_data %}
+                <tr>
+                  <!-- <td><input type="checkbox" name="" value=""></td> -->
+                  <td>{{ project.project_name }}</td>
+                  <td>{{ project.project_id }}</td>
+                  <td>{{ project.project_city }}</td>
+                  <td>{{ project.customer }}</td>
+                  <td>{{ project.project_status }}</td>
+                </tr>
+                {% endfor %}
+              </thead>
+            </table>
+            {% else %}
+            <p>Oops! No Record Found</p>
+            {% endif %}
+          </div>
         </div>
       </div>
-      <div class="modal fade" tabindex="-1" role="dialog" id="AddCustomer">
-        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">New Project</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-              <div class="modal-body" aria-hidden="true">
-                <form method="POST">
-                  <div class="row">
-                    <div class="col-md">
-                      {{ form.customer.label}}
-                      {{ form.customer }}
-                    </div>
-                    <div class="col-md">
-                      {{ form.project_id.label }}
-                      {{ form.project_id }}
-                    </div>
-                    <div class="col-md">
-                      {{ form.project_name.label }}
-                      {{ form.project_name }}
-                    </div>
-                  </div>
-
-                  <div class="row mt-2">
-                    <div class="col-md">
-                      {{ form.project_city.label }}
-                      {{ form.project_city }}
-                    </div>
-                    <div class="col-md">
-                      {{ form.project_status.label }}
-                      {{ form.project_status }}
-                    </div>
-
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary" name="save">Save</button>
-                  {% csrf_token %}
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="collapse" id="SearchCustomer">
-          <form method="POST">{% csrf_token %}
-            <div class="row align-items-end">
-              <div class="col-md-2">
-                {{ search_form.search_by.label }}
-                {{ search_form.search_by}}
-              </div>
-              <div class="col-md-2">
-                {{ search_form.search_for.label }}
-                {{ search_form.search_for }}
-              </div>
-              <div class="col-md-2 pl-0">
-                <span class="align-bottom">
-                <button class="btn btn-primary" type="submit" value="search" name="search">Go!</button>
-                </span>
-              </div>
-            </form>
-          </div>
-        </div>
-        <hr class="">
-        <div class="row">
-          <div class="col-md-8">
-            <div class="pb-1 pt-1">
-
-              <!-- consider for table block start -->
-              <!-- <link src="table-block.html" rel="import"> -->
-              <!-- consider for table block end -->
-              {% if project_data %}
-              <table class="table">
-                <thead class="thead-light">
-                  <tr>
-                    <!-- <th>S.no</th> -->
-                    <th>Project Name</th>
-                    <th>Project Id</th>
-                    <th>Project City</th>
-                    <th>Customer</th>
-                    <th>Project Status</th>
-                  </tr>
-                  {% for project in project_data %}
-                  <tr>
-                    <!-- <td><input type="checkbox" name="" value=""></td> -->
-                    <td>{{ project.project_name }}</td>
-                    <td>{{ project.project_id }}</td>
-                    <td>{{ project.project_city }}</td>
-                    <td>{{ project.customer }}</td>
-                    <td>{{ project.project_status }}</td>
-                  </tr>
-                  {% endfor %}
-                </thead>
-              </table>
-              {% else %}
-              <p>Oops! No Record Found</p>
-              {% endif %}
-            </div>
-          </div>
-        </div>
       {% endblock %}

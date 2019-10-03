@@ -12,4 +12,5 @@ urlpatterns=[
     path('createcustomer/',views.CreateCustomer,name='createcustomer'),
     path('createsupplier/',views.CreateSupplier,name='createsupplier'),
     path('createitem/',views.CreateItem,name='createitem'),
+    path('createproject/',views.CreateProject,name='createproject'),
 ]

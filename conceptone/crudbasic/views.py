@@ -112,9 +112,31 @@ def projects(request):
                 print("ERROR! Form is invalid")
     return render(request,"crudbasic/projects.html",{'form':form,'search_form':search_form,'project_data':projects_list})
 
+def CreateProject(request):
+    form = ProjectForm()
+    if request.method == 'POST':
+        form = ProjectForm(request.POST)
+        if 'save' in request.POST:
+            if form.is_valid():
+                form.save(commit=True)
+                return redirect('crudbasic:projects')
+            else:
+                print("ERROR! Form is invalid")
+
+        if 'save-addnew' in request.POST:
+            if form.is_valid():
+                form.save(commit=True)
+                form = ProjectForm()
+                return render(request,'crudbasic/createproject.html',{'form':form})
+            else:
+                print("ERROR! Form is invalid")
+    translation.activate('en')
+    return render(request,"crudbasic/createproject.html",{'form':form})
+
 def items(request):
     item_list = Items.objects.order_by('item_line')
     form = ItemForm()
+    search_form = BasicSearch()
     if request.method == 'POST':
         form = ItemForm(request.POST)
         if form.is_valid:
@@ -122,7 +144,7 @@ def items(request):
             return redirect('crudbasic:items')
         else:
             print("ERROR! Form is invalid")
-    return render(request,"crudbasic/items.html", {'form':form,'item_data':item_list})
+    return render(request,"crudbasic/items.html", {'form':form, 'search_form':search_form,'item_data':item_list})
 
 def CreateItem(request):
     form = ItemForm()

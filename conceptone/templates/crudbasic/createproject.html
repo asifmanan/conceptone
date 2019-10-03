@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% extends "crudbasic/base.html" %}
+  {% block body_block %}
+  <div class="container pb-1 border bg-light rounded">
+    <h3>Provide Project Details</h3>
+    <form method="POST">{% csrf_token %}
+      <div class="row mb-2">
+        <div class="col-md-6">
+          {{ form.customer.label}}
+          {{ form.customer }}
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-md-4">
+          {{ form.project_id.label }}
+          {{ form.project_id }}
+        </div>
+        <div class="col-md-6">
+          {{ form.project_name.label }}
+          {{ form.project_name }}
+        </div>
+      </div>
+      <div class="row mb-4">
+        <div class="col-md-4">
+          {{ form.project_city.label }}
+          {{ form.project_city }}
+        </div>
+        <div class="col-md-4">
+          {{ form.project_status.label }}
+          {{ form.project_status }}
+        </div>
+      </div>
+      <div class="row mb-4">
+        <a class="btn btn-secondary ml-3" href="{% url 'crudbasic:projects' %}">Cancel</a>
+        <button type="submit" class="btn btn-primary ml-2" name="save">Save</button>
+        <button type="submit" class="btn btn-success ml-2" name="save-addnew">Save & Add Another</button>
+      </div>
+    </form>
+  </div>
+  {% endblock %}

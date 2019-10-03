@@ -3,33 +3,21 @@
     {% extends "crudbasic/base.html" %}
       {% block body_block %}
         <h3 class="">Customers</h3>
+        <a class="" href="{% url 'crudbasic:createcustomer' %}">Create New Customer</a>
         <hr class="">
-        <div class="row mb-2">
-          <div class="col-md-2 col-sm-5">
-            <a class="btn btn-primary" href="{% url 'crudbasic:createcustomer' %}">Add New</a>
-            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#SearchCustomer" aria-expanded="false" aria-controls="collapseExample" name="search">Search</button>
+        <form method="POST">{% csrf_token %}
+          <div class="row mb-2">
+            <div class="col-xl-2 col-lg-3 col-md-4 mb-2">
+              {{ search_form.search_by}}
+            </div>
+            <div class="col-xl-2 col-lg-3 col-md-4 mb-2">
+              {{ search_form.search_for }}
+            </div>
+            <div class="col-xl-2 col-lg-3 col-md-4 pl-2 mb-1 ml-2">
+              <button class="btn btn-primary" type="submit" value="search" name="search">Search</button>
+            </div>
           </div>
-        </div>
-  </div>
-  <div class="collapse" id="SearchCustomer">
-    <form method="POST">{% csrf_token %}
-      <div class="row align-items-end">
-        <div class="col-md-2">
-          {{ search_form.search_by.label }}
-          {{ search_form.search_by}}
-        </div>
-        <div class="col-md-2">
-          {{ search_form.search_for.label }}
-          {{ search_form.search_for }}
-        </div>
-        <div class="col-md-2 pl-0">
-          <span class="align-bottom">
-            <button class="btn btn-primary" type="submit" value="search" name="search">Go!</button>
-          </span>
-        </div>
-    </div>
-    </form>
-  </div>
+        </form>
   <div class="row">
     <div class="col-md-12">
       <div class="mt-2 pb-3 pt-1">
