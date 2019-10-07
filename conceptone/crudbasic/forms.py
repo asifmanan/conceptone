@@ -33,17 +33,17 @@ class SupplierForm(forms.ModelForm):
         }
 
 class BasicSearch(forms.Form):
-    # if id=="cu":
-    #     print("its from customer")
-    cu = Customers()
-    field_dct = get_col_heads(cu)
+    field_dct = {}
     search_by = forms.ChoiceField(choices=field_dct,widget=forms.Select(attrs={'class':'form-control'}))
     search_for = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    # def clean_search_data
-    # def identifier(id):
-    #     if id=="cu":
-    #         return 1
-    #     else return None
+    def __init__(self,arg):
+        caller = arg
+        if caller == 'customer':
+            print("It Works!")
+        cu = Customers()
+        field_dct = get_col_heads(cu)
+        self.fields['search_by'] = forms.ChoiceField(choices=field_dct,widget=forms.Select(attrs={'class':'form-control'}))
+
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Projects

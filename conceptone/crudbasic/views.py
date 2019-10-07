@@ -2,33 +2,64 @@ from django.shortcuts import render, redirect
 from crudbasic.models import Customers, Suppliers, Projects, Items
 from crudbasic.forms import CustomerForm, SupplierForm, ProjectForm, ItemForm, BasicSearch
 from django.utils import translation
+from django.views.generic import View, TemplateView, ListView, DetailView
 from crudbasic.basic_functions import get_col_heads
 
 # Create your views here.
-def index(request):
-    return render(request,"crudbasic/index.html")
+class IndexView(TemplateView):
+    template_name = 'crudbasic/index.html'
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context ['page_title'] = ''
+        return context
 
-def customers(request):
-    customers_list = Customers.objects.order_by('customer_name')
-    form = CustomerForm()
-    # id = "cu"
-    search_form = BasicSearch()
+class CustomerView(ListView):
+    template_name = 'crudbasic/customers.html'
+    model = Customers
+    context_object_name = 'customer_data'
 
-    if request.method == 'POST':
-        if 'search' in request.POST:
-            search_form = BasicSearch(request.POST)
-            if search_form.is_valid():
-                data = request.POST.copy()
-                # print(data)
-                qby = data.get('search_by')
-                qstring = data.get('search_for')
-                queryparam = qby+'__'+'contains'
-                # search_list = Customers.objects.filter(customer_name__contains=q)
-                search_list = Customers.objects.filter(**{ queryparam:qstring })
-                customers_list = search_list
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['search_form'] = BasicSearch('customer')
+        return context
 
-    translation.activate('en')
-    return render(request,"crudbasic/customers.html",{'form':form,'search_form':search_form,'customer_data':customers_list})
+    def post(self, request, *args, **kwargs):
+        search_form = BasicSearch(request.POST)
+        if search_form.is_valid():
+            data = request.POST.copy()
+            qby = data.get('search_by')
+            qstrting = data.get('search_for')
+            queryparam = qby+'__'+'contains'
+            search_list = Customers.objects.filter(**{queryparam:qstrting})
+            customer_data = search_list
+        return render(request, self.template_name, {'customer_data': customer_data,'search_form':search_form})
+
+
+
+# def index(request):
+#     return render(request,"crudbasic/index.html")
+
+# def customers(request):
+#     customers_list = Customers.objects.order_by('customer_name')
+#     form = CustomerForm()
+#     # id = "cu"
+#     search_form = BasicSearch()
+#
+#     if request.method == 'POST':
+#         if 'search' in request.POST:
+#             search_form = BasicSearch(request.POST)
+#             if search_form.is_valid():
+#                 data = request.POST.copy()
+#                 # print(data)
+#                 qby = data.get('search_by')
+#                 qstring = data.get('search_for')
+#                 queryparam = qby+'__'+'contains'
+#                 # search_list = Customers.objects.filter(customer_name__contains=q)
+#                 search_list = Customers.objects.filter(**{ queryparam:qstring })
+#                 customers_list = search_list
+#
+#     translation.activate('en')
+#     return render(request,"crudbasic/customers.html",{'form':form,'search_form':search_form,'customer_data':customers_list})
 
 def CreateCustomer(request):
     form = CustomerForm()
