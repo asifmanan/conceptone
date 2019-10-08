@@ -36,13 +36,13 @@ class BasicSearch(forms.Form):
     field_dct = {}
     search_by = forms.ChoiceField(choices=field_dct,widget=forms.Select(attrs={'class':'form-control'}))
     search_for = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    def __init__(self,arg):
-        caller = arg
-        if caller == 'customer':
-            print("It Works!")
-        cu = Customers()
-        field_dct = get_col_heads(cu)
-        self.fields['search_by'] = forms.ChoiceField(choices=field_dct,widget=forms.Select(attrs={'class':'form-control'}))
+
+    def __init__(self,*arg,**kwargs):
+        caller = kwargs.pop('caller')
+        # print(caller)
+        super(BasicSearch, self).__init__(*arg,**kwargs)
+        field_dct = get_col_heads(caller)
+        self.fields['search_by'].choices = field_dct
 
 class ProjectForm(forms.ModelForm):
     class Meta:

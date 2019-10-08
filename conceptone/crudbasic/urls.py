@@ -6,7 +6,6 @@ app_name = 'crudbasic'
 urlpatterns=[
     path('',views.IndexView.as_view(),name='index'),
     path('customers/',views.CustomerView.as_view(),name='customers'),
-    # path('customers1/',views.CustomerView.as_view(),name='customers1'),
     path('suppliers/',views.suppliers,name='suppliers'),
     path('projects/',views.projects,name='projects'),
     path('items/',views.items,name='items'),

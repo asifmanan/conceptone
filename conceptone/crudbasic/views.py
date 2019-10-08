@@ -18,13 +18,18 @@ class CustomerView(ListView):
     model = Customers
     context_object_name = 'customer_data'
 
-    def get_context_data(self,**kwargs):
-        context = super().get_context_data(**kwargs)
-        context['search_form'] = BasicSearch('customer')
-        return context
+    # def get_context_data(self,**kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     # context['search_form'] = BasicSearch('customer')
+    #     return context
+
+    def get(self, request, *args, **kwargs):
+        search_form = BasicSearch(caller = Customers)
+        customer_data = Customers.objects.order_by('created_on')
+        return render(request, self.template_name, {'customer_data': customer_data,'search_form' : search_form})
 
     def post(self, request, *args, **kwargs):
-        search_form = BasicSearch(request.POST)
+        search_form = BasicSearch(request.POST, caller = Customers)
         if search_form.is_valid():
             data = request.POST.copy()
             qby = data.get('search_by')
@@ -32,6 +37,10 @@ class CustomerView(ListView):
             queryparam = qby+'__'+'contains'
             search_list = Customers.objects.filter(**{queryparam:qstrting})
             customer_data = search_list
+        else:
+            search_form = BasicSearch(caller = Customers)
+            customer_data = Customers.objects.order_by('customer_name')
+            return render(request, self.template_name, {'customer_data': customer_data,'search_form' : search_form})
         return render(request, self.template_name, {'customer_data': customer_data,'search_form':search_form})
 
 
