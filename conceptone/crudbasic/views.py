@@ -14,29 +14,57 @@ class IndexView(TemplateView):
         return context
 
 class BaseDisplayView(TemplateView):
-    template_name = 'crudbasic/customers.html'
-    if 'customers' in request.path:
-        main_title = 'Customers'
-        create_link = 'Create New Customer'
-        model = Customers
+    template_name = 'crudbasic/basedisplay.html'
+    # if 'basedisplay' in request.path:
+    #     main_title = 'Customers'
+    #     create_link = 'Create New Customer'
+    model = Customers
+    context_object_name='page_data'
 
     def get(self, request, *args, **kwargs):
-        search_form = BasicSearch(caller = model)
-        page_data = model.objects.order_by('created_on')
-        return render(request, self.template_name, {'page_data': page_data,'search_form' : search_form})
+        if 'basedisplay' in request.path:
+            main_title = 'Customers'
+            create_link = 'Create New Customer'
+            search_form = BasicSearch(caller = Customers)
+            table_head_temp = get_col_heads(Customers)
+            table_head = []
+            for idx, val in enumerate(table_head_temp):
+                table_head.append(str(val[1]).split(" ")[1])
+            page_data = Customers.objects.order_by('created_on')
+            return render(request, self.template_name, {'page_data': page_data,
+                                                        'search_form' : search_form,
+                                                        'table_head':table_head,
+                                                        'main_title':main_title,
+                                                        'create_link':create_link
+                                                        })
+        if 'suppliers' in request.path:
+            main_title = 'Suppliers'
+            create_link = 'Create New Supplier'
+            search_form = BasicSearch(caller = Suppliers)
+            table_head_temp = get_col_heads(Suppliers)
+            table_head = []
+            for idx, val in enumerate(table_head_temp):
+                table_head.append(str(val[1]).split(" ")[1])
+            page_data = Suppliers.objects.order_by('created_on')
+            return render(request, self.template_name, {'page_data': page_data,
+                                                        'search_form' : search_form,
+                                                        'table_head':table_head,
+                                                        'main_title':main_title,
+                                                        'create_link':create_link
+                                                        })
 
     def post(self, request, *args, **kwargs):
-        search_form = BasicSearch(request.POST, caller = model)
+        search_form = BasicSearch(request.POST, caller = Customers)
         if search_form.is_valid():
             data = request.POST.copy()
             qby = data.get('search_by')
             qstrting = data.get('search_for')
             queryparam = qby+'__'+'contains'
-            search_list = model.objects.filter(**{queryparam:qstrting})
+            search_list = Customers.objects.filter(**{queryparam:qstrting})
             page_data = search_list
         else:
-            search_form = BasicSearch(caller = model)
-            page_data = model.objects.order_by('created_on')
+            search_form = BasicSearch(caller = Customers)
+            page_data = Customers.objects.order_by('created_on')
             return render(request, self.template_name, {'page_data': page_data,'search_form' : search_form})
         return render(request, self.template_name, {'page_data': page_data,'search_form':search_form})
 

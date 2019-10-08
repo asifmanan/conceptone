@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-{% extends base.html %}
-{% body_block %}
+{% extends 'crudbasic/base.html' %}
+{% block body_block %}
 <h3 class="">{{ main_title }}</h3>
 <a class="" href="{% url 'crudbasic:createcustomer' %}">{{ create_link }}</a>
 <hr class="">
@@ -24,20 +24,14 @@
 <table class="table table-bordered table-properties">
   <thead class="thead-light">
     <tr>
+      {% for head in table_head %}
       <!-- <th>S.no</th> -->
-      <th>Select</th>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Address</th>
-      <th>City</th>
-      <th>Phone</th>
-      <th>Fax</th>
-      <th>Email</th>
-      <th>NTN</th>
+      <th>{{ head }}</th>
+      {% endfor %}
     </tr>
-    {% for entity in page_data %}
+    {% for customer in page_data %}
     <tr>
-      <td><input type="checkbox" name="" value=""></td>
+      <!-- <td><input type="checkbox" name="" value=""></td> -->
       <td>{{ customer.customer_id }}</td>
       <td>{{ customer.customer_name }}</td>
       <td>{{ customer.customer_address }}</td>
