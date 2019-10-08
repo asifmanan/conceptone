@@ -13,15 +13,38 @@ class IndexView(TemplateView):
         context ['page_title'] = ''
         return context
 
+class BaseDisplayView(TemplateView):
+    template_name = 'crudbasic/customers.html'
+    if 'customers' in request.path:
+        main_title = 'Customers'
+        create_link = 'Create New Customer'
+        model = Customers
+
+    def get(self, request, *args, **kwargs):
+        search_form = BasicSearch(caller = model)
+        page_data = model.objects.order_by('created_on')
+        return render(request, self.template_name, {'page_data': page_data,'search_form' : search_form})
+
+    def post(self, request, *args, **kwargs):
+        search_form = BasicSearch(request.POST, caller = model)
+        if search_form.is_valid():
+            data = request.POST.copy()
+            qby = data.get('search_by')
+            qstrting = data.get('search_for')
+            queryparam = qby+'__'+'contains'
+            search_list = model.objects.filter(**{queryparam:qstrting})
+            page_data = search_list
+        else:
+            search_form = BasicSearch(caller = model)
+            page_data = model.objects.order_by('created_on')
+            return render(request, self.template_name, {'page_data': page_data,'search_form' : search_form})
+        return render(request, self.template_name, {'page_data': page_data,'search_form':search_form})
+
+
 class CustomerView(ListView):
     template_name = 'crudbasic/customers.html'
     model = Customers
     context_object_name = 'customer_data'
-
-    # def get_context_data(self,**kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     # context['search_form'] = BasicSearch('customer')
-    #     return context
 
     def get(self, request, *args, **kwargs):
         search_form = BasicSearch(caller = Customers)
@@ -43,7 +66,30 @@ class CustomerView(ListView):
             return render(request, self.template_name, {'customer_data': customer_data,'search_form' : search_form})
         return render(request, self.template_name, {'customer_data': customer_data,'search_form':search_form})
 
+class SupplierView(TemplateView):
+    template_name = 'crudbasic/suppliers.html'
+    model = Suppliers
+    context_object_name = 'supplier_data'
 
+    def get(self, request, *args, **kwargs):
+        search_form = BasicSearch(caller = Suppliers)
+        supplier_data = Suppliers.objects.order_by('created_on')
+        return render(request, self.template_name, {'supplier_data': supplier_data,'search_form' : search_form})
+
+    def post(self, request, *args, **kwargs):
+        search_form = BasicSearch(request.POST, caller = Suppliers)
+        if search_form.is_valid():
+            data = request.POST.copy()
+            qby = data.get('search_by')
+            qstrting = data.get('search_for')
+            queryparam = qby+'__'+'contains'
+            search_list = Suppliers.objects.filter(**{queryparam:qstrting})
+            supplier_data = search_list
+        else:
+            search_form = BasicSearch(caller = Suppliers)
+            supplier_data = Suppliers.objects.order_by('supplier_name')
+            return render(request, self.template_name, {'supplier_data': supplier_data,'search_form' : search_form})
+        return render(request, self.template_name, {'supplier_data': supplier_data,'search_form':search_form})
 
 # def index(request):
 #     return render(request,"crudbasic/index.html")
