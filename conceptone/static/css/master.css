@@ -57,7 +57,21 @@
 } */
 
 .table-properties{
-  height: 500px;
+  height: 460px;
   display: block;
   overflow-y: scroll;
+}
+
+.button-custom{
+  width : 100%;
+}
+
+thead {
+  background-color: #8193e6;
+  /* background-color: #4e62c2; */
+  color: white;
+}
+
+table {
+  font-size: 0.88rem;
 }

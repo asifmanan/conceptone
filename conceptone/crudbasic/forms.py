@@ -58,8 +58,8 @@ class ItemForm(forms.ModelForm):
 
 class BasicSearch(forms.Form):
     field_dct = {}
-    search_by = forms.ChoiceField(choices=field_dct,widget=forms.Select(attrs={'class':'form-control'}))
-    search_for = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    search_by = forms.ChoiceField(choices=field_dct,widget=forms.Select(attrs={'class':'form-control form-control-sm'}))
+    search_for = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control form-control-sm'}))
 
     def __init__(self,*arg,**kwargs):
         caller = kwargs.pop('caller')
