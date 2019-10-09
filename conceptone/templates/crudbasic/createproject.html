@@ -6,14 +6,14 @@
     <form method="POST">{% csrf_token %}
       <div class="row mb-2">
         <div class="col-md-6">
-          {{ form.customer.label}}
-          {{ form.customer }}
+          {{ form.project_customer.label}}
+          {{ form.project_customer }}
         </div>
       </div>
       <div class="row mb-2">
         <div class="col-md-4">
-          {{ form.project_id.label }}
-          {{ form.project_id }}
+          {{ form.project_code.label }}
+          {{ form.project_code }}
         </div>
         <div class="col-md-6">
           {{ form.project_name.label }}
