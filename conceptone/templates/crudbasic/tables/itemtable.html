@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+{% for item in page_data %}
+<tr>
+  <td>{{ item.item_line }}</td>
+  <td>{{ item.item_description }}</td>
+  <td>{{ item.item_uom }}</td>
+  <td>{{ item.item_type }}</td>
+</tr>
+{% endfor %}

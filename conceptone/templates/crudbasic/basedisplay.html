@@ -18,37 +18,33 @@
   </div>
 </form>
 <div class="row">
-<div class="col-md-12">
-<div class="mt-2 pb-3 pt-1">
-{% if page_data %}
-<table class="table table-bordered table-properties">
-  <thead class="thead-light">
-    <tr>
-      {% for head in table_head %}
-      <!-- <th>S.no</th> -->
-      <th>{{ head }}</th>
-      {% endfor %}
-    </tr>
-    {% for customer in page_data %}
-    <tr>
-      <!-- <td><input type="checkbox" name="" value=""></td> -->
-      <td>{{ customer.customer_id }}</td>
-      <td>{{ customer.customer_name }}</td>
-      <td>{{ customer.customer_address }}</td>
-      <td>{{ customer.customer_city }}</td>
-      <td>{{ customer.customer_phone }}</td>
-      <td>{{ customer.customer_fax }}</td>
-      <td>{{ customer.customer_email }}</td>
-      <td>{{ customer.customer_ntn_number }}</td>
-    </tr>
-    {% endfor %}
-  </thead>
-</table>
-{% else %}
-<p>Oops! No Record found</p>
-{% endif %}
+  <div class="col-md-12">
+    <div class="mt-2 pb-3 pt-1">
+    {% if page_data %}
+    <table class="table table-bordered table-properties">
+      <thead class="thead-light">
+        <tr>
+          {% for head in table_head %}
+            <th>{{ head }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% if main_title == 'Customers' %}
+          {% include 'crudbasic/tables/customertable.html' %}
+        {% elif main_title == 'Suppliers' %}
+          {% include 'crudbasic/tables/suppliertable.html' %}
+        {% elif main_title == 'Items' %}
+          {% include 'crudbasic/tables/itemtable.html' %}
+        {% elif main_title == 'Projects' %}
+          {% include 'crudbasic/tables/projecttable.html' %}
+        {% endif %}
+      </tbody>
+    </table>
+    {% else %}
+      <p>Oops! No Record found</p>
+    {% endif %}
+    </div>
+  </div>
 </div>
-</div>
-</div>
-
 {% endblock %}

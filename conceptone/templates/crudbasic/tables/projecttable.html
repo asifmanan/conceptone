@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+{% for project in page_data %}
+<tr>
+  <td>{{ project.project_name }}</td>
+  <td>{{ project.project_id }}</td>
+  <td>{{ project.project_city }}</td>
+  <td>{{ project.project_customer }}</td>
+  <td>{{ project.project_status }}</td>
+</tr>
+{% endfor %}

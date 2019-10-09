@@ -39,7 +39,8 @@ class BasicSearch(forms.Form):
 
     def __init__(self,*arg,**kwargs):
         caller = kwargs.pop('caller')
-        # print(caller)
+        if caller == Customers:
+            print(caller)
         super(BasicSearch, self).__init__(*arg,**kwargs)
         field_dct = get_col_heads(caller)
         self.fields['search_by'].choices = field_dct

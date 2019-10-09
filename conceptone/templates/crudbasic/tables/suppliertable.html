@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+{% for supplier in page_data %}
+<tr>
+  <td>{{ supplier.supplier_id }}</td>
+  <td>{{ supplier.supplier_name }}</td>
+  <td>{{ supplier.supplier_address }}</td>
+  <td>{{ supplier.supplier_city }}</td>
+  <td>{{ supplier.supplier_phone }}</td>
+  <td>{{ supplier.supplier_fax }}</td>
+  <td>{{ supplier.supplier_email }}</td>
+  <td>{{ supplier.supplier_ntn_number }}</td>
+</tr>
+{% endfor %}

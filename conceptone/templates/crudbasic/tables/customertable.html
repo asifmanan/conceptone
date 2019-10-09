@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+    {% for customer in page_data %}
+    <tr>
+      <td>{{ customer.customer_id }}</td>
+      <td>{{ customer.customer_name }}</td>
+      <td>{{ customer.customer_address }}</td>
+      <td>{{ customer.customer_city }}</td>
+      <td>{{ customer.customer_phone }}</td>
+      <td>{{ customer.customer_fax }}</td>
+      <td>{{ customer.customer_email }}</td>
+      <td>{{ customer.customer_ntn_number }}</td>
+    </tr>
+    {% endfor %}

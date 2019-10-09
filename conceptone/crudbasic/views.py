@@ -18,11 +18,12 @@ class BaseDisplayView(TemplateView):
     # if 'basedisplay' in request.path:
     #     main_title = 'Customers'
     #     create_link = 'Create New Customer'
-    model = Customers
-    context_object_name='page_data'
+    # model = Customers
+    # context_object_name='page_data'
+
 
     def get(self, request, *args, **kwargs):
-        if 'basedisplay' in request.path:
+        if 'customers' in request.path:
             main_title = 'Customers'
             create_link = 'Create New Customer'
             search_form = BasicSearch(caller = Customers)
@@ -31,12 +32,16 @@ class BaseDisplayView(TemplateView):
             for idx, val in enumerate(table_head_temp):
                 table_head.append(str(val[1]).split(" ")[1])
             page_data = Customers.objects.order_by('created_on')
+            # for customer in page_data:
+            #     for idx, data_item in enumerate(customer):
+            #         print(data_item)
             return render(request, self.template_name, {'page_data': page_data,
                                                         'search_form' : search_form,
                                                         'table_head':table_head,
                                                         'main_title':main_title,
                                                         'create_link':create_link
                                                         })
+
         if 'suppliers' in request.path:
             main_title = 'Suppliers'
             create_link = 'Create New Supplier'
@@ -46,6 +51,38 @@ class BaseDisplayView(TemplateView):
             for idx, val in enumerate(table_head_temp):
                 table_head.append(str(val[1]).split(" ")[1])
             page_data = Suppliers.objects.order_by('created_on')
+            return render(request, self.template_name, {'page_data': page_data,
+                                                        'search_form' : search_form,
+                                                        'table_head':table_head,
+                                                        'main_title':main_title,
+                                                        'create_link':create_link
+                                                        })
+
+        if 'items' in request.path:
+            main_title = 'Items'
+            create_link = 'Create New Item'
+            search_form = BasicSearch(caller = Items)
+            table_head_temp = get_col_heads(Items)
+            table_head = []
+            for idx, val in enumerate(table_head_temp):
+                table_head.append(str(val[1]).split(" ")[1])
+            page_data = Items.objects.order_by('created_on')
+            return render(request, self.template_name, {'page_data': page_data,
+                                                        'search_form' : search_form,
+                                                        'table_head':table_head,
+                                                        'main_title':main_title,
+                                                        'create_link':create_link
+                                                        })
+
+        if 'projects' in request.path:
+            main_title = 'Projects'
+            create_link = 'Create New Project'
+            search_form = BasicSearch(caller = Projects)
+            table_head_temp = get_col_heads(Projects)
+            table_head = []
+            for idx, val in enumerate(table_head_temp):
+                table_head.append(str(val[1]).split(" ")[1])
+            page_data = Projects.objects.order_by('created_on')
             return render(request, self.template_name, {'page_data': page_data,
                                                         'search_form' : search_form,
                                                         'table_head':table_head,
@@ -210,7 +247,7 @@ def suppliers(request):
 def projects(request):
     projects_list = Projects.objects.order_by('project_name')
     form = ProjectForm()
-    search_form = BasicSearch()
+    search_form = BasicSearch(caller = Projects)
     if request.method == 'POST':
         if 'search' in request.POST:
             data = request.POST.copy()
@@ -250,7 +287,7 @@ def CreateProject(request):
 def items(request):
     item_list = Items.objects.order_by('item_line')
     form = ItemForm()
-    search_form = BasicSearch()
+    search_form = BasicSearch(caller = Items)
     if request.method == 'POST':
         form = ItemForm(request.POST)
         if form.is_valid:

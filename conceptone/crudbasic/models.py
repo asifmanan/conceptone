@@ -46,7 +46,7 @@ class Projects(models.Model):
         ('Completed','Completed'),
         ('On-Going','On-Going'),
     ]
-    customer = models.ForeignKey(Customers, on_delete=models.CASCADE)
+    project_customer = models.ForeignKey(Customers, on_delete=models.CASCADE)
     project_id = models.CharField(max_length=16, unique=True)
     project_name = models.CharField(max_length=128, unique=True)
     project_city = models.CharField(max_length=128)
