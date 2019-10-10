@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 class Customers(models.Model):
@@ -15,6 +16,11 @@ class Customers(models.Model):
 
     def __str__(self):
         return self.customer_name
+
+    # def get_absolute_url(self):
+    #     if 'save' in request.POST:
+    #         print('Save was Clicked')
+    #     return reverse('crudbasic:customers')
 
 class Suppliers(models.Model):
     supplier_code = models.CharField(max_length=16, unique=True)

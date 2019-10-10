@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from crudbasic.models import Customers, Suppliers, Projects, Items
 from crudbasic.forms import CustomerForm, SupplierForm, ProjectForm, ItemForm, BasicSearch
 from django.utils import translation
-from django.views.generic import View, TemplateView, ListView, DetailView
+from django.views.generic import View, TemplateView, ListView, DetailView, CreateView
 from crudbasic.basic_functions import get_col_heads
 
 # Create your views here.
@@ -198,86 +199,49 @@ class ItemView(TemplateView):
                                                     'create_link':create_link
                                                     })
 
-def CreateCustomer(request):
-    form = CustomerForm()
-    if request.method == 'POST':
-        form = CustomerForm(request.POST)
-        if 'save' in request.POST:
-            if form.is_valid():
-                form.save(commit=True)
-                return redirect('crudbasic:customers')
-            else:
-                print("ERROR! Form is invalid")
 
-        if 'save-addnew' in request.POST:
-            if form.is_valid():
-                form.save(commit=True)
-                form = CustomerForm()
-                return render(request,'crudbasic/CreateCustomer.html',{'form':form})
-            else:
-                print("ERROR! Form is invalid")
-    translation.activate('en')
-    return render(request,"crudbasic/CreateCustomer.html",{'form':form})
+class CreateCustomerView(CreateView):
+    # fields = '__all__'
+    # if defining form_class then fields cannot be used
+    model = Customers
+    form_class = CustomerForm
+    template_name = 'crudbasic/createcustomer.html'
 
-def CreateSupplier(request):
-    form = SupplierForm()
-    if request.method == 'POST':
-        form = SupplierForm(request.POST)
-        if 'save' in request.POST:
-            if form.is_valid():
-                form.save(commit=True)
-                return redirect('crudbasic:suppliers')
-            else:
-                print("ERROR! Form is invalid")
+    def get_success_url(self):
+        if 'save-addnew' in self.request.POST:
+            return reverse('crudbasic:createcustomer')
+        else:
+            return reverse('crudbasic:customers')
 
-        if 'save-addnew' in request.POST:
-            if form.is_valid():
-                form.save(commit=True)
-                form = CustomerForm()
-                return render(request,'crudbasic/createsustomer.html',{'form':form})
-            else:
-                print("ERROR! Form is invalid")
-    translation.activate('en')
-    return render(request,"crudbasic/createsupplier.html",{'form':form})
+class CreateSupplierView(CreateView):
+    model = Suppliers
+    form_class = SupplierForm
+    template_name = 'crudbasic/createsupplier.html'
 
-def CreateProject(request):
-    form = ProjectForm()
-    if request.method == 'POST':
-        form = ProjectForm(request.POST)
-        if 'save' in request.POST:
-            if form.is_valid():
-                form.save(commit=True)
-                return redirect('crudbasic:projects')
-            else:
-                print("ERROR! Form is invalid")
+    def get_success_url(self):
+        if 'save-addnew' in self.request.POST:
+            return reverse('crudbasic:createsupplier')
+        if 'save' in self.request.POST:
+            return reverse('crudbasic:suppliers')
 
-        if 'save-addnew' in request.POST:
-            if form.is_valid():
-                form.save(commit=True)
-                form = ProjectForm()
-                return render(request,'crudbasic/createproject.html',{'form':form})
-            else:
-                print("ERROR! Form is invalid")
-    translation.activate('en')
-    return render(request,"crudbasic/createproject.html",{'form':form})
+class CreateProjectView(CreateView):
+    model = Projects
+    form_class = ProjectForm
+    template_name = 'crudbasic/createproject.html'
 
-def CreateItem(request):
-    form = ItemForm()
-    if request.method == 'POST':
-        form = ItemForm(request.POST)
-        if 'save' in request.POST:
-            if form.is_valid():
-                form.save(commit=True)
-                return redirect('crudbasic:items')
-            else:
-                print("ERROR! Form is invalid")
+    def get_success_url(self):
+        if 'save-addnew' in self.request.POST:
+            return reverse('crudbasic:createproject')
+        if 'save' in self.request.POST:
+            return reverse('crudbasic:projects')
 
-        if 'save-addnew' in request.POST:
-            if form.is_valid():
-                form.save(commit=True)
-                form = ItemForm()
-                return render(request,'crudbasic/createitem.html',{'form':form})
-            else:
-                print("ERROR! Form is invalid")
-    translation.activate('en')
-    return render(request,"crudbasic/createitem.html",{'form':form})
+class CreateItemView(CreateView):
+    model = Items
+    form_class = ItemForm
+    template_name = 'crudbasic/createitem.html'
+
+    def get_success_url(self):
+        if 'save-addnew' in self.request.POST:
+            return reverse('crudbasic:createitem')
+        if 'save' in self.request.POST:
+            return reverse('crudbasic:items')
