@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 {% for item in page_data %}
 <tr>
-  <td>{{ item.item_code }}</td>
+  <td>
+    <a href="{{item.id}}/">{{ item.item_code }}</a>
+  </td>
   <td>{{ item.item_description }}</td>
   <td>{{ item.item_uom }}</td>
   <td>{{ item.item_type }}</td>

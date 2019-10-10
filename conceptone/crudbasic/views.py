@@ -3,7 +3,7 @@ from django.urls import reverse
 from crudbasic.models import Customers, Suppliers, Projects, Items
 from crudbasic.forms import CustomerForm, SupplierForm, ProjectForm, ItemForm, BasicSearch
 from django.utils import translation
-from django.views.generic import View, TemplateView, ListView, DetailView, CreateView
+from django.views.generic import View, TemplateView, ListView, DetailView, CreateView, UpdateView
 from crudbasic.basic_functions import get_col_heads
 
 # Create your views here.
@@ -213,6 +213,14 @@ class CreateCustomerView(CreateView):
         else:
             return reverse('crudbasic:customers')
 
+class UpdateCustomerView(UpdateView):
+    model = Customers
+    form_class = CustomerForm
+    template_name = 'crudbasic/createcustomer.html'
+
+    def get_success_url(self):
+        return reverse('crudbasic:createcustomer')
+        
 class CreateSupplierView(CreateView):
     model = Suppliers
     form_class = SupplierForm

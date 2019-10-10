@@ -2,7 +2,9 @@
     {% for customer in page_data %}
     <tr scope="row">
       <td>{{ customer.customer_code }}</td>
-      <td>{{ customer.customer_name }}</td>
+      <td>
+        <a href="{{customer.id}}/">{{ customer.customer_name }}</a>
+      </td>
       <td>{{ customer.customer_address }}</td>
       <td>{{ customer.customer_city }}</td>
       <td>{{ customer.customer_phone }}</td>

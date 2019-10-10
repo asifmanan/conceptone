@@ -13,4 +13,5 @@ urlpatterns=[
     path('createsupplier/',views.CreateSupplierView.as_view(),name='createsupplier'),
     path('createitem/',views.CreateItemView.as_view(),name='createitem'),
     path('createproject/',views.CreateProjectView.as_view(),name='createproject'),
+    path('customers/<int:pk>/',views.UpdateCustomerView.as_view(),name='updatecustomer'),
 ]
