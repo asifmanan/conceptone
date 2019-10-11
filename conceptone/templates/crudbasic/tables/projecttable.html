@@ -2,7 +2,9 @@
 {% for project in page_data %}
 <tr>
   <td>{{ project.project_code }}</td>
-  <td>{{ project.project_name }}</td>
+  <td>
+    <a href="update/{{project.id}}">{{ project.project_name }}</a>
+  </td>
   <td>{{ project.project_customer }}</td>
   <td>{{ project.project_city }}</td>
   <td>{{ project.project_status }}</td>

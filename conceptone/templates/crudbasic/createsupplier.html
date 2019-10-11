@@ -1,53 +1,61 @@
 <!DOCTYPE html>
 {% extends "crudbasic/base.html" %}
-  {% block body_block %}
-    <div class="container pb-1 border bg-light rounded">
-      <h3>Provide Supplier Details</h3>
-        <form method="post">
-          {% csrf_token %}
-              <div class="row mb-2">
-                <div class="col-md-2">
-                  {{ form.supplier_code.label}}
-                  {{ form.supplier_code }}
-                </div>
-                <div class="col-md-6">
-                  {{ form.supplier_name.label }}
-                  {{ form.supplier_name }}
-                </div>
-                <div class="col-md-4">
-                  {{ form.supplier_ntn_number.label }}
-                  {{ form.supplier_ntn_number }}
-                </div>
-              </div>
-              <div class="row mb-4">
-                <div class="col-md-8">
-                  {{ form.supplier_address.label }}
-                  {{ form.supplier_address }}
-                </div>
-                <div class="col-md-4">
-                  {{ form.supplier_city.label }}
-                  {{ form.supplier_city }}
-                </div>
-              </div>
-              <div class="row mb-4">
-                <div class="col-md-4">
-                  {{ form.supplier_phone.label}}
-                  {{ form.supplier_phone }}
-                </div>
-                <div class="col-md-4">
-                  {{ form.supplier_fax.label }}
-                  {{ form.supplier_fax }}
-                </div>
-                <div class="col-md-4">
-                  {{ form.supplier_email.label }}
-                  {{ form.supplier_email }}
-                </div>
-              </div>
-              <div class="row mb-4">
-                  <a class="btn btn-secondary ml-3" href="{% url 'crudbasic:suppliers' %}">Cancel</a>
-                  <button type="submit" class="btn btn-primary ml-2" name="save">Save</button>
-                  <button type="submit" class="btn btn-success ml-2" name="save-addnew">Save & Add Another</button>
-              </div>
-        </form>
+{% block body_block %}
+<div class="container pb-1 border bg-light rounded">
+  <h3>
+    {% if not form.instance.pk %}
+      Create New Supplier
+    {% else %}
+      Update Supplier details
+    {% endif %}
+  </h3>
+  <form method="post">{% csrf_token %}
+    <div class="row mb-2">
+      <div class="col-md-2">
+        {{ form.supplier_code.label}}
+        {{ form.supplier_code }}
+      </div>
+      <div class="col-md-6">
+        {{ form.supplier_name.label }}
+        {{ form.supplier_name }}
+      </div>
+      <div class="col-md-4">
+        {{ form.supplier_ntn_number.label }}
+        {{ form.supplier_ntn_number }}
+      </div>
     </div>
-  {% endblock %}
+    <div class="row mb-4">
+      <div class="col-md-8">
+        {{ form.supplier_address.label }}
+        {{ form.supplier_address }}
+      </div>
+      <div class="col-md-4">
+        {{ form.supplier_city.label }}
+        {{ form.supplier_city }}
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col-md-4">
+        {{ form.supplier_phone.label}}
+        {{ form.supplier_phone }}
+      </div>
+      <div class="col-md-4">
+        {{ form.supplier_fax.label }}
+        {{ form.supplier_fax }}
+      </div>
+      <div class="col-md-4">
+        {{ form.supplier_email.label }}
+        {{ form.supplier_email }}
+      </div>
+    </div>
+    <div class="row mb-4">
+      {% url 'crudbasic:suppliers' as back_url %}
+      {% if not form.instance.pk %}
+        {% include "crudbasic/buttonpanel/createbuttonpanel.html" %}
+      {% else %}
+        {% include "crudbasic/buttonpanel/updatebuttonpanel.html" %}
+      {% endif %}
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% extends 'crudbasic/base.html' %}
+{% block body_block %}
+<div class="container">
+  <form method="post">{% csrf_token %}
+      <h3>Are you Sure?</h3>
+      <p>
+        Are you sure you want to delete the customers
+        <b>"{{ object }}"</b>?
+      </p>
+      <!-- <p>
+        Following item will be deleted:
+      </p>
+      <p>{{object}}</p> -->
+      <input class="btn btn-danger" type="submit" value="Yes, I'm Sure">
+      <a class="btn btn-secondary" href="../update/{{object.pk}}">No, Take me back</a>
+  </form>
+</div>
+{% endblock %}

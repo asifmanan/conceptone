@@ -2,7 +2,9 @@
 {% for supplier in page_data %}
 <tr>
   <td>{{ supplier.supplier_code }}</td>
-  <td>{{ supplier.supplier_name }}</td>
+  <td>
+    <a href="update/{{supplier.id}}">{{ supplier.supplier_name }}</a>
+  </td>
   <td>{{ supplier.supplier_address }}</td>
   <td>{{ supplier.supplier_city }}</td>
   <td>{{ supplier.supplier_phone }}</td>

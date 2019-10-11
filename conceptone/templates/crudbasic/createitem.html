@@ -2,7 +2,13 @@
 {% extends "crudbasic/base.html" %}
   {% block body_block %}
   <div class="container pb-1 border bg-light rounded">
-    <h3>Provide Item Details</h3>
+    <h3>
+      {% if not form.instance.pk %}
+        Create New Item
+      {% else %}
+        Update Item Details
+      {% endif %}
+    </h3>
     <form method="post">{% csrf_token %}
       <div class="row mb-2">
         <div class="col-md-4">
@@ -27,9 +33,12 @@
         </div>
       </div>
       <div class="row mb-4">
-        <a class="btn btn-secondary ml-3" href="{% url 'crudbasic:items' %}">Cancel</a>
-        <button type="submit" class="btn btn-primary ml-2" name="save">Save</button>
-        <button type="submit" class="btn btn-success ml-2" name="save-addnew">Save & Add Another</button>
+        {% url 'crudbasic:items' as back_url %}
+        {% if not form.instance.pk %}
+          {% include "crudbasic/buttonpanel/createbuttonpanel.html" %}
+        {% else %}
+          {% include "crudbasic/buttonpanel/updatebuttonpanel.html" %}
+        {% endif %}
       </div>
     </form>
   </div>

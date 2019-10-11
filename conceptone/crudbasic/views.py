@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from crudbasic.models import Customers, Suppliers, Projects, Items
 from crudbasic.forms import CustomerForm, SupplierForm, ProjectForm, ItemForm, BasicSearch
 from django.utils import translation
-from django.views.generic import View, TemplateView, ListView, DetailView, CreateView, UpdateView
+from django.views.generic import View, TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from crudbasic.basic_functions import get_col_heads
 
 # Create your views here.
@@ -199,7 +199,9 @@ class ItemView(TemplateView):
                                                     'create_link':create_link
                                                     })
 
-
+#######################
+####   CreateViews  ###
+#######################
 class CreateCustomerView(CreateView):
     # fields = '__all__'
     # if defining form_class then fields cannot be used
@@ -213,14 +215,6 @@ class CreateCustomerView(CreateView):
         else:
             return reverse('crudbasic:customers')
 
-class UpdateCustomerView(UpdateView):
-    model = Customers
-    form_class = CustomerForm
-    template_name = 'crudbasic/createcustomer.html'
-
-    def get_success_url(self):
-        return reverse('crudbasic:createcustomer')
-        
 class CreateSupplierView(CreateView):
     model = Suppliers
     form_class = SupplierForm
@@ -231,6 +225,17 @@ class CreateSupplierView(CreateView):
             return reverse('crudbasic:createsupplier')
         if 'save' in self.request.POST:
             return reverse('crudbasic:suppliers')
+
+class CreateItemView(CreateView):
+    model = Items
+    form_class = ItemForm
+    template_name = 'crudbasic/createitem.html'
+
+    def get_success_url(self):
+        if 'save-addnew' in self.request.POST:
+            return reverse('crudbasic:createitem')
+        if 'save' in self.request.POST:
+            return reverse('crudbasic:items')
 
 class CreateProjectView(CreateView):
     model = Projects
@@ -243,13 +248,47 @@ class CreateProjectView(CreateView):
         if 'save' in self.request.POST:
             return reverse('crudbasic:projects')
 
-class CreateItemView(CreateView):
+#######################
+####   UpdateViews  ###
+#######################
+
+class UpdateCustomerView(UpdateView):
+    model = Customers
+    form_class = CustomerForm
+    template_name = 'crudbasic/createcustomer.html'
+
+    def get_success_url(self):
+        return reverse('crudbasic:customers')
+
+class UpdateSupplierView(UpdateView):
+    model = Suppliers
+    form_class = SupplierForm
+    template_name = 'crudbasic/createsupplier.html'
+
+    def get_success_url(self):
+        return reverse('crudbasic:suppliers')
+
+class UpdateItemView(UpdateView):
     model = Items
     form_class = ItemForm
     template_name = 'crudbasic/createitem.html'
 
     def get_success_url(self):
-        if 'save-addnew' in self.request.POST:
-            return reverse('crudbasic:createitem')
-        if 'save' in self.request.POST:
-            return reverse('crudbasic:items')
+        return reverse('crudbasic:items')
+
+class UpdateProjectView(UpdateView):
+    model = Projects
+    form_class = ProjectForm
+    template_name = 'crudbasic/createproject.html'
+
+    def get_success_url(self):
+        return reverse('crudbasic:projects')
+
+#######################
+####   DeleteViews  ###
+#######################
+
+class DeleteCustomerView(DeleteView):
+    model = Customers
+    success_url = reverse_lazy('crudbasic:customers')
+    template_name = 'crudbasic/dialog/customers_confirm_delete.html'

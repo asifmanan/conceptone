@@ -4,70 +4,58 @@
     <div class="container pb-1 border bg-light rounded">
       <h3>
         {% if not form.instance.pk %}
-          Provide Customer Details
+          Create New Customer
         {% else %}
           Update Customer Details
         {% endif %}
       </h3>
-        <form method="post">
-          {% csrf_token %}
-              <div class="row mb-2">
-                <div class="col-md-2">
-                  {{ form.customer_code.label }}
-                  {{ form.customer_code }}
-                </div>
-                <div class="col-md-6">
-                  {{ form.customer_name.label }}
-                  {{ form.customer_name }}
-                </div>
-                <div class="col-md-4">
-                  {{ form.customer_ntn_number.label }}
-                  {{ form.customer_ntn_number }}
-                </div>
-              </div>
-              <div class="row mb-4">
-                <div class="col-md-8">
-                  {{ form.customer_address.label }}
-                  {{ form.customer_address }}
-                </div>
-                <div class="col-md-4">
-                  {{ form.customer_city.label }}
-                  {{ form.customer_city }}
-                </div>
-              </div>
-              <div class="row mb-4">
-                <div class="col-md-4">
-                  {{ form.customer_phone.label}}
-                  {{ form.customer_phone }}
-                </div>
-                <div class="col-md-4">
-                  {{ form.customer_fax.label }}
-                  {{ form.customer_fax }}
-                </div>
-                <div class="col-md-4">
-                  {{ form.customer_email.label }}
-                  {{ form.customer_email }}
-                </div>
-              </div>
-              <div class="row mb-4">
-                {% if not form.instance.pk %}
-                  <a class="btn btn-secondary ml-3" href="{% url 'crudbasic:customers' %}">Cancel</a>
-                  <button type="submit" class="btn btn-primary ml-2" name="save">Save</button>
-                  <button type="submit" class="btn btn-success ml-2" name="save-addnew">Save & Add Another</button>
-                {% else %}
-                  <!-- <div class="col-1"> -->
-                    <a class="btn btn-secondary ml-3" href="{% url 'crudbasic:customers' %}">Cancel</a>
-                  <!-- </div>
-                  <div class="col-1"> -->
-                    <button type="submit" class="btn btn-primary ml-2" name="save">Save</button>
-                  <!-- </div> -->
-                  <!-- <div class="col">
-                    <div class="float-right"> -->
-                    <button type="submit" class="btn btn-danger mr-3 ml-auto" name="delete">Delete</button>
-                    <!-- </div> -->
-                  </div>
-                {% endif %}
-              </div>
+        <form method="post">{% csrf_token %}
+          <div class="row mb-2">
+            <div class="col-md-2">
+              {{ form.customer_code.label }}
+              {{ form.customer_code }}
+            </div>
+            <div class="col-md-6">
+              {{ form.customer_name.label }}
+              {{ form.customer_name }}
+            </div>
+            <div class="col-md-4">
+              {{ form.customer_ntn_number.label }}
+              {{ form.customer_ntn_number }}
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-8">
+              {{ form.customer_address.label }}
+              {{ form.customer_address }}
+            </div>
+            <div class="col-md-4">
+              {{ form.customer_city.label }}
+              {{ form.customer_city }}
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-4">
+              {{ form.customer_phone.label}}
+              {{ form.customer_phone }}
+            </div>
+            <div class="col-md-4">
+              {{ form.customer_fax.label }}
+              {{ form.customer_fax }}
+            </div>
+            <div class="col-md-4">
+              {{ form.customer_email.label }}
+              {{ form.customer_email }}
+            </div>
+          </div>
+          <div class="row mb-4">
+            {% url 'crudbasic:customers' as back_url %}
+            {% if not form.instance.pk %}
+              {% include "crudbasic/buttonpanel/createbuttonpanel.html" %}
+            {% else %}
+              {% include "crudbasic/buttonpanel/updatebuttonpanel.html" %}
+            {% endif %}
+          </div>
         </form>
     </div>
   {% endblock %}
