@@ -17,6 +17,9 @@ class Customers(models.Model):
     def __str__(self):
         return self.customer_name
 
+    def this_class_name(self):
+        return 'Customer'
+
     # def get_absolute_url(self):
     #     if 'save' in request.POST:
     #         print('Save was Clicked')
@@ -34,6 +37,8 @@ class Suppliers(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
+    def this_class_name(self):
+        return 'Supplier'
     # def get_col_heads(self):
     #     all_fields = self._meta.fields
     #     field_list = []
@@ -44,7 +49,7 @@ class Suppliers(models.Model):
     #     return field_list
 
     def __str__(self):
-        return self.partner_name
+        return self.supplier_name
 
 class Projects(models.Model):
     status_flags = [
@@ -63,6 +68,9 @@ class Projects(models.Model):
     def __str__(self):
         return self.project_name
 
+    def this_class_name(self):
+        return 'Project'
+
 class Items(models.Model):
     item_type_choices = [
         ('Goods', 'Goods'),
@@ -77,3 +85,6 @@ class Items(models.Model):
 
     def __str__(self):
         return self.item_description
+
+    def this_class_name(self):
+        return 'Item'

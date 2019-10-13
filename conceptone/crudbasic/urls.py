@@ -21,4 +21,7 @@ urlpatterns=[
     path('projects/update/<int:pk>/',views.UpdateProjectView.as_view(),name='updateproject'),
 
     path('customers/delete/<int:pk>',views.DeleteCustomerView.as_view(),name='customerdelete'),
+    path('suppliers/delete/<int:pk>',views.DeleteSupplierView.as_view(),name='supplierdelete'),
+    path('items/delete/<int:pk>',views.DeleteItemView.as_view(),name='itemdelete'),
+    path('projects/delete/<int:pk>',views.DeleteProjectView.as_view(),name='projectdelete'),
 ]

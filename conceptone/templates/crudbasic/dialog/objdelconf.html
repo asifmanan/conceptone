@@ -5,7 +5,7 @@
   <form method="post">{% csrf_token %}
       <h3>Are you Sure?</h3>
       <p>
-        Are you sure you want to delete the customers
+        Are you sure you want to delete the {{object.this_class_name}}
         <b>"{{ object }}"</b>?
       </p>
       <!-- <p>

@@ -49,9 +49,9 @@ class CustomerView(TemplateView):
                 table_head.append(str(val[1]).split(" ")[1])
             page_data = search_list
         else:
-            search_form = BasicSearch(caller = Customers)
+            search_form = BasicSearch(request.POST, caller = Customers)
             main_title = 'Customers'
-            create_link = 'Create New Customer'
+            create_link = {'name':'Create New Customer','value':'crudbasic:createcustomer'}
             table_head = None
             page_data = None
         return render(request, self.template_name, {'page_data': page_data,
@@ -291,4 +291,19 @@ class UpdateProjectView(UpdateView):
 class DeleteCustomerView(DeleteView):
     model = Customers
     success_url = reverse_lazy('crudbasic:customers')
-    template_name = 'crudbasic/dialog/customers_confirm_delete.html'
+    template_name = 'crudbasic/dialog/objdelconf.html'
+
+class DeleteSupplierView(DeleteView):
+    model = Suppliers
+    success_url = reverse_lazy('crudbasic:suppliers')
+    template_name = 'crudbasic/dialog/objdelconf.html'
+
+class DeleteItemView(DeleteView):
+    model = Items
+    success_url = reverse_lazy('crudbasic:items')
+    template_name = 'crudbasic/dialog/objdelconf.html'
+
+class DeleteProjectView(DeleteView):
+    model = Projects
+    success_url = reverse_lazy('crudbasic:projects')
+    template_name = 'crudbasic/dialog/objdelconf.html'
