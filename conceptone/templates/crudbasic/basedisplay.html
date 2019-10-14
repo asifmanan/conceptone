@@ -5,7 +5,7 @@
 <a class="" href="{% url create_link.value %}">{{ create_link.name }}</a>
 <hr class="">
 <form method="POST">{% csrf_token %}
-  <div class="row mb-2">
+  <div class="row mb-0">
     <div class="col-xl-2 col-lg-3 col-md-4 mb-2">
       {{ search_form.search_by}}
     </div>
@@ -19,7 +19,7 @@
 </form>
 <div class="row">
   <div class="col-md-12">
-    <div class="mt-2 pb-3 pt-1">
+    <div class="mt-0 pb-3 pt-1">
     {% if page_data %}
     <table class="table table-bordered table-striped table-sm table-properties">
       <thead class="">
