@@ -59,7 +59,7 @@ class Projects(models.Model):
     ]
     project_code = models.CharField(max_length=16, unique=True)
     project_name = models.CharField(max_length=128, unique=True)
-    project_customer = models.ForeignKey(Customers, on_delete=models.CASCADE)
+    project_customer = models.ForeignKey(Customers, on_delete=models.PROTECT)
     project_city = models.CharField(max_length=128)
     project_status = models.CharField(max_length=16,choices=status_flags)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -88,3 +88,8 @@ class Items(models.Model):
 
     def this_class_name(self):
         return 'Item'
+
+# class OrderItem(models.Model):
+#     po_line_number = models.CharField(max_length=16)
+#     order_item = models.ForeignKey(Items, on_delete=models.PROTECT)
+#     order_quantity =
