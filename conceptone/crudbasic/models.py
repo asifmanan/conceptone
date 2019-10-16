@@ -39,14 +39,6 @@ class Suppliers(models.Model):
 
     def this_class_name(self):
         return 'Supplier'
-    # def get_col_heads(self):
-    #     all_fields = self._meta.fields
-    #     field_list = []
-    #     for fields in all_fields:
-    #         column_head = (str(fields)).split(".")
-    #         print(column_head[-1])
-    #         # field_list.append(column_head[-1])
-    #     return field_list
 
     def __str__(self):
         return self.supplier_name
@@ -92,8 +84,23 @@ class Items(models.Model):
 class OrderItem(models.Model):
     po_line_number = models.CharField(max_length=16)
     order_item = models.ForeignKey(Items, on_delete=models.PROTECT)
-    order_quantity = models.DecimalField(max_digit=14, decimal_places=2)
-    purchase_price = models.DecimalField(max_digit=14, decimal_places=2)
+    po_number = models.ForeignKey(PurchaseOrders, on_delete=models.CASCADE)
+    order_quantity = models.DecimalField(max_digits=14, decimal_places=2)
+    purchase_price = models.DecimalField(max_digits=14, decimal_places=2)
+    variation_number = models.IntegerField()
+    variation_quantity = models.DecimalField(max_digits=14, decimal_places=2)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.po_line_number
+
+class PurchaseOrders(models.Model):
+    po_number = models.CharField(max_length=16)
+    po_date = models.DateField()
+    po_supplier = models.ForeignKey(Suppliers, on_delete=models.PROTECT)
+    po_amount = models.DecimalField(max_digits=14, decimal_places=2)
+    # po_tax
+    # po_payment_status
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
