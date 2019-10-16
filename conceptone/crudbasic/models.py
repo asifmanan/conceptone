@@ -89,7 +89,11 @@ class Items(models.Model):
     def this_class_name(self):
         return 'Item'
 
-# class OrderItem(models.Model):
-#     po_line_number = models.CharField(max_length=16)
-#     order_item = models.ForeignKey(Items, on_delete=models.PROTECT)
-#     order_quantity =
+class OrderItem(models.Model):
+    po_line_number = models.CharField(max_length=16)
+    order_item = models.ForeignKey(Items, on_delete=models.PROTECT)
+    order_quantity = models.DecimalField(max_digit=14, decimal_places=2)
+    purchase_price = models.DecimalField(max_digit=14, decimal_places=2)
+
+    def __str__(self):
+        return self.po_line_number
