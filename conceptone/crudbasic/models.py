@@ -104,3 +104,9 @@ class PurchaseOrders(models.Model):
     # po_payment_status
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
+
+class TaxTable(models.Model):
+    tax_name = models.CharField(max_length=64)
+    tax_value = models.DecimalField(max_digits=5, decimal_places=2)
+
+# class AccountsTable(models.Model):
