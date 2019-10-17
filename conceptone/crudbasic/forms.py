@@ -1,6 +1,21 @@
 from django import forms
-from crudbasic.models import Customers, Suppliers, Projects, Items
+from datetime import datetime
+from crudbasic.models import (Customers,
+                                Suppliers,
+                                Projects,
+                                Items,
+                                OrderItem,
+                                PurchaseOrder,)
 from crudbasic.basic_functions import get_col_heads
+
+class PurchaseOrderForm(forms.ModelForm):
+    class Meta:
+        model = PurchaseOrder
+        fields = ('po_tax', 'po_date',)
+        widgets = {
+                'po_date':forms.DateInput(attrs={'class':'form-control'}),
+                'po_tax':forms.Select(attrs={'class':'form-control'}),
+                }
 
 class CustomerForm(forms.ModelForm):
     class Meta:
@@ -55,6 +70,7 @@ class ItemForm(forms.ModelForm):
                 'item_uom':forms.TextInput(attrs={'class':'form-control'}),
                 'item_type':forms.Select(attrs={'class':'form-control'}),
         }
+
 
 class BasicSearch(forms.Form):
     field_dct = {}
