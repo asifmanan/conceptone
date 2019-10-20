@@ -10,12 +10,16 @@
         </div>
         <div class="col-md-4">
           {{ po_form.po_date.label }}
-          {{ form.po_date }}
+          {{ po_form.po_date }}
         </div>
       </div>
       <div class="row mb-4">
-        <div class="col-md-6">
-          {{ form.tax_value.label }}
+        <div class="col-md-8">
+          {# {{ form.tax_value.label }}
+          {{ form.tax_value }} #}
+        </div>
+        <div class="col-md-4">
+          {{ po_form.tax_value.label }}
           {{ form.tax_value }}
         </div>
       </div>
