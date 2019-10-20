@@ -81,16 +81,22 @@ class Items(models.Model):
     def this_class_name(self):
         return 'Item'
 
-class TaxTable(models.Model):
+class TaxRate(models.Model):
+    tax_code = models.CharField(max_length=16)
     tax_name = models.CharField(max_length=64)
     tax_value = models.DecimalField(max_digits=5, decimal_places=2)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.tax_name
 
 class PurchaseOrder(models.Model):
     po_number = models.CharField(max_length=16)
     po_date = models.DateField()
     po_supplier = models.ForeignKey(Suppliers, on_delete=models.PROTECT)
     po_amount = models.DecimalField(max_digits=14, decimal_places=2)
-    po_tax = models.ForeignKey(TaxTable, on_delete=models.PROTECT)
+    po_tax = models.ForeignKey(TaxRate, on_delete=models.PROTECT)
     # po_payment_status
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)

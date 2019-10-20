@@ -5,8 +5,21 @@ from crudbasic.models import (Customers,
                                 Projects,
                                 Items,
                                 OrderItem,
-                                PurchaseOrder,)
+                                PurchaseOrder,
+                                TaxRate,
+                                )
 from crudbasic.basic_functions import get_col_heads
+
+class TaxRateForm(forms.ModelForm):
+    tax_value = forms.DecimalField(max_digits=5,decimal_places=2,initial=0.00,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    class Meta:
+        model = TaxRate
+        fields = '__all__'
+        widgets = {
+                'tax_name':forms.TextInput(attrs={'class':'form-control'}),
+                'tax_code':forms.TextInput(attrs={'class':'form-control'}),
+                # 'tax_value':forms.NumberInput(attrs={'class':'form-control'}),
+                }
 
 class PurchaseOrderForm(forms.ModelForm):
     class Meta:

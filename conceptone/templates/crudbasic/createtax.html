@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% extends "crudbasic/base.html" %}
+{% block body_block %}
+  <div class="container pb-1 border bg-light rounded">
+    <h3>Create New Tax</h3>
+    <form method="post">{% csrf_token %}
+      <div class="row mb-2">
+        <div class="col-md-12">
+          {{ form.tax_name.label }}
+          {{ form.tax_name }}
+        </div>
+      </div>
+      <div class="row mb-4">
+        <div class="col-md-6">
+          {{ form.tax_code.label }}
+          {{ form.tax_code }}
+        </div>
+        <div class="col-md-6">
+          {{ form.tax_value.label }}
+          {{ form.tax_value }}
+        </div>
+      </div>
+      <div class="row mb-4">
+        {% url 'crudbasic:taxrates' as back_url %}
+        {% if not form.instance.pk %}
+          {% include "crudbasic/buttonpanel/createbuttonpanel.html" %}
+        {% else %}
+          {% include "crudbasic/buttonpanel/updatebuttonpanel.html" %}
+        {% endif %}
+      </div>
+    </form>
+  </div>
+{% endblock body_block %}

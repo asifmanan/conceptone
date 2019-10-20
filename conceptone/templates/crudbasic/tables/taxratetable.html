@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+{% for tax in page_data %}
+<tr>
+  <td>{{ tax.tax_code }}</td>
+  <td>
+    <a href="update/{{tax.id}}">{{ tax.tax_name }}</a>
+  </td>
+  <td>{{ tax.tax_value }}</td>
+</tr>
+{% endfor %}

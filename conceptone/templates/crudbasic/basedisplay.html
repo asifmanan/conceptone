@@ -4,6 +4,7 @@
 <h3 class="">{{ main_title }}</h3>
 <a class="" href="{% url create_link.value %}">{{ create_link.name }}</a>
 <hr class="">
+{% if search_form %}
 <form method="POST">{% csrf_token %}
   <div class="row mb-0">
     <div class="col-xl-2 col-lg-3 col-md-4 mb-2">
@@ -17,6 +18,7 @@
     </div>
   </div>
 </form>
+{% endif %}
 <div class="row">
   <div class="col-md-12">
     <div class="mt-0 pb-3 pt-1">
@@ -38,6 +40,8 @@
           {% include 'crudbasic/tables/itemtable.html' %}
         {% elif main_title == 'Projects' %}
           {% include 'crudbasic/tables/projecttable.html' %}
+        {% elif main_title == 'Tax Rates' %}
+          {% include 'crudbasic/tables/taxratetable.html' %}
         {% endif %}
       </tbody>
     </table>
