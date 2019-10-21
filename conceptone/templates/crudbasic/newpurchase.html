@@ -5,31 +5,31 @@
     <form method="post">{% csrf_token %}
       <div class="row mb-2">
         <div class="col-md-8">
-          {{ po_form.po_supplier.label }}
-          {{ po_form.po_supplier }}
+          {{ form.po_supplier.label }}
+          {{ form.po_supplier }}
         </div>
         <div class="col-md-4">
-          {{ po_form.po_date.label }}
-          {{ po_form.po_date }}
+          {{ form.po_date.label }}
+          {{ form.po_date }}
         </div>
       </div>
       <div class="row mb-4">
-        <div class="col-md-8">
-          {# {{ form.tax_value.label }}
-          {{ form.tax_value }} #}
+        <div class="col-md-6">
+          {{ form.po_number.label }}
+          {{ form.po_number }}
         </div>
-        <div class="col-md-4">
-          {{ po_form.tax_value.label }}
-          {{ form.tax_value }}
+        <div class="col-md-6">
+          {{ form.po_tax.label }}
+          {{ form.po_tax }}
         </div>
       </div>
       <div class="row mb-4">
-        {# {% url 'crudbasic:taxrates' as back_url %}
+        {% url 'crudbasic:taxrates' as back_url %}
         {% if not form.instance.pk %}
-          {% include "crudbasic/buttonpanel/createbuttonpanel.html" %}
+          {% include "crudbasic/buttonpanel/pocontinuepanel.html" %}
         {% else %}
           {% include "crudbasic/buttonpanel/updatebuttonpanel.html" %}
-        {% endif %} #}
+        {% endif %}
       </div>
     </form>
   </div>

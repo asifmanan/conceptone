@@ -16,6 +16,7 @@ urlpatterns=[
     path('createitem/',views.CreateItemView.as_view(),name='createitem'),
     path('createproject/',views.CreateProjectView.as_view(),name='createproject'),
     path('createtax/',views.CreateTaxRateView.as_view(),name='createtax'),
+    path('newpurchaseorder/',views.CreatePurchaseOrder.as_view(),name='newpurchaseorder'),
 
     path('customers/update/<int:pk>/',views.UpdateCustomerView.as_view(),name='updatecustomer'),
     path('suppliers/update/<int:pk>/',views.UpdateSupplierView.as_view(),name='updatesupplier'),
