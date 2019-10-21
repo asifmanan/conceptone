@@ -248,13 +248,10 @@ class CreatePurchaseOrder(CreateView):
     def get_success_url(self):
         return reverse('crudbasic:index')
 
-<<<<<<< HEAD
     def form_valid(self, form):
         self.kwargs['po_amount']
         return super(CreatePurchaseView, self).form_valid(form)
 
-=======
->>>>>>> 386c21e90e27d603b0a00301f74a000f2747272d
 class CreateTaxRateView(CreateView):
     model = TaxRate
     form_class = TaxRateForm
