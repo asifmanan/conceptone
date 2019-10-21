@@ -24,9 +24,11 @@ class TaxRateForm(forms.ModelForm):
 class PurchaseOrderForm(forms.ModelForm):
     class Meta:
         model = PurchaseOrder
-        fields = ('po_tax', 'po_date',)
+        fields = ('po_number','po_supplier','po_tax', 'po_date',)
         widgets = {
-                'po_date':forms.DateInput(attrs={'class':'form-control'}),
+                'po_supplier':forms.Select(attrs={'class':'form-control'}),
+                'po_date':forms.DateInput(attrs={'class':'form-control', 'type':'date'}),
+                'po_number':forms.TextInput(attrs={'class':'form-control'}),
                 'po_tax':forms.Select(attrs={'class':'form-control'}),
                 }
 
@@ -70,7 +72,6 @@ class ProjectForm(forms.ModelForm):
                 'project_name':forms.TextInput(attrs={'class':'form-control'}),
                 'project_city':forms.TextInput(attrs={'class':'form-control'}),
                 'project_status':forms.Select(attrs={'class':'form-control'}),
-
         }
 
 class ItemForm(forms.ModelForm):
@@ -92,8 +93,6 @@ class BasicSearch(forms.Form):
 
     def __init__(self,*arg,**kwargs):
         caller = kwargs.pop('caller')
-        if caller == Customers:
-            print(caller)
         super(BasicSearch, self).__init__(*arg,**kwargs)
         field_dct = get_col_heads(caller)
         self.fields['search_by'].choices = field_dct

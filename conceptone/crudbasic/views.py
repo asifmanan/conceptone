@@ -6,6 +6,8 @@ from crudbasic.models import (
                                 Projects,
                                 Items,
                                 TaxRate,
+                                PurchaseOrder,
+                                OrderItem,
                             )
 from crudbasic.forms import (
                                 CustomerForm,
@@ -14,6 +16,8 @@ from crudbasic.forms import (
                                 ItemForm,
                                 TaxRateForm,
                                 BasicSearch,
+                                PurchaseOrderForm,
+
                             )
 from django.utils import translation
 from django.views.generic import View, TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -235,6 +239,14 @@ class ItemView(TemplateView):
 #######################
 ####   CreateViews  ###
 #######################
+
+class CreatePurchaseOrder(CreateView):
+    model = PurchaseOrder
+    form_class = PurchaseOrderForm
+    template_name = 'crudbasic/newpurchase.html'
+
+    def get_success_url(self):
+        return reverse('crudbasic:index')
 
 class CreateTaxRateView(CreateView):
     model = TaxRate
