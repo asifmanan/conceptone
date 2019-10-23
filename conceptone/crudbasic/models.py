@@ -97,6 +97,7 @@ class PurchaseOrder(models.Model):
     po_supplier = models.ForeignKey(Suppliers, on_delete=models.PROTECT)
     po_amount = models.DecimalField(max_digits=14, decimal_places=2, default=0.00)
     po_tax = models.ForeignKey(TaxRate, on_delete=models.PROTECT)
+    po_draft = models.BooleanField(default=True)
     # po_payment_status
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)

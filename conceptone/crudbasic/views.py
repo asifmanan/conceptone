@@ -17,6 +17,7 @@ from crudbasic.forms import (
                                 TaxRateForm,
                                 BasicSearch,
                                 PurchaseOrderForm,
+                                OrderItemForm,
 
                             )
 from django.utils import translation
@@ -240,6 +241,25 @@ class ItemView(TemplateView):
 ####   CreateViews  ###
 #######################
 
+class CreateOrderItem(CreateView):
+    model = OrderItem
+    form_class = OrderItemForm
+    template_name = 'crudbasic/neworderitems.html'
+
+def CreateOrder(request,pk):
+    po = get_object_or_404(po,pk=pk)
+    if request.method='POST':
+        form=OrderItemForm(request.POST)
+        if form.is_valid():
+            itemline = form.save(commit=False)
+            itemline.po_number = po
+            itemline.save()
+            return('index')
+        else:
+            form = OrderItemForm()
+        return render(request,'crudbasic/neworderitems.html',{'form':form})
+
+
 class CreatePurchaseOrder(CreateView):
     model = PurchaseOrder
     form_class = PurchaseOrderForm
@@ -249,8 +269,8 @@ class CreatePurchaseOrder(CreateView):
         return reverse('crudbasic:index')
 
     def form_valid(self, form):
-        self.kwargs['po_amount']
-        return super(CreatePurchaseView, self).form_valid(form)
+        self.kwargs['po_amount'] = 0.00
+        return super(CreatePurchaseOrder, self).form_valid(form)
 
 class CreateTaxRateView(CreateView):
     model = TaxRate
