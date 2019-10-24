@@ -37,11 +37,11 @@ class OrderItemForm(forms.ModelForm):
         model = OrderItem
         fields = ('po_line_number','order_item','order_quantity','purchase_price','total_price')
         widgets = {
-                'po_line_number':forms.TextInput(attrs={'class':'form-control'}),
-                'order_item':forms.Select(attrs={'class':'form-control', 'type':'date'}),
-                'order_quantity':forms.TextInput(attrs={'class':'form-control'}),
-                'purchase_price':forms.TextInput(attrs={'class':'form-control'}),
-                'total_price':forms.TextInput(attrs={'class':'form-control'}),
+                'po_line_number':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
+                'order_item':forms.Select(attrs={'class':'form-control form-control-sm', 'type':'date'}),
+                'order_quantity':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
+                'purchase_price':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
+                'total_price':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
                 }
 
 

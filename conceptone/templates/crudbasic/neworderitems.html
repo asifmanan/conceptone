@@ -23,25 +23,25 @@
       <hr>
       <form method="post">{% csrf_token %}
         <div class="row mb-4">
-          <div class="col-md-2">
-            {{ form.po_line_number.label }}
-            {{ form.po_line_number}}
+          <div class="col-md-4">
+            {{ form.form.po_line_number.label }}
+            {{ form.form.po_line_number}}
           </div>
-          <div class="col-md-3">
-            {{ form.order_item.label }}
-            {{ form.order_item}}
+          <div class="col-md-8">
+            {{ form.form.order_item.label }}
+            {{ form.form.order_item}}
           </div>
-          <div class="col-md-2">
-            {{ form.order_quantity.label }}
-            {{ form.order_quantity}}
+          <div class="col-md-4">
+            {{ form.form.order_quantity.label }}
+            {{ form.form.order_quantity}}
           </div>
-          <div class="col-md-2">
-            {{ form.purchase_price.label }}
-            {{ form.purchase_price}}
+          <div class="col-md-4">
+            {{ form.form.purchase_price.label }}
+            {{ form.form.purchase_price}}
           </div>
-          <div class="col-md-2">
-            {{ form.total_price.label }}
-            {{ form.total_price}}
+          <div class="col-md-4">
+            <b>{{ form.form.total_price.label }}</b>
+            {{ form.form.total_price}}
           </div>
         </div>
       </form>

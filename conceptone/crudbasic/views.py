@@ -251,18 +251,17 @@ def CreateOrderItem(request,pk):
     po_obj = get_object_or_404(PurchaseOrder,pk=pk)
     # form = OrderItemForm()
     item_formset=formset_factory(OrderItemForm)
-    form_formset = item_formset()
+    form = item_formset()
     if request.method=='POST':
         # form=OrderItemForm(request.POST)
-        form_formset = item_formset(request.POST)
-        if form_formset.is_valid():
-            for form in item_formset:
-                itemline = form.save(commit=False)
-                itemline.po_number = po_obj
-                itemline.save()
+        form = item_formset(request.POST)
+        if form.is_valid():
+            itemline = form.save(commit=False)
+            itemline.po_number = po_obj
+            itemline.save()
         else:
-            form_formset = item_formset()
-    return render(request,'crudbasic/neworderitems.html',{'form':form_formset,'po_obj':po_obj})
+            form = item_formset()
+    return render(request,'crudbasic/neworderitems.html',{'form':form,'po_obj':po_obj})
 
 class CreatePurchaseOrder(CreateView):
     model = PurchaseOrder
