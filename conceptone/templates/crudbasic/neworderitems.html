@@ -1,0 +1,49 @@
+{% extends "crudbasic/base.html" %}
+{% block body_block %}
+  <div class="container pb-1 border bg-light">
+    <h3>New Purchase (Items)</h3>
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <p>Supplier: <b>{{ po_obj.po_supplier }}</b></p>
+          <p>Address: {{po_obj.po_supplier.supplier_address}}</p>
+          <p>City: {{po_obj.po_supplier.supplier_city}}</p>
+        </div>
+        <div class="col-md-6">
+          <p>Date: <b>{{ po_obj.po_date }}</b></p>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <p>Po Number: <b>{{ po_obj.po_number }}</b></p>
+        </div>
+        <div class="col-md-6">
+          <p>Tax Rate: <b>{{ po_obj.po_tax.tax_value }}%</b></p>
+        </div>
+      </div>
+      <hr>
+      <form method="post">{% csrf_token %}
+        <div class="row mb-4">
+          <div class="col-md-2">
+            {{ form.po_line_number.label }}
+            {{ form.po_line_number}}
+          </div>
+          <div class="col-md-3">
+            {{ form.order_item.label }}
+            {{ form.order_item}}
+          </div>
+          <div class="col-md-2">
+            {{ form.order_quantity.label }}
+            {{ form.order_quantity}}
+          </div>
+          <div class="col-md-2">
+            {{ form.purchase_price.label }}
+            {{ form.purchase_price}}
+          </div>
+          <div class="col-md-2">
+            {{ form.total_price.label }}
+            {{ form.total_price}}
+          </div>
+        </div>
+      </form>
+  </div>
+{% endblock body_block %}

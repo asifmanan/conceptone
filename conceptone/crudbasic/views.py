@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
+from django.forms.formsets import formset_factory
 from crudbasic.models import (
                                 Customers,
                                 Suppliers,
@@ -241,24 +242,27 @@ class ItemView(TemplateView):
 ####   CreateViews  ###
 #######################
 
-class CreateOrderItem(CreateView):
-    model = OrderItem
-    form_class = OrderItemForm
-    template_name = 'crudbasic/neworderitems.html'
+# class CreateOrderItem(CreateView):
+#     model = OrderItem
+#     form_class = OrderItemForm
+#     template_name = 'crudbasic/neworderitems.html'
 
-def CreateOrder(request,pk):
-    po = get_object_or_404(po,pk=pk)
-    if request.method='POST':
-        form=OrderItemForm(request.POST)
-        if form.is_valid():
-            itemline = form.save(commit=False)
-            itemline.po_number = po
-            itemline.save()
-            return('index')
+def CreateOrderItem(request,pk):
+    po_obj = get_object_or_404(PurchaseOrder,pk=pk)
+    # form = OrderItemForm()
+    item_formset=formset_factory(OrderItemForm)
+    form_formset = item_formset()
+    if request.method=='POST':
+        # form=OrderItemForm(request.POST)
+        form_formset = item_formset(request.POST)
+        if form_formset.is_valid():
+            for form in item_formset:
+                itemline = form.save(commit=False)
+                itemline.po_number = po_obj
+                itemline.save()
         else:
-            form = OrderItemForm()
-        return render(request,'crudbasic/neworderitems.html',{'form':form})
-
+            form_formset = item_formset()
+    return render(request,'crudbasic/neworderitems.html',{'form':form_formset,'po_obj':po_obj})
 
 class CreatePurchaseOrder(CreateView):
     model = PurchaseOrder
@@ -266,11 +270,11 @@ class CreatePurchaseOrder(CreateView):
     template_name = 'crudbasic/newpurchase.html'
 
     def get_success_url(self):
-        return reverse('crudbasic:index')
+        return reverse_lazy('crudbasic:neworderitems',kwargs={'pk':self.object.pk})
 
-    def form_valid(self, form):
-        self.kwargs['po_amount'] = 0.00
-        return super(CreatePurchaseOrder, self).form_valid(form)
+    # def form_valid(self, form):
+    #     self.kwargs['po_amount'] = 0.00
+    #     return super(CreatePurchaseOrder, self).form_valid(form)
 
 class CreateTaxRateView(CreateView):
     model = TaxRate

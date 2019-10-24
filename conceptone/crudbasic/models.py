@@ -94,7 +94,7 @@ class TaxRate(models.Model):
 class PurchaseOrder(models.Model):
     po_number = models.CharField(max_length=16)
     po_date = models.DateField()
-    po_supplier = models.ForeignKey(Suppliers, on_delete=models.PROTECT)
+    po_supplier = models.ForeignKey(Suppliers, on_delete=models.CASCADE)
     po_amount = models.DecimalField(max_digits=14, decimal_places=2, default=0.00)
     po_tax = models.ForeignKey(TaxRate, on_delete=models.PROTECT)
     po_draft = models.BooleanField(default=True)
