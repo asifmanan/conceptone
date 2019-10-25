@@ -1,7 +1,8 @@
 {% extends "crudbasic/base.html" %}
 {% block body_block %}
   <div class="container pb-1 border bg-light">
-    <h3>New Purchase (Items)</h3>
+    <h3>New Purchase</h3>
+    <hr>
       <div class="row mb-2">
         <div class="col-md-6">
           <p>Supplier: <b>{{ po_obj.po_supplier }}</b></p>
@@ -23,7 +24,7 @@
       <hr>
       <form method="post">{% csrf_token %}
         <div class="row mb-4">
-          <div class="col-md-4">
+          <div class="col-md-2">
             {{ form.form.po_line_number.label }}
             {{ form.form.po_line_number}}
           </div>
@@ -31,19 +32,20 @@
             {{ form.form.order_item.label }}
             {{ form.form.order_item}}
           </div>
-          <div class="col-md-4">
+          <div class="col-md-2">
             {{ form.form.order_quantity.label }}
             {{ form.form.order_quantity}}
           </div>
-          <div class="col-md-4">
+          <div class="col-md-3">
             {{ form.form.purchase_price.label }}
             {{ form.form.purchase_price}}
           </div>
-          <div class="col-md-4">
+          <div class="col-md-3">
             <b>{{ form.form.total_price.label }}</b>
             {{ form.form.total_price}}
           </div>
         </div>
+        <hr>
       </form>
   </div>
 {% endblock body_block %}

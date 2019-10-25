@@ -44,6 +44,19 @@ class OrderItemForm(forms.ModelForm):
                 'total_price':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
                 }
 
+OrderItem_Formset = modelformset_factory(
+    OrderItem,
+    fields=('po_line_number','order_item','order_quantity','purchase_price','total_price' ),
+    extra=1,
+    widgets={
+        'name': forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter Book Name here'
+            }
+        )
+    }
+)
+
 
 class CustomerForm(forms.ModelForm):
     class Meta:
