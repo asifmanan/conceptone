@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import (formset_factory, modelformset_factory)
 from datetime import datetime
 from crudbasic.models import (Customers,
                                 Suppliers,
@@ -56,8 +57,6 @@ OrderItem_Formset = modelformset_factory(
             'total_price':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
             }
         )
-    }
-)
 
 
 class CustomerForm(forms.ModelForm):
