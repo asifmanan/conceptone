@@ -261,7 +261,7 @@ def CreateOrderItem(request,pk):
             itemline.save()
         else:
             form = item_formset()
-    return render(request,'crudbasic/neworderitems.html',{'form':form,'po_obj':po_obj})
+    return render(request,'crudbasic/neworderitems.html',{'formset':form,'po_obj':po_obj})
 
 class CreatePurchaseOrder(CreateView):
     model = PurchaseOrder
