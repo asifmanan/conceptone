@@ -10,6 +10,7 @@ urlpatterns=[
     path('items/',views.ItemView.as_view(),name='items'),
     path('projects/',views.ProjectView.as_view(),name='projects'),
     path('taxrates/',views.TaxRateView.as_view(),name='taxrates'),
+    path('purchaseoders/',views.PurchaseOrderView.as_view(),name='purchaseorders'),
 
     path('createcustomer/',views.CreateCustomerView.as_view(),name='createcustomer'),
     path('createsupplier/',views.CreateSupplierView.as_view(),name='createsupplier'),

@@ -53,6 +53,27 @@ class TaxRateView(ListView):
         context['create_link'] = create_link= {'name':'Define New Tax','value':'crudbasic:createtax'}
         return context
 
+class PurchaseOrderView(ListView):
+    model = PurchaseOrder
+    template_name = 'crudbasic/basedisplay.html'
+
+    def get_context_data(self, **kwargs):
+    # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['page_data'] = PurchaseOrder.objects.order_by('created_on')
+
+        table_head_temp = get_col_heads(PurchaseOrder)
+        table_head = []
+        for idx, val in enumerate(table_head_temp):
+            table_head.append(str(val[1]).split(" ")[1])
+
+        context['table_head'] = table_head
+        context['main_title'] = 'Purchase Orders'
+        context['create_link'] = create_link= {'name':'Create New PO','value':'crudbasic:newpurchaseorder'}
+        return context
+
+
 class CustomerView(TemplateView):
     template_name = 'crudbasic/basedisplay.html'
     def get(self, request, *args, **kwargs):
@@ -249,18 +270,17 @@ class ItemView(TemplateView):
 
 def CreateOrderItem(request,pk):
     po_obj = get_object_or_404(PurchaseOrder,pk=pk)
-    # form = OrderItemForm()
     item_formset=formset_factory(OrderItemForm)
     form = item_formset()
     if request.method=='POST':
-        # form=OrderItemForm(request.POST)
         form = item_formset(request.POST)
-        if form.is_valid():
-            itemline = form.save(commit=False)
-            itemline.po_number = po_obj
-            itemline.save()
-        else:
-            form = item_formset()
+        for sform in form:
+            if form.is_valid():
+                itemline = sform.save(commit=False)
+                itemline.po_number = po_obj
+                itemline.save()
+            else:
+                form = item_formset()
     return render(request,'crudbasic/neworderitems.html',{'formset':form,'po_obj':po_obj})
 
 class CreatePurchaseOrder(CreateView):

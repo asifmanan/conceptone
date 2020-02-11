@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="row mb-4">
-        {% url 'crudbasic:taxrates' as back_url %}
+        {% url 'crudbasic:purchaseorders' as back_url %}
         {% if not form.instance.pk %}
           {% include "crudbasic/buttonpanel/pocontinuepanel.html" %}
         {% else %}

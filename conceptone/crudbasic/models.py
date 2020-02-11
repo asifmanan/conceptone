@@ -110,7 +110,7 @@ class OrderItem(models.Model):
     purchase_price = models.DecimalField(max_digits=14, decimal_places=2,verbose_name='Price')
     total_price = models.DecimalField(max_digits=14, decimal_places=2)
     variation_number = models.IntegerField(default=0)
-    variation_quantity = models.DecimalField(max_digits=14, decimal_places=2)
+    variation_quantity = models.DecimalField(max_digits=14, decimal_places=2,default=0)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
