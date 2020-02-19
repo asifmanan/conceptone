@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+{% for po in page_data %}
+<tr>
+  <td>
+    <a href="update/{{po.id}}">{{ po.po_number }}</a>
+  </td>
+  <td>{{ po.po_date }}</td>
+  <td>{{ po.po_supplier }}</td>
+  <td>{{ po.po_amount }}</td>
+  <td>{{ po.po_tax }}</td>
+  <td>{{ po.po_draft }}</td>
+</tr>
+{% endfor %}

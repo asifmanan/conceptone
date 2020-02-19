@@ -62,7 +62,7 @@ class PurchaseOrderView(ListView):
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
         context['page_data'] = PurchaseOrder.objects.order_by('created_on')
-
+        context['search_form'] = BasicSearch(caller = PurchaseOrder)
         table_head_temp = get_col_heads(PurchaseOrder)
         table_head = []
         for idx, val in enumerate(table_head_temp):
@@ -72,7 +72,34 @@ class PurchaseOrderView(ListView):
         context['main_title'] = 'Purchase Orders'
         context['create_link'] = create_link= {'name':'Create New PO','value':'crudbasic:newpurchaseorder'}
         return context
+    def post(self, request, *args, **kwargs):
+        search_form = BasicSearch(request.POST, caller = PurchaseOrder)
+        if search_form.is_valid():
+            data = request.POST.copy()
+            qby = data.get('search_by')
+            qstrting = data.get('search_for')
+            queryparam = qby+'__'+'contains'
+            search_list = PurchaseOrder.objects.filter(**{queryparam:qstrting})
 
+            main_title = 'Purchase Orders'
+            create_link= {'name':'Create New PO','value':'crudbasic:newpurchaseorder'}
+            table_head_temp = get_col_heads(PurchaseOrder)
+            table_head = []
+            for idx, val in enumerate(table_head_temp):
+                table_head.append(str(val[1]).split(" ")[1])
+            page_data = search_list
+        else:
+            search_form = BasicSearch(request.POST, caller = PurchaseOrder)
+            main_title = 'Purchase Orders'
+            create_link = {'name':'Create New PO','value':'crudbasic:newpurchaseorder'}
+            table_head = None
+            page_data = None
+        return render(request, self.template_name, {'page_data': page_data,
+                                                    'search_form' : search_form,
+                                                    'table_head':table_head,
+                                                    'main_title':main_title,
+                                                    'create_link':create_link
+                                                    })
 
 class CustomerView(TemplateView):
     template_name = 'crudbasic/basedisplay.html'
