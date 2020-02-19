@@ -10,7 +10,7 @@ urlpatterns=[
     path('items/',views.ItemView.as_view(),name='items'),
     path('projects/',views.ProjectView.as_view(),name='projects'),
     path('taxrates/',views.TaxRateView.as_view(),name='taxrates'),
-    path('purchaseoders/',views.PurchaseOrderView.as_view(),name='purchaseorders'),
+    path('purchaseorders/',views.PurchaseOrderView.as_view(),name='purchaseorders'),
 
     path('createcustomer/',views.CreateCustomerView.as_view(),name='createcustomer'),
     path('createsupplier/',views.CreateSupplierView.as_view(),name='createsupplier'),
@@ -25,6 +25,7 @@ urlpatterns=[
     path('items/update/<int:pk>/',views.UpdateItemView.as_view(),name='updateitem'),
     path('projects/update/<int:pk>/',views.UpdateProjectView.as_view(),name='updateproject'),
     path('taxrates/update/<int:pk>/',views.UpdateTaxRateView.as_view(),name='updatetaxrate'),
+    path('purchaseorders/update/<int:pk>/',views.UpdatePurchaseOrder.as_view(),name='updatepurchaseorder'),
 
     path('customers/delete/<int:pk>',views.DeleteCustomerView.as_view(),name='customerdelete'),
     path('suppliers/delete/<int:pk>',views.DeleteSupplierView.as_view(),name='supplierdelete'),

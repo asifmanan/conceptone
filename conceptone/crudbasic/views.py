@@ -423,6 +423,14 @@ class UpdateProjectView(UpdateView):
     def get_success_url(self):
         return reverse('crudbasic:projects')
 
+class UpdatePurchaseOrder(UpdateView):
+    model = PurchaseOrder
+    form_class = PurchaseOrderForm
+    template_name = 'crudbasic/newpurchase.html'
+
+    def get_success_url(self):
+        return reverse('crudbasic:purchaseorders')
+
 #######################
 ####   DeleteViews  ###
 #######################
