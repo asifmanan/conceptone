@@ -101,6 +101,25 @@ class PurchaseOrderView(ListView):
                                                     'create_link':create_link
                                                     })
 
+class OrderItemView(ListView):
+    model = OrderItem
+    template_name = 'crudbasic/basedisplay.html'
+    def get_context_data(self, **kwargs):
+    # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['page_data'] = OrderItem.objects.order_by('created_on')
+        # context['search_form'] = BasicSearch(caller = OrderItem)
+        table_head_temp = get_col_heads(OrderItem)
+        table_head = []
+        for idx, val in enumerate(table_head_temp):
+            table_head.append(str(val[1]).split(" ")[1])
+
+        context['table_head'] = table_head
+        context['main_title'] = 'Purchase Orders (Items)'
+        context['create_link'] = create_link= {'name':'Create New PO','value':'crudbasic:newpurchaseorder'}
+        return context
+
 class CustomerView(TemplateView):
     template_name = 'crudbasic/basedisplay.html'
     def get(self, request, *args, **kwargs):

@@ -11,6 +11,7 @@ urlpatterns=[
     path('projects/',views.ProjectView.as_view(),name='projects'),
     path('taxrates/',views.TaxRateView.as_view(),name='taxrates'),
     path('purchaseorders/',views.PurchaseOrderView.as_view(),name='purchaseorders'),
+    path('orderitems/',views.OrderItemView.as_view(),name='orderitemview'),
 
     path('createcustomer/',views.CreateCustomerView.as_view(),name='createcustomer'),
     path('createsupplier/',views.CreateSupplierView.as_view(),name='createsupplier'),
