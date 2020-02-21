@@ -42,7 +42,7 @@ class OrderItemForm(forms.ModelForm):
                 'order_item':forms.Select(attrs={'class':'form-control form-control-sm', 'type':'date'}),
                 'order_quantity':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
                 'purchase_price':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
-                'total_price':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
+                'total_price':forms.TextInput(attrs={'class':'form-control form-control-sm','disabled':'True'}),
                 }
 
 OrderItem_Formset = modelformset_factory(
