@@ -316,37 +316,19 @@ class ItemView(TemplateView):
 
 def CreateOrderItem(request,pk):
     po_obj = get_object_or_404(PurchaseOrder,pk=pk)
-    form = OrderItemForm()
+    item_formset=formset_factory(OrderItemForm)
+    form = item_formset()
     if request.method=='POST':
-        form = OrderItemForm(request.POST)
-        if form.is_valid():
-            itemline = form.save(commit=False)
-            itemline.po_number = po_obj
-            itemline.total_price = itemline.purchase_price*itemline.order_quantity
-            itemline.save()
-        else:
-            print("An Error Occured")
-    else:
-        form = OrderItemForm()
-    return render(request,'crudbasic/neworderitems.html',{'form':form,'po_obj':po_obj})
-    #
-    # def get_context_data(self, **kwargs):
-    #     po_obj = get_object_or_404(PurchaseOrder,pk=pk)
-    # if request.method=='POST':
-    #     form = OrderItemForm(request.POST)
-    #     if form.is_valid():
-    #         itemline = form.save(commit=False)
-    #         itemline.po_number = po_obj
-    #         itemline.total_price = itemline.purchase_price*itemline.order_quantity
-    #         itemline.save()
-    #     else:
-    #         form = OrderItemForm()
-    def get_success_url(self):
-        if'save' in self.request.POST:
-            return reverse_lazy('crudbasic:purchaseorders')
-        if'continue' in self.request.POST:
-            return reverse_lazy('crudbasic:neworderitems',kwargs={'pk':self.object.pk})
-    # return render(request,'crudbasic/neworderitems.html',{'formset':form,'po_obj':po_obj})
+        form = item_formset(request.POST)
+        for sform in form:
+            if form.is_valid():
+                itemline = sform.save(commit=False)
+                itemline.po_number = po_obj
+                itemline.total_price = itemline.purchase_price*itemline.order_quantity
+                itemline.save()
+            else:
+                form = item_formset()
+    return render(request,'crudbasic/neworderitems.html',{'formset':form,'po_obj':po_obj})
 
 class CreatePurchaseOrder(CreateView):
     model = PurchaseOrder

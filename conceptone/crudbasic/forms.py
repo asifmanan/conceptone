@@ -40,10 +40,10 @@ class OrderItemForm(forms.ModelForm):
         widgets = {
                 'po_line_number':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
                 'order_item':forms.Select(attrs={'class':'form-control form-control-sm', 'type':'date'}),
-                'order_quantity':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
-                'purchase_price':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
-                'total_price':forms.TextInput(attrs={'class':'form-control form-control-sm','readonly':'True'}),
-                # 'total_price':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
+                'order_quantity':forms.TextInput(attrs={'class':'form-control form-control-sm','id':'#order_quantity', 'onchange':'auto_complete()'}),
+                'purchase_price':forms.TextInput(attrs={'class':'form-control form-control-sm','id':'#purchase_price','onchange':'auto_complete()'}),
+                # 'total_price':forms.TextInput(attrs={'class':'form-control form-control-sm','readonly':'True'}),
+                'total_price':forms.TextInput(attrs={'class':'form-control form-control-sm','id':'#total_price'}),
                 }
 
 OrderItem_Formset = modelformset_factory(
