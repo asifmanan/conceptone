@@ -64,14 +64,14 @@
         <button class="btn btn-success" type="submit" name="button">Save</button>
       </form>
   </div>
-{% endblock body_block %}
 {% block custom_js %}
-<script type="text/javascript">
-  function auto_complete(){
-    tp = oq*pp;
-  }
-  var tp = document.getElementById("#total_price").value;
-  var oq = document.getElementById("#order_quantity").value;
-  var pp = document.getElementById("#purchase_price").value;
-</script>
-{% endblock %}
+  <script type="text/javascript">
+    function auto_complete(){
+      tp = oq*pp;
+    }
+    var tp = document.getElementById("#total_price").value;
+    var oq = document.getElementById("#order_quantity").value;
+    var pp = document.getElementById("#purchase_price").value;
+  </script>
+{% endblock custom_js %}
+{% endblock body_block %}
