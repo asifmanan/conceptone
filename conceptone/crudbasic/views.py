@@ -324,6 +324,7 @@ def CreateOrderItem(request,pk):
             if form.is_valid():
                 itemline = sform.save(commit=False)
                 itemline.po_number = po_obj
+                itemline.total_price = itemline.purchase_price*itemline.order_quantity
                 itemline.save()
             else:
                 form = item_formset()
@@ -335,7 +336,10 @@ class CreatePurchaseOrder(CreateView):
     template_name = 'crudbasic/newpurchase.html'
 
     def get_success_url(self):
-        return reverse_lazy('crudbasic:neworderitems',kwargs={'pk':self.object.pk})
+        if'save' in self.request.POST:
+            return reverse_lazy('crudbasic:purchaseorders')
+        if'continue' in self.request.POST:
+            return reverse_lazy('crudbasic:neworderitems',kwargs={'pk':self.object.pk})
 
     # def form_valid(self, form):
     #     self.kwargs['po_amount'] = 0.00
@@ -448,7 +452,10 @@ class UpdatePurchaseOrder(UpdateView):
     template_name = 'crudbasic/newpurchase.html'
 
     def get_success_url(self):
-        return reverse('crudbasic:purchaseorders')
+        if'save' in self.request.POST:
+            return reverse_lazy('crudbasic:purchaseorders')
+        if'continue' in self.request.POST:
+            return reverse_lazy('crudbasic:neworderitems',kwargs={'pk':self.object.pk})
 
 #######################
 ####   DeleteViews  ###
@@ -477,4 +484,9 @@ class DeleteItemView(DeleteView):
 class DeleteProjectView(DeleteView):
     model = Projects
     success_url = reverse_lazy('crudbasic:projects')
+    template_name = 'crudbasic/dialog/objdelconf.html'
+
+class DeletePurchaseOrderView(DeleteView):
+    model = PurchaseOrder
+    success_url = reverse_lazy('crudbasic:purchaseorders')
     template_name = 'crudbasic/dialog/objdelconf.html'

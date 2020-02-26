@@ -33,4 +33,5 @@ urlpatterns=[
     path('items/delete/<int:pk>',views.DeleteItemView.as_view(),name='itemdelete'),
     path('projects/delete/<int:pk>',views.DeleteProjectView.as_view(),name='projectdelete'),
     path('taxrates/delete/<int:pk>',views.DeleteTaxRateView.as_view(),name='taxratedelete'),
+    path('purchaseorders/delete/<int:pk>',views.DeletePurchaseOrderView.as_view(),name='purchaseorderdelete'),
 ]
