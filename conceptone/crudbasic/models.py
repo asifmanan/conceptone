@@ -71,6 +71,7 @@ class Items(models.Model):
     item_code = models.CharField(max_length=16, unique=True)
     item_description = models.CharField(max_length=192)
     item_uom = models.CharField(max_length=16)
+    item_price = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
     item_type = models.CharField(max_length=8, choices=item_type_choices)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)

@@ -31,6 +31,10 @@
           {{ form.item_uom.label }}
           {{ form.item_uom }}
         </div>
+        <div class="col-md-4">
+          {{ form.item_price.label }}
+          {{ form.item_price }}
+        </div>
       </div>
       <div class="row mb-4">
         {% url 'crudbasic:items' as back_url %}

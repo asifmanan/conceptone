@@ -353,12 +353,19 @@ def CreateOrderItem(request,pk):
     #         itemline.save()
     #     else:
     #         form = OrderItemForm()
-    def get_success_url(self):
-        if'save' in self.request.POST:
-            return reverse_lazy('crudbasic:purchaseorders')
-        if'continue' in self.request.POST:
-            return reverse_lazy('crudbasic:neworderitems',kwargs={'pk':self.object.pk})
+    # def get_success_url(self):
+    #     if'save' in self.request.POST:
+    #         return reverse_lazy('crudbasic:purchaseorders')
+    #     if'continue' in self.request.POST:
+    #         return reverse_lazy('crudbasic:neworderitems',kwargs={'pk':self.object.pk})
     # return render(request,'crudbasic/neworderitems.html',{'formset':form,'po_obj':po_obj})
+
+def loaditemrates(request):
+    item_id = request.GET.get('item')
+    print(item_id)
+    item_ra = Items.objects.get(pk=item_id)
+    print(item_ra.item_price)
+    return render(request, 'crudbasic/ajaxhtml/loaditemrates.html',{'item_ra':item_ra})
 
 class CreatePurchaseOrder(CreateView):
     model = PurchaseOrder
