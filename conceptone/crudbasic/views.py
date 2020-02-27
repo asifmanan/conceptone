@@ -316,19 +316,31 @@ class ItemView(TemplateView):
 
 def CreateOrderItem(request,pk):
     po_obj = get_object_or_404(PurchaseOrder,pk=pk)
+    po_num = po_obj.po_number
+    # print(po_num)
+
+    # all_items_in_po = OrderItem.objects.filter(po_number=po_obj)
+    # print(all_items_in_po)
+    # print(len(all_items_in_po))
+
+    page_data = OrderItem.objects.order_by('po_line_number')
+    # po_obj_same = po_obj.po_number
     form = OrderItemForm()
     if request.method=='POST':
         form = OrderItemForm(request.POST)
         if form.is_valid():
             itemline = form.save(commit=False)
             itemline.po_number = po_obj
+            new_line_number = (len(OrderItem.objects.filter(po_number=po_obj)))+1
+            print(new_line_number)
+            itemline.po_line_number = new_line_number
             itemline.total_price = itemline.purchase_price*itemline.order_quantity
             itemline.save()
         else:
             print("An Error Occured")
     else:
         form = OrderItemForm()
-    return render(request,'crudbasic/neworderitems.html',{'form':form,'po_obj':po_obj})
+    return render(request,'crudbasic/neworderitems.html',{'form':form,'po_obj':po_obj,'page_data':page_data})
     #
     # def get_context_data(self, **kwargs):
     #     po_obj = get_object_or_404(PurchaseOrder,pk=pk)

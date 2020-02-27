@@ -24,10 +24,10 @@
       <hr>
       <form method="POST">{% csrf_token %}
         <div class="row mb-2">
-          <div class="col-md-1">
+          <!-- <div class="col-md-1">
             {{ form.po_line_number.label }}
-          </div>
-          <div class="col-md-6">
+          </div> -->
+          <div class="col-md-8">
             {{ form.order_item.label }}
           </div>
           <div class="col-md-1">
@@ -36,15 +36,15 @@
           <div class="col-md-1">
             {{ form.purchase_price.label }}
           </div>
-          <div class="col-md-2">
+          <!-- <div class="col-md-2">
             <b>{{ form.total_price.label }}</b>
-          </div>
+          </div> -->
         </div>
         <div class="row form-row mb-4">
-          <div class="input-group col-md-1">
+          <!-- <div class="input-group col-md-1">
             {{ form.po_line_number}}
-          </div>
-          <div class="input-group col-md-6">
+          </div> -->
+          <div class="input-group col-md-8">
             {{ form.order_item}}
           </div>
           <div class="input-group col-md-1">
@@ -53,25 +53,46 @@
           <div class="input-group col-md-1">
             {{ form.purchase_price}}
           </div>
-          <div class="input-group col-md-2">
+          <!-- <div class="input-group col-md-2">
             {{ form.total_price}}
-          </div>
-          <div class="input-group-append">
-            <button class="btn btn-success btn-sm add-form-row button-custom">+</button>
-          </div>
+          </div> -->
+          <!-- <div class="input-group-append"> -->
+            <!-- <button class="btn btn-success btn-sm add-form-row button-custom">+</button> -->
+          <!-- </div> -->
         </div>
-        <hr>
-        <button class="btn btn-success" type="submit" name="button">Save</button>
+        <button class="btn btn-success" type="submit" name="button">Add Item</button>
       </form>
+      <hr>
+      {% if page_data %}
+      <div class="mt-0 pb-3 pt-1">
+        <table class="table table-bordered table-striped table-sm table-properties">
+          <thead class="">
+            <tr>
+              <th scope="col">PO Number</th>
+              <th scope="col">Line Number</th>
+              <th scope="col">Item Description</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Unit Price</th>
+              <th scope="col">Total Price</th>
+              <th scope="col">Variation Number</th>
+              <th scope="col">Variation Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% include 'crudbasic/tables/poitemstable.html' %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
   </div>
 {% block custom_js %}
   <script type="text/javascript">
     function auto_complete(){
-      tp = oq*pp;
+      var oq = document.getElementById("order_quantity").value;
+      var pp = document.getElementById("purchase_price").value;
+      var tp = oq*pp;
+      document.getElementById("total_price").setAttribute("value", tp);
     }
-    var tp = document.getElementById("#total_price").value;
-    var oq = document.getElementById("#order_quantity").value;
-    var pp = document.getElementById("#purchase_price").value;
   </script>
 {% endblock custom_js %}
 {% endblock body_block %}

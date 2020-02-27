@@ -36,28 +36,29 @@ class PurchaseOrderForm(forms.ModelForm):
 class OrderItemForm(forms.ModelForm):
     class Meta:
         model = OrderItem
-        fields = ('po_line_number','order_item','order_quantity','purchase_price','total_price')
+        fields = ('order_item','order_quantity','purchase_price')
         widgets = {
-                'po_line_number':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
+                # 'po_line_number':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
                 'order_item':forms.Select(attrs={'class':'form-control form-control-sm', 'type':'date'}),
-                'order_quantity':forms.TextInput(attrs={'class':'form-control form-control-sm','id':'#order_quantity', 'onchange':'auto_complete()'}),
-                'purchase_price':forms.TextInput(attrs={'class':'form-control form-control-sm','id':'#purchase_price','onchange':'auto_complete()'}),
+                'order_quantity':forms.TextInput(attrs={'class':'form-control form-control-sm','id':'order_quantity','onchange':'auto_complete()'}),
+                'purchase_price':forms.TextInput(attrs={'class':'form-control form-control-sm','id':'purchase_price','onchange':'auto_complete()'}),
                 # 'total_price':forms.TextInput(attrs={'class':'form-control form-control-sm','readonly':'True'}),
-                'total_price':forms.TextInput(attrs={'class':'form-control form-control-sm','id':'#total_price'}),
+                # 'total_price':forms.TextInput(attrs={'class':'form-control form-control-sm','id':'total_price','onkeydown':'return false','onchange':'auto_complete()'}),
                 }
 
-OrderItem_Formset = modelformset_factory(
-    OrderItem,
-    fields=('po_line_number','order_item','order_quantity','purchase_price','total_price' ),
-    extra=1,
-    widgets={
-            'po_line_number':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
-            'order_item':forms.Select(attrs={'class':'form-control form-control-sm', 'type':'date'}),
-            'order_quantity':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
-            'purchase_price':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
-            'total_price':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
-            }
-        )
+# if using formset then unindent the following
+# OrderItem_Formset = modelformset_factory(
+#     OrderItem,
+#     fields=('po_line_number','order_item','order_quantity','purchase_price','total_price' ),
+#     extra=1,
+#     widgets={
+#             'po_line_number':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
+#             'order_item':forms.Select(attrs={'class':'form-control form-control-sm', 'type':'date'}),
+#             'order_quantity':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
+#             'purchase_price':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
+#             'total_price':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
+#             }
+#        )
 
 
 class CustomerForm(forms.ModelForm):
