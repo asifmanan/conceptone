@@ -104,11 +104,11 @@ class PurchaseOrder(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
 
 class OrderItem(models.Model):
-    po_line_number = models.IntegerField(max_length=16,verbose_name='Line')
+    po_line_number = models.IntegerField(verbose_name='Line')
     order_item = models.ForeignKey(Items, on_delete=models.PROTECT,verbose_name='Item')
     po_number = models.ForeignKey(PurchaseOrder, on_delete=models.CASCADE)
     order_quantity = models.DecimalField(max_digits=14, decimal_places=2,verbose_name='Quantity')
-    purchase_price = models.DecimalField(max_digits=14, decimal_places=2,verbose_name='Price')
+    purchase_price = models.DecimalField(max_digits=14, decimal_places=2,verbose_name='Purchase Price')
     total_price = models.DecimalField(max_digits=14, decimal_places=2)
     variation_number = models.IntegerField(default=0)
     variation_quantity = models.DecimalField(max_digits=14, decimal_places=2,default=0)
