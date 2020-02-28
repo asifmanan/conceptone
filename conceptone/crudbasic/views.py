@@ -318,6 +318,8 @@ class ItemView(TemplateView):
 def CreateOrderItem(request,pk):
     po_obj = get_object_or_404(PurchaseOrder,pk=pk)
     po_num = po_obj.po_number
+    # po_num_int = cast(po_num,output_field = IntegerField())
+    # print(po_num_int)
     page_data = OrderItem.objects.filter(po_number=po_obj).order_by('po_line_number')
     form = OrderItemForm()
     if request.method=='POST':
@@ -325,11 +327,15 @@ def CreateOrderItem(request,pk):
         if form.is_valid():
             itemline = form.save(commit=False)
             itemline.po_number = po_obj
-            new_line_number = (len(OrderItem.objects.filter(po_number=po_obj)))+1
-            current_line_num = OrderItem.objects.filter(po_number=po_obj).order_by('-po_line_number').first()
+            # new_line_number = (len(OrderItem.objects.filter(po_number=po_obj)))+1
+            current_obj = OrderItem.objects.filter(po_number=po_obj).order_by('-po_line_number').first()
+            # print(current_obj)
+            if current_obj !=None:
+                new_line_number = (current_obj.po_line_number) + 1
+            else:
+                new_line_number = 1
             # new_line_number = current_line_num + 1
             # max_line = max(temp_obj.aggregate(max('po_line_number'))
-            print(int(current_line_num.po_line_number)+1)
             itemline.po_line_number = new_line_number
             itemline.total_price = itemline.purchase_price*itemline.order_quantity
             itemline.save()
@@ -496,6 +502,11 @@ class UpdatePurchaseOrder(UpdateView):
             return reverse_lazy('crudbasic:purchaseorders')
         if'continue' in self.request.POST:
             return reverse_lazy('crudbasic:neworderitems',kwargs={'pk':self.object.pk})
+
+# class UpdateOrderItemView(UpdateView):
+#     model = OrderItem
+#     form_class = OrderItemForm
+#     template_name = 'crudbasic/orderitemupdate.html'
 
 #######################
 ####   DeleteViews  ###
