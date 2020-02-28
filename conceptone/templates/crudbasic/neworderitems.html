@@ -86,29 +86,30 @@
       {% endif %}
   </div>
 {% block custom_js %}
-  {# <script type="text/javascript">
+  <script type="text/javascript">
     function auto_complete(){
-      var oq = document.getElementById("order_quantity").value;
-      var pp = document.getElementById("purchase_price").value;
-      var tp = oq*pp;
-      document.getElementById("total_price").setAttribute("value", tp);
+      // var oq = document.getElementById("order_quantity").value;
+      // var pp = document.getElementById("purchase_price").value;
+      // var tp = oq*pp;
+      // document.getElementById("total_price").setAttribute("value", tp);
     }
-  </script> #}
+  </script>
 
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
       $("#itemselect").change(function () {
         var url = $("#poitemform").attr("data-items-url");  // get the url of the `load_cities` view
         var itemId = $(this).val();  // get the selected country ID from the HTML input
-
+        $("#order_quantity").val(itemId);
         $.ajax({                       // initialize an AJAX request
-          url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+          url: url,
+          datatype: 'json',                   // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
           data: {
             'item': itemId       // add the country id to the GET parameters
           },
           success: function (data) {   // `data` is the return of the `load_cities` view function
-            $("#purchase_price").val(data);  // replace the contents of the city input with the data that came from the server
-            $("#order_quantity").val(data);
+            $("#purchase_price").val('0.00');
+            $("#purchase_price").val(data.data);  // replace the contents of the city input with the data that came from the server
           }
         });
 

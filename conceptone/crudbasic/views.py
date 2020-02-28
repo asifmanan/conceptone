@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
 from django.urls import reverse, reverse_lazy
 from django.forms.formsets import formset_factory
 from crudbasic.models import (
@@ -317,14 +318,7 @@ class ItemView(TemplateView):
 def CreateOrderItem(request,pk):
     po_obj = get_object_or_404(PurchaseOrder,pk=pk)
     po_num = po_obj.po_number
-    # print(po_num)
-
-    # all_items_in_po = OrderItem.objects.filter(po_number=po_obj)
-    # print(all_items_in_po)
-    # print(len(all_items_in_po))
-
-    page_data = OrderItem.objects.order_by('po_line_number')
-    # po_obj_same = po_obj.po_number
+    page_data = OrderItem.objects.filter(po_number=po_obj).order_by('po_line_number')
     form = OrderItemForm()
     if request.method=='POST':
         form = OrderItemForm(request.POST)
@@ -332,7 +326,10 @@ def CreateOrderItem(request,pk):
             itemline = form.save(commit=False)
             itemline.po_number = po_obj
             new_line_number = (len(OrderItem.objects.filter(po_number=po_obj)))+1
-            print(new_line_number)
+            current_line_num = OrderItem.objects.filter(po_number=po_obj).order_by('-po_line_number').first()
+            # new_line_number = current_line_num + 1
+            # max_line = max(temp_obj.aggregate(max('po_line_number'))
+            print(int(current_line_num.po_line_number)+1)
             itemline.po_line_number = new_line_number
             itemline.total_price = itemline.purchase_price*itemline.order_quantity
             itemline.save()
@@ -360,12 +357,18 @@ def CreateOrderItem(request,pk):
     #         return reverse_lazy('crudbasic:neworderitems',kwargs={'pk':self.object.pk})
     # return render(request,'crudbasic/neworderitems.html',{'formset':form,'po_obj':po_obj})
 
+#ajax call view
 def loaditemrates(request):
+    if request.GET.get('item') == "":
+        data = 0.0
+        return JsonResponse({'data':data})
     item_id = request.GET.get('item')
     print(item_id)
-    item_ra = Items.objects.get(pk=item_id)
-    print(item_ra.item_price)
-    return render(request, 'crudbasic/ajaxhtml/loaditemrates.html',{'item_ra':item_ra})
+    selected_item = Items.objects.get(pk=item_id)
+    data = selected_item.item_price
+    # print(data)
+    #return render(request, 'crudbasic/ajaxhtml/loaditemrates.html',{'item_ra':item_ra})
+    return JsonResponse({'data':data})
 
 class CreatePurchaseOrder(CreateView):
     model = PurchaseOrder
