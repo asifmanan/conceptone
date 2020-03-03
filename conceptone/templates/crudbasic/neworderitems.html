@@ -1,9 +1,17 @@
 {% extends "crudbasic/base.html" %}
 {% block body_block %}
   <div class="container pb-1 border bg-light">
-    <h3>New Purchase</h3>
+    <div class="row mb-0 mb-0 ml-1 mr-1 mt-1">
+      {# <div class="col-md-6"> #}
+        <h3>New Purchase</h3>
+      {# </div> #}
+      {# <div class="col-md-6 ml-auto"> #}
+        <button class="btn btn-primary ml-auto mr-2" type="submit" name="button">Print</button>
+        <button class="btn btn-danger mr-0" type="submit" name="button">Publish</button>
+      {# </div> #}
+    </div>
     <hr>
-      <div class="row mb-2">
+      <div class="row mb-0">
         <div class="col-md-6">
           <p>Supplier: <b>{{ po_obj.po_supplier }}</b></p>
           <p>Address: {{po_obj.po_supplier.supplier_address}}</p>
@@ -13,7 +21,7 @@
           <p>Date: <b>{{ po_obj.po_date }}</b></p>
         </div>
       </div>
-      <div class="row mb-4">
+      <div class="row mb-1">
         <div class="col-md-6">
           <p>Po Number: <b>{{ po_obj.po_number }}</b></p>
         </div>
@@ -40,7 +48,7 @@
             <b>{{ form.total_price.label }}</b>
           </div> -->
         </div>
-        <div class="row form-row mb-4">
+        <div class="row form-row mb-1">
           <!-- <div class="input-group col-md-1">
             {{ form.po_line_number}}
           </div> -->
@@ -60,9 +68,9 @@
             <!-- <button class="btn btn-success btn-sm add-form-row button-custom">+</button> -->
           <!-- </div> -->
         </div>
-        <button class="btn btn-success" type="submit" name="button">Add Item</button>
+        <button class="btn btn-primary mb-2" type="submit" name="button">Add Item</button>
       </form>
-      <hr>
+      {# <hr> #}
       {% if page_data %}
       <div class="mt-0 pb-3 pt-1">
         <table class="table table-bordered table-striped table-sm table-properties">
@@ -108,7 +116,7 @@
             'item': itemId       // add the country id to the GET parameters
           },
           success: function (data) {   // `data` is the return of the `load_cities` view function
-            $("#purchase_price").val('0.00');
+            $("#order_quantity").val('0');
             $("#purchase_price").val(data.data);  // replace the contents of the city input with the data that came from the server
           }
         });
