@@ -371,6 +371,9 @@ def CreateOrderItem(request,pk):
     #         return reverse_lazy('crudbasic:neworderitems',kwargs={'pk':self.object.pk})
     # return render(request,'crudbasic/neworderitems.html',{'formset':form,'po_obj':po_obj})
 
+def PoPublishConfirmation(request,pk):
+
+
 #ajax call view
 def loaditemrates(request):
     if request.GET.get('item') == "":
