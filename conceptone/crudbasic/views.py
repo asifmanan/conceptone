@@ -121,6 +121,14 @@ class OrderItemView(ListView):
         context['create_link'] = create_link= {'name':'Create New PO','value':'crudbasic:newpurchaseorder'}
         return context
 
+class Published_PoView(DetailView):
+    model = OrderItem
+    def get_queryset(self):
+        return
+    # template_name = 'crudbasic/publishedpo.html'
+    # def get(self, request, *args, **kwargs):
+    #     main_title = ''
+
 class CustomerView(TemplateView):
     template_name = 'crudbasic/basedisplay.html'
     def get(self, request, *args, **kwargs):
@@ -344,7 +352,7 @@ def CreateOrderItem(request,pk):
     else:
         form = OrderItemForm()
     return render(request,'crudbasic/neworderitems.html',{'form':form,'po_obj':po_obj,'page_data':page_data})
-    #
+
     # def get_context_data(self, **kwargs):
     #     po_obj = get_object_or_404(PurchaseOrder,pk=pk)
     # if request.method=='POST':

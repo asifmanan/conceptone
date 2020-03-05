@@ -99,9 +99,16 @@ class PurchaseOrder(models.Model):
     po_amount = models.DecimalField(max_digits=14, decimal_places=2, default=0.00)
     po_tax = models.ForeignKey(TaxRate, on_delete=models.PROTECT)
     po_draft = models.BooleanField(default=True)
+    po_publish = models.BooleanField(default=False)
+    po_publish_date = models.DateTimeField(blank=True, null=True)
     # po_payment_status
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
+
+    def publish(self):
+        self.po_publish_date = timezone.now()
+        self.po_publish = True
+        self.save()
 
 class OrderItem(models.Model):
     po_line_number = models.IntegerField(verbose_name='Line')
