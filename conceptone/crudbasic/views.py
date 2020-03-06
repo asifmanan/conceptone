@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
+from django.utils import timezone
 from django.urls import reverse, reverse_lazy
 from django.forms.formsets import formset_factory
 from crudbasic.models import (
@@ -326,6 +327,7 @@ class ItemView(TemplateView):
 def CreateOrderItem(request,pk):
     po_obj = get_object_or_404(PurchaseOrder,pk=pk)
     po_num = po_obj.po_number
+    po_total_amount = po_obj.CalculatePoTotal()
     # po_num_int = cast(po_num,output_field = IntegerField())
     # print(po_num_int)
     page_data = OrderItem.objects.filter(po_number=po_obj).order_by('po_line_number')
@@ -372,6 +374,17 @@ def CreateOrderItem(request,pk):
     # return render(request,'crudbasic/neworderitems.html',{'formset':form,'po_obj':po_obj})
 
 def PoPublishConfirmation(request,pk):
+    po_obj = get_object_or_404(PurchaseOrder,pk=pk)
+    if request.method == 'POST':
+        if 'proceed' in request.POST:
+            po_obj.publish()
+            print(po_obj.po_publish)
+            print(timezone.now())
+            print("PO PUBLISDHED SUCCESSFULLY!")
+                # return()
+
+
+    return render(request,'crudbasic/publishedpo.html',{'po_obj':po_obj})
 
 
 #ajax call view

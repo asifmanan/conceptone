@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 {% extends 'crudbasic/base.html' %}
 {% block body_block %}
-<div class="container pb-1">
-    
+<div class="container">
+  <form method="post">{% csrf_token %}
+      <h3>Confirmation</h3>
+      <p>
+        Are you sure you want to Publish the PO
+        <b>"{{ po_obj }}"</b>?
+      </p>
+      <!-- <p>
+        Following item will be deleted:
+      </p>
+      <p>{{object}}</p> -->
+      <input class="btn btn-success" type="submit" name="proceed" value="Proceed">
+      <a class="btn btn-secondary" href="../{{po_obj.pk}}">Not Now</a>
+  </form>
 </div>
+{% endblock %}

@@ -35,6 +35,7 @@ urlpatterns=[
     path('taxrates/delete/<int:pk>',views.DeleteTaxRateView.as_view(),name='taxratedelete'),
     path('purchaseorders/delete/<int:pk>',views.DeletePurchaseOrderView.as_view(),name='purchaseorderdelete'),
 
+    path('neworderitems/publish/<int:pk>',views.PoPublishConfirmation,name='publishpo'),
     path('ajax/loaditemrates/', views.loaditemrates, name='loaditemrates'),
 
 ]

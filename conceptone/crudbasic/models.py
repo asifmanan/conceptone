@@ -1,5 +1,7 @@
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
+from django.db.models import Sum
 
 # Create your models here.
 class Customers(models.Model):
@@ -109,6 +111,15 @@ class PurchaseOrder(models.Model):
         self.po_publish_date = timezone.now()
         self.po_publish = True
         self.save()
+
+    def CalculatePoTotal(self):
+        items = OrderItem.objects.filter(po_number=self)
+        print(items.values('total_price'))
+        # print(items)
+        # print(str(items))
+
+    def __str__(self):
+        return self.po_number
 
 class OrderItem(models.Model):
     po_line_number = models.IntegerField(verbose_name='Line')
