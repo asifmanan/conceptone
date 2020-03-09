@@ -114,9 +114,15 @@ class PurchaseOrder(models.Model):
 
     def CalculatePoTotal(self):
         items = OrderItem.objects.filter(po_number=self)
-        print(items.values('total_price'))
-        # print(items)
-        # print(str(items))
+        if items.exists():
+            items_sum = items.aggregate(Sum('total_price'))
+            print(items_sum['total_price__sum'])
+            items_total_amount = items_sum['total_price__sum']
+            self.po_amount = items_total_amount
+            self.save()
+        # else:
+        #     print("Object Does not exits")
+
 
     def __str__(self):
         return self.po_number

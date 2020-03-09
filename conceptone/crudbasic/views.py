@@ -327,9 +327,8 @@ class ItemView(TemplateView):
 def CreateOrderItem(request,pk):
     po_obj = get_object_or_404(PurchaseOrder,pk=pk)
     po_num = po_obj.po_number
-    po_total_amount = po_obj.CalculatePoTotal()
-    # po_num_int = cast(po_num,output_field = IntegerField())
-    # print(po_num_int)
+    po_obj.CalculatePoTotal()
+    # print(po_obj.po_amount)
     page_data = OrderItem.objects.filter(po_number=po_obj).order_by('po_line_number')
     form = OrderItemForm()
     if request.method=='POST':
@@ -337,6 +336,7 @@ def CreateOrderItem(request,pk):
         if form.is_valid():
             itemline = form.save(commit=False)
             itemline.po_number = po_obj
+            # po_obj.po_amount = po_obj.CalculatePoTotal()
             # new_line_number = (len(OrderItem.objects.filter(po_number=po_obj)))+1
             current_obj = OrderItem.objects.filter(po_number=po_obj).order_by('-po_line_number').first()
             # print(current_obj)
@@ -349,6 +349,7 @@ def CreateOrderItem(request,pk):
             itemline.po_line_number = new_line_number
             itemline.total_price = itemline.purchase_price*itemline.order_quantity
             itemline.save()
+            po_obj.CalculatePoTotal()
         else:
             print("An Error Occured")
     else:
