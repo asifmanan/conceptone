@@ -19,7 +19,6 @@ urlpatterns=[
     path('createproject/',views.CreateProjectView.as_view(),name='createproject'),
     path('createtax/',views.CreateTaxRateView.as_view(),name='createtax'),
     path('newpurchaseorder/',views.CreatePurchaseOrder.as_view(),name='newpurchaseorder'),
-    path('neworderitems/<int:pk>',views.CreateOrderItem,name='neworderitems'),
 
     path('customers/update/<int:pk>/',views.UpdateCustomerView.as_view(),name='updatecustomer'),
     path('suppliers/update/<int:pk>/',views.UpdateSupplierView.as_view(),name='updatesupplier'),
@@ -27,6 +26,7 @@ urlpatterns=[
     path('projects/update/<int:pk>/',views.UpdateProjectView.as_view(),name='updateproject'),
     path('taxrates/update/<int:pk>/',views.UpdateTaxRateView.as_view(),name='updatetaxrate'),
     path('purchaseorders/update/<int:pk>/',views.UpdatePurchaseOrder.as_view(),name='updatepurchaseorder'),
+    path('purchaseorders/poadditems/<int:pk>',views.CreateOrderItem,name='poadditems'),
 
     path('customers/delete/<int:pk>',views.DeleteCustomerView.as_view(),name='customerdelete'),
     path('suppliers/delete/<int:pk>',views.DeleteSupplierView.as_view(),name='supplierdelete'),

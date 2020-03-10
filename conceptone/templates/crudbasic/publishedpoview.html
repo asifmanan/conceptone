@@ -1,0 +1,52 @@
+{% extends "crudbasic/base.html" %}
+{% block body_block %}
+  <div class="container pb-1">
+    <div class="row mb-0 mb-0 ml-1 mr-1 mt-1">
+      <h3>New Purchase</h3>
+      <button class="btn btn-primary ml-auto mr-1" type="submit" name="button">Print</button>
+      <a href="approve/{{po_obj.pk}}" class="btn btn-success mr-1">Approve</a>
+      <a href="reject/{{po_obj.pk}}" class="btn btn-danger mr-1">Reject</a>
+    </div>
+      <hr>
+      <div class="row mb-0">
+        <div class="col-md-6">
+          <p>Supplier: <b>{{ po_obj.po_supplier }}</b></p>
+          <p>Address: {{po_obj.po_supplier.supplier_address}}</p>
+          <p>City: {{po_obj.po_supplier.supplier_city}}</p>
+        </div>
+        <div class="col-md-6">
+          <p>Date: <b>{{ po_obj.po_date }}</b></p>
+          <p>Total Amount: <b>{{po_obj.po_amount}}</b></p>
+        </div>
+      </div>
+      <div class="row mb-1">
+        <div class="col-md-6">
+          <p>Po Number: <b>{{ po_obj.po_number }}</b></p>
+        </div>
+        <div class="col-md-6">
+          <p>Tax Rate: <b>{{ po_obj.po_tax.tax_value }}%</b></p>
+        </div>
+      </div>
+      {% if page_data %}
+      <div class="mt-0 pb-3 pt-1">
+        <table class="table table-bordered table-striped table-sm table-properties">
+          <thead class="">
+            <tr>
+              <th scope="col">PO Number</th>
+              <th scope="col">Line Number</th>
+              <th scope="col">Item Description</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Unit Price</th>
+              <th scope="col">Total Price</th>
+              <th scope="col">Variation Number</th>
+              <th scope="col">Variation Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% include 'crudbasic/tables/poitemstable.html' %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+  </div>
+{% endblock body_block %}

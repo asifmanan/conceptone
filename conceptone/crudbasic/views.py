@@ -126,7 +126,6 @@ class Published_PoView(DetailView):
     model = OrderItem
     def get_queryset(self):
         return
-    # template_name = 'crudbasic/publishedpo.html'
     # def get(self, request, *args, **kwargs):
     #     main_title = ''
 
@@ -322,7 +321,7 @@ class ItemView(TemplateView):
 # class CreateOrderItem(CreateView):
 #     model = OrderItem
 #     form_class = OrderItemForm
-#     template_name = 'crudbasic/neworderitems.html'
+#     template_name = 'crudbasic/poadditems.html'
 
 def CreateOrderItem(request,pk):
     po_obj = get_object_or_404(PurchaseOrder,pk=pk)
@@ -330,6 +329,8 @@ def CreateOrderItem(request,pk):
     po_obj.CalculatePoTotal()
     # print(po_obj.po_amount)
     page_data = OrderItem.objects.filter(po_number=po_obj).order_by('po_line_number')
+    if po_obj.po_publish == True:
+        return render(request,'crudbasic/PublishedPoView.html',{'po_obj':po_obj,'page_data':page_data})
     form = OrderItemForm()
     if request.method=='POST':
         form = OrderItemForm(request.POST)
@@ -354,7 +355,7 @@ def CreateOrderItem(request,pk):
             print("An Error Occured")
     else:
         form = OrderItemForm()
-    return render(request,'crudbasic/neworderitems.html',{'form':form,'po_obj':po_obj,'page_data':page_data})
+    return render(request,'crudbasic/poadditems.html',{'form':form,'po_obj':po_obj,'page_data':page_data})
 
     # def get_context_data(self, **kwargs):
     #     po_obj = get_object_or_404(PurchaseOrder,pk=pk)
@@ -371,21 +372,25 @@ def CreateOrderItem(request,pk):
     #     if'save' in self.request.POST:
     #         return reverse_lazy('crudbasic:purchaseorders')
     #     if'continue' in self.request.POST:
-    #         return reverse_lazy('crudbasic:neworderitems',kwargs={'pk':self.object.pk})
-    # return render(request,'crudbasic/neworderitems.html',{'formset':form,'po_obj':po_obj})
+    #         return reverse_lazy('crudbasic:poadditems',kwargs={'pk':self.object.pk})
+    # return render(request,'crudbasic/poadditems.html',{'formset':form,'po_obj':po_obj})
+
+def PublishedPoView(request,pk):
+    po_obj = get_object_or_404(PurchaseOrder,pk=pk)
+    page_data = OrderItem.objects.filter(po_number=po_obj).order_by('po_line_number')
+    return render(request,'crudbasic/PublishedPoView.html',{'po_obj':po_obj,'page_data':page_data})
 
 def PoPublishConfirmation(request,pk):
     po_obj = get_object_or_404(PurchaseOrder,pk=pk)
+    page_data = OrderItem.objects.filter(po_number=po_obj).order_by('po_line_number')
     if request.method == 'POST':
         if 'proceed' in request.POST:
             po_obj.publish()
             print(po_obj.po_publish)
             print(timezone.now())
             print("PO PUBLISDHED SUCCESSFULLY!")
-                # return()
-
-
-    return render(request,'crudbasic/publishedpo.html',{'po_obj':po_obj})
+            return render(request,'crudbasic/publishedpoview.html',{'po_obj':po_obj,'page_data':page_data})
+    return render(request,'crudbasic/publishpoconf.html',{'po_obj':po_obj})
 
 
 #ajax call view
@@ -410,7 +415,7 @@ class CreatePurchaseOrder(CreateView):
         if'save' in self.request.POST:
             return reverse_lazy('crudbasic:purchaseorders')
         if'continue' in self.request.POST:
-            return reverse_lazy('crudbasic:neworderitems',kwargs={'pk':self.object.pk})
+            return reverse_lazy('crudbasic:poadditems',kwargs={'pk':self.object.pk})
 
     # def form_valid(self, form):
     #     self.kwargs['po_amount'] = 0.00
@@ -526,7 +531,7 @@ class UpdatePurchaseOrder(UpdateView):
         if'save' in self.request.POST:
             return reverse_lazy('crudbasic:purchaseorders')
         if'continue' in self.request.POST:
-            return reverse_lazy('crudbasic:neworderitems',kwargs={'pk':self.object.pk})
+            return reverse_lazy('crudbasic:poadditems',kwargs={'pk':self.object.pk})
 
 # class UpdateOrderItemView(UpdateView):
 #     model = OrderItem
