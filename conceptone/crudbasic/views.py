@@ -3,6 +3,9 @@ from django.http import JsonResponse
 from django.utils import timezone
 from django.urls import reverse, reverse_lazy
 from django.forms.formsets import formset_factory
+
+from django.http import FileResponse
+
 from crudbasic.models import (
                                 Customers,
                                 Suppliers,
@@ -25,7 +28,7 @@ from crudbasic.forms import (
                             )
 from django.utils import translation
 from django.views.generic import View, TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
-from crudbasic.basic_functions import get_col_heads
+from crudbasic.basic_functions import get_col_heads, printpo2pdf
 
 # Create your views here.
 class IndexView(TemplateView):
@@ -121,6 +124,8 @@ class OrderItemView(ListView):
         context['main_title'] = 'Purchase Orders (Items)'
         context['create_link'] = create_link= {'name':'Create New PO','value':'crudbasic:newpurchaseorder'}
         return context
+
+
 
 class Published_PoView(DetailView):
     model = OrderItem
@@ -392,6 +397,11 @@ def PoPublishConfirmation(request,pk):
             return render(request,'crudbasic/publishedpoview.html',{'po_obj':po_obj,'page_data':page_data})
     return render(request,'crudbasic/publishpoconf.html',{'po_obj':po_obj})
 
+def PrintPurchaseOrder(request,pk):
+    po_obj = get_object_or_404(PurchaseOrder,pk=pk)
+    po_lines = OrderItem.objects.filter(po_number=po_obj).order_by('po_line_number')
+    buffer = printpo2pdf(po_obj, po_lines)
+    return FileResponse(buffer,as_attachment=False,filename="hello.pdf")
 
 #ajax call view
 def loaditemrates(request):

@@ -27,6 +27,7 @@ urlpatterns=[
     path('taxrates/update/<int:pk>/',views.UpdateTaxRateView.as_view(),name='updatetaxrate'),
     path('purchaseorders/update/<int:pk>/',views.UpdatePurchaseOrder.as_view(),name='updatepurchaseorder'),
     path('purchaseorders/poadditems/<int:pk>',views.CreateOrderItem,name='poadditems'),
+    path('purchaseorders/print/<int:pk>',views.PrintPurchaseOrder,name='printpurchaseorder'),
 
     path('customers/delete/<int:pk>',views.DeleteCustomerView.as_view(),name='customerdelete'),
     path('suppliers/delete/<int:pk>',views.DeleteSupplierView.as_view(),name='supplierdelete'),
