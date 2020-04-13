@@ -1,21 +1,34 @@
 import io
+
 from reportlab.pdfgen import canvas
+
 from reportlab.lib.pagesizes import letter, A4
 from reportlab.lib.units import inch, cm
+from reportlab.lib.styles import getSampleStyleSheet
 
-def get_col_heads(caller):
-    caller_fields = caller._meta.fields
-    field_list = []
-    human_rdable_list =[]
-    for fields in caller_fields:
-        column_head = (str(fields)).split(".")
-        human_rdable_name = column_head[-1].replace("_"," ").title()
-        human_rdable_list.append(human_rdable_name)
-        field_list.append(column_head[-1])
-    field_list = field_list[1:-2]
-    human_rdable_list = human_rdable_list[1:-2]
-    field_dct = tuple(zip(field_list,human_rdable_list))
-    return field_dct
+from reportlab.platypus import doctemplate, Paragraph, Frame
+from reportlab.platypus.tables import Table
+
+def generatePdf():
+    buffer = io.BytesIO()
+    c=canvas.Canvas(buffer, pagesize=A4)
+    styles = getSampleStyleSheet()
+    styleN = styles['Normal']
+    styleH = styles['Heading1']
+
+    story = []
+
+    story.append(Paragraph("This is a Heading",styleH))
+    story.append(Paragraph("This is a Paragraph in Normal Style",styleN))
+
+    data = [["S.no","Line Number","Line Description","Quantity","UoM","Unit Price","Total"],[1,1,"Excavation of trench, pipe laying and backfilling in normal soil as per specifications","100","KM","155","15500"]]
+    t=Table(data)
+
+    f = Frame(1*cm,24.7*cm,18*cm,5*cm,showBoundary=1)
+    f.addFromList(story,c)
+    c.save()
+    buffer.seek(0)
+    return buffer
 
 def printpo2pdf(po_obj, po_lines):
     buffer = io.BytesIO()
@@ -51,7 +64,26 @@ def printpo2pdf(po_obj, po_lines):
     textobject.textLine(su_email)
     p.drawText(textobject)
 
+    data = [["S.no","Line Number","Line Description","Quantity","UoM","Unit Price","Total"],[1,1,"Excavation of trench, pipe laying and backfilling in normal soil as per specifications","100","KM","155","15500"]]
+    t=Table(data)
+    t.wrapOn(p,460,100)
+    t.drawOn(p,1.27*cm,(ySize-6)*cm)
+
     p.showPage()
     p.save()
     buffer.seek(0)
     return buffer
+
+def get_col_heads(caller):
+    caller_fields = caller._meta.fields
+    field_list = []
+    human_rdable_list =[]
+    for fields in caller_fields:
+        column_head = (str(fields)).split(".")
+        human_rdable_name = column_head[-1].replace("_"," ").title()
+        human_rdable_list.append(human_rdable_name)
+        field_list.append(column_head[-1])
+    field_list = field_list[1:-2]
+    human_rdable_list = human_rdable_list[1:-2]
+    field_dct = tuple(zip(field_list,human_rdable_list))
+    return field_dct

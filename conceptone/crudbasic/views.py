@@ -28,7 +28,7 @@ from crudbasic.forms import (
                             )
 from django.utils import translation
 from django.views.generic import View, TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
-from crudbasic.basic_functions import get_col_heads, printpo2pdf
+from crudbasic.basic_functions import get_col_heads, printpo2pdf, generatePdf
 
 # Create your views here.
 class IndexView(TemplateView):
@@ -400,7 +400,8 @@ def PoPublishConfirmation(request,pk):
 def PrintPurchaseOrder(request,pk):
     po_obj = get_object_or_404(PurchaseOrder,pk=pk)
     po_lines = OrderItem.objects.filter(po_number=po_obj).order_by('po_line_number')
-    buffer = printpo2pdf(po_obj, po_lines)
+    # buffer = printpo2pdf(po_obj, po_lines)
+    buffer = generatePdf()
     return FileResponse(buffer,as_attachment=False,filename="hello.pdf")
 
 #ajax call view
