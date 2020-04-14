@@ -9,26 +9,57 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import doctemplate, Paragraph, Frame
 from reportlab.platypus.tables import Table
 
-def generatePdf():
+from reportlab.rl_config import defaultPageSize
+
+def generatePdf(po_obj,po_lines):
     buffer = io.BytesIO()
     c=canvas.Canvas(buffer, pagesize=A4)
+
+    PAGE_WIDTH=A4[0]
+    PAGE_HEIGHT=A4[1]
+
+    c.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-26, "Purchase Order")
+
     styles = getSampleStyleSheet()
     styleN = styles['Normal']
     styleH = styles['Heading1']
 
     story = []
+    elements = []
 
-    story.append(Paragraph("This is a Heading",styleH))
-    story.append(Paragraph("This is a Paragraph in Normal Style",styleN))
+    buyerDetail = []
+
+    p=Paragraph("This is just an example",styleN)
+    aW = PAGE_WIDTH
+    aH = PAGE_HEIGHT
+    w,h = p.wrap(aW,aH)
+    print(w,h)
+
+    # story.append(Paragraph("This is a Heading",styleH))
+    # story.append(Paragraph("This is a Paragraph in Normal Style",styleN))
     line_description = Paragraph("Excavation of trench, pipe laying and backfilling in normal soil as per specifications",styleN)
 
     data = [["Line","Description","Quantity","UoM","Unit Price","Total"],[1,line_description,"100","KM","155","15500"]]
     t=Table(data,(2.0*cm,6*cm,2.5*cm,2*cm,3*cm,3*cm))
+    w,h = t.wrap(aW,aH)
+    print(w,h)
 
-    story.append(t)
+    elements.append(t)
 
-    f = Frame(1*cm,23.7*cm,19*cm,5*cm,showBoundary=1)
-    f.addFromList(story,c)
+    # buyerName = Paragraph()
+    buyerInfo = [["PO Number",po_obj.po_number],["PO Date",po_obj.po_date]]
+    supplierInfo = [["Supplier Name",po_obj.po_supplier.supplier_name],
+                    ["Supplier Address",po_obj.po_supplier.supplier_address],
+                    ["Supplier NTN",po_obj.po_supplier.supplier_ntn_number]
+                    ]
+
+    infoTable = Table(supplierInfo,(3.0*cm,6*cm))
+    story.append(infoTable)
+
+    f1 = Frame(1*cm,23.7*cm,19*cm,5*cm,showBoundary=1)
+    f2 = Frame(1*cm,17.7*cm,19*cm,5.5*cm,showBoundary=1)
+    f1.addFromList(story,c)
+    f2.addFromList(elements,c)
     c.save()
     buffer.seek(0)
     return buffer

@@ -401,7 +401,7 @@ def PrintPurchaseOrder(request,pk):
     po_obj = get_object_or_404(PurchaseOrder,pk=pk)
     po_lines = OrderItem.objects.filter(po_number=po_obj).order_by('po_line_number')
     # buffer = printpo2pdf(po_obj, po_lines)
-    buffer = generatePdf()
+    buffer = generatePdf(po_obj,po_lines)
     return FileResponse(buffer,as_attachment=False,filename="hello.pdf")
 
 #ajax call view
