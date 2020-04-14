@@ -22,8 +22,8 @@ def generatePdf():
     story.append(Paragraph("This is a Paragraph in Normal Style",styleN))
     line_description = Paragraph("Excavation of trench, pipe laying and backfilling in normal soil as per specifications",styleN)
 
-    data = [["Line Number","Line Description","Quantity","UoM","Unit Price","Total"],[1,line_description,"100","KM","155","15500"]]
-    t=Table(data,(2*cm,7.5*cm,2*cm,1.5*cm,2.5*cm,3.5*cm))
+    data = [["Line","Description","Quantity","UoM","Unit Price","Total"],[1,line_description,"100","KM","155","15500"]]
+    t=Table(data,(2.0*cm,6*cm,2.5*cm,2*cm,3*cm,3*cm))
 
     story.append(t)
 
