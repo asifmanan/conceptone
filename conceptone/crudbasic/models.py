@@ -100,6 +100,7 @@ class PurchaseOrder(models.Model):
     po_supplier = models.ForeignKey(Suppliers, on_delete=models.CASCADE)
     po_amount = models.DecimalField(max_digits=14, decimal_places=2, default=0.00)
     po_tax = models.ForeignKey(TaxRate, on_delete=models.PROTECT)
+    po_tax_amount = models.DecimalField(max_digits=14, decimal_places=2, default=0.00)
     po_draft = models.BooleanField(default=True)
     po_publish = models.BooleanField(default=False)
     po_publish_date = models.DateTimeField(blank=True, null=True)
@@ -116,10 +117,13 @@ class PurchaseOrder(models.Model):
         items = OrderItem.objects.filter(po_number=self)
         if items.exists():
             items_sum = items.aggregate(Sum('total_price'))
-            print(items_sum['total_price__sum'])
+            # print(items_sum['total_price__sum'])
             items_total_amount = items_sum['total_price__sum']
             self.po_amount = items_total_amount
+            print(self.po_tax.tax_value)
+            self.po_tax_amount = items_total_amount*self.po_tax.tax_value
             self.save()
+
         # else:
         #     print("Object Does not exits")
 
