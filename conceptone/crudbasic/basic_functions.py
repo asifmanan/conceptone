@@ -94,26 +94,16 @@ def generatePdf(po_obj,po_lines):
 class Print_PO(BaseDocTemplate):
     def __init__(self, filename, their_adress, po_lines, po_obj, **kwargs):
         super().__init__(filename, page_size=A4,leftMargin=cm, rightMargin=cm, topMargin=cm, bottomMargin=cm,_pageBreakQuick=0, **kwargs)
-        self.their_adress = their_adress
-        self.objects = po_lines
-        self.po_obj = po_obj
+        self.po_lines = po_lines
+        self.po_object = po_obj
 
         self.page_width = (self.width + self.leftMargin * 2)
         self.page_height = (self.height + self.bottomMargin * 2)
 
-        styles = getSampleStyleSheet()
-        styleN = styles['Normal']
+        # styles = getSampleStyleSheet()
+        # styleN = styles['Normal']
 
         # Setting up the frames, frames are use for dynamic content not fixed page elements
-        supplierInfo = [["Supplier Name",po_obj.po_supplier.supplier_name],
-                        ["Supplier Address",po_obj.po_supplier.supplier_address+", "+po_obj.po_supplier.supplier_city],
-                        ["Supplier NTN",po_obj.po_supplier.supplier_ntn_number],
-                        ["Supplier Phone",po_obj.po_supplier.supplier_phone],
-                        ["Supplier Email",po_obj.po_supplier.supplier_email],
-                        ]
-        supplier_info_table = Table(supplierInfo,(3.0*cm,6*cm))
-        info_table_w,info_table_h = supplier_info_table.wrap(0,0)
-        # info_table = Frame(self.leftMargin,)
         first_page_table_frame = Frame(self.leftMargin, self.bottomMargin, self.width, self.height, id='small_table')
         later_pages_table_frame = Frame(self.leftMargin, self.bottomMargin, self.width, self.height, id='large_table')
 
@@ -123,18 +113,42 @@ class Print_PO(BaseDocTemplate):
         self.addPageTemplates([first_page, later_pages])
 
         # Tell Reportlab to use the other template on the later pages,
-        # by the default the first template that was added is used for the first page.
+        # by default the first template that was added is used for the first page.
         story = [NextPageTemplate(['*', 'LaterPages'])]
 
-        table_grid = [["Line","Description","Quantity","UoM","Unit Price","Total"],]
+        info_table = self.infoTable()
+        item_table,calculation_table = self.itemsTable()
+        story.append(info_table)
+        story.append(Spacer(1,0.25*cm))
+        story.append(item_table)
+        story.append(Spacer(1,0.25*cm))
+        story.append(calculation_table)
+        self.build(story)
 
+    def infoTable(self):
+        # Provide Supplier Information
+        supplierInfo = [
+                        ["Supplier Name",self.po_object.po_supplier.supplier_name],
+                        ["Supplier Address",self.po_object.po_supplier.supplier_address+", "+self.po_object.po_supplier.supplier_city],
+                        ["Supplier NTN",self.po_object.po_supplier.supplier_ntn_number],
+                        ["Supplier Phone",self.po_object.po_supplier.supplier_phone],
+                        ["Supplier Email",self.po_object.po_supplier.supplier_email],
+                        ]
+        supplier_info_table = Table(supplierInfo,(3.0*cm,6*cm))
+        info_table_w,info_table_h = supplier_info_table.wrap(0,0)
+        supplier_info_table.hAlign = 'LEFT'
+        return supplier_info_table
+
+    def itemsTable(self):
         # Add the objects
-        for item in po_lines:
+        styles = getSampleStyleSheet()
+        styleN = styles['Normal']
+        table_grid = [["Line","Description","Quantity","UoM","Unit Price","Total"],]
+        for item in self.po_lines:
             line_description = Paragraph(item.order_item.item_description,styleN)
             table_grid.append([item.po_line_number,line_description,
                             item.order_quantity,item.order_item.item_uom,
                             item.purchase_price,item.total_price])
-
         item_table = Table(table_grid, repeatRows=1, colWidths=(2.0*cm,6.1*cm,2.5*cm,2*cm,3*cm,3*cm),
                            style=TableStyle([('GRID',(0,1),(-1,-1),0.25,colors.gray),
                                              ('BOX', (0,0), (-1,-1), 1.0, colors.black),
@@ -144,8 +158,8 @@ class Print_PO(BaseDocTemplate):
                                              ('ALIGN', (4,1),(5,-1), 'RIGHT'),
                                              ]))
 
-        calculation_data = [["Total Amount",po_obj.po_amount],
-                            ["Tax",po_obj.po_tax_amount],
+        calculation_data = [["Total Amount",self.po_object.po_amount],
+                            ["Tax",self.po_object.po_tax_amount],
                             ["Total (inc Tax)","Value"]]
         calculation_table = Table(calculation_data, colWidths=(3*cm,3*cm),
                             style=TableStyle([('GRID',(0,0),(-1,-1),0.25,colors.gray),
@@ -154,41 +168,24 @@ class Print_PO(BaseDocTemplate):
                                               ]))
 
         calculation_table.hAlign = 'RIGHT'
-        # story.append(supplier_info_table)
-        # story.append(Spacer(1,0.25*cm))
-        story.append(item_table)
-        story.append(Spacer(1,0.25*cm))
-        story.append(calculation_table)
-        self.build(story)
+        return item_table, calculation_table
 
     def on_first_page(self, canvas, doc):
         canvas.saveState()
         # Add the logo and other default stuff
         self.add_default_info(canvas, doc)
 
-        supplierInfo = [["Supplier Name",self.po_obj.po_supplier.supplier_name],
-                        ["Supplier Address",self.po_obj.po_supplier.supplier_address+", "+po_obj.po_supplier.supplier_city],
-                        ["Supplier NTN",self.po_obj.po_supplier.supplier_ntn_number],
-                        ["Supplier Phone",self.po_obj.po_supplier.supplier_phone],
-                        ["Supplier Email",self.po_obj.po_supplier.supplier_email],
-                        ]
-        supplier_info_table = Table(supplierInfo,(3.0*cm,6*cm))
-        info_table_w,info_table_h = supplier_info_table.wrap(0,0)
-        supplier_info_table.drawOn(canvas,self.leftMargin,doc.height-(info_table_h+0.5*cm))
+        # supplier_info_table.drawOn(canvas,self.leftMargin,doc.height-(info_table_h+0.5*cm))
 
-        canvas.drawString(doc.leftMargin, doc.height, "My address")
-        canvas.drawString(0.5 * doc.page_width, doc.height, self.their_adress)
+        # canvas.drawString(doc.leftMargin, doc.height, "My address")
+        # canvas.drawString(0.5 * doc.page_width, doc.height, self.their_adress)
 
         canvas.restoreState()
 
     def add_default_info(self, canvas, doc):
         canvas.saveState()
-        canvas.drawCentredString(0.5 * (doc.page_width), doc.page_height - 1 * cm, "Amanullah Khan & Co (Pvt) Ltd")
-
+        canvas.drawCentredString(0.5 * (doc.page_width), doc.page_height - 1 * cm, "Purchase Order No. "+self.po_object.po_number)
         canvas.restoreState()
-
-# if __name__ == '__main__':
-#     ShippingListReport('example.pdf', "Their address", ["Product", "Product"] * 50)
 
 def printpo2pdf(po_obj, po_lines):
     buffer = io.BytesIO()
