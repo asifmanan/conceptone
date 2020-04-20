@@ -11,7 +11,9 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sales</a>
         <div class="dropdown-menu">
-            <a class="dropdown-item" href="newinvoice.html">View Invoces</a>
+            <a class="dropdown-item" href="newinvoice.html">Sales Orders</a>
+            <a class="dropdown-item" href="newinvoice.html">Sales Invoces</a>
+            <a class="dropdown-item" href="newinvoice.html">Sales Report</a>
           <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Payment Receivable</a>
         </div>
@@ -32,6 +34,8 @@
         <div class="dropdown-menu">
             <a class="dropdown-item" href="{% url 'crudbasic:projects' %}">View Projects</a>
             <a class="dropdown-item" href="{% url 'crudbasic:createproject' %}">Create New Project</a>
+            <a class="dropdown-item" href="{% url 'crudbasic:createproject' %}">Manage Contracts</a>
+            <a class="dropdown-item" href="{% url 'crudbasic:createproject' %}">Bill of Quantity</a>
           <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Progress</a>
             <a class="dropdown-item" href="#">Deliverables</a>
