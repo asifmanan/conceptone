@@ -3,6 +3,9 @@ conceptone/conceptone/__pycache__/
 conceptone/crudbasic/__pycache__/
 conceptone/crudbasic/migrations/__pycache__/
 conceptone/crudbasic/migrations/
+conceptone/salesApp/__pycache__/
+conceptone/salesApp/migrations/__pycache__/
+conceptone/salesApp/migrations/
 __pycache__/
 *.py[cod]
 *$py.class
