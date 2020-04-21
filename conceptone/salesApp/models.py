@@ -42,3 +42,14 @@ class SaleOrderItem(models.Model):
 
     def __str__(self):
         return str(self.po_line_number)
+
+class SaleInvoice(models.Model):
+    so_number = models.ForeignKey(SaleOrder, on_delete=models.PROTECT,verbose_name='SO Number')
+    si_number = models.CharField(max_length=24)
+    si_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
+    si_date = models.DateField()
+
+class SaleInvoiceItems(models.Model):
+    si_number = models.ForeignKey(SaleInvoice, on_delete=models.CASCADE)
+    si_item = models.ForeignKey(SaleOrderItem, on_delete=models.CASCADE)
+    si_quantity = models.DecimalField(max_digits=14,decimal_places=2,default=0.00,verbose_name='Quantity')
