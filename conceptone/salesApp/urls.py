@@ -1,8 +1,8 @@
 from django.urls import path
-from crudbasic import views
+from salesApp import views
 
 app_name = 'salesApp'
 
 urlpatterns=[
-
+    path('createinvoice/',views.CreateInvoice.as_view(),name='createinvoice'),
 ]
