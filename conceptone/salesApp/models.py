@@ -6,11 +6,11 @@ from crudbasic.models import Customers, Items, TaxRate, Projects
 
 # Create your models here.
 class SaleOrder(models.Model):
-    so_number = models.CharField(max_length=24)
-    so_ponumber = models.CharField(max_length=48)
-    so_date = models.DateField()
-    so_customer = models.ForeignKey(Customers, on_delete=models.PROTECT)
-    so_project = models.ForeignKey(Projects, on_delete=models.PROTECT)
+    so_number = models.CharField(max_length=24,verbose_name='SO Number')
+    so_ponumber = models.CharField(max_length=48,verbose_name='PO Number')
+    so_customer = models.ForeignKey(Customers, on_delete=models.PROTECT,verbose_name='Customer')
+    so_project = models.ForeignKey(Projects, on_delete=models.PROTECT,verbose_name='Project')
+    so_podate = models.DateField(verbose_name='PO Date', null=True)
     so_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
     so_tax_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
     so_draft = models.BooleanField(default=True)
@@ -48,7 +48,7 @@ class SaleOrderItem(models.Model):
         return str(self.po_line_number)
 
 class SaleInvoice(models.Model):
-    so_number = models.ForeignKey(SaleOrder, on_delete=models.PROTECT,verbose_name='SO Number',null=True)
+    si_sonumber = models.ForeignKey(SaleOrder,on_delete=models.PROTECT,verbose_name='SO Number',null=True)
     si_number = models.CharField(max_length=24,verbose_name='Invoice Number')
     si_customer = models.ForeignKey(Customers,on_delete=models.PROTECT,verbose_name='Customer')
     si_project = models.ForeignKey(Projects,on_delete=models.PROTECT,verbose_name='Project')
