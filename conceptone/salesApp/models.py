@@ -10,6 +10,7 @@ class SaleOrder(models.Model):
     so_ponumber = models.CharField(max_length=48)
     so_date = models.DateField()
     so_customer = models.ForeignKey(Customers, on_delete=models.PROTECT)
+    so_project = models.ForeignKey(Projects, on_delete=models.PROTECT)
     so_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
     so_tax_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
     so_draft = models.BooleanField(default=True)
