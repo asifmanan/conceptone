@@ -31,3 +31,17 @@ class SaleInvoiceForm(forms.ModelForm):
                     'si_customer':forms.Select(attrs={'class':'form-control'}),
                     'si_project':forms.Select(attrs={'class':'form-control'}),
                     }
+
+class SaleOrderItemForm(forms.ModelForm):
+    class Meta:
+        model = SaleOrderItem
+        fields = (
+                    'sale_order_item','so_quantity','sale_price',
+                    'so_tax_rate',
+                    )
+        widgets = {
+                    'sale_order_item':forms.Select(attrs={'class':'form-control'}),
+                    'so_quantity':forms.TextInput(attrs={'class':'form-control'}),
+                    'sale_price':forms.TextInput(attrs={'class':'form-control'}),
+                    'so_tax_rate':forms.Select(attrs={'class':'form-control'}),
+        }
