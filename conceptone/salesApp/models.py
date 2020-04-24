@@ -40,12 +40,12 @@ class SaleOrderItem(models.Model):
     so_item_tax_amount = models.DecimalField(max_digits=14,decimal_places=2,verbose_name='Tax Amount')
     total_price = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
     variation_number = models.IntegerField(default=0)
-    variation_quantity = models.DecimalField(max_digits=14,decimal_places=2,verbose_name='Variation Quantity')
+    variation_quantity = models.DecimalField(max_digits=14,decimal_places=2,default=0,verbose_name='Variation Quantity')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(self.po_line_number)
+        return str(self.so_line_number)
 
 class SaleInvoice(models.Model):
     si_sonumber = models.ForeignKey(SaleOrder,on_delete=models.PROTECT,verbose_name='SO Number',null=True)
