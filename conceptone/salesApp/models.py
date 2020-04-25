@@ -30,6 +30,9 @@ class SaleOrder(models.Model):
     def __str__(self):
         return self.so_number
 
+    def get_absolute_url(self):
+        return reverse('salesApp:addsaleorderitems',kwargs={'pk':self.pk})
+
 class SaleOrderItem(models.Model):
     so_line_number = models.IntegerField(verbose_name='Line')
     sale_order_item = models.ForeignKey(Items, on_delete=models.PROTECT,verbose_name='Item')

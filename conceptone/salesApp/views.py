@@ -31,7 +31,7 @@ class AddSaleOrderItems(CreateView):
     def form_valid(self,form):
         line_item = form.save(commit=False)
         line_item.so_number = get_object_or_404(SaleOrder, pk=self.kwargs['pk'])
-        current_obj = SaleOrderItem.objects.filter(so_line_number=line_item.so_line_number).order_by('-so_line_number').first()
+        current_obj = SaleOrderItem.objects.filter(so_number=line_item.so_number).order_by('-so_line_number').first()
         if current_obj !=None:
             new_line_number = (current_obj.so_line_number) + 1
         else:
@@ -40,6 +40,8 @@ class AddSaleOrderItems(CreateView):
         line_item.total_price = line_item.sale_price*line_item.so_quantity
         line_item.so_item_tax_amount = line_item.so_tax_rate.tax_value*line_item.total_price
         line_item.save()
+        return super().form_valid(form)
+
 
     def get_success_url(self):
-        return reverse_lazy('salesApp:addsaleorderitems',kwargs={'pk':self.object.pk})
+        return reverse_lazy('salesApp:addsaleorderitems',kwargs={'pk':self.object.so_number.pk})
