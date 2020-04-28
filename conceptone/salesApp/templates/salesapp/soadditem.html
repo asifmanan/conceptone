@@ -9,7 +9,7 @@
     <div>
         <div class="mr-md-2 ml-md-2">
             <div class="row">
-                <div class="col-md-3 col-lg-3 mr-1 ml-1 mr-md-0 ml-md-0">
+                <div class="col-md-3 col-lg-3 col-xl-2 mr-1 ml-1 mr-md-0 ml-md-0">
                     <div class="border rounded" style="margin-bottom: 6px;">
                         <p style="margin-left: 3px;margin-bottom: 1px;">
                           SO Number</p>
@@ -41,8 +41,11 @@
                         <p style="margin-bottom: 0px;margin-left: 3px;">
                         {{so.so_tax_amount}}</p>
                     </div>
+                    <div style="margin-top: 12px;">
+                      <button class="btn btn-success" type="button" name="button">Publish</button>
+                    </div>
                 </div>
-                <div class="col-md-9 col-lg-9 mr-1 ml-1 mr-md-0 ml-md-0">
+                <div class="col-md-9 col-lg-9 col-xl-10 mr-1 ml-1 mr-md-0 ml-md-0">
                     <div class="row">
                         <div class="col">
                             <form method="post">{% csrf_token %}
@@ -67,22 +70,22 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="col-md-3 col-lg-2 col-xl-2 mr-1 ml-1 mr-md-0 ml-md-0" style="margin-top: 12px;">
-                                      <button class="btn btn-primary" type="submit" style="width: 100%;">Add Item</button>
+                                    <div class="col-md-3 col-lg-2 col-xl-1 mr-1 ml-1 mr-md-0 ml-md-0" style="margin-top: 12px;">
+                                      <button class="btn btn-primary" type="submit" style="width: 100%;">Add</button>
                                     </div>
-                                    <div class="col-md-3 col-lg-2 ml-1 mr-1 ml-md-0 mr-md-0" style="margin-top: 12px;">
+                                    <div class="col-md-3 col-lg-2 col-xl-1 ml-1 mr-1 ml-md-0 mr-md-0" style="margin-top: 12px;">
                                       <button class="btn btn-info" type="reset" style="width: 100%;">Reset</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
+                    <div class="row">
+                      {% if items %}
+                      {% include "salesApp/tables/soadditemstable.html" %}
+                      {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row ml-1 mr-1">
-      {% if items %}
-      {% include "salesApp/tables/soadditemstable.html" %}
-      {% endif %}
     </div>
