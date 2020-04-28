@@ -25,7 +25,15 @@ class SaleOrder(models.Model):
         self.save()
 
     def CalculateSoTotal(self):
-        pass
+        items = SaleOrderItem.objects.filter(so_number=self)
+        if items.exists():
+            items_sum = items.aggregate(Sum('total_price'))
+            items_tax = items.aggregate(Sum('so_item_tax_amount'))
+            items_total_amount = items_sum['total_price__sum']
+            items_total_tax_amount = items_tax['so_item_tax_amount__sum']
+            self.so_amount = items_total_amount
+            self.so_tax_amount = items_total_tax_amount
+            self.save()
 
     def __str__(self):
         return self.so_number

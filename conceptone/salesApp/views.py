@@ -40,8 +40,12 @@ class AddSaleOrderItems(CreateView):
         line_item.total_price = line_item.sale_price*line_item.so_quantity
         line_item.so_item_tax_amount = line_item.so_tax_rate.tax_value*line_item.total_price
         line_item.save()
+        line_item.so_number.CalculateSoTotal()
         return super().form_valid(form)
-
-
     def get_success_url(self):
         return reverse_lazy('salesApp:addsaleorderitems',kwargs={'pk':self.object.so_number.pk})
+
+class SaleOrderList(ListView):
+    model = SaleOrder
+    form_class = SaleOrderForm
+    template_name = 'salesApp/saleorderlist.html'

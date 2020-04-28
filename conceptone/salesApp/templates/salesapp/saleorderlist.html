@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% include "salesApp/base.html" %}
+{% block bodyblock %}
+    <h1 style="margin-left: 6px;">Sale Orders</h1>
+    <div style="margin-left: 3px;margin-right: 3px;">
+        <div class="row">
+            <div class="col-md-4 col-lg-3 col-xl-2">
+                <div>
+                    <form>
+                        <div style="margin-left: 6px;margin-right: 6px;">
+                            <p style="margin-bottom: 3px;">SO Number</p><input class="form-control" type="text" style="padding-right: 0px;padding-left: 0px;"></div>
+                        <div style="margin-left: 6px;margin-top: 12px;margin-right: 6px;">
+                            <p style="margin-bottom: 3px;">PO Number</p><input class="form-control" type="text" style="padding-right: 0px;padding-left: 0px;"></div>
+                        <div style="margin-left: 6px;margin-top: 12px;margin-right: 6px;">
+                            <p style="margin-bottom: 3px;">Customer</p><input class="form-control" type="text" style="padding-right: 0px;padding-left: 0px;"></div>
+                        <div style="margin-left: 6px;margin-top: 12px;margin-right: 6px;">
+                            <p style="margin-bottom: 3px;">Project</p><input class="form-control" type="text" style="padding-right: 0px;padding-left: 0px;"></div>
+                        <div style="margin-left: 6px;margin-top: 18px;margin-right: 6px;margin-bottom: 6px;"><button class="btn btn-primary" type="button">Search</button></div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-8 col-lg-9 col-xl-10">
+                <div style="margin-right: 12px;">
+                    {% include "salesApp/tables/solisttable.html" %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock bodyblock %}
