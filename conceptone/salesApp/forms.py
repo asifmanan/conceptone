@@ -3,7 +3,7 @@ from datetime import datetime
 from salesApp.models import (SaleOrder,
                                 SaleOrderItem,
                                 SaleInvoice,
-                                SaleInvoiceItems,
+                                SaleInvoiceItem,
 )
 
 class SaleOrderForm(forms.ModelForm):
@@ -26,7 +26,6 @@ class SaleInvoiceForm(forms.ModelForm):
         fields = ('si_sonumber','si_number','si_date','si_customer','si_project',)
         widgets = {
                     'si_sonumber':forms.Select(attrs={'class':'form-control'}),
-                    'si_number':forms.TextInput(attrs={'class':'form-control'}),
                     'si_date':forms.DateInput(attrs={'class':'form-control','type':'date','id':'si_date'}),
                     'si_customer':forms.Select(attrs={'class':'form-control'}),
                     'si_project':forms.Select(attrs={'class':'form-control'}),
@@ -44,4 +43,14 @@ class SaleOrderItemForm(forms.ModelForm):
                     'so_quantity':forms.TextInput(attrs={'class':'form-control'}),
                     'sale_price':forms.TextInput(attrs={'class':'form-control'}),
                     'so_tax_rate':forms.Select(attrs={'class':'form-control'}),
+        }
+
+class SaleInvoiceItemForm(forms.ModelForm):
+    class Meta:
+        model = SaleInvoiceItem
+        fields = ('si_item','si_item_bill_quantity','si_item_tax_rate')
+        widgets = {
+                    'si_item':forms.Select(attrs={'class':'form-control'}),
+                    'si_item_bill_quantity':forms.TextInput(attrs={'class':'form-control'}),
+                    'si_item_tax_rate':forms.Select(attrs={'class':'form-control'}),
         }

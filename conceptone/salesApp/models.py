@@ -60,17 +60,24 @@ class SaleOrderItem(models.Model):
 
 class SaleInvoice(models.Model):
     si_sonumber = models.ForeignKey(SaleOrder,on_delete=models.PROTECT,verbose_name='SO Number',null=True)
-    si_number = models.CharField(max_length=24,verbose_name='Invoice Number')
+    si_number = models.CharField(max_length=24,verbose_name='Invoice Number',null=True)
     si_customer = models.ForeignKey(Customers,on_delete=models.PROTECT,verbose_name='Customer')
     si_project = models.ForeignKey(Projects,on_delete=models.PROTECT,verbose_name='Project')
     si_tax_amount = models.DecimalField(max_digits=14,decimal_places=2,verbose_name='Tax Amount')
     si_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00, verbose_name='Grand Total')
     si_date = models.DateField(verbose_name='Invoice Date')
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+    def CreateInvoiceFromSo(self):
+        self.si_customer = self.si_sonumber.so_customer
+        self.si_project = self.si_sonumber.so_project
 
-class SaleInvoiceItems(models.Model):
+class SaleInvoiceItem(models.Model):
     si_number = models.ForeignKey(SaleInvoice, on_delete=models.CASCADE)
     si_item = models.ForeignKey(SaleOrderItem, on_delete=models.CASCADE)
     si_item_bill_quantity = models.DecimalField(max_digits=14,decimal_places=2,default=0.00,verbose_name='Quantity')
     si_item_tax_rate = models.ForeignKey(TaxRate, on_delete=models.PROTECT)
     si_item_tax_amount = models.DecimalField(max_digits=14,decimal_places=2,verbose_name='Tax Amount')
     si_item_total_amount = models.DecimalField(max_digits=14,decimal_places=2,verbose_name='Total Amount')
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
