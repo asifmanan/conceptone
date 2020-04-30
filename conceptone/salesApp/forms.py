@@ -20,15 +20,23 @@ class SaleOrderForm(forms.ModelForm):
                     'so_project':forms.Select(attrs={'class':'form-control'}),
                     }
 
-class SaleInvoiceForm(forms.ModelForm):
+class SaleInvoiceSoForm(forms.ModelForm):
     class Meta:
         model = SaleInvoice
-        fields = ('si_sonumber','si_number','si_date','si_customer','si_project',)
+        fields = ('si_sonumber','si_date',)
         widgets = {
                     'si_sonumber':forms.Select(attrs={'class':'form-control'}),
                     'si_date':forms.DateInput(attrs={'class':'form-control','type':'date','id':'si_date'}),
+                    }
+
+class SaleInvoiceNewForm(forms.ModelForm):
+    class Meta:
+        model = SaleInvoice
+        fields = ('si_date','si_customer','si_project',)
+        widgets = {
                     'si_customer':forms.Select(attrs={'class':'form-control'}),
                     'si_project':forms.Select(attrs={'class':'form-control'}),
+                    'si_date':forms.DateInput(attrs={'class':'form-control','type':'date','id':'si_date'}),
                     }
 
 class SaleOrderItemForm(forms.ModelForm):

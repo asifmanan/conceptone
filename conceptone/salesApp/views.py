@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.urls import reverse, reverse_lazy
 from django.http import FileResponse
 from salesApp.models import SaleOrder, SaleInvoice, SaleOrderItem, SaleInvoiceItem
-from salesApp.forms import SaleInvoiceForm, SaleOrderForm, SaleOrderItemForm, SaleInvoiceItemForm
+from salesApp.forms import SaleInvoiceSoForm, SaleInvoiceNewForm , SaleOrderForm, SaleOrderItemForm, SaleInvoiceItemForm
 from django.views.generic import (View, TemplateView, ListView, DetailView,
                                     CreateView, UpdateView, DetailView)
 # Create your views here.
@@ -14,10 +14,28 @@ class CreateSaleOrder(CreateView):
     def get_success_url(self):
         return reverse_lazy('salesApp:addsaleorderitems',kwargs={'pk':self.object.pk})
 
-class CreateInvoice(CreateView):
+class CreateSoInvoice(CreateView):
     model = SaleInvoice
-    form_class = SaleInvoiceForm
-    template_name = 'salesApp/createinvoice.html'
+    form_class = SaleInvoiceSoForm
+    template_name = 'salesApp/createsoinvoice.html'
+    def form_valid(self,form):
+        so_invoice = form.save(commit=False)
+        print(so_invoice)
+        so_invoice.si_customer = so_invoice.si_sonumber.so_customer
+        print(so_invoice.si_customer)
+        so_invoice.si_project = so_invoice.si_sonumber.so_project
+        print(so_invoice.si_project)
+        so_invoice.save()
+        return super().form_valid(form)
+    def get_success_url(self):
+        return reverse_lazy('salesApp:addsaleorderitems',kwargs={'pk':self.object.si_sonumber.pk})
+
+class CreateNewInvoice(CreateView):
+    model = SaleInvoice
+    form_class = SaleInvoiceNewForm
+    template_name = 'salesApp/createnewinvoice.html'
+    def get_success_url(self):
+        return reverse_lazy('salesApp:createsoinvoice')
 
 class AddSaleOrderItems(CreateView):
     model = SaleOrderItem
