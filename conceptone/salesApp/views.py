@@ -30,6 +30,10 @@ class CreateSoInvoice(CreateView):
 class AddSaleInvoiceItemsFromSo(ListView):
     model = SaleInvoiceItem
     template_name = 'salesApp/invitemselect.html'
+    def get_context_data(self,*args,**kwargs):
+        context = super().get_context_data(*args,**kwargs)
+        context['so'] = get_object_or_404(SaleOrder, pk=self.kwargs['pk'])
+
 
 
 class CreateNewInvoice(CreateView):
