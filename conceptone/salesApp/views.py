@@ -20,15 +20,17 @@ class CreateSoInvoice(CreateView):
     template_name = 'salesApp/createsoinvoice.html'
     def form_valid(self,form):
         so_invoice = form.save(commit=False)
-        print(so_invoice)
         so_invoice.si_customer = so_invoice.si_sonumber.so_customer
-        print(so_invoice.si_customer)
         so_invoice.si_project = so_invoice.si_sonumber.so_project
-        print(so_invoice.si_project)
         so_invoice.save()
         return super().form_valid(form)
     def get_success_url(self):
         return reverse_lazy('salesApp:addsaleorderitems',kwargs={'pk':self.object.si_sonumber.pk})
+
+class AddSaleInvoiceItemsFromSo(ListView):
+    model = SaleInvoiceItem
+    template_name = 'salesApp/invitemselect.html'
+
 
 class CreateNewInvoice(CreateView):
     model = SaleInvoice

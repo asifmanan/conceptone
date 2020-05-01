@@ -1,0 +1,47 @@
+{% include "salesApp/bast.html" %}
+{% block bodyblock %}
+<div style="margin-top: 12px;margin-left: 12px;margin-bottom: 12px;margin-right: 12px;">
+    <h3>New Invoice</h3>
+</div>
+<div style="margin: 12px;">
+    <div class="row">
+        <div class="col-md-4 col-xl-3">
+            <div style="margin: 6px;margin-right: 3px;margin-left: 3px;">
+                <h5 style="margin-bottom: 4px;">SO Number</h5>
+                <p style="margin-bottom: 0px;">Paragraph</p>
+            </div>
+        </div>
+        <div class="col-md-4 col-xl-3">
+            <div style="margin: 6px;margin-right: 3px;margin-left: 3px;">
+                <h5 style="margin-bottom: 4px;">Customer</h5>
+                <p style="margin-bottom: 0px;">Paragraph</p>
+            </div>
+        </div>
+        <div class="col-md-4 col-xl-3">
+            <div style="margin: 6px;margin-right: 3px;margin-left: 3px;">
+                <h5 style="margin-bottom: 4px;">Project</h5>
+                <p style="margin-bottom: 0px;">Paragraph</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="margin: 12px;">
+    <p style="margin-bottom: 8px;margin-top: 12px;">Select items to Invoice from the list</p>
+      {% include "salesApp/tables/selectinvitemtable.html" %}
+    <div class="row">
+        <div class="col">
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                    <li class="page-item"><a class="page-link" href="#">5</a></li>
+                    <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+{% endblock bodyblock %}
