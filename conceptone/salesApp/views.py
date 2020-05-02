@@ -25,14 +25,15 @@ class CreateSoInvoice(CreateView):
         so_invoice.save()
         return super().form_valid(form)
     def get_success_url(self):
-        return reverse_lazy('salesApp:addsaleorderitems',kwargs={'pk':self.object.si_sonumber.pk})
+        return reverse_lazy('salesApp:addsiitemfromso',kwargs={'pk':self.object.si_sonumber.pk})
 
 class AddSaleInvoiceItemsFromSo(ListView):
-    model = SaleInvoiceItem
-    template_name = 'salesApp/invitemselect.html'
+    model = SaleOrderItem
+    template_name = 'salesApp/addsiitemfromso.html'
     def get_context_data(self,*args,**kwargs):
         context = super().get_context_data(*args,**kwargs)
         context['so'] = get_object_or_404(SaleOrder, pk=self.kwargs['pk'])
+        print(self.object_list[9].so_number)
 
 
 
