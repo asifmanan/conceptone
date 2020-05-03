@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.http import JsonResponse
 from django.urls import reverse, reverse_lazy
 from django.http import FileResponse
 from salesApp.models import SaleOrder, SaleInvoice, SaleOrderItem, SaleInvoiceItem
 from salesApp.forms import SaleInvoiceSoForm, SaleInvoiceNewForm , SaleOrderForm, SaleOrderItemForm, SaleInvoiceItemForm
 from django.views.generic import (View, TemplateView, ListView, DetailView,
-                                    CreateView, UpdateView, DetailView)
+                                    CreateView, UpdateView, DetailView, FormView,)
 # Create your views here.
 class CreateSaleOrder(CreateView):
     model = SaleOrder
@@ -14,28 +14,42 @@ class CreateSaleOrder(CreateView):
     def get_success_url(self):
         return reverse_lazy('salesApp:addsaleorderitems',kwargs={'pk':self.object.pk})
 
-class CreateSoInvoice(CreateView):
-    model = SaleInvoice
+# class CreateSoInvoice(CreateView):
+#     model = SaleInvoice
+#     form_class = SaleInvoiceSoForm
+#     template_name = 'salesApp/createsoinvoice.html'
+#     def form_valid(self,form):
+#         so_invoice = form.save(commit=False)
+#         so_invoice.si_customer = so_invoice.si_sonumber.so_customer
+#         so_invoice.si_project = so_invoice.si_sonumber.so_project
+#         so_invoice.save()
+#         return super().form_valid(form)
+#     def get_success_url(self):
+#         return reverse_lazy('salesApp:addsiitemfromso',kwargs={'pk':self.object.si_sonumber.pk})
+
+class CreateSoInvoice(FormView):
     form_class = SaleInvoiceSoForm
     template_name = 'salesApp/createsoinvoice.html'
     def form_valid(self,form):
-        so_invoice = form.save(commit=False)
-        so_invoice.si_customer = so_invoice.si_sonumber.so_customer
-        so_invoice.si_project = so_invoice.si_sonumber.so_project
-        so_invoice.save()
+        self.so = form.cleaned_data['si_sonumber']
+        # print(self.so.pk)
+        # self.form = form
         return super().form_valid(form)
-    def get_success_url(self):
-        return reverse_lazy('salesApp:addsiitemfromso',kwargs={'pk':self.object.si_sonumber.pk})
 
-class AddSaleInvoiceItemsFromSo(ListView):
+    def get_success_url(self):
+        # so = self.form.cleaned_data['si_sonumber']
+        return reverse_lazy('salesApp:selectsiitemfromso',kwargs={'pk':self.so.pk})
+
+
+class SelectSaleInvoiceItemsFromSo(ListView):
     model = SaleOrderItem
-    template_name = 'salesApp/addsiitemfromso.html'
+    template_name = 'salesApp/selectsiitemfromso.html'
     def get_context_data(self,*args,**kwargs):
         context = super().get_context_data(*args,**kwargs)
         context['so'] = get_object_or_404(SaleOrder, pk=self.kwargs['pk'])
-        print(self.object_list[9].so_number)
-
-
+        # context['object_list'] = get_list_or_404(SaleOrderItem, so_number=self.kwargs['pk'])
+        context['object_list'] = SaleOrderItem.objects.filter(so_number=self.kwargs['pk'])
+        return context
 
 class CreateNewInvoice(CreateView):
     model = SaleInvoice

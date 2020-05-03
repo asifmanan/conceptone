@@ -23,10 +23,10 @@ class SaleOrderForm(forms.ModelForm):
 class SaleInvoiceSoForm(forms.ModelForm):
     class Meta:
         model = SaleInvoice
-        fields = ('si_sonumber','si_date',)
+        fields = ('si_sonumber',)
         widgets = {
                     'si_sonumber':forms.Select(attrs={'class':'form-control'}),
-                    'si_date':forms.DateInput(attrs={'class':'form-control','type':'date','id':'si_date'}),
+                    # 'si_date':forms.DateInput(attrs={'class':'form-control','type':'date','id':'si_date'}),
                     }
 
 class SaleInvoiceNewForm(forms.ModelForm):
