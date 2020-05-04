@@ -32,6 +32,7 @@ class CreateSoInvoice(FormView):
     template_name = 'salesApp/createsoinvoice.html'
     def form_valid(self,form):
         self.so = form.cleaned_data['si_sonumber']
+        self.request.session['so_num'] = self.so
         # print(self.so.pk)
         # self.form = form
         return super().form_valid(form)
@@ -39,7 +40,6 @@ class CreateSoInvoice(FormView):
     def get_success_url(self):
         # so = self.form.cleaned_data['si_sonumber']
         return reverse_lazy('salesApp:selectsiitemfromso',kwargs={'pk':self.so.pk})
-
 
 class SelectSaleInvoiceItemsFromSo(ListView):
     model = SaleOrderItem
@@ -49,7 +49,15 @@ class SelectSaleInvoiceItemsFromSo(ListView):
         context['so'] = get_object_or_404(SaleOrder, pk=self.kwargs['pk'])
         # context['object_list'] = get_list_or_404(SaleOrderItem, so_number=self.kwargs['pk'])
         context['object_list'] = SaleOrderItem.objects.filter(so_number=self.kwargs['pk'])
+        print("success!")
+        print(self.request.session['so_num'])
         return context
+    def form_valid(self,form):
+        pass
+
+class CreateInvoiceFromSo(CreateView):
+    model = SaleInvoice
+    form_class = SaleInvoiceSoForm
 
 class CreateNewInvoice(CreateView):
     model = SaleInvoice
