@@ -1,0 +1,47 @@
+.h1, h1 {
+  font-family: raleway;
+}
+
+.font-raleway {
+  font-family: 'Raleway';
+}
+
+.amount-fields {
+  font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace!important;
+  font-size: .9rem;
+  color: #fff;
+}
+
+.amount-fields-head {
+  font-size: .9rem;
+  font-weight: 400;
+  color: #fff;
+}
+
+.bottom-panel {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+.inv-info {
+  font-size: .9rem;
+}
+
+.items-table {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.header-table {
+  width: 100%;
+  color: #ffffff;
+  font-size: .9rem;
+  margin-bottom: 0rem;
+}
+
