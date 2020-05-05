@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.urls import reverse, reverse_lazy
 from django.http import FileResponse
 from salesApp.models import SaleOrder, SaleInvoice, SaleOrderItem, SaleInvoiceItem
-from salesApp.forms import SaleInvoiceSoForm, SaleInvoiceNewForm , SaleOrderForm, SaleOrderItemForm, SaleInvoiceItemForm
+from salesApp.forms import SaleInvoiceSoForm, SaleInvoiceNewForm , SaleOrderForm, SaleOrderItemForm, SaleInvoiceItemForm, SelectItemFromSo
 from django.views.generic import (View, TemplateView, ListView, DetailView,
                                     CreateView, UpdateView, DetailView, FormView,)
 # Create your views here.
@@ -32,7 +32,7 @@ class CreateSoInvoice(FormView):
     template_name = 'salesApp/createsoinvoice.html'
     def form_valid(self,form):
         self.so = form.cleaned_data['si_sonumber']
-        self.request.session['so_num'] = self.so
+        # self.request.session['so_num'] = self.so
         # print(self.so.pk)
         # self.form = form
         return super().form_valid(form)
@@ -41,23 +41,27 @@ class CreateSoInvoice(FormView):
         # so = self.form.cleaned_data['si_sonumber']
         return reverse_lazy('salesApp:selectsiitemfromso',kwargs={'pk':self.so.pk})
 
-class SelectSaleInvoiceItemsFromSo(ListView):
-    model = SaleOrderItem
+class SelectSaleInvoiceItemsFromSo(FormView):
+    # model = SaleOrderItem
     template_name = 'salesApp/selectsiitemfromso.html'
+    form_class = SelectItemFromSo
     def get_context_data(self,*args,**kwargs):
         context = super().get_context_data(*args,**kwargs)
         context['so'] = get_object_or_404(SaleOrder, pk=self.kwargs['pk'])
-        # context['object_list'] = get_list_or_404(SaleOrderItem, so_number=self.kwargs['pk'])
         context['object_list'] = SaleOrderItem.objects.filter(so_number=self.kwargs['pk'])
-        print("success!")
-        print(self.request.session['so_num'])
         return context
     def form_valid(self,form):
-        pass
+        # selected_items = request.POST.getlist('selected_items')
+        print(selected_items)
+        return super().form_valid(form)
+    def get_success_url(self):
+        return reverse_lazy('salesApp:selectsiitemfromso',kwargs={'pk':self.pk})
 
 class CreateInvoiceFromSo(CreateView):
     model = SaleInvoice
     form_class = SaleInvoiceSoForm
+
+
 
 class CreateNewInvoice(CreateView):
     model = SaleInvoice

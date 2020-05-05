@@ -62,3 +62,8 @@ class SaleInvoiceItemForm(forms.ModelForm):
                     'si_item_bill_quantity':forms.TextInput(attrs={'class':'form-control'}),
                     'si_item_tax_rate':forms.Select(attrs={'class':'form-control'}),
         }
+
+class SelectItemFromSo(forms.ModelForm):
+    class Meta:
+        model = SaleOrderItem
+        fields = ('id')

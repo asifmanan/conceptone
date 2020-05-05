@@ -1,5 +1,6 @@
 {% include "salesApp/base.html" %}
 {% block bodyblock %}
+{% load static %}
 <div style="margin-top: 12px;margin-left: 12px;margin-bottom: 12px;margin-right: 12px;">
     <h3>New Invoice</h3>
 </div>
@@ -25,11 +26,14 @@
         </div>
     </div>
 </div>
-<div style="margin: 12px;">
-    <p style="margin-bottom: 8px;margin-top: 12px;">Select items to Invoice from the list</p>
-      {% include "salesApp/tables/selectsiitemfromsotable.html" %}
-</div>
-<div class="row" style="margin: 12px">
-  <button class="btn btn-primary ml-auto" type="submit" name="button">Next</button>
-</div>
+<form method="POST">{% csrf_token %}
+  <div style="margin: 12px;">
+      <p style="margin-bottom: 8px;margin-top: 12px;">Select items to Invoice from the list</p>
+        {% include "salesApp/tables/selectsiitemfromsotable.html" %}
+  </div>
+
+  <div class="row" style="margin: 12px">
+    <button class="btn btn-primary ml-auto" type="submit" name="button">Next</button>
+  </div>
+</form>
 {% endblock bodyblock %}

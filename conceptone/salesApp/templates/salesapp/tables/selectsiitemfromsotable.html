@@ -14,7 +14,7 @@
           <tbody>
             {% for item in object_list  %}
               <tr>
-                  <td><input type="checkbox" value={{item.id}}></td>
+                  <td><input type="checkbox" name="selected_items" value={{item.id}}></td>
                   <td>{{item}}</td>
                   <td>{{item.sale_order_item.item_description}}</td>
                   <td>{{item.sale_order_item.item_uom}}</td>
