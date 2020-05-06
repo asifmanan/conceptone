@@ -63,7 +63,13 @@ class SaleInvoiceItemForm(forms.ModelForm):
                     'si_item_tax_rate':forms.Select(attrs={'class':'form-control'}),
         }
 
-class SelectItemFromSo(forms.ModelForm):
-    class Meta:
-        model = SaleOrderItem
-        fields = ('id')
+class SelectItemFromSo(forms.Form):
+    selected_item = forms.BooleanField(widget=forms.CheckboxInput(attrs={'value':'{{item.id}}'}))
+
+    # class Meta:
+    #     model = SaleOrderItem
+    #     soipk = SaleOrderItem.pk
+    #     fields = ('id',)
+    #     widgets = {
+    #                 'id':forms.CheckboxInput(attrs={'class':'form-control'})
+    #     }
