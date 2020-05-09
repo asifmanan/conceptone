@@ -73,3 +73,11 @@ class SelectItemFromSo(forms.Form):
     #     widgets = {
     #                 'id':forms.CheckboxInput(attrs={'class':'form-control'})
     #     }
+
+class InputInvoiceItemQuantity(forms.ModelForm):
+    class Meta:
+        model = SaleInvoiceItem
+        fields = ('si_item_bill_quantity',)
+        widgets = {
+            'si_item_bill_quantity':forms.TextInput(attrs={'class':'form-control'})
+        }

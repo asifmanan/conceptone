@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.urls import reverse, reverse_lazy
 from django.http import FileResponse
 from salesApp.models import SaleOrder, SaleInvoice, SaleOrderItem, SaleInvoiceItem
-from salesApp.forms import SaleInvoiceSoForm, SaleInvoiceNewForm, SaleOrderForm, SaleOrderItemForm, SaleInvoiceItemForm, SelectItemFromSo
+from salesApp.forms import SaleInvoiceSoForm, SaleInvoiceNewForm, SaleOrderForm, SaleOrderItemForm, SaleInvoiceItemForm, SelectItemFromSo, InputInvoiceItemQuantity
 from django.views.generic import (View, TemplateView, ListView, DetailView,
                                     CreateView, UpdateView, DetailView, FormView,)
 # Create your views here.
@@ -63,9 +63,12 @@ class SelectSaleInvoiceItemsFromSo(TemplateView):
             print(selected_items) #just a test
         context = self.get_context_data(*args,**kwargs)
         # print(context.item_list)
-        return self.render_to_response(context) #Just a test
+        return reverse_lazy('salesApp:CreateInvoiceSo',kwargs={'pk':1}) #Just a test
 
-
+class CreateInvoiceSo(CreateView):
+    model = SaleInvoiceItem
+    form_class = InputInvoiceItemQuantity
+    template_name = 'salesApp/createsoinvoiceitems.html'
 #Using FormView#
 ###################################
 # class SelectSaleInvoiceItemsFromSo(FormView):
