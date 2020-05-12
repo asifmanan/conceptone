@@ -10,5 +10,5 @@ urlpatterns=[
     path('addsaleorderitem/<int:pk>/',views.AddSaleOrderItems.as_view(),name='addsaleorderitems'),
     path('saleorderlist/',views.SaleOrderList.as_view(),name='saleorderlist'),
     path('selectsiitemfromso/<int:pk>',views.SelectSaleInvoiceItemsFromSo.as_view(),name='selectsiitemfromso'),
-    path('createinvoiceso/<int:pk>',views.CreateInvoiceSo.as_view(),name='createinvoiceso'),
+    path('createinvoiceso/',views.CreateInvoiceSo.as_view(),name='createinvoiceso'),
 ]

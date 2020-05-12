@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-{% load {% static "" %} %}
+{% extends "salesApp/base.html" %}
+{% load static %}
 {% block headblock %}
     <title>Create New Invoice</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-    <link rel="stylesheet" src="{% static 'css/createinvstyles.css' %}">
+    <link rel="stylesheet" href="{% static "css\createinvstyles.css" %}">
 {% endblock headblock %}
 
 {% block bodyblock %}
@@ -47,7 +48,7 @@
         <div>
             <div class="row" style="margin-top: 0px;margin-right: 0px;margin-left: 0px;">
                 <div class="col" style="padding-right: 0px;padding-left: 0px;">
-                    {% include "tables/newinvoiceitemstable.html" %}
+                    {% include "salesApp/tables/newinvoiceitemstable.html" %}
                 </div>
             </div>
         </div>

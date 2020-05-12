@@ -51,24 +51,36 @@ class SelectSaleInvoiceItemsFromSo(TemplateView):
         context['object_list'] = so_items
         item_list = []
         for items in so_items:
-            item_list.append(items.id)
-        # print(item_list)
+            item_list.append(str(items.id))
+        context['item_list'] = item_list
         return context
 
     def post(self, request, *args, **kwargs):
+        context = self.get_context_data(*args,**kwargs)
         selected_items = request.POST.getlist('selected_items')
         if not selected_items:
             print("No Items Selected")
         else:
-            print(selected_items) #just a test
-        context = self.get_context_data(*args,**kwargs)
-        # print(context.item_list)
-        return reverse_lazy('salesApp:CreateInvoiceSo',kwargs={'pk':1}) #Just a test
+            request.session['invoice-selected_item'] = selected_items
+        print("*** After POST ***")
+        issubset = set(selected_items) <= set(context['item_list'])
+        print(issubset)
+        print(selected_items)
+        print(context['item_list'])
+        return redirect('salesApp:createinvoiceso') #Just a test
 
 class CreateInvoiceSo(CreateView):
     model = SaleInvoiceItem
     form_class = InputInvoiceItemQuantity
     template_name = 'salesApp/createsoinvoiceitems.html'
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args,**kwargs)
+        selected_items = self.request.session['invoice-selected_item']
+        invoice_items = SaleOrderItem.objects.filter(id__in=selected_items)
+        print('in the new view')
+        print(invoice_items)
+        print(selected_items)
+
 #Using FormView#
 ###################################
 # class SelectSaleInvoiceItemsFromSo(FormView):
