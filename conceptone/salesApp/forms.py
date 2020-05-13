@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import formset_factory
+from django.forms import formset_factory, modelformset_factory
 from datetime import datetime
 from salesApp.models import (SaleOrder,
                                 SaleOrderItem,
@@ -75,12 +75,23 @@ class SelectItemFromSo(forms.Form):
     #                 'id':forms.CheckboxInput(attrs={'class':'form-control'})
     #     }
 
-class InputInvoiceItemQuantity(forms.ModelForm):
-    class Meta:
-        model = SaleInvoiceItem
-        fields = ('si_item_bill_quantity',)
-        widgets = {
-            'si_item_bill_quantity':forms.TextInput(attrs={'class':'form-control inv-qty-input border-0 rounded-0',
-                                                            'label':''})
-        }
-invoice_item_formset = formset_factory(InputInvoiceItemQuantity,extra=10)
+# class InputInvoiceItemQuantity(forms.ModelForm):
+#     class Meta:
+#         model = SaleInvoiceItem
+#         fields = ('si_item_bill_quantity',)
+#         widgets = {
+#             'si_item_bill_quantity':forms.TextInput(attrs={'class':'form-control inv-qty-input border-0 rounded-0',
+#                                                             'label':''})
+#         }
+# invoice_item_formset = modelformset_factory(InputInvoiceItemQuantity,extra=10)
+
+invoice_item_formset = modelformset_factory(
+    SaleInvoiceItem,
+    fields=('si_item_bill_quantity', ),
+    extra=10,
+    widgets={'si_item_bill_quantity': forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter Bill Quantity'
+        })
+    }
+)

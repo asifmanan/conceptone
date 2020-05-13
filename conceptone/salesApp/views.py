@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.urls import reverse, reverse_lazy
 from django.http import FileResponse, HttpResponse, HttpResponseRedirect
 from salesApp.models import SaleOrder, SaleInvoice, SaleOrderItem, SaleInvoiceItem
-from salesApp.forms import SaleInvoiceSoForm, SaleInvoiceNewForm, SaleOrderForm, SaleOrderItemForm, SaleInvoiceItemForm, SelectItemFromSo, InputInvoiceItemQuantity, invoice_item_formset
+from salesApp.forms import SaleInvoiceSoForm, SaleInvoiceNewForm, SaleOrderForm, SaleOrderItemForm, SaleInvoiceItemForm, SelectItemFromSo, invoice_item_formset
 from django.views.generic import (View, TemplateView, ListView, DetailView,
                                     CreateView, UpdateView, DetailView, FormView,)
 # Create your views here.
@@ -75,14 +75,15 @@ class SelectSaleInvoiceItemsFromSo(TemplateView):
 
 class CreateInvoiceSo(CreateView):
     model = SaleInvoiceItem
-    form_class = InputInvoiceItemQuantity
+    form_class = invoice_item_formset
     template_name = 'salesApp/createsoinvoiceitems.html'
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args,**kwargs)
         selected_items = self.request.session['invoice-selected_item']
         line_items = SaleOrderItem.objects.filter(id__in=selected_items)
         # num_of_items = len(context['line_items'])
-        item_formset = invoice_item_formset()
+        # item_formset = invoice_item_formset()
+        item_formset = invoice_item_formset(queryset=SaleOrderItem.objects.none())
         # print('in the new view')
         i = 0
         for items in line_items:
@@ -91,6 +92,21 @@ class CreateInvoiceSo(CreateView):
         # print(line_items[0].form)
         context['line_items'] = line_items
         return context
+
+    def post(self,request,*arg,**kwargs):
+        item_formset = invoice_item_formset(request.POST)
+        # myformset = item_formset(request.POST)
+        if item_formset.is_valid():
+            print("valid")
+            for key, value in request.POST.items():
+                print('Key: %s' % (key) )
+                # print(f'Key: {key}') in Python >= 3.7
+                print('Value %s' % (value) )
+                # print(f'Value: {value}') in Python >= 3.7
+        else:
+            print("Invalid")
+        return HttpResponseRedirect(reverse('salesApp:createsoinvoice'))
+
     def form_valid(self,form,*arg,**kwargs):
         print("form")
         return super().form_valid(form)
