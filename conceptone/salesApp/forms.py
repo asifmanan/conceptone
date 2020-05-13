@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import formset_factory
 from datetime import datetime
 from salesApp.models import (SaleOrder,
                                 SaleOrderItem,
@@ -79,5 +80,7 @@ class InputInvoiceItemQuantity(forms.ModelForm):
         model = SaleInvoiceItem
         fields = ('si_item_bill_quantity',)
         widgets = {
-            'si_item_bill_quantity':forms.TextInput(attrs={'class':'form-control'})
+            'si_item_bill_quantity':forms.TextInput(attrs={'class':'form-control inv-qty-input border-0 rounded-0',
+                                                            'label':''})
         }
+invoice_item_formset = formset_factory(InputInvoiceItemQuantity,extra=10)

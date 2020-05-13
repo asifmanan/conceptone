@@ -12,6 +12,11 @@
   color: #fff;
 }
 
+.inv-qty-input {
+  width: 80%;
+  height: 24px;
+}
+
 .amount-fields-head {
   font-size: .9rem;
   font-weight: 400;
@@ -44,4 +49,3 @@
   font-size: .9rem;
   margin-bottom: 0rem;
 }
-

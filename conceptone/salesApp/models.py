@@ -72,8 +72,8 @@ class SaleInvoice(models.Model):
         return str(self.si_number)
 
 class SaleInvoiceItem(models.Model):
-    si_number = models.ForeignKey(SaleInvoice, on_delete=models.CASCADE)
-    si_item = models.ForeignKey(SaleOrderItem, on_delete=models.CASCADE)
+    si_number = models.ForeignKey(SaleInvoice, on_delete=models.CASCADE,verbose_name='Invoice Number')
+    si_item = models.ForeignKey(SaleOrderItem, on_delete=models.CASCADE,verbose_name='Item')
     si_item_bill_quantity = models.DecimalField(max_digits=14,decimal_places=2,default=0.00,verbose_name='Quantity')
     si_item_tax_rate = models.ForeignKey(TaxRate, on_delete=models.PROTECT)
     si_item_tax_amount = models.DecimalField(max_digits=14,decimal_places=2,verbose_name='Tax Amount')

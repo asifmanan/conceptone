@@ -1,26 +1,30 @@
 <div class="table-responsive" style="height: 500px;background-color: #c1d1bf;">
     <table class="table table-sm">
         <thead style="background-color: #00aacc;color: #ffffff;">
+
             <tr>
-                <th>Line</th>
-                <th>Description</th>
-                <th>UoM</th>
-                <th>Unbilled Quantity</th>
-                <th>Invoice Quantity</th>
-                <th>Unit Price</th>
-                <th>Total&nbsp;Price</th>
+                <th style="width:5%;">Line</th>
+                <th style="width:25%;">Description</th>
+                <th style="width:5%;">UoM</th>
+                <th style="width:10%;">Unbilled Quantity</th>
+                <th style="width:15%;">Invoice Quantity</th>
+                <th style="width:10%;">Unit Price</th>
+                <th style="width:10%;">Total&nbsp;Price</th>
             </tr>
         </thead>
         <tbody style="background-color: #c1d1bf;">
-            <tr>
-                <td>Cell 1</td>
-                <td>Cell 2</td>
-                <td>Cell 3</td>
-                <td>Cell 4</td>
-                <td><input type="text" class="border-0"></td>
-                <td>Cell 6</td>
-                <td>Cell 7</td>
-            </tr>
+            {{formset.mangement_form}}
+            {% for items in line_items  %}
+              <tr>
+                <td>{{items.so_line_number}}</td>
+                <td>{{items.sale_order_item}}</td>
+                <td>{{items.sale_order_item.item_uom}}</td>
+                <td>{{items.so_quantity}}</td>
+                <td>{{items.form.si_item_bill_quantity}}</td>
+                <td>{{items.sale_price}}</td>
+                <td>{{items.total_price}}</td>
+              </tr>
+            {% endfor %}    
         </tbody>
     </table>
 </div>

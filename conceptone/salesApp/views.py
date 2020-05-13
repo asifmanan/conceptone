@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.http import JsonResponse
 from django.urls import reverse, reverse_lazy
-from django.http import FileResponse
+from django.http import FileResponse, HttpResponse, HttpResponseRedirect
 from salesApp.models import SaleOrder, SaleInvoice, SaleOrderItem, SaleInvoiceItem
-from salesApp.forms import SaleInvoiceSoForm, SaleInvoiceNewForm, SaleOrderForm, SaleOrderItemForm, SaleInvoiceItemForm, SelectItemFromSo, InputInvoiceItemQuantity
+from salesApp.forms import SaleInvoiceSoForm, SaleInvoiceNewForm, SaleOrderForm, SaleOrderItemForm, SaleInvoiceItemForm, SelectItemFromSo, InputInvoiceItemQuantity, invoice_item_formset
 from django.views.generic import (View, TemplateView, ListView, DetailView,
                                     CreateView, UpdateView, DetailView, FormView,)
 # Create your views here.
@@ -46,6 +46,8 @@ class SelectSaleInvoiceItemsFromSo(TemplateView):
     # item_list = []
     def get_context_data(self,*args,**kwargs):
         context = super().get_context_data(*args,**kwargs)
+        self.sonumber = self.kwargs['pk']
+        print(self.sonumber)
         context['so'] = get_object_or_404(SaleOrder, pk=self.kwargs['pk'])
         so_items = SaleOrderItem.objects.filter(so_number=self.kwargs['pk'])
         context['object_list'] = so_items
@@ -60,14 +62,16 @@ class SelectSaleInvoiceItemsFromSo(TemplateView):
         selected_items = request.POST.getlist('selected_items')
         if not selected_items:
             print("No Items Selected")
+            print(self.kwargs['pk'])
+            return HttpResponseRedirect(reverse('salesApp:selectsiitemfromso',kwargs={'pk':self.sonumber}))
         else:
             request.session['invoice-selected_item'] = selected_items
-        print("*** After POST ***")
-        issubset = set(selected_items) <= set(context['item_list'])
-        print(issubset)
-        print(selected_items)
-        print(context['item_list'])
-        return redirect('salesApp:createinvoiceso') #Just a test
+            issubset = set(selected_items) <= set(context['item_list'])
+            return redirect('salesApp:createinvoiceso')
+            # print("*** After POST ***")
+            # print(issubset)
+            # print(selected_items)
+            # print(context['item_list'])
 
 class CreateInvoiceSo(CreateView):
     model = SaleInvoiceItem
@@ -76,10 +80,20 @@ class CreateInvoiceSo(CreateView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args,**kwargs)
         selected_items = self.request.session['invoice-selected_item']
-        invoice_items = SaleOrderItem.objects.filter(id__in=selected_items)
-        print('in the new view')
-        print(invoice_items)
-        print(selected_items)
+        line_items = SaleOrderItem.objects.filter(id__in=selected_items)
+        # num_of_items = len(context['line_items'])
+        item_formset = invoice_item_formset()
+        # print('in the new view')
+        i = 0
+        for items in line_items:
+            items.form = item_formset[i]
+            i = i+1
+        # print(line_items[0].form)
+        context['line_items'] = line_items
+        return context
+    def form_valid(self,form,*arg,**kwargs):
+        print("form")
+        return super().form_valid(form)
 
 #Using FormView#
 ###################################
