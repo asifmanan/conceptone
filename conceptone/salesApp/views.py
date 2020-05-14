@@ -73,44 +73,58 @@ class SelectSaleInvoiceItemsFromSo(TemplateView):
             # print(selected_items)
             # print(context['item_list'])
 
-class CreateInvoiceSo(CreateView):
-    model = SaleInvoiceItem
+class CreateInvoiceSo(FormView):
     form_class = invoice_item_formset
     template_name = 'salesApp/createsoinvoiceitems.html'
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args,**kwargs)
         selected_items = self.request.session['invoice-selected_item']
         line_items = SaleOrderItem.objects.filter(id__in=selected_items)
-        # num_of_items = len(context['line_items'])
-        # item_formset = invoice_item_formset()
-        item_formset = invoice_item_formset(queryset=SaleOrderItem.objects.none())
-        # print('in the new view')
-        i = 0
+        no_of_items = len(selected_items)
+        formdata = {
+            'form-TOTAL_FORMS': no_of_items,
+            'form-INITIAL_FORMS': '0',
+            'form-MAX_NUM_FORMS': '',
+            # 'form-0-si_item_bill_quantity': '',
+            }
+        item_formset = invoice_item_formset(formdata)
+        form_list = []
+        for form in item_formset:
+            element = {
+                'qty_form' : form['si_item_bill_quantity'],
+                'id_form' : form['id'],
+                }
+            form_list.append(element)
+        i=0
         for items in line_items:
-            items.form = item_formset[i]
+            items.form = form_list[i]
             i = i+1
-        # print(line_items[0].form)
+        context['formset'] = item_formset
+        # print(item_formset)
         context['line_items'] = line_items
         return context
 
-    def post(self,request,*arg,**kwargs):
-        item_formset = invoice_item_formset(request.POST)
-        # myformset = item_formset(request.POST)
-        if item_formset.is_valid():
-            print("valid")
-            for key, value in request.POST.items():
-                print('Key: %s' % (key) )
-                # print(f'Key: {key}') in Python >= 3.7
-                print('Value %s' % (value) )
-                # print(f'Value: {value}') in Python >= 3.7
-        else:
-            print("Invalid")
-        return HttpResponseRedirect(reverse('salesApp:createsoinvoice'))
+    # def post(self,request,*arg,**kwargs):
+    #     item_formset = invoice_item_formset(request.POST)
+    #     # myformset = item_formset(request.POST)
+    #     if item_formset.is_valid():
+    #         print("valid")
+    #         for key, value in item_formset:
+    #             print('Key: %s' % (key) )
+    #             # print(f'Key: {key}') in Python >= 3.7
+    #             print('Value %s' % (value) )
+    #             # print(f'Value: {value}') in Python >= 3.7
+    #     else:
+    #         print("Invalid")
+    #     return HttpResponseRedirect(reverse('salesApp:createsoinvoice'))
 
     def form_valid(self,form,*arg,**kwargs):
-        print("form")
-        return super().form_valid(form)
-
+        context = self.get_context_data(**kwargs)
+        print(self.request.POST)
+        item_formset = invoice_item_formset(self.request.POST)
+        return super().form_valid(item_formset)
+    def get_success_url(self):
+        return reverse('salesApp:createsoinvoice')
 #Using FormView#
 ###################################
 # class SelectSaleInvoiceItemsFromSo(FormView):

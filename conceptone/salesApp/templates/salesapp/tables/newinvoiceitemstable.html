@@ -1,5 +1,5 @@
 <div class="table-responsive" style="height: 500px;background-color: #c1d1bf;">
-    <table class="table table-sm">
+    <table class="table">
         <thead style="background-color: #00aacc;color: #ffffff;">
 
             <tr>
@@ -13,18 +13,18 @@
             </tr>
         </thead>
         <tbody style="background-color: #c1d1bf;">
-            {{formset.mangement_form}}
+            {{formset.management_form}}
             {% for items in line_items  %}
               <tr>
                 <td>{{items.so_line_number}}</td>
                 <td>{{items.sale_order_item}}</td>
                 <td>{{items.sale_order_item.item_uom}}</td>
                 <td>{{items.so_quantity}}</td>
-                <td>{{items.form.si_item_bill_quantity}}</td>
+                <td>{{items.form.qty_form}}{{items.form.id_form}}</td>
                 <td>{{items.sale_price}}</td>
                 <td>{{items.total_price}}</td>
               </tr>
-            {% endfor %}    
+            {% endfor %}
         </tbody>
     </table>
 </div>
