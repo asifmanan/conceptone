@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.http import JsonResponse
+from django.utils import timezone
+from datetime import datetime
 from django.urls import reverse, reverse_lazy
 from django.http import FileResponse, HttpResponse, HttpResponseRedirect
 from salesApp.models import SaleOrder, SaleInvoice, SaleOrderItem, SaleInvoiceItem
@@ -47,7 +49,7 @@ class SelectSaleInvoiceItemsFromSo(TemplateView):
     def get_context_data(self,*args,**kwargs):
         context = super().get_context_data(*args,**kwargs)
         self.sonumber = self.kwargs['pk']
-        print(self.sonumber)
+        # print(self.sonumber)
         context['so'] = get_object_or_404(SaleOrder, pk=self.kwargs['pk'])
         so_items = SaleOrderItem.objects.filter(so_number=self.kwargs['pk'])
         context['object_list'] = so_items
@@ -62,7 +64,7 @@ class SelectSaleInvoiceItemsFromSo(TemplateView):
         selected_items = request.POST.getlist('selected_items')
         if not selected_items:
             print("No Items Selected")
-            print(self.kwargs['pk'])
+            # print(self.kwargs['pk'])
             return HttpResponseRedirect(reverse('salesApp:selectsiitemfromso',kwargs={'pk':self.sonumber}))
         else:
             request.session['invoice-selected_item'] = selected_items
@@ -80,6 +82,8 @@ class CreateInvoiceSo(FormView):
         context = super().get_context_data(*args,**kwargs)
         selected_items = self.request.session['invoice-selected_item']
         line_items = SaleOrderItem.objects.filter(id__in=selected_items)
+        s_order = line_items.first().so_number
+        # print('Sale Order: '+s_order.so_number)
         no_of_items = len(selected_items)
         formdata = {
             'form-TOTAL_FORMS': no_of_items,
@@ -99,6 +103,7 @@ class CreateInvoiceSo(FormView):
         for items in line_items:
             items.form = form_list[i]
             i = i+1
+        context['so'] = s_order
         context['formset'] = item_formset
         # print(item_formset)
         context['line_items'] = line_items
@@ -120,8 +125,45 @@ class CreateInvoiceSo(FormView):
 
     def form_valid(self,form,*arg,**kwargs):
         context = self.get_context_data(**kwargs)
-        print(self.request.POST)
+        sale_order = context['so']
+        sale_order_item = context['line_items']
+        invoice = SaleInvoice()
+        invoice.si_sonumber = sale_order
+        invoice.si_customer = sale_order.so_customer
+        invoice.si_project = sale_order.so_project
+        invoice.si_date = datetime.now().date()
+        invoice.save()
+        print('Invoice Id: '+str(invoice.id))
+
+        # invoice.si_date = datetime.datetime.now()
+        # print(context['line_items'])
+        line_item = SaleInvoiceItem()
+        # line_item.si_number = 1
+        # print(line_item.si_number)
+        # print(line_item.si_number)
+        # x = context['line_items'].filter(so_line_number=1)
+        # print(x)
+        # x = context['line_items']
+        # print(x)
+        # for line_items in context['line_items']:
+        #     line_item =
+        #     print(line_items.form.cleaned_data['qty_form'])
+        #     print("///////////////////////////////////////")
         item_formset = invoice_item_formset(self.request.POST)
+        # print(item_formset.errors)
+        i=0
+        for form in item_formset:
+            line_item = form.save(commit=False)
+            line_item.si_number = invoice
+            line_item.si_item = sale_order_item[i]
+            line_item.si_item_tax_rate = sale_order_item[i].so_tax_rate
+            line_item.si_item_total_amount = line_item.si_item_bill_quantity*sale_order_item[i].sale_price
+            line_item.si_item_tax_amount = line_item.si_item_total_amount*line_item.si_item_tax_rate.tax_value
+            line_item.save()
+            i=i+1
+            # print(form)
+            print(line_item)
+            print("*** --- *** --- ***")
         return super().form_valid(item_formset)
     def get_success_url(self):
         return reverse('salesApp:createsoinvoice')

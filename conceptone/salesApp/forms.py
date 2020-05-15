@@ -91,10 +91,16 @@ invoice_item_formset = modelformset_factory(
     SaleInvoiceItem,
     fields=('si_item_bill_quantity', ),
     extra=0,
-    widgets={'si_item_bill_quantity': forms.IntegerField(validators=[DecimalValidator(max_digits=14, decimal_places=2)],attrs={
+    widgets={'si_item_bill_quantity': forms.TextInput(attrs={
             'class': 'form-control',
             'required':'required',
             'placeholder': '<Invoice Quantity>'
         })
     }
+    # widgets={'si_item_bill_quantity': forms.DecimalField(validators=[DecimalValidator(max_digits=14, decimal_places=2)],attrs={
+    #         'class': 'form-control',
+    #         'required':'required',
+    #         'placeholder': '<Invoice Quantity>'
+    #     })
+    # }
 )
