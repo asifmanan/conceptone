@@ -68,6 +68,18 @@ class SaleInvoice(models.Model):
     si_date = models.DateField(verbose_name='Invoice Date')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
+
+    def CalculateSiTotal(self):
+        items = SaleInvoiceItem.objects.filter(si_number=self)
+        if items.exists():
+            items_sum = items.aggregate(Sum('si_item_total_amount'))
+            items_tax = items.aggregate(Sum('si_item_tax_amount'))
+            items_total_amount = items_sum['si_item_total_amount__sum']
+            items_total_tax_amount = items_tax['si_item_tax_amount__sum']
+            self.si_amount = items_total_amount
+            self.si_tax_amount = items_total_tax_amount
+            self.save()
+
     def __str__(self):
         return str(self.si_number)
 

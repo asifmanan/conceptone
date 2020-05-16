@@ -69,6 +69,7 @@ class SelectSaleInvoiceItemsFromSo(TemplateView):
         else:
             request.session['invoice-selected_item'] = selected_items
             issubset = set(selected_items) <= set(context['item_list'])
+            # something went wrong page
             return redirect('salesApp:createinvoiceso')
             # print("*** After POST ***")
             # print(issubset)
@@ -135,16 +136,8 @@ class CreateInvoiceSo(FormView):
         invoice.save()
         print('Invoice Id: '+str(invoice.id))
 
-        # invoice.si_date = datetime.datetime.now()
-        # print(context['line_items'])
         line_item = SaleInvoiceItem()
-        # line_item.si_number = 1
-        # print(line_item.si_number)
-        # print(line_item.si_number)
-        # x = context['line_items'].filter(so_line_number=1)
-        # print(x)
-        # x = context['line_items']
-        # print(x)
+
         # for line_items in context['line_items']:
         #     line_item =
         #     print(line_items.form.cleaned_data['qty_form'])
@@ -164,6 +157,7 @@ class CreateInvoiceSo(FormView):
             # print(form)
             print(line_item)
             print("*** --- *** --- ***")
+        invoice.CalculateSiTotal()
         return super().form_valid(item_formset)
     def get_success_url(self):
         return reverse('salesApp:createsoinvoice')
