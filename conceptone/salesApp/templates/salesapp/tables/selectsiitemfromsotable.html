@@ -8,7 +8,8 @@
                 <th>Description</th>
                 <th>UoM</th>
                 <th>Quantity</th>
-                <th>Price</th>
+                <th>Unit Price</th>
+                <th>Total Amount</th>
             </tr>
         </thead>
         {% if object_list %}
@@ -19,9 +20,10 @@
                     <input type="checkbox" name="selected_items" value={{item.id}}>
                   </td>
                   <td>{{item}}</td>
-                  <td>{{item.sale_order_item.item_description}}</td>
-                  <td>{{item.sale_order_item.item_uom}}</td>
-                  <td>{{item.so_quantity}}</td>
+                  <td>{{item.item.item_description}}</td>
+                  <td>{{item.item.item_uom}}</td>
+                  <td>{{item.order_quantity}}</td>
+                  <td>{{item.sale_price}}</td>
                   <td>{{item.total_price}}</td>
               </tr>
             {% endfor %}

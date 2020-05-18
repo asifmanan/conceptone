@@ -13,32 +13,32 @@ class SaleOrderForm(forms.ModelForm):
     class Meta:
         model = SaleOrder
         fields = (
-                    'so_number','so_podate','so_ponumber','so_customer',
-                    'so_project',)
+                    'so_number','customer_po_date','customer_po_number','customer',
+                    'project',)
         widgets = {
                     'so_number':forms.TextInput(attrs={'class':'form-control'}),
-                    'so_podate':forms.DateInput(attrs={'class':'form-control','type':'date','id':'so_podate'}),
-                    'so_ponumber':forms.TextInput(attrs={'class':'form-control'}),
-                    'so_customer':forms.Select(attrs={'class':'form-control'}),
-                    'so_project':forms.Select(attrs={'class':'form-control'}),
+                    'customer_po_date':forms.DateInput(attrs={'class':'form-control','type':'date','id':'so_podate'}),
+                    'customer_po_number':forms.TextInput(attrs={'class':'form-control'}),
+                    'customer':forms.Select(attrs={'class':'form-control'}),
+                    'project':forms.Select(attrs={'class':'form-control'}),
                     }
 
 class SaleInvoiceSoForm(forms.ModelForm):
     class Meta:
         model = SaleInvoice
-        fields = ('si_sonumber',)
+        fields = ('sale_order',)
         widgets = {
-                    'si_sonumber':forms.Select(attrs={'class':'form-control'}),
+                    'sale_order':forms.Select(attrs={'class':'form-control'}),
                     # 'si_date':forms.DateInput(attrs={'class':'form-control','type':'date','id':'si_date'}),
                     }
 
 class SaleInvoiceNewForm(forms.ModelForm):
     class Meta:
         model = SaleInvoice
-        fields = ('si_date','si_customer','si_project',)
+        fields = ('si_date','customer','project',)
         widgets = {
-                    'si_customer':forms.Select(attrs={'class':'form-control'}),
-                    'si_project':forms.Select(attrs={'class':'form-control'}),
+                    'customer':forms.Select(attrs={'class':'form-control'}),
+                    'project':forms.Select(attrs={'class':'form-control'}),
                     'si_date':forms.DateInput(attrs={'class':'form-control','type':'date','id':'si_date'}),
                     }
 
@@ -46,24 +46,24 @@ class SaleOrderItemForm(forms.ModelForm):
     class Meta:
         model = SaleOrderItem
         fields = (
-                    'sale_order_item','so_quantity','sale_price',
-                    'so_tax_rate',
+                    'item','order_quantity','unit_price',
+                    'tax_rate',
                     )
         widgets = {
-                    'sale_order_item':forms.Select(attrs={'class':'form-control'}),
-                    'so_quantity':forms.TextInput(attrs={'class':'form-control'}),
-                    'sale_price':forms.TextInput(attrs={'class':'form-control'}),
-                    'so_tax_rate':forms.Select(attrs={'class':'form-control'}),
+                    'item':forms.Select(attrs={'class':'form-control'}),
+                    'order_quantity':forms.TextInput(attrs={'class':'form-control'}),
+                    'unit_price':forms.TextInput(attrs={'class':'form-control'}),
+                    'tax_rate':forms.Select(attrs={'class':'form-control'}),
         }
 
 class SaleInvoiceItemForm(forms.ModelForm):
     class Meta:
         model = SaleInvoiceItem
-        fields = ('si_item','si_item_bill_quantity','si_item_tax_rate')
+        fields = ('sale_order_item','bill_quantity','tax_rate')
         widgets = {
-                    'si_item':forms.Select(attrs={'class':'form-control'}),
-                    'si_item_bill_quantity':forms.TextInput(attrs={'class':'form-control'}),
-                    'si_item_tax_rate':forms.Select(attrs={'class':'form-control'}),
+                    'sale_order_item':forms.Select(attrs={'class':'form-control'}),
+                    'bill_quantity':forms.TextInput(attrs={'class':'form-control'}),
+                    'tax_rate':forms.Select(attrs={'class':'form-control'}),
         }
 
 class SelectItemFromSo(forms.Form):
@@ -89,9 +89,9 @@ class SelectItemFromSo(forms.Form):
 
 invoice_item_formset = modelformset_factory(
     SaleInvoiceItem,
-    fields=('si_item_bill_quantity', ),
+    fields=('bill_quantity', ),
     extra=0,
-    widgets={'si_item_bill_quantity': forms.TextInput(attrs={
+    widgets={'bill_quantity': forms.TextInput(attrs={
             'class': 'form-control',
             'required':'required',
             'placeholder': '<Invoice Quantity>'

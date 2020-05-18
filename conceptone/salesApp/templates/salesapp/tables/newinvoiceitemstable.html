@@ -17,11 +17,11 @@
             {% for items in line_items  %}
               <tr>
                 <td>{{items.so_line_number}}</td>
-                <td>{{items.sale_order_item}}</td>
-                <td>{{items.sale_order_item.item_uom}}</td>
-                <td>{{items.so_quantity}}</td>
+                <td>{{items.item}}</td>
+                <td>{{items.item.item_uom}}</td>
+                <td>{{items.order_quantity}}</td>
                 <td>{{items.form.qty_form}}{{items.form.id_form}}</td>
-                <td>{{items.sale_price}}</td>
+                <td>{{items.unit_price}}</td>
                 <td>{{items.total_price}}</td>
               </tr>
             {% endfor %}

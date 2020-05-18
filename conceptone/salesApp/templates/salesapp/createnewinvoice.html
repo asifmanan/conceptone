@@ -1,5 +1,5 @@
-{% load static %}
 {% extends "salesApp/base.html" %}
+{% load static %}
 {% block bodyblock %}
     <div class="container" style="margin-top: 18px;">
         <div class="col-lg-8 col-xl-6 mx-auto">
@@ -7,12 +7,12 @@
         </div>
         <form method="POST">{% csrf_token %}
             <div class="col-lg-8 col-xl-6 mx-auto" style="margin-bottom: 12px;">
-              {{form.si_customer.label}}
-              {{form.si_customer}}
+              {{form.customer.label}}
+              {{form.customer}}
             </div>
             <div class="col-lg-8 col-xl-6 mx-auto" style="margin-bottom: 12px;">
-              {{form.si_project.label}}
-              {{form.si_project}}
+              {{form.project.label}}
+              {{form.project}}
             </div>
             <div class="col-lg-8 col-xl-6 mx-auto" style="margin-bottom: 12px;">
               {{form.si_date.label}}

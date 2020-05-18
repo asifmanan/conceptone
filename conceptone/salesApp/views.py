@@ -33,7 +33,7 @@ class CreateSoInvoice(FormView):
     form_class = SaleInvoiceSoForm
     template_name = 'salesApp/createsoinvoice.html'
     def form_valid(self,form):
-        self.so = form.cleaned_data['si_sonumber']
+        self.so = form.cleaned_data['sale_order']
         # self.request.session['so_num'] = self.so
         # print(self.so.pk)
         # self.form = form
@@ -51,7 +51,7 @@ class SelectSaleInvoiceItemsFromSo(TemplateView):
         self.sonumber = self.kwargs['pk']
         # print(self.sonumber)
         context['so'] = get_object_or_404(SaleOrder, pk=self.kwargs['pk'])
-        so_items = SaleOrderItem.objects.filter(so_number=self.kwargs['pk'])
+        so_items = SaleOrderItem.objects.filter(sale_order=self.kwargs['pk'])
         context['object_list'] = so_items
         item_list = []
         for items in so_items:
@@ -83,8 +83,7 @@ class CreateInvoiceSo(FormView):
         context = super().get_context_data(*args,**kwargs)
         selected_items = self.request.session['invoice-selected_item']
         line_items = SaleOrderItem.objects.filter(id__in=selected_items)
-        s_order = line_items.first().so_number
-        # print('Sale Order: '+s_order.so_number)
+        s_order = line_items.first().sale_order
         no_of_items = len(selected_items)
         formdata = {
             'form-TOTAL_FORMS': no_of_items,
@@ -96,7 +95,7 @@ class CreateInvoiceSo(FormView):
         form_list = []
         for form in item_formset:
             element = {
-                'qty_form' : form['si_item_bill_quantity'],
+                'qty_form' : form['bill_quantity'],
                 'id_form' : form['id'],
                 }
             form_list.append(element)
@@ -129,9 +128,9 @@ class CreateInvoiceSo(FormView):
         sale_order = context['so']
         sale_order_item = context['line_items']
         invoice = SaleInvoice()
-        invoice.si_sonumber = sale_order
-        invoice.si_customer = sale_order.so_customer
-        invoice.si_project = sale_order.so_project
+        invoice.sale_order = sale_order
+        invoice.customer = sale_order.customer
+        invoice.project = sale_order.project
         invoice.si_date = datetime.now().date()
         invoice.save()
         print('Invoice Id: '+str(invoice.id))
@@ -147,11 +146,11 @@ class CreateInvoiceSo(FormView):
         i=0
         for form in item_formset:
             line_item = form.save(commit=False)
-            line_item.si_number = invoice
-            line_item.si_item = sale_order_item[i]
-            line_item.si_item_tax_rate = sale_order_item[i].so_tax_rate
-            line_item.si_item_total_amount = line_item.si_item_bill_quantity*sale_order_item[i].sale_price
-            line_item.si_item_tax_amount = line_item.si_item_total_amount*line_item.si_item_tax_rate.tax_value
+            line_item.sale_invoice = invoice
+            line_item.sale_order_item = sale_order_item[i]
+            line_item.tax_rate = sale_order_item[i].tax_rate
+            line_item.total_price = line_item.bill_quantity*sale_order_item[i].unit_price
+            line_item.tax_amount = line_item.total_price*line_item.tax_rate.tax_value
             line_item.save()
             i=i+1
             # print(form)
@@ -211,24 +210,24 @@ class AddSaleOrderItems(CreateView):
     def get_context_data(self,*args,**kwargs):
         context = super().get_context_data(*args,**kwargs)
         context['so'] = get_object_or_404(SaleOrder, pk=self.kwargs['pk'])
-        context['items'] = SaleOrderItem.objects.filter(so_number=self.kwargs['pk'])
+        context['items'] = SaleOrderItem.objects.filter(sale_order=self.kwargs['pk'])
         return context
     def form_valid(self,form):
         line_item = form.save(commit=False)
-        line_item.so_number = get_object_or_404(SaleOrder, pk=self.kwargs['pk'])
-        current_obj = SaleOrderItem.objects.filter(so_number=line_item.so_number).order_by('-so_line_number').first()
+        line_item.sale_order = get_object_or_404(SaleOrder, pk=self.kwargs['pk'])
+        current_obj = SaleOrderItem.objects.filter(sale_order=line_item.sale_order).order_by('-so_line_number').first()
         if current_obj !=None:
             new_line_number = (current_obj.so_line_number) + 1
         else:
             new_line_number = 1
         line_item.so_line_number = new_line_number
-        line_item.total_price = line_item.sale_price*line_item.so_quantity
-        line_item.so_item_tax_amount = line_item.so_tax_rate.tax_value*line_item.total_price
+        line_item.total_price = line_item.unit_price*line_item.order_quantity
+        line_item.tax_amount = line_item.tax_rate.tax_value*line_item.total_price
         line_item.save()
-        line_item.so_number.CalculateSoTotal()
+        line_item.sale_order.CalculateSoTotal()
         return super().form_valid(form)
     def get_success_url(self):
-        return reverse_lazy('salesApp:addsaleorderitems',kwargs={'pk':self.object.so_number.pk})
+        return reverse_lazy('salesApp:addsaleorderitems',kwargs={'pk':self.object.sale_order.pk})
 
 class AddSaleInvoiceItems(CreateView):
     model = SaleInvoiceItem
@@ -258,3 +257,9 @@ class SaleOrderList(ListView):
     model = SaleOrder
     form_class = SaleOrderForm
     template_name = 'salesApp/saleorderlist.html'
+    def get_context_data(self, *args, **kwargs):
+        so_list = SaleOrder.objects.all()
+        for sale_order in so_list:
+            sale_order.CalculateSoTotal()
+        context = super().get_context_data(*args,**kwargs)
+        return context

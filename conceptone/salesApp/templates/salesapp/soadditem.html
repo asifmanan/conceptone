@@ -19,17 +19,17 @@
                     <div class="border rounded" style="margin-bottom: 8px;">
                         <p style="margin-left: 3px;margin-bottom: 1px;">Customer</p>
                         <p style="margin-bottom: 0px;margin-left: 3px;">
-                          {{so.so_customer}}</p>
+                          {{so.customer}}</p>
                     </div>
                     <div class="border rounded" style="margin-bottom: 8px;">
                         <p style="margin-left: 3px;margin-bottom: 1px;">Project</p>
                         <p style="margin-bottom: 0px;margin-left: 3px;">
-                        {{so.so_project}}</p>
+                        {{so.project}}</p>
                     </div>
                     <div class="border rounded" style="margin-bottom: 8px;">
                         <p style="margin-left: 3px;margin-bottom: 1px;">PO Number</p>
                         <p style="margin-bottom: 0px;margin-left: 3px;">
-                        {{so.so_ponumber}}</p>
+                        {{so.customer_po_number}}</p>
                     </div>
                     <div class="border rounded" style="margin-bottom: 8px;">
                         <p style="margin-left: 3px;margin-bottom: 1px;">Total Amount</p>
@@ -39,7 +39,7 @@
                     <div class="border rounded" style="margin-bottom: 12px;">
                         <p style="margin-left: 3px;margin-bottom: 1px;">Tax Amount</p>
                         <p style="margin-bottom: 0px;margin-left: 3px;">
-                        {{so.so_tax_amount}}</p>
+                        {{so.tax_amount}}</p>
                     </div>
                     <div style="margin-top: 12px;">
                       <button class="btn btn-success" type="button" name="button">Publish</button>
@@ -51,22 +51,22 @@
                             <form method="post">{% csrf_token %}
                                 <div class="form-row">
                                     <div class="col-md-12">
-                                      {{form.sale_order_item.label}}
-                                      {{form.sale_order_item}}
+                                      {{form.item.label}}
+                                      {{form.item}}
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-12 col-lg-4" style="margin-top: 12px;">
-                                      {{form.so_quantity.label}}
-                                      {{form.so_quantity}}
+                                      {{form.order_quantity.label}}
+                                      {{form.order_quantity}}
                                     </div>
                                     <div class="col-md-12 col-lg-4" style="margin-top: 12px;">
-                                      {{form.sale_price.label}}
-                                      {{form.sale_price}}
+                                      {{form.unit_price.label}}
+                                      {{form.unit_price}}
                                     </div>
                                     <div class="col-md-12 col-lg-4" style="margin-top: 12px;">
-                                      {{form.so_tax_rate.label}}
-                                      {{form.so_tax_rate}}
+                                      {{form.tax_rate.label}}
+                                      {{form.tax_rate}}
                                     </div>
                                 </div>
                                 <div class="form-row">
