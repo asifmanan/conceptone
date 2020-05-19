@@ -128,6 +128,19 @@ class CreateInvoiceSo(FormView):
         context = self.get_context_data(**kwargs)
         sale_order = context['so']
         sale_order_item = context['line_items']
+        line_item = SaleInvoiceItem()
+        item_formset = invoice_item_formset(self.request.POST)
+        i=0
+        for form in item_formset:
+            if form.is_valid():
+                invoice_quantity = form.cleaned_data['bill_quantity']
+                if invoice_quantity > sale_order_item[i].available_quantity:
+                    messages.set_level(self.request,messages.WARNING)
+                    messages.warning(self.request,"Bill Quantity Cannot be greater than Available Quantity")
+                    # invoice.delete()
+                    # print(invoice.id)
+                    return redirect('salesApp:createinvoiceso')
+                i=i+1
         invoice = SaleInvoice()
         invoice.sale_order = sale_order
         invoice.customer = sale_order.customer
@@ -140,16 +153,6 @@ class CreateInvoiceSo(FormView):
             print("Yayyyy!!!!")
         print('Invoice Id: '+str(invoice.id))
 
-        line_item = SaleInvoiceItem()
-        item_formset = invoice_item_formset(self.request.POST)
-        i=0
-        for form in item_formset:
-            if form.is_valid():
-                invoice_quantity = form.cleaned_data['bill_quantity']
-                if invoice_quantity > sale_order_item[i].available_quantity:
-                    messages.add_message(messages.warning(request,"Bill Quantity Cannot be greater than Available Quantity"))
-                    return redirect('salesApp:createinvoiceso')
-                i=i+1
         i=0
         for form in item_formset:
             line_item = form.save(commit=False)
