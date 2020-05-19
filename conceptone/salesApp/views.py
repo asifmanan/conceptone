@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
+from django.core.exceptions import ValidationError
+from django.contrib import messages
 from django.http import JsonResponse
 from django.utils import timezone
 from datetime import datetime
@@ -132,17 +134,25 @@ class CreateInvoiceSo(FormView):
         invoice.customer = sale_order.customer
         invoice.project = sale_order.project
         invoice.si_date = datetime.now().date()
+        if invoice.id:
+            print("Nayyyy!!!!")
         invoice.save()
+        if invoice.id:
+            print("Yayyyy!!!!")
         print('Invoice Id: '+str(invoice.id))
 
         line_item = SaleInvoiceItem()
 
-        # for line_items in context['line_items']:
-        #     line_item =
-        #     print(line_items.form.cleaned_data['qty_form'])
-        #     print("///////////////////////////////////////")
+
         item_formset = invoice_item_formset(self.request.POST)
-        # print(item_formset.errors)
+        i=0
+        for form in item_formset:
+            if form.is_valid():
+                invoice_quantity = form.cleaned_data['bill_quantity']
+                if invoice_quantity > sale_order_item[i].available_quantity:
+                    context['error_msg'] = "Error"
+                    return redirect('salesApp:createinvoiceso')
+                i=i+1
         i=0
         for form in item_formset:
             line_item = form.save(commit=False)
@@ -151,11 +161,15 @@ class CreateInvoiceSo(FormView):
             line_item.tax_rate = sale_order_item[i].tax_rate
             line_item.total_price = line_item.bill_quantity*sale_order_item[i].unit_price
             line_item.tax_amount = line_item.total_price*line_item.tax_rate.tax_value
+            print('*** Saving Item ***')
             line_item.save()
+            # print(sale_order_item[i])
+            if line_item.id:
+                sale_order_item[i].ConsumeQuantity(line_item.bill_quantity)
             i=i+1
             # print(form)
-            print(line_item)
-            print("*** --- *** --- ***")
+            # print(line_item)
+
         invoice.CalculateSiTotal()
         return super().form_valid(item_formset)
     def get_success_url(self):
@@ -223,6 +237,7 @@ class AddSaleOrderItems(CreateView):
         line_item.so_line_number = new_line_number
         line_item.total_price = line_item.unit_price*line_item.order_quantity
         line_item.tax_amount = line_item.tax_rate.tax_value*line_item.total_price
+        line_item.available_quantity = line_item.order_quantity
         line_item.save()
         line_item.sale_order.CalculateSoTotal()
         return super().form_valid(form)

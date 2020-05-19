@@ -46,6 +46,7 @@ class SaleOrderItem(models.Model):
     item = models.ForeignKey(Items, on_delete=models.PROTECT,verbose_name='Item')
     sale_order = models.ForeignKey(SaleOrder, on_delete=models.CASCADE)
     order_quantity = models.DecimalField(max_digits=14,decimal_places=2,default=0.00,verbose_name='Order Quantity')
+    available_quantity = models.DecimalField(max_digits=14,decimal_places=2,default=0.00,verbose_name='Available Quantity')
     billed_quantity = models.DecimalField(max_digits=14,decimal_places=2,default=0.00,verbose_name='Billed Quantity')
     unit_price = models.DecimalField(max_digits=14,decimal_places=2,verbose_name='Sale Price')
     total_price = models.DecimalField(max_digits=14,decimal_places=2,default=0.00,verbose_name='Total Price')
@@ -56,6 +57,12 @@ class SaleOrderItem(models.Model):
     variation_quantity = models.DecimalField(max_digits=14,decimal_places=2,default=0,verbose_name='Variation Quantity')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
+
+    def ConsumeQuantity(self,invoice_quantity):
+        if invoice_quantity <= self.available_quantity:
+            self.billed_quantity += invoice_quantity
+            self.available_quantity -= invoice_quantity
+            self.save()
 
     def __str__(self):
         return str(self.so_line_number)
@@ -106,3 +113,6 @@ class SaleInvoiceItem(models.Model):
     total_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00,verbose_name='Total Amount')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.sale_order_item.item)

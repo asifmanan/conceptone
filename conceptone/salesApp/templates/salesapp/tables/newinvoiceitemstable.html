@@ -3,13 +3,14 @@
         <thead style="background-color: #00aacc;color: #ffffff;">
 
             <tr>
-                <th style="width:5%;">Line</th>
-                <th style="width:25%;">Description</th>
-                <th style="width:5%;">UoM</th>
-                <th style="width:10%;">Unbilled Quantity</th>
-                <th style="width:15%;">Invoice Quantity</th>
+                <th style="width:4%;">Line</th>
+                <th style="width:20%;">Description</th>
+                <th style="width:4%;">UoM</th>
+                <th style="width:9%;">Order Quantity</th>
+                <th style="width:9%;">Available Quantity</th>
+                <th style="width:14%;">Invoice Quantity</th>
                 <th style="width:10%;">Unit Price</th>
-                <th style="width:10%;">Total&nbsp;Price</th>
+                <th style="width:10%;">Total Price</th>
             </tr>
         </thead>
         <tbody style="background-color: #c1d1bf;">
@@ -20,7 +21,8 @@
                 <td>{{items.item}}</td>
                 <td>{{items.item.item_uom}}</td>
                 <td>{{items.order_quantity}}</td>
-                <td>{{items.form.qty_form}}{{items.form.id_form}}</td>
+                <td>{{items.available_quantity}}</td>
+                <td>{{items.form.qty_form}}<small>{{error_msg}}</small>{{items.form.id_form}}</td>
                 <td>{{items.unit_price}}</td>
                 <td>{{items.total_price}}</td>
               </tr>

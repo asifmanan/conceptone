@@ -7,7 +7,9 @@
                 <th>Line Number</th>
                 <th>Description</th>
                 <th>UoM</th>
-                <th>Quantity</th>
+                <th>Order Quantity</th>
+                <th>Billed Quantity</th>
+                <th>Available Quantity</th>
                 <th>Unit Price</th>
                 <th>Total Amount</th>
             </tr>
@@ -23,7 +25,9 @@
                   <td>{{item.item.item_description}}</td>
                   <td>{{item.item.item_uom}}</td>
                   <td>{{item.order_quantity}}</td>
-                  <td>{{item.sale_price}}</td>
+                  <td>{{item.billed_quantity}}</td>
+                  <td>{{item.available_quantity}}</td>
+                  <td>{{item.unit_price}}</td>
                   <td>{{item.total_price}}</td>
               </tr>
             {% endfor %}
