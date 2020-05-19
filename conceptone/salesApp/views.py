@@ -91,7 +91,6 @@ class CreateInvoiceSo(FormView):
             'form-TOTAL_FORMS': no_of_items,
             'form-INITIAL_FORMS': '0',
             'form-MAX_NUM_FORMS': '',
-            # 'form-0-si_item_bill_quantity': '',
             }
         item_formset = invoice_item_formset(formdata)
         form_list = []
@@ -142,15 +141,13 @@ class CreateInvoiceSo(FormView):
         print('Invoice Id: '+str(invoice.id))
 
         line_item = SaleInvoiceItem()
-
-
         item_formset = invoice_item_formset(self.request.POST)
         i=0
         for form in item_formset:
             if form.is_valid():
                 invoice_quantity = form.cleaned_data['bill_quantity']
                 if invoice_quantity > sale_order_item[i].available_quantity:
-                    context['error_msg'] = "Error"
+                    messages.add_message(messages.warning(request,"Bill Quantity Cannot be greater than Available Quantity"))
                     return redirect('salesApp:createinvoiceso')
                 i=i+1
         i=0
