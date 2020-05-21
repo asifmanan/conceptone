@@ -8,14 +8,17 @@
 {% endblock headblock %}
 
 {% block bodyblock %}
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
     <div style="width: 100%;">
+      {% if messages %}
+          {% for message in messages %}
+            <div class="mb-0 alert alert-{{ message.tags }} alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              {{ message }}
+            </div>
+          {% endfor %}
+      {% endif %}
         <div>
           <div class="row" style="margin-left: 0px;margin-right: 0px;">
             <div class="col-md-4 col-lg-3 col-xl-3" style="padding-left: 0px;padding-right: 0px;">
