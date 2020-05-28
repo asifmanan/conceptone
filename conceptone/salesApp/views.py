@@ -7,7 +7,7 @@ from datetime import datetime
 from django.urls import reverse, reverse_lazy
 from django.http import FileResponse, HttpResponse, HttpResponseRedirect
 from salesApp.models import SaleOrder, SaleInvoice, SaleOrderItem, SaleInvoiceItem
-from salesApp.forms import SaleInvoiceSoForm, SaleInvoiceNewForm, SaleOrderForm, SaleOrderItemForm, SaleInvoiceItemForm, SelectItemFromSo, invoice_item_formset
+from salesApp.forms import SaleInvoiceSoForm, SaleInvoiceNewForm, SaleOrderForm, SaleOrderItemForm, SaleInvoiceItemForm, SelectItemFromSo, invoice_item_formset, ViewInvoiceForm
 from django.views.generic import (View, TemplateView, ListView, DetailView,
                                     CreateView, UpdateView, DetailView, FormView,)
 # Create your views here.
@@ -278,3 +278,34 @@ class SaleOrderList(ListView):
             sale_order.CalculateSoTotal()
         context = super().get_context_data(*args,**kwargs)
         return context
+
+class ViewInvoices(FormView):
+    form_class = ViewInvoiceForm
+    template_name = 'salesApp/viewinvoices.html'
+    success_url = 'salesApp:viewinvoices'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args,**kwargs)
+        context['object_list'] = SaleInvoice.objects.all()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        form = ViewInvoiceForm(request.POST)
+        if form.is_valid():
+            customer_id = form.cleaned_data['customer'].id
+            project_id = form.cleaned_data['project'].id
+            print(cust_id)
+        else:
+            context['invalid_search'] = "invalid"
+        return self.render_to_response(context)
+    #
+    #
+    # def form_valid(self,form):
+    #     print(form.cleaned_data['si_number'])
+    #     print(form.cleaned_data['customer'].id)
+    #     self.si_number=form.cleaned_data['si_number']
+    #     print()
+    #     return super().form_valid(form)
+
+    # def get_success_url(self):

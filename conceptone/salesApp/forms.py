@@ -69,23 +69,6 @@ class SaleInvoiceItemForm(forms.ModelForm):
 class SelectItemFromSo(forms.Form):
     selected_item = forms.BooleanField(widget=forms.CheckboxInput(attrs={'value':'{{item.id}}'}))
 
-    # class Meta:
-    #     model = SaleOrderItem
-    #     soipk = SaleOrderItem.pk
-    #     fields = ('id',)
-    #     widgets = {
-    #                 'id':forms.CheckboxInput(attrs={'class':'form-control'})
-    #     }
-
-# class InputInvoiceItemQuantity(forms.ModelForm):
-#     class Meta:
-#         model = SaleInvoiceItem
-#         fields = ('si_item_bill_quantity',)
-#         widgets = {
-#             'si_item_bill_quantity':forms.TextInput(attrs={'class':'form-control inv-qty-input border-0 rounded-0',
-#                                                             'label':''})
-#         }
-# invoice_item_formset = modelformset_factory(InputInvoiceItemQuantity,extra=10)
 
 invoice_item_formset = modelformset_factory(
     SaleInvoiceItem,
@@ -104,3 +87,14 @@ invoice_item_formset = modelformset_factory(
     #     })
     # }
 )
+
+class ViewInvoiceForm(forms.ModelForm):
+    class Meta:
+        model = SaleInvoice
+        fields = ('sale_order','si_number','customer','project')
+        widgets = {
+                    'sale_order':forms.TextInput(attrs={'class': 'form-control'}),
+                    'si_number':forms.TextInput(attrs={'class': 'form-control'}),
+                    'customer':forms.Select(attrs={'class': 'form-control'}),
+                    'project':forms.Select(attrs={'class': 'form-control'}),
+        }

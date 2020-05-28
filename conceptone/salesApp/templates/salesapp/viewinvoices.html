@@ -1,0 +1,52 @@
+{% extends "salesApp/base.html" %}
+{% load static %}
+{% block headblock %}
+    <title>Create New Invoice</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="{% static "css\masterstyles.css" %}">
+{% endblock headblock %}
+{% block bodyblock %}
+<body style="background-color: #e1dfe1;">
+    <div class="shadow-sm" style="background-color: #ffffff;padding-bottom: 12px;margin-bottom: 18px;">
+        <div class="col col-12 pt-2 pb-2">
+            <h2 class="font-raleway">Invoices</h2>
+        </div>
+        <form method="post">{% csrf_token %}
+        <div class="row" style="margin-right: 0px;margin-left: 0px;">
+
+            <div class="col-md-6 col-xl-3">
+                {{form.si_number.label}}
+                {{form.si_number}}
+            </div>
+            <div class="col-md-6 col-xl-3">
+                {{form.sale_order.label}}
+                {{form.sale_order}}
+            </div>
+            <div class="col-md-6 col-xl-3">
+                {{form.customer.label}}
+                {{form.customer}}
+            </div>
+            <div class="col-md-6 col-xl-3">
+                {{form.project.label}}
+                {{form.project}}
+            </div>
+            <div class="col mt-3">
+              <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+
+        </div>
+        </form>
+    </div>
+    <div>
+      <div class="table-responsive" style="background-color: #ffffff;">
+        {% if invalid_search %}
+          <p>Invalid Search Criteria</p>
+        {% else %}
+          {% include "salesApp/tables/viewinvoicestable.html" %}
+        {% endif %}
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+</body>
+{% endblock bodyblock %}

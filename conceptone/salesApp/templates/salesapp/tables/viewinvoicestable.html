@@ -1,0 +1,26 @@
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Invoice No</th>
+                <th>Sale Order No.</th>
+                <th>Invoice Date</th>
+                <th>Customer</th>
+                <th>Project</th>
+                <th>Invoice Amount</th>
+                <th>Tax Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for item in object_list  %}
+          <tr>
+              <td>{{item.si_number}}</td>
+              <td>{{item.sale_order}}</td>
+              <td>{{item.si_date}}</td>
+              <td>{{item.customer}}</td>
+              <td>{{item.project}}</td>
+              <td>{{item.si_amount}}</td>
+              <td>{{item.tax_amount}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+    </table>
