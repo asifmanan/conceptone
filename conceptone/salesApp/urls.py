@@ -12,4 +12,5 @@ urlpatterns=[
     path('selectsiitemfromso/<int:pk>',views.SelectSaleInvoiceItemsFromSo.as_view(),name='selectsiitemfromso'),
     path('createinvoiceso/',views.CreateInvoiceSo.as_view(),name='createinvoiceso'),
     path('viewinvoices/',views.ViewInvoices.as_view(),name='viewinvoices'),
+    path('viewinvoicelist/',views.ViewInvoiceList,name='viewinvoicelist'),
 ]

@@ -5,9 +5,10 @@ from django.http import JsonResponse
 from django.utils import timezone
 from datetime import datetime
 from django.urls import reverse, reverse_lazy
+from django.template.loader import render_to_string
 from django.http import FileResponse, HttpResponse, HttpResponseRedirect
 from salesApp.models import SaleOrder, SaleInvoice, SaleOrderItem, SaleInvoiceItem
-from salesApp.forms import SaleInvoiceSoForm, SaleInvoiceNewForm, SaleOrderForm, SaleOrderItemForm, SaleInvoiceItemForm, SelectItemFromSo, invoice_item_formset, ViewInvoiceForm
+from salesApp.forms import SaleInvoiceSoForm, SaleInvoiceNewForm, SaleOrderForm, SaleOrderItemForm, SaleInvoiceItemForm, SelectItemFromSo, invoice_item_formset, ViewInvoiceForm, InvoiceSearchForm
 from django.views.generic import (View, TemplateView, ListView, DetailView,
                                     CreateView, UpdateView, DetailView, FormView,)
 # Create your views here.
@@ -280,7 +281,7 @@ class SaleOrderList(ListView):
         return context
 
 class ViewInvoices(FormView):
-    form_class = ViewInvoiceForm
+    form_class = InvoiceSearchForm
     template_name = 'salesApp/viewinvoices.html'
     success_url = 'salesApp:viewinvoices'
 
@@ -309,3 +310,12 @@ class ViewInvoices(FormView):
     #     return super().form_valid(form)
 
     # def get_success_url(self):
+#AJAX Calls
+def ViewInvoiceList(request):
+    # if request.GET.get('customer')
+    customer = request.GET.get('customer')
+    print("in django view!")
+    print(customer)
+    result = SaleInvoice.objects.all()
+    new_html_table = render_to_string('salesapp/tables/viewinvoicestable.html',{'object_list':result})
+    return HttpResponse(new_html_table)
