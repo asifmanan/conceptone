@@ -52,6 +52,11 @@
       $("#id_search_btn").click(function () {
         var search_param = $("#id_customer").val();
         var url = $("#id_search_form").attr("invoice-search-url")
+        $("input").each(function () {
+          $(this).attr("required",true);
+          var value = $(this).val();
+          console.log(value)
+        })
         console.log(search_param);
         console.log(url);
         $.ajax({
@@ -61,6 +66,7 @@
             'customer': search_param
           },
           success: function (new_html_table) {
+              console.log(new_html_table);
               $("#id_customer").val('Success');
               $("#invoiceviewtable").html(new_html_table);
           }
