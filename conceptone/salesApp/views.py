@@ -312,10 +312,15 @@ class ViewInvoices(FormView):
     # def get_success_url(self):
 #AJAX Calls
 def ViewInvoiceList(request):
-    # if request.GET.get('customer')
-    customer = request.GET.get('customer')
+    data = request.GET
+
     print("in django view!")
-    print(customer)
+    query_result = SaleInvoice.objects.all()
+    if 'invoce_number' != '':
+        query_result.filter()
+    if 'customer' in data:
+        print("YAYYYYYYYYY!")
+    print(data)
     result = SaleInvoice.objects.all()
     new_html_table = render_to_string('salesapp/tables/viewinvoicestable.html',{'object_list':result})
     return HttpResponse(new_html_table)
