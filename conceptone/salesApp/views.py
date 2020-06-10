@@ -316,11 +316,14 @@ def ViewInvoiceList(request):
 
     print("in django view!")
     query_result = SaleInvoice.objects.all()
-    if 'invoce_number' != '':
-        query_result.filter()
-    if 'customer' in data:
-        print("YAYYYYYYYYY!")
-    print(data)
-    result = SaleInvoice.objects.all()
-    new_html_table = render_to_string('salesapp/tables/viewinvoicestable.html',{'object_list':result})
+    if data['customer'] != '':
+        query_result = query_result.filter(customer__customer_name__icontains=data['customer'])
+    if data['project'] != '':
+        query_result = query_result.filter(project__project_name__icontains=data['project'])
+    if data['sale_order'] != '':
+        query_result = query_result.filter(sale_order__so_number__icontains=data['sale_order'])
+    if data['invoice_number'] != '':
+        query_result = query_result.filter(si_number__icontains=data['invoice_number'])
+    # print(data)
+    new_html_table = render_to_string('salesapp/tables/viewinvoicestable.html',{'object_list':query_result})
     return HttpResponse(new_html_table)

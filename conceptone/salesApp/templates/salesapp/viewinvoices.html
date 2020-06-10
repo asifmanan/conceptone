@@ -37,7 +37,7 @@
         </div>
         </form>
     </div>
-    <div>
+    <div class="mr-3 ml-3">
       <div class="table-responsive" style="background-color: #ffffff;">
         {% if invalid_search %}
           <p>Invalid Search Criteria</p>
@@ -50,6 +50,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script>
       $("input").on("input", function () {
+          $("#id_si_number").removeClass("is-invalid");
           $("#id_si_number").removeClass("is-invalid");
           $("#id_sale_order").removeClass("is-invalid");
           $("#id_customer").removeClass("is-invalid");
@@ -66,7 +67,7 @@
               $("#id_project").addClass("is-invalid");
               console.log("Fill in the required fields");
         }
-      else{
+      else {
           var search_param = $("#id_customer").val();
           var url = $("#id_search_form").attr("invoice-search-url")
           console.log(search_param);
@@ -83,12 +84,6 @@
           //     key: 'customer',
           //     value: $("#id_customer").val()
           //   });
-          }
-
-
-
-          // console.log(ajaxData)
-
           $.ajax({
             url: url,
             datatype:'json',
@@ -103,10 +98,10 @@
                 console.log(new_html_table);
                 // $("#id_customer").val('Success');
                 $("#invoiceviewtable").html(new_html_table);
-            }
-          });
+                }
+              });
         }
-      );
+      });
     </script>
 </body>
 {% endblock bodyblock %}
