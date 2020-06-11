@@ -72,22 +72,10 @@
           var url = $("#id_search_form").attr("invoice-search-url")
           console.log(search_param);
           console.log(url);
-          // var ajaxData = [];
-          // if ($("#id_si_number").val().length !== 0) {
-          //   ajaxData.push({
-          //     key: 'invoice_number',
-          //     value: $("#id_si_number").val()
-          //   });
-          // }
-          // if ($("#id_customer").val().length !== 0) {
-          //   ajaxData.push({
-          //     key: 'customer',
-          //     value: $("#id_customer").val()
-          //   });
+
           $.ajax({
             url: url,
             datatype:'json',
-            // data:ajaxData,
             data: {
               'invoice_number': $("#id_si_number").val(),
               'sale_order': $("#id_sale_order").val(),
@@ -96,7 +84,6 @@
             },
             success: function (new_html_table) {
                 console.log(new_html_table);
-                // $("#id_customer").val('Success');
                 $("#invoiceviewtable").html(new_html_table);
                 }
               });

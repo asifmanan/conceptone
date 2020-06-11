@@ -11,7 +11,7 @@ from salesApp.models import SaleOrder, SaleInvoice, SaleOrderItem, SaleInvoiceIt
 from salesApp.forms import SaleInvoiceSoForm, SaleInvoiceNewForm, SaleOrderForm, SaleOrderItemForm, SaleInvoiceItemForm, SelectItemFromSo, invoice_item_formset, ViewInvoiceForm, InvoiceSearchForm
 from django.views.generic import (View, TemplateView, ListView, DetailView,
                                     CreateView, UpdateView, DetailView, FormView,)
-# Create your views here.
+# Create views
 class CreateSaleOrder(CreateView):
     model = SaleOrder
     form_class = SaleOrderForm
@@ -19,36 +19,18 @@ class CreateSaleOrder(CreateView):
     def get_success_url(self):
         return reverse_lazy('salesApp:addsaleorderitems',kwargs={'pk':self.object.pk})
 
-# class CreateSoInvoice(CreateView):
-#     model = SaleInvoice
-#     form_class = SaleInvoiceSoForm
-#     template_name = 'salesApp/createsoinvoice.html'
-#     def form_valid(self,form):
-#         so_invoice = form.save(commit=False)
-#         so_invoice.si_customer = so_invoice.si_sonumber.so_customer
-#         so_invoice.si_project = so_invoice.si_sonumber.so_project
-#         so_invoice.save()
-#         return super().form_valid(form)
-#     def get_success_url(self):
-#         return reverse_lazy('salesApp:addsiitemfromso',kwargs={'pk':self.object.si_sonumber.pk})
-
 class CreateSoInvoice(FormView):
     form_class = SaleInvoiceSoForm
     template_name = 'salesApp/createsoinvoice.html'
     def form_valid(self,form):
         self.so = form.cleaned_data['sale_order']
-        # self.request.session['so_num'] = self.so
-        # print(self.so.pk)
-        # self.form = form
         return super().form_valid(form)
 
     def get_success_url(self):
-        # so = self.form.cleaned_data['si_sonumber']
         return reverse_lazy('salesApp:selectsiitemfromso',kwargs={'pk':self.so.pk})
 
 class SelectSaleInvoiceItemsFromSo(TemplateView):
     template_name = 'salesApp/selectsiitemfromso.html'
-    # item_list = []
     def get_context_data(self,*args,**kwargs):
         context = super().get_context_data(*args,**kwargs)
         self.sonumber = self.kwargs['pk']
@@ -67,17 +49,11 @@ class SelectSaleInvoiceItemsFromSo(TemplateView):
         selected_items = request.POST.getlist('selected_items')
         if not selected_items:
             print("No Items Selected")
-            # print(self.kwargs['pk'])
             return HttpResponseRedirect(reverse('salesApp:selectsiitemfromso',kwargs={'pk':self.sonumber}))
         else:
             request.session['invoice-selected_item'] = selected_items
             issubset = set(selected_items) <= set(context['item_list'])
-            # something went wrong page
             return redirect('salesApp:createinvoiceso')
-            # print("*** After POST ***")
-            # print(issubset)
-            # print(selected_items)
-            # print(context['item_list'])
 
 class CreateInvoiceSo(FormView):
     form_class = invoice_item_formset
@@ -111,20 +87,6 @@ class CreateInvoiceSo(FormView):
         context['line_items'] = line_items
         return context
 
-    # def post(self,request,*arg,**kwargs):
-    #     item_formset = invoice_item_formset(request.POST)
-    #     # myformset = item_formset(request.POST)
-    #     if item_formset.is_valid():
-    #         print("valid")
-    #         for key, value in item_formset:
-    #             print('Key: %s' % (key) )
-    #             # print(f'Key: {key}') in Python >= 3.7
-    #             print('Value %s' % (value) )
-    #             # print(f'Value: {value}') in Python >= 3.7
-    #     else:
-    #         print("Invalid")
-    #     return HttpResponseRedirect(reverse('salesApp:createsoinvoice'))
-
     def form_valid(self,form,*arg,**kwargs):
         context = self.get_context_data(**kwargs)
         sale_order = context['so']
@@ -138,8 +100,6 @@ class CreateInvoiceSo(FormView):
                 if invoice_quantity > sale_order_item[i].available_quantity:
                     messages.set_level(self.request,messages.WARNING)
                     messages.warning(self.request,"Bill Quantity Cannot be greater than Available Quantity")
-                    # invoice.delete()
-                    # print(invoice.id)
                     return redirect('salesApp:createinvoiceso')
                 i=i+1
         invoice = SaleInvoice()
@@ -147,12 +107,9 @@ class CreateInvoiceSo(FormView):
         invoice.customer = sale_order.customer
         invoice.project = sale_order.project
         invoice.si_date = datetime.now().date()
-        if invoice.id:
-            print("Nayyyy!!!!")
         invoice.save()
         if invoice.id:
-            print("Yayyyy!!!!")
-        print('Invoice Id: '+str(invoice.id))
+            print('Invoice Id: '+str(invoice.id))
 
         i=0
         for form in item_formset:
@@ -162,61 +119,27 @@ class CreateInvoiceSo(FormView):
             line_item.tax_rate = sale_order_item[i].tax_rate
             line_item.total_price = line_item.bill_quantity*sale_order_item[i].unit_price
             line_item.tax_amount = line_item.total_price*line_item.tax_rate.tax_value
-            print('*** Saving Item ***')
             line_item.save()
-            # print(sale_order_item[i])
             if line_item.id:
                 sale_order_item[i].ConsumeQuantity(line_item.bill_quantity)
             i=i+1
-            # print(form)
-            # print(line_item)
 
         invoice.CalculateSiTotal()
         return super().form_valid(item_formset)
     def get_success_url(self):
         return reverse('salesApp:createsoinvoice')
-#Using FormView#
-###################################
-# class SelectSaleInvoiceItemsFromSo(FormView):
-#     # model = SaleOrderItem
-#     template_name = 'salesApp/selectsiitemfromso.html'
-#     form_class = SelectItemFromSo
-#     def get_context_data(self,*args,**kwargs):
-#         context = super().get_context_data(*args,**kwargs)
-#         context['so'] = get_object_or_404(SaleOrder, pk=self.kwargs['pk'])
-#         context['object_list'] = SaleOrderItem.objects.filter(so_number=self.kwargs['pk'])
-#         for item in context['object_list']:
-#             context['form']['selected_item'].widget.attrs['value'] = item.id
-#         return context
-#
-#     def post(self, request, *args, **kwargs):
-#         selected_items = request.POST.getlist('selected_items')
-#         print(selected_items)
-#         context = self.get_context_data(*args,**kwargs)
-#         return self.render_to_response(context)
-#
-#     def form_valid(self,form):
-#         selected_items = form.cleaned_data['selected_item']
-#         print(selected_items)
-#         return super(SelectSaleInvoiceItemsFromSo,self).form_valid(form)
-#     def get_success_url(self):
-#         return reverse_lazy('salesApp:selectsiitemfromso',kwargs={'pk':self.pk})
-###################################
-
-
 
 class CreateInvoiceFromSo(CreateView):
     model = SaleInvoice
     form_class = SaleInvoiceSoForm
 
-
-
-class CreateNewInvoice(CreateView):
-    model = SaleInvoice
-    form_class = SaleInvoiceNewForm
-    template_name = 'salesApp/createnewinvoice.html'
-    def get_success_url(self):
-        return reverse_lazy('salesApp:createsoinvoice')
+#Standalone invoice (without SO)
+# class CreateNewInvoice(CreateView):
+#     model = SaleInvoice
+#     form_class = SaleInvoiceNewForm
+#     template_name = 'salesApp/createnewinvoice.html'
+#     def get_success_url(self):
+#         return reverse_lazy('salesApp:createsoinvoice')
 
 class AddSaleOrderItems(CreateView):
     model = SaleOrderItem
@@ -300,16 +223,7 @@ class ViewInvoices(FormView):
         else:
             context['invalid_search'] = "invalid"
         return self.render_to_response(context)
-    #
-    #
-    # def form_valid(self,form):
-    #     print(form.cleaned_data['si_number'])
-    #     print(form.cleaned_data['customer'].id)
-    #     self.si_number=form.cleaned_data['si_number']
-    #     print()
-    #     return super().form_valid(form)
 
-    # def get_success_url(self):
 #AJAX Calls
 def ViewInvoiceList(request):
     data = request.GET
@@ -324,6 +238,5 @@ def ViewInvoiceList(request):
         query_result = query_result.filter(sale_order__so_number__icontains=data['sale_order'])
     if data['invoice_number'] != '':
         query_result = query_result.filter(si_number__icontains=data['invoice_number'])
-    # print(data)
     new_html_table = render_to_string('salesapp/tables/viewinvoicestable.html',{'object_list':query_result})
     return HttpResponse(new_html_table)
