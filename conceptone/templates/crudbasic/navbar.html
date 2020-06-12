@@ -11,7 +11,7 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sales</a>
         <div class="dropdown-menu">
-            <a class="dropdown-item" href="{% url 'salesApp:saleorderlist' %}">View Sale Orders</a>
+            <a class="dropdown-item" href="{% url 'salesApp:viewsaleorderslist' %}">View Sale Orders</a>
             <a class="dropdown-item" href="{% url 'salesApp:viewinvoices' %}">View Invoices</a>
             <a class="dropdown-item" href="{% url 'salesApp:createsaleorder' %}">New Sale Order</a>
             <a class="dropdown-item" href="{% url 'salesApp:createsoinvoice' %}">New Invoice</a>
@@ -23,8 +23,8 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Purchases</a>
         <div class="dropdown-menu">
-            <a class="dropdown-item" href="{% url 'crudbasic:purchaseorders' %}">View Purchase Orders</a>
-            <a class="dropdown-item" href="{% url 'crudbasic:newpurchaseorder' %}">New Purchase Order</a>
+            <a class="dropdown-item" href="{% url 'purchaseApp:createpurchaseorder' %}">New Purchase Order</a>
+            {% comment %} <a class="dropdown-item" href="{% url 'purchaseApp:newpurchaseorder' %}">New Purchase Order</a> {% endcomment %}
           <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Payables</a>
         </div>

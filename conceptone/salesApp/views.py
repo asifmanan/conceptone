@@ -19,6 +19,44 @@ class CreateSaleOrder(CreateView):
     def get_success_url(self):
         return reverse_lazy('salesApp:addsaleorderitems',kwargs={'pk':self.object.pk})
 
+class AddSaleOrderItems(CreateView):
+    model = SaleOrderItem
+    form_class = SaleOrderItemForm
+    template_name = 'salesApp/soadditem.html'
+    def get_context_data(self,*args,**kwargs):
+        context = super().get_context_data(*args,**kwargs)
+        context['so'] = get_object_or_404(SaleOrder, pk=self.kwargs['pk'])
+        context['items'] = SaleOrderItem.objects.filter(sale_order=self.kwargs['pk'])
+        return context
+    def form_valid(self,form):
+        line_item = form.save(commit=False)
+        line_item.sale_order = get_object_or_404(SaleOrder, pk=self.kwargs['pk'])
+        current_obj = SaleOrderItem.objects.filter(sale_order=line_item.sale_order).order_by('-so_line_number').first()
+        if current_obj !=None:
+            new_line_number = (current_obj.so_line_number) + 1
+        else:
+            new_line_number = 1
+        line_item.so_line_number = new_line_number
+        line_item.total_price = line_item.unit_price*line_item.order_quantity
+        line_item.tax_amount = line_item.tax_rate.tax_value*line_item.total_price
+        line_item.available_quantity = line_item.order_quantity
+        line_item.save()
+        line_item.sale_order.CalculateSoTotal()
+        return super().form_valid(form)
+    def get_success_url(self):
+        return reverse_lazy('salesApp:addsaleorderitems',kwargs={'pk':self.object.sale_order.pk})
+
+class ViewSaleOrdersList(ListView):
+    model = SaleOrder
+    form_class = SaleOrderForm
+    template_name = 'salesApp/viewsaleorderslist.html'
+    def get_context_data(self, *args, **kwargs):
+        so_list = SaleOrder.objects.all()
+        for sale_order in so_list:
+            sale_order.CalculateSoTotal()
+        context = super().get_context_data(*args,**kwargs)
+        return context
+
 class CreateSoInvoice(FormView):
     form_class = SaleInvoiceSoForm
     template_name = 'salesApp/createsoinvoice.html'
@@ -34,7 +72,6 @@ class SelectSaleInvoiceItemsFromSo(TemplateView):
     def get_context_data(self,*args,**kwargs):
         context = super().get_context_data(*args,**kwargs)
         self.sonumber = self.kwargs['pk']
-        # print(self.sonumber)
         context['so'] = get_object_or_404(SaleOrder, pk=self.kwargs['pk'])
         so_items = SaleOrderItem.objects.filter(sale_order=self.kwargs['pk'])
         context['object_list'] = so_items
@@ -83,7 +120,6 @@ class CreateInvoiceSo(FormView):
             i = i+1
         context['so'] = s_order
         context['formset'] = item_formset
-        # print(item_formset)
         context['line_items'] = line_items
         return context
 
@@ -129,102 +165,17 @@ class CreateInvoiceSo(FormView):
     def get_success_url(self):
         return reverse('salesApp:createsoinvoice')
 
-class CreateInvoiceFromSo(CreateView):
-    model = SaleInvoice
-    form_class = SaleInvoiceSoForm
-
-#Standalone invoice (without SO)
-# class CreateNewInvoice(CreateView):
-#     model = SaleInvoice
-#     form_class = SaleInvoiceNewForm
-#     template_name = 'salesApp/createnewinvoice.html'
-#     def get_success_url(self):
-#         return reverse_lazy('salesApp:createsoinvoice')
-
-class AddSaleOrderItems(CreateView):
-    model = SaleOrderItem
-    form_class = SaleOrderItemForm
-    template_name = 'salesApp/soadditem.html'
-    def get_context_data(self,*args,**kwargs):
-        context = super().get_context_data(*args,**kwargs)
-        context['so'] = get_object_or_404(SaleOrder, pk=self.kwargs['pk'])
-        context['items'] = SaleOrderItem.objects.filter(sale_order=self.kwargs['pk'])
-        return context
-    def form_valid(self,form):
-        line_item = form.save(commit=False)
-        line_item.sale_order = get_object_or_404(SaleOrder, pk=self.kwargs['pk'])
-        current_obj = SaleOrderItem.objects.filter(sale_order=line_item.sale_order).order_by('-so_line_number').first()
-        if current_obj !=None:
-            new_line_number = (current_obj.so_line_number) + 1
-        else:
-            new_line_number = 1
-        line_item.so_line_number = new_line_number
-        line_item.total_price = line_item.unit_price*line_item.order_quantity
-        line_item.tax_amount = line_item.tax_rate.tax_value*line_item.total_price
-        line_item.available_quantity = line_item.order_quantity
-        line_item.save()
-        line_item.sale_order.CalculateSoTotal()
-        return super().form_valid(form)
-    def get_success_url(self):
-        return reverse_lazy('salesApp:addsaleorderitems',kwargs={'pk':self.object.sale_order.pk})
-
-class AddSaleInvoiceItems(CreateView):
-    model = SaleInvoiceItem
-    form_class = SaleInvoiceItemForm
-    template_name = 'salesApp/siadditem.html'
-    def get_context_data(self,*args,**kwargs):
-        context = super().get_context_data(*args,**kwargs)
-        context['si'] = get_object_or_404(SaleInvoice, pk=self.kwargs['pk'])
-        context['items'] = SaleInvoiceItem.objects.filter(so_number=self.kwargs['pk'])
-        return context
-    def form_valid(self,form):
-        line_item = form.save(commit=False)
-        line_item.si_number = get_object_or_404(SaleInvoice, pk=self.kwargs['pk'])
-        current_obj = SaleInvoiceItem.objects.filter(si_number=line_item.si_number).order_by('-so_line_number').first()
-        if current_obj !=None:
-            new_line_number = (current_obj.si_line_number) + 1
-        else:
-            new_line_number = 1
-        line_item.si_line_number = new_line_number
-        line_item.total_price = line_item.sale_price*line_item.so_quantity
-        line_item.so_item_tax_amount = line_item.so_tax_rate.tax_value*line_item.total_price
-        line_item.save()
-        line_item.so_number.CalculateSoTotal()
-        return super().form_valid(form)
-
-class SaleOrderList(ListView):
-    model = SaleOrder
-    form_class = SaleOrderForm
-    template_name = 'salesApp/saleorderlist.html'
-    def get_context_data(self, *args, **kwargs):
-        so_list = SaleOrder.objects.all()
-        for sale_order in so_list:
-            sale_order.CalculateSoTotal()
-        context = super().get_context_data(*args,**kwargs)
-        return context
 
 class ViewInvoices(FormView):
     form_class = InvoiceSearchForm
     template_name = 'salesApp/viewinvoices.html'
-    success_url = 'salesApp:viewinvoices'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args,**kwargs)
         context['object_list'] = SaleInvoice.objects.all()
         return context
 
-    def post(self, request, *args, **kwargs):
-        context = self.get_context_data()
-        form = ViewInvoiceForm(request.POST)
-        if form.is_valid():
-            customer_id = form.cleaned_data['customer'].id
-            project_id = form.cleaned_data['project'].id
-            print(cust_id)
-        else:
-            context['invalid_search'] = "invalid"
-        return self.render_to_response(context)
-
-#AJAX Calls
+#AJAX Calls to retriew invoices
 def ViewInvoiceList(request):
     data = request.GET
 

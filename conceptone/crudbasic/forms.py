@@ -5,8 +5,6 @@ from crudbasic.models import (Customers,
                                 Suppliers,
                                 Projects,
                                 Items,
-                                OrderItem,
-                                PurchaseOrder,
                                 TaxRate,
                                 )
 from crudbasic.basic_functions import get_col_heads
@@ -20,30 +18,6 @@ class TaxRateForm(forms.ModelForm):
                 'tax_name':forms.TextInput(attrs={'class':'form-control'}),
                 'tax_code':forms.TextInput(attrs={'class':'form-control'}),
                 # 'tax_value':forms.NumberInput(attrs={'class':'form-control'}),
-                }
-
-class PurchaseOrderForm(forms.ModelForm):
-    class Meta:
-        model = PurchaseOrder
-        fields = ('po_number','po_supplier','po_tax', 'po_date',)
-        widgets = {
-                'po_supplier':forms.Select(attrs={'class':'form-control'}),
-                'po_date':forms.DateInput(attrs={'class':'form-control', 'type':'date'}),
-                'po_number':forms.TextInput(attrs={'class':'form-control'}),
-                'po_tax':forms.Select(attrs={'class':'form-control'}),
-                }
-
-class OrderItemForm(forms.ModelForm):
-    class Meta:
-        model = OrderItem
-        fields = ('order_item','order_quantity','purchase_price')
-        widgets = {
-                # 'po_line_number':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
-                'order_item':forms.Select(attrs={'class':'form-control form-control-sm', 'type':'date','id':'itemselect'}),
-                'order_quantity':forms.TextInput(attrs={'class':'form-control form-control-sm','id':'order_quantity','onchange':'auto_complete()'}),
-                'purchase_price':forms.TextInput(attrs={'class':'form-control form-control-sm','id':'purchase_price'}),
-                # 'total_price':forms.TextInput(attrs={'class':'form-control form-control-sm','readonly':'True'}),
-                # 'total_price':forms.TextInput(attrs={'class':'form-control form-control-sm','id':'total_price','onkeydown':'return false','onchange':'auto_complete()'}),
                 }
 
 # if using formset then unindent the following
