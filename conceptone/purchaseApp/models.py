@@ -13,7 +13,6 @@ class PurchaseOrder(models.Model):
     tax_rate = models.ForeignKey(TaxRate, on_delete=models.PROTECT)
     tax_amount = models.DecimalField(max_digits=14, decimal_places=2, default=0.00)
     total_amount = models.DecimalField(max_digits=14, decimal_places=2, default=0.00)
-    po_draft = models.BooleanField(default=True)
     published = models.BooleanField(default=False)
     published_date = models.DateTimeField(blank=True, null=True)
     # po_payment_status

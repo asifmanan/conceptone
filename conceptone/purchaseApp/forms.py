@@ -9,13 +9,12 @@ from purchaseApp.models import (PurchaseOrder,
 class PurchaseOrderForm(forms.ModelForm):
     class Meta:
         model = PurchaseOrder
-        fields = ('project','po_number','supplier','tax_rate', 'po_date',)
+        fields = ('project','supplier','tax_rate', 'po_date',)
         widgets = {
                 'project':forms.Select(attrs={'class':'form-control'}),
                 'supplier':forms.Select(attrs={'class':'form-control'}),
                 'po_date':forms.DateInput(attrs={'class':'form-control', 'type':'date'}),
-                'po_number':forms.TextInput(attrs={'class':'form-control'}),
-                'po_tax':forms.Select(attrs={'class':'form-control'}),
+                'tax_rate':forms.Select(attrs={'class':'form-control'}),
                 }
 
 class OrderItemForm(forms.ModelForm):

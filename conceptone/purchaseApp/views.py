@@ -11,13 +11,11 @@ class CreatePurchaseOrder(CreateView):
     model = PurchaseOrder
     form_class = PurchaseOrderForm
     template_name = 'purchaseapp/createpurchaseorder.html'
-
     def get_success_url(self):
-        if'save' in self.request.POST:
-            return reverse_lazy('crudbasic:purchaseorders')
-        if'continue' in self.request.POST:
-            return reverse_lazy('crudbasic:poadditems',kwargs={'pk':self.object.pk})
+        return reverse_lazy('purchaseApp:CreatePurchaseOrderItems',kwargs={'pk':self.object.pk})
 
+class CreatePurchaseOrderItems():
+    pass
 
 class ViewPurchaseOrdersList(ListView):
     model = PurchaseOrder

@@ -1,7 +1,7 @@
 {% extends "purchaseApp/base.html" %}
 {% block bodyblock %}
 
-<div class="container bg-light">
+<div class="container">
     <div class="col-lg-8 col-xl-6 mx-auto">
         <h2>New Purchase Order</h2>
     </div>
@@ -13,6 +13,10 @@
         <div class="col-lg-8 col-xl-6 mx-auto" style="margin-bottom: 12px;">
           {{form.project.label}}
           {{form.project}}
+        </div>
+        <div class="col-lg-8 col-xl-6 mx-auto" style="margin-bottom: 12px;">
+          {{form.tax_rate.label}}
+          {{form.tax_rate}}
         </div>
         <div class="col-lg-8 col-xl-6 mx-auto" style="margin-bottom: 12px;">
           {{form.po_date.label}}
