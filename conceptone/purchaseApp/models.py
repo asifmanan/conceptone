@@ -25,14 +25,15 @@ class PurchaseOrder(models.Model):
         self.save()
 
     def CalculatePoTotal(self):
-        items = OrderItem.objects.filter(po_number=self)
+        items = PurchaseOrderItem.objects.filter(purchase_order=self)
         if items.exists():
             items_sum = items.aggregate(Sum('total_price'))
-            # print(items_sum['total_price__sum'])
-            items_total_amount = items_sum['total_price__sum']
-            self.po_amount = items_total_amount
-            print(self.po_tax.tax_value)
-            self.po_tax_amount = items_total_amount*self.po_tax.tax_value
+            po_amount = items_sum['total_price__sum']
+            tax_amount = po_amount*self.tax_rate.tax_value
+            self.po_amount = po_amount
+            self.tax_amount = tax_amount
+            self.total_amount = po_amount + tax_amount
+            # print(self.po_tax.tax_value)
             self.save()
 
     def __str__(self):

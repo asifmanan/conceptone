@@ -23,14 +23,13 @@ class CreatePurchaseOrderItems(FormView):
         self.po_object = PurchaseOrder.objects.get(pk=self.kwargs['pk'])
         context['po_object'] = self.po_object
         context['order_items'] = PurchaseOrderItem.objects.filter(purchase_order=self.po_object)
+        self.po_object.CalculatePoTotal()
         print(self.po_object.po_date)
         return context
 
     def form_valid(self,form):
         line_item = form.save(commit=False)
         print("In Form_valid")
-
-
         line_item.purchase_order = get_object_or_404(PurchaseOrder, pk=self.kwargs['pk'])
         current_obj = PurchaseOrderItem.objects.filter(purchase_order=line_item.purchase_order).order_by('-po_line_number').first()
         if current_obj !=None:
@@ -39,8 +38,6 @@ class CreatePurchaseOrderItems(FormView):
             new_line_number = 1
         line_item.po_line_number = new_line_number
         line_item.total_price = line_item.purchase_price*line_item.order_quantity
-        # line_item.tax_amount = line_item.tax_rate.tax_value*line_item.total_price
-        # line_item.available_quantity = line_item.order_quantity
         line_item.save()
         # line_item.purchase_order.CalculateSoTotal()
         return super().form_valid(form)

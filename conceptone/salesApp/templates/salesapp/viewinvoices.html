@@ -6,38 +6,36 @@
     <link rel="stylesheet" href="{% static "css\masterstyles.css" %}">
 {% endblock headblock %}
 {% block bodyblock %}
-<body style="background-color: #e1dfe1;">
-    <div class="shadow-sm" style="background-color: #ffffff;padding-bottom: 12px;margin-bottom: 18px;">
-        <div class="col col-12 pt-2 pb-2">
-            <h2 class="font-raleway">Invoices</h2>
-        </div>
-        <form id="id_search_form" invoice-search-url = "{% url 'salesApp:viewinvoicelist' %}" novalidate>
+<body style="background-color: #FFFFFF;">
+    <div class="rounded mt-2 mb-2 mr-2 ml-2" style="background-color: #d6eadf;padding-bottom: 12px;">
+      <div class="col col-12 pt-2 pb-1">
+          <h2 class="font-raleway">Invoices</h2>
+      </div>
+      <form id="id_search_form" invoice-search-url = "{% url 'salesApp:viewinvoicelist' %}" novalidate>
         <div class="row" style="margin-right: 0px;margin-left: 0px;">
-
-            <div class="col-md-6 col-xl-3">
-                {{form.si_number.label}}
-                {{form.si_number}}
-            </div>
-            <div class="col-md-6 col-xl-3">
-                {{form.sale_order.label}}
-                {{form.sale_order}}
-            </div>
-            <div class="col-md-6 col-xl-3">
-                {{form.customer.label}}
-                {{form.customer}}
-            </div>
-            <div class="col-md-6 col-xl-3">
-                {{form.project.label}}
-                {{form.project}}
-            </div>
-            <div class="col mt-3">
-              <button id="id_search_btn" class="btn btn-primary" type="button">Search</button>
-            </div>
-
+          <div class="col-md-6 col-xl-3">
+              {{form.si_number.label}}
+              {{form.si_number}}
+          </div>
+          <div class="col-md-6 col-xl-3">
+              {{form.sale_order.label}}
+              {{form.sale_order}}
+          </div>
+          <div class="col-md-6 col-xl-3">
+              {{form.customer.label}}
+              {{form.customer}}
+          </div>
+          <div class="col-md-6 col-xl-3">
+              {{form.project.label}}
+              {{form.project}}
+          </div>
+          <div class="col mt-2">
+            <button id="id_search_btn" class="btn btn-primary" type="button">Search</button>
+          </div>
         </div>
-        </form>
+      </form>
     </div>
-    <div class="mr-3 ml-3">
+    <div class="mr-2 ml-2">
       <div class="table-responsive" style="background-color: #ffffff;">
         {% if invalid_search %}
           <p>Invalid Search Criteria</p>
@@ -49,7 +47,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script>
-      $("input").on("input", function () {
+      $(".search_field").on("input", function () {
           $("#id_si_number").removeClass("is-invalid");
           $("#id_si_number").removeClass("is-invalid");
           $("#id_sale_order").removeClass("is-invalid");

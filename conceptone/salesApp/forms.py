@@ -99,7 +99,7 @@ class ViewInvoiceForm(forms.ModelForm):
                     'project':forms.Select(attrs={'class': 'form-control'}),
         }
 class InvoiceSearchForm(forms.Form):
-    sale_order = forms.CharField(label='Sale Order', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    si_number = forms.CharField(label='Invioce Number', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    customer = forms.CharField(label='Customer', max_length=200,widget=forms.TextInput(attrs={'class': 'form-control'}))
-    project = forms.CharField(label='Project', max_length=200, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    sale_order = forms.CharField(label='Sale Order', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control-sm search_field'}))
+    si_number = forms.CharField(label='Invioce Number', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control-sm search_field'}))
+    customer = forms.CharField(label='Customer', max_length=200,widget=forms.TextInput(attrs={'class': 'form-control form-control-sm search_field'}))
+    project = forms.CharField(label='Project', max_length=200, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control-sm search_field'}))
