@@ -2,7 +2,7 @@ from django import forms
 from django.forms import (formset_factory, modelformset_factory)
 from datetime import datetime
 from purchaseApp.models import (PurchaseOrder,
-                                OrderItem,
+                                PurchaseOrderItem,
                                 )
 
 
@@ -17,12 +17,12 @@ class PurchaseOrderForm(forms.ModelForm):
                 'tax_rate':forms.Select(attrs={'class':'form-control'}),
                 }
 
-class OrderItemForm(forms.ModelForm):
+class PurchaseOrderItemForm(forms.ModelForm):
     class Meta:
-        model = OrderItem
+        model = PurchaseOrderItem
         fields = ('item','order_quantity','purchase_price')
         widgets = {
-                'order_item':forms.Select(attrs={'class':'form-control form-control-sm', 'type':'date','id':'itemselect'}),
-                'order_quantity':forms.TextInput(attrs={'class':'form-control form-control-sm','id':'order_quantity','onchange':'auto_complete()'}),
-                'purchase_price':forms.TextInput(attrs={'class':'form-control form-control-sm','id':'purchase_price'}),
+                'item':forms.Select(attrs={'class':'form-control form-control', 'type':'date','id':'itemselect'}),
+                'order_quantity':forms.TextInput(attrs={'class':'form-control form-control','id':'order_quantity','onchange':'auto_complete()'}),
+                'purchase_price':forms.TextInput(attrs={'class':'form-control form-control','id':'purchase_price'}),
                 }

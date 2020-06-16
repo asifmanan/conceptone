@@ -38,7 +38,7 @@ class PurchaseOrder(models.Model):
     def __str__(self):
         return self.po_number
 
-class OrderItem(models.Model):
+class PurchaseOrderItem(models.Model):
     po_line_number = models.IntegerField(verbose_name='Line')
     item = models.ForeignKey(Items, on_delete=models.PROTECT,verbose_name='Item')
     purchase_order = models.ForeignKey(PurchaseOrder, on_delete=models.CASCADE)

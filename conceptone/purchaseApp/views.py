@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import (View, TemplateView, ListView, DetailView,
                                 CreateView, UpdateView, DetailView, FormView,
                                 DeleteView,)
-from purchaseApp.models import PurchaseOrder, OrderItem
-from purchaseApp.forms import PurchaseOrderForm, OrderItemForm
+from purchaseApp.models import PurchaseOrder, PurchaseOrderItem
+from crudbasic.models import Suppliers
+from purchaseApp.forms import PurchaseOrderForm, PurchaseOrderItemForm
 # Create your views here.
 # class CreatePurchaseOrder():
 class CreatePurchaseOrder(CreateView):
@@ -14,8 +15,38 @@ class CreatePurchaseOrder(CreateView):
     def get_success_url(self):
         return reverse_lazy('purchaseApp:CreatePurchaseOrderItems',kwargs={'pk':self.object.pk})
 
-class CreatePurchaseOrderItems():
-    pass
+class CreatePurchaseOrderItems(FormView):
+    form_class = PurchaseOrderItemForm
+    template_name = 'purchaseapp/createpurchaseorderitems.html'
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        self.po_object = PurchaseOrder.objects.get(pk=self.kwargs['pk'])
+        context['po_object'] = self.po_object
+        context['order_items'] = PurchaseOrderItem.objects.filter(purchase_order=self.po_object)
+        print(self.po_object.po_date)
+        return context
+
+    def form_valid(self,form):
+        line_item = form.save(commit=False)
+        print("In Form_valid")
+
+
+        line_item.purchase_order = get_object_or_404(PurchaseOrder, pk=self.kwargs['pk'])
+        current_obj = PurchaseOrderItem.objects.filter(purchase_order=line_item.purchase_order).order_by('-po_line_number').first()
+        if current_obj !=None:
+            new_line_number = (current_obj.po_line_number) + 1
+        else:
+            new_line_number = 1
+        line_item.po_line_number = new_line_number
+        line_item.total_price = line_item.purchase_price*line_item.order_quantity
+        # line_item.tax_amount = line_item.tax_rate.tax_value*line_item.total_price
+        # line_item.available_quantity = line_item.order_quantity
+        line_item.save()
+        # line_item.purchase_order.CalculateSoTotal()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('purchaseApp:CreatePurchaseOrderItems',kwargs={'pk':self.kwargs['pk']})
 
 class ViewPurchaseOrdersList(ListView):
     model = PurchaseOrder
@@ -66,7 +97,7 @@ class ViewPurchaseOrdersList(ListView):
                                                     })
 
 class Published_PoView(DetailView):
-    model = OrderItem
+    model = PurchaseOrderItem
     def get_queryset(self):
         return
     # def get(self, request, *args, **kwargs):
@@ -74,15 +105,15 @@ class Published_PoView(DetailView):
 
 
 class OrderItemView(ListView):
-    model = OrderItem
+    model = PurchaseOrderItem
     template_name = 'crudbasic/basedisplay.html'
     def get_context_data(self, **kwargs):
     # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
-        context['page_data'] = OrderItem.objects.order_by('created_on')
+        context['page_data'] = PurchaseOrderItem.objects.order_by('created_on')
         # context['search_form'] = BasicSearch(caller = OrderItem)
-        table_head_temp = get_col_heads(OrderItem)
+        table_head_temp = get_col_heads(PurchaseOrderItem)
         table_head = []
         for idx, val in enumerate(table_head_temp):
             table_head.append(str(val[1]).split(" ")[1])
@@ -100,12 +131,12 @@ class OrderItemView(ListView):
 
 def PublishedPoView(request,pk):
     po_obj = get_object_or_404(PurchaseOrder,pk=pk)
-    page_data = OrderItem.objects.filter(po_number=po_obj).order_by('po_line_number')
+    page_data = PurchaseOrderItem.objects.filter(po_number=po_obj).order_by('po_line_number')
     return render(request,'crudbasic/PublishedPoView.html',{'po_obj':po_obj,'page_data':page_data})
 
 def PoPublishConfirmation(request,pk):
     po_obj = get_object_or_404(PurchaseOrder,pk=pk)
-    page_data = OrderItem.objects.filter(po_number=po_obj).order_by('po_line_number')
+    page_data = PurchaseOrderItem.objects.filter(po_number=po_obj).order_by('po_line_number')
     if request.method == 'POST':
         if 'proceed' in request.POST:
             po_obj.publish()
@@ -117,7 +148,7 @@ def PoPublishConfirmation(request,pk):
 
 def PrintPurchaseOrder(request,pk):
     po_obj = get_object_or_404(PurchaseOrder,pk=pk)
-    po_lines = OrderItem.objects.filter(po_number=po_obj).order_by('po_line_number')
+    po_lines = PurchaseOrderItem.objects.filter(po_number=po_obj).order_by('po_line_number')
     # buffer = printpo2pdf(po_obj, po_lines)
     buffer = generatePdf(po_obj,po_lines)
     return FileResponse(buffer,as_attachment=False,filename="hello.pdf")
@@ -140,18 +171,18 @@ def CreateOrderItem(request,pk):
     po_num = po_obj.po_number
     po_obj.CalculatePoTotal()
     # print(po_obj.po_amount)
-    page_data = OrderItem.objects.filter(po_number=po_obj).order_by('po_line_number')
+    page_data = PurchaseOrderItem.objects.filter(po_number=po_obj).order_by('po_line_number')
     if po_obj.po_publish == True:
         return render(request,'crudbasic/PublishedPoView.html',{'po_obj':po_obj,'page_data':page_data})
-    form = OrderItemForm()
+    form = PurchaseOrderItemForm()
     if request.method=='POST':
-        form = OrderItemForm(request.POST)
+        form = PurchaseOrderItemForm(request.POST)
         if form.is_valid():
             itemline = form.save(commit=False)
             itemline.po_number = po_obj
             # po_obj.po_amount = po_obj.CalculatePoTotal()
             # new_line_number = (len(OrderItem.objects.filter(po_number=po_obj)))+1
-            current_obj = OrderItem.objects.filter(po_number=po_obj).order_by('-po_line_number').first()
+            current_obj = PurchaseOrderItem.objects.filter(po_number=po_obj).order_by('-po_line_number').first()
             # print(current_obj)
             if current_obj !=None:
                 new_line_number = (current_obj.po_line_number) + 1
@@ -166,7 +197,7 @@ def CreateOrderItem(request,pk):
         else:
             print("An Error Occured")
     else:
-        form = OrderItemForm()
+        form = PurchaseOrderItemForm()
     return render(request,'crudbasic/poadditems.html',{'form':form,'po_obj':po_obj,'page_data':page_data})
 
 class UpdatePurchaseOrder(UpdateView):
