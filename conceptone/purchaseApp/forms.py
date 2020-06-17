@@ -26,3 +26,8 @@ class PurchaseOrderItemForm(forms.ModelForm):
                 'order_quantity':forms.TextInput(attrs={'class':'form-control form-control','id':'order_quantity','onchange':'auto_complete()'}),
                 'purchase_price':forms.TextInput(attrs={'class':'form-control form-control','id':'purchase_price'}),
                 }
+
+class PurchaseOrderSearchForm(forms.Form):
+    po_number = forms.CharField(label='PO Number', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control-sm search_field'}))
+    supplier = forms.CharField(label='Supplier', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control-sm search_field'}))
+    project = forms.CharField(label='Project', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control-sm search_field'}))

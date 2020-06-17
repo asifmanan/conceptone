@@ -13,7 +13,7 @@
 </div>
 <div class="row" style="padding-left: 10px;padding-right: 10px;margin-top: 10px;margin-right: 0px;margin-left: 0px;">
   <div class="col-md-6 col-lg-3">
-    <div class="card border-left-primary">
+    <div class="card">
       <div class="card-body">
         <h4 class="card-title">Supplier</h4>
           <h6 class="text-muted card-subtitle mb-2">{{po_object.supplier.supplier_name}}</h6>
@@ -22,7 +22,7 @@
     </div>
   </div>
   <div class="col-md-6 col-lg-3">
-    <div class="card border-left-primary">
+    <div class="card">
       <div class="card-body">
         <h4 class="card-title">Project</h4>
         <h6 class="text-muted card-subtitle mb-2">{{po_object.project.project_name}}</h6>
@@ -31,7 +31,7 @@
     </div>
   </div>
   <div class="col-md-6 col-lg-3">
-    <div class="card border-left-primary">
+    <div class="card">
       <div class="card-body">
         <h4 class="card-title">Tax Rate</h4>
         <h6 class="text-muted card-subtitle mb-2">{{po_object.tax_rate.tax_name}}</h6>
@@ -40,7 +40,7 @@
     </div>
   </div>
   <div class="col-md-6 col-lg-3">
-    <div class="card border-left-primary">
+    <div class="card">
       <div class="card-body">
         <h4 class="card-title">PO Date</h4>
         <h6 class="text-muted card-subtitle mb-2">{{po_object.po_date}}</h6>
@@ -49,41 +49,10 @@
     </div>
   </div>
 </div>
-<div class="row" style="margin-top: 10px;margin-right: 0px;margin-left: 0px;">
-  <div class="col">
-    <form method="POST">{% csrf_token %}
-      <div class="col" style="padding-right: 10px;padding-left: 10px;">
-        <div class="card">
-          <div class="card-body" style="background-color: #e2edf5;padding-right: 20px;">
-            <h4 class="card-title">Add Item</h4>
-          <div class="form-row">
-            <div class="col-xl-6" style="margin-bottom: 6px;">
-              {{form.item.label}}
-              {{form.item}}
-            </div>
-            <div class="col-xl-3" style="margin-bottom: 6px;">
-              {{form.order_quantity.label}}
-              {{form.order_quantity}}
-            </div>
-            <div class="col-xl-3" style="margin-bottom: 6px;">
-              {{form.purchase_price.label}}
-              {{form.purchase_price}}
-            </div>
-          </div>
-            <div class="form-row">
-              <div class="col">
-                <button class="btn btn-primary" type="submit">Add Item</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
+
   <div class="row" style="margin-top: 10px;margin-right: 0px;margin-left: 0px;">
     <div class="col" style="padding-right: 25px;padding-left: 25px;">
-      {% include "purchaseApp/tables/createpurchaseorderitemstable.html" %}
+      {% include "purchaseApp/tables/createpurchaseorderitemstable1.html" %}
     </div>
   </div>
 {% endblock bodyblock %}

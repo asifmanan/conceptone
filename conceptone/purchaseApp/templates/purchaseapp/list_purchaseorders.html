@@ -1,7 +1,7 @@
 {% extends "salesApp/base.html" %}
 {% load static %}
 {% block headblock %}
-    <title>Create New Invoice</title>
+    <title>View Purchase Orders</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     {% comment %} <link rel="stylesheet" href="{% static "css\masterstyles.css" %}"> {% endcomment %}
 {% endblock headblock %}
@@ -9,27 +9,23 @@
 <body style="background-color: #FFFFFF;">
     <div class="rounded mt-2 mb-2 mr-2 ml-2" style="background-color: #f0f0f0;padding-bottom: 12px;">
       <div class="col col-12 pt-2 pb-1">
-          <h2 class="font-raleway">Invoices</h2>
+          <h2 class="font-raleway">Purchase Orders List</h2>
       </div>
-      <form id="id_search_form" invoice-search-url = "{% url 'salesApp:viewinvoicelist' %}" novalidate>
+      <form id="id_search_form" po-search-url = "{% url 'purchaseApp:PurchaseOrderQuery' %}" novalidate>
         <div class="row" style="margin-right: 0px;margin-left: 0px;">
-          <div class="col-md-6 col-xl-3">
-              {{form.si_number.label}}
-              {{form.si_number}}
+          <div class="col-md-6 col-xl-4">
+              {{form.po_number.label}}
+              {{form.po_number}}
           </div>
-          <div class="col-md-6 col-xl-3">
-              {{form.sale_order.label}}
-              {{form.sale_order}}
+          <div class="col-md-6 col-xl-4">
+              {{form.supplier.label}}
+              {{form.supplier}}
           </div>
-          <div class="col-md-6 col-xl-3">
-              {{form.customer.label}}
-              {{form.customer}}
-          </div>
-          <div class="col-md-6 col-xl-3">
+          <div class="col-md-6 col-xl-4">
               {{form.project.label}}
               {{form.project}}
           </div>
-          <div class="col mt-2">
+          <div class="col-12 mt-2">
             <button id="id_search_btn" class="btn btn-primary" type="button">Search</button>
           </div>
         </div>
@@ -40,12 +36,12 @@
         {% if invalid_search %}
           <p>Invalid Search Criteria</p>
         {% else %}
-          {% include "salesApp/tables/viewinvoicestable.html" %}
+          {% include "purchaseApp/tables/list_purchaseorderstable.html" %}
         {% endif %}
       </div>
     </div>
 </body>
 {% endblock bodyblock %}
 {% block customjs %}
-  <script src="{% static "salesapp/js/inv-search.js" %}"></script>
+  <script src="{% static "purchaseapp/js/po-search.js" %}"></script>
 {% endblock customjs %}

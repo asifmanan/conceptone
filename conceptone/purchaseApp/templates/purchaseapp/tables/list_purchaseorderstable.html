@@ -1,0 +1,33 @@
+    <table id="purchaseordertable" class="table">
+        <thead style="background-color: #247ba0;color: #ffffff;">
+            <tr>
+                <th>PO No</th>
+                <th>Published</th>
+                <th>PO Date</th>
+                <th>Supplier</th>
+                <th>Project</th>
+                <th>PO Amount</th>
+                <th>Tax Amount</th>
+                <th>Total Amount</th>
+            </tr>
+        </thead>
+        <tbody style="background-color: #F4F1C9;">
+          {% for item in object_list  %}
+          <tr>
+              <td>{{item.po_number}}</td>
+              {% if item.published %}
+                  <td>Yes</td>
+              {% else %}
+              <td><a href= {% url 'purchaseApp:CreatePurchaseOrderItems' item.id %}>
+                No</a></td>
+              {% endif %}
+              <td>{{item.po_date}}</td>
+              <td>{{item.supplier.supplier_name}}</td>
+              <td>{{item.project.project_name}}</td>
+              <td>{{item.po_amount}}</td>
+              <td>{{item.tax_amount}}</td>
+              <td>{{item.total_amount}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+    </table>

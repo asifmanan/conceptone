@@ -1,0 +1,41 @@
+<div class="table-responsive">
+    <table class="table">
+        <thead style="background-color: #247ba0;color: #ffffff;">
+            <tr>
+                <th style="width:7%;">Line</th>
+                <th style="width:46%;">Item Description</th>
+                <th style="width:7%;">UoM</th>
+                <th style="width:10%;">Quantity</th>
+                <th style="width:10%;">Unit Price</th>
+                <th style="width:10%;">Total Price</th>
+                <th style="width:10%;">Action</th>
+            </tr>
+        </thead>
+        <tbody style="background-color: #F4F1C9;">
+          <tr>
+            <form method="post">{% csrf_token %}
+              <td></td>
+              <td>{{form.item}}</td>
+              <td></td>
+              <td>{{form.order_quantity}}</td>
+              <td>{{form.purchase_price}}</td>
+              <td><input readonly placeholder="0.00" class='form-control' type="text" name="" value=""></td>
+              <td><button class="btn btn-primary" type="submit">Add Item</button></td>
+            </form>
+          </tr>
+        {% if order_items %}
+          {% for item in order_items  %}
+            <tr>
+                <td>{{item.po_line_number}}</td>
+                <td>{{item.item.item_description}}</td>
+                <td>{{item.item.item_uom}}</td>
+                <td>{{item.order_quantity}}</td>
+                <td>{{item.purchase_price}}</td>
+                <td>{{item.total_price}}</td>
+                <td><button class="btn btn-danger" type="button">Remove</button></td>
+            </tr>
+          {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+</div>

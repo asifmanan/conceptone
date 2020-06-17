@@ -33,7 +33,6 @@ class PurchaseOrder(models.Model):
             self.po_amount = po_amount
             self.tax_amount = tax_amount
             self.total_amount = po_amount + tax_amount
-            # print(self.po_tax.tax_value)
             self.save()
 
     def __str__(self):

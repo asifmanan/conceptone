@@ -5,7 +5,7 @@ from django.views.generic import (View, TemplateView, ListView, DetailView,
                                 DeleteView,)
 from purchaseApp.models import PurchaseOrder, PurchaseOrderItem
 from crudbasic.models import Suppliers
-from purchaseApp.forms import PurchaseOrderForm, PurchaseOrderItemForm
+from purchaseApp.forms import PurchaseOrderForm, PurchaseOrderItemForm,PurchaseOrderSearchForm
 # Create your views here.
 # class CreatePurchaseOrder():
 class CreatePurchaseOrder(CreateView):
@@ -45,53 +45,26 @@ class CreatePurchaseOrderItems(FormView):
     def get_success_url(self):
         return reverse_lazy('purchaseApp:CreatePurchaseOrderItems',kwargs={'pk':self.kwargs['pk']})
 
-class ViewPurchaseOrdersList(ListView):
-    model = PurchaseOrder
-    template_name = 'crudbasic/basedisplay.html'
-
-    def get_context_data(self, **kwargs):
-    # Call the base implementation first to get a context
-        context = super().get_context_data(**kwargs)
-        # Add in a QuerySet of all the books
-        context['page_data'] = PurchaseOrder.objects.order_by('created_on')
-        context['search_form'] = BasicSearch(caller = PurchaseOrder)
-        table_head_temp = get_col_heads(PurchaseOrder)
-        table_head = []
-        for idx, val in enumerate(table_head_temp):
-            table_head.append(str(val[1]).split(" ")[1])
-
-        context['table_head'] = table_head
-        context['main_title'] = 'Purchase Orders'
-        context['create_link'] = create_link= {'name':'Create New PO','value':'crudbasic:newpurchaseorder'}
+class ListPurchaseOrders(FormView):
+    form_class = PurchaseOrderSearchForm
+    template_name = 'purchaseapp/list_purchaseorders.html'
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args,**kwargs)
+        context['object_list'] = PurchaseOrder.objects.all()
         return context
-    def post(self, request, *args, **kwargs):
-        search_form = BasicSearch(request.POST, caller = PurchaseOrder)
-        if search_form.is_valid():
-            data = request.POST.copy()
-            qby = data.get('search_by')
-            qstrting = data.get('search_for')
-            queryparam = qby+'__'+'contains'
-            search_list = PurchaseOrder.objects.filter(**{queryparam:qstrting})
-
-            main_title = 'Purchase Orders'
-            create_link= {'name':'Create New PO','value':'crudbasic:newpurchaseorder'}
-            table_head_temp = get_col_heads(PurchaseOrder)
-            table_head = []
-            for idx, val in enumerate(table_head_temp):
-                table_head.append(str(val[1]).split(" ")[1])
-            page_data = search_list
-        else:
-            search_form = BasicSearch(request.POST, caller = PurchaseOrder)
-            main_title = 'Purchase Orders'
-            create_link = {'name':'Create New PO','value':'crudbasic:newpurchaseorder'}
-            table_head = None
-            page_data = None
-        return render(request, self.template_name, {'page_data': page_data,
-                                                    'search_form' : search_form,
-                                                    'table_head':table_head,
-                                                    'main_title':main_title,
-                                                    'create_link':create_link
-                                                    })
+#AJAX View
+def PurchaseOrderQuery(request):
+    data = request.GET
+    print("in django view!")
+    query_result = PurchaseOrder.objects.all()
+    if data['supplier'] != '':
+        query_result = query_result.filter(supplier__supplier_name__icontains=data['supplier'])
+    if data['project'] != '':
+        query_result = query_result.filter(project__project_name__icontains=data['project'])
+    if data['po_number'] != '':
+        query_result = query_result.filter(po_number__icontains=data['po_number'])
+    new_html_table = render_to_string('salesapp/tables/list_purchaseorderstable.html',{'object_list':query_result})
+    return HttpResponse(new_html_table)
 
 class Published_PoView(DetailView):
     model = PurchaseOrderItem
