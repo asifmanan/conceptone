@@ -6,6 +6,7 @@ $(".search_field").on("input", function () {
 $("#id_search_btn").click(function () {
 if (($.trim($("#id_po_number").val()).length === 0 ) &&
     ($.trim($("#id_supplier").val()).length === 0 ) &&
+    (!Date.parse($("#id_date").val())) &&
     ($.trim($("#id_project").val()).length === 0 )) {
         $("#id_po_number").addClass("is-invalid");
         $("#id_supplier").addClass("is-invalid");

@@ -13,17 +13,21 @@
       </div>
       <form id="id_search_form" po-search-url = "{% url 'purchaseApp:PurchaseOrderQuery' %}" novalidate>
         <div class="row" style="margin-right: 0px;margin-left: 0px;">
-          <div class="col-md-6 col-xl-4">
+          <div class="col-md-6 col-xl-3">
               {{form.po_number.label}}
               {{form.po_number}}
           </div>
-          <div class="col-md-6 col-xl-4">
+          <div class="col-md-6 col-xl-3">
               {{form.supplier.label}}
               {{form.supplier}}
           </div>
-          <div class="col-md-6 col-xl-4">
+          <div class="col-md-6 col-xl-3">
               {{form.project.label}}
               {{form.project}}
+          </div>
+          <div class="col-md-6 col-xl-3">
+              {{form.date.label}}
+              {{form.date}}
           </div>
           <div class="col-12 mt-2">
             <button id="id_search_btn" class="btn btn-primary" type="button">Search</button>

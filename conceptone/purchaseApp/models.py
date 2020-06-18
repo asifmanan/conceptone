@@ -7,7 +7,7 @@ from crudbasic.models import Customers, Items, TaxRate, Projects, Suppliers
 class PurchaseOrder(models.Model):
     po_number = models.CharField(max_length=16)
     po_date = models.DateField()
-    supplier = models.ForeignKey(Suppliers, on_delete=models.CASCADE)
+    supplier = models.ForeignKey(Suppliers, on_delete=models.PROTECT)
     project = models.ForeignKey(Projects, on_delete=models.PROTECT)
     po_amount = models.DecimalField(max_digits=14, decimal_places=2, default=0.00)
     tax_rate = models.ForeignKey(TaxRate, on_delete=models.PROTECT)

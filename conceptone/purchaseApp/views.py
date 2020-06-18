@@ -24,12 +24,10 @@ class CreatePurchaseOrderItems(FormView):
         context['po_object'] = self.po_object
         context['order_items'] = PurchaseOrderItem.objects.filter(purchase_order=self.po_object)
         self.po_object.CalculatePoTotal()
-        print(self.po_object.po_date)
         return context
 
     def form_valid(self,form):
         line_item = form.save(commit=False)
-        print("In Form_valid")
         line_item.purchase_order = get_object_or_404(PurchaseOrder, pk=self.kwargs['pk'])
         current_obj = PurchaseOrderItem.objects.filter(purchase_order=line_item.purchase_order).order_by('-po_line_number').first()
         if current_obj !=None:
@@ -55,7 +53,6 @@ class ListPurchaseOrders(FormView):
 #AJAX View
 def PurchaseOrderQuery(request):
     data = request.GET
-    print("in django view!")
     query_result = PurchaseOrder.objects.all()
     if data['supplier'] != '':
         query_result = query_result.filter(supplier__supplier_name__icontains=data['supplier'])
@@ -65,6 +62,29 @@ def PurchaseOrderQuery(request):
         query_result = query_result.filter(po_number__icontains=data['po_number'])
     new_html_table = render_to_string('salesapp/tables/list_purchaseorderstable.html',{'object_list':query_result})
     return HttpResponse(new_html_table)
+
+class DeletePurchaseOrder(DeleteView):
+    model = PurchaseOrder
+    success_url = reverse_lazy('purchaseApp:ListPurchaseOrders')
+    template_name = 'purchaseapp/deletepoconfirmation.html'
+
+class DeletePurchaseOrderItem(DeleteView):
+    model = PurchaseOrderItem
+    # success_url = reverse_lazy('PurchaseApp:CreatePurchaseOrderItems')
+    def get_success_url(self):
+        po_object = self.object.purchase_order
+        obj_pk=self.object.id
+        line_items = PurchaseOrderItem.objects.filter(purchase_order=po_object)
+        proceeding_line_items = line_items.filter(po_line_number__gt=self.object.po_line_number)
+        if proceeding_line_items.exists():
+            i = self.object.po_line_number
+            for item in proceeding_line_items:
+                item.po_line_number = i
+                item.save()
+                i = i + 1
+        # print(proceeding_line_items)
+        # print(obj.id)
+        return reverse_lazy('purchaseApp:CreatePurchaseOrderItems', kwargs={'pk':po_object.id})
 
 class Published_PoView(DetailView):
     model = PurchaseOrderItem

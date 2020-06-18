@@ -12,17 +12,19 @@
             </tr>
         </thead>
         <tbody style="background-color: #F4F1C9;">
-          <tr>
-            <form method="post">{% csrf_token %}
-              <td></td>
-              <td>{{form.item}}</td>
-              <td></td>
-              <td>{{form.order_quantity}}</td>
-              <td>{{form.purchase_price}}</td>
-              <td><input readonly placeholder="0.00" class='form-control' type="text" name="" value=""></td>
-              <td><button class="btn btn-primary" type="submit">Add Item</button></td>
-            </form>
-          </tr>
+            <div>
+              <tr class="d-none d-lg-table-row">
+                <form method="post">{% csrf_token %}
+                  <td></td>
+                  <td>{{form.item}}</td>
+                  <td></td>
+                  <td>{{form.order_quantity}}</td>
+                  <td>{{form.purchase_price}}</td>
+                  <td><input readonly placeholder="0.00" class='form-control' type="text" name="" value=""></td>
+                  <td><button class="btn btn-primary" type="submit">Add Item</button></td>
+                </form>
+              </tr>
+            </div>
         {% if order_items %}
           {% for item in order_items  %}
             <tr>
@@ -32,7 +34,12 @@
                 <td>{{item.order_quantity}}</td>
                 <td>{{item.purchase_price}}</td>
                 <td>{{item.total_price}}</td>
-                <td><button class="btn btn-danger" type="button">Remove</button></td>
+                <td>
+                  <form action="{% url 'purchaseApp:DeletePurchaseOrderItem' item.id %}" method="post">{% csrf_token %}
+                    <input type="hidden" name="po_object_id" value="{{po_object.id}}">
+                    <button class="btn btn-danger" type="submit">Remove</button>
+                  </form>
+                </td>
             </tr>
           {% endfor %}
         {% endif %}

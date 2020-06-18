@@ -6,53 +6,67 @@
     <link rel="stylesheet" type="text/css" href="{% static "purchaseapp\css\masterstyles.css" %}">
 {% endblock headblock %}
 {% block bodyblock %}
-<div class="row" style="margin-right: 0px;margin-left: 0px;">
-  <div class="col" style="background-color: #00a896;padding-right: 0px;padding-left: 0px;">
-    <p style="color: #ffffff;margin-bottom: 8px;margin-left: 25px;margin-top: 8px;">PO Amount: {{po_object.po_amount}} | Tax Amount: {{po_object.tax_amount}} | Total Amount: {{po_object.total_amount}}</p>
+<div class="row" style="margin-right: 0px;margin-left: 0px;margin-bottom: 8px;">
+  <div class="col-lg-6">
+      <h2>New Purchase Order</h2>
+  </div>
+  <div class="col-lg-6 col-xl-6 d-flex flex-column" style="padding-right: 16px;">
+      <div class="mt-auto ml-auto">
+        <button class="btn btn-success" type="button">Publish</button>
+        <a href={% url 'purchaseApp:DeletePurchaseOrder' po_object.pk %} class="btn btn-danger ml-2" role="button">Delete</a>
+      </div>
   </div>
 </div>
-<div class="row" style="padding-left: 10px;padding-right: 10px;margin-top: 10px;margin-right: 0px;margin-left: 0px;">
-  <div class="col-md-6 col-lg-3">
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">Supplier</h4>
-          <h6 class="text-muted card-subtitle mb-2">{{po_object.supplier.supplier_name}}</h6>
-            <p class="card-text"></p>
-      </div>
-    </div>
+<div class="row" style="margin-top: 0px;margin-right: 15px;margin-left: 15px;">
+  <div class="col-lg-4 col-xl-4" style="padding: 8px 15px;">
+      <h6 class="text-muted" style="margin-bottom: 4px;">Supplier
+        <input value="{{po_object.supplier.supplier_name}}" type="text" class="form-control" readonly="">
+      </h6>
+      <h6 class="text-muted" style="margin-bottom: 4px;">Project
+        <input value="{{po_object.project.project_name}}" type="text" class="form-control" readonly=""></h6>
+      <h6 class="text-muted" style="margin-bottom: 4px;">Tax
+        <input value="{{po_object.tax_rate.tax_name}}" type="text" class="form-control" readonly=""></h6>
+      <h6 class="text-muted" style="margin-bottom: 4px;">Date
+        <input value="{{po_object.po_date}}" type="text" class="form-control" readonly=""></h6>
   </div>
-  <div class="col-md-6 col-lg-3">
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">Project</h4>
-        <h6 class="text-muted card-subtitle mb-2">{{po_object.project.project_name}}</h6>
-        <p class="card-text"></p>
-      </div>
-    </div>
+  <div class="col-lg-4 col-xl-4" style="padding: 8px 15px;">
+      <h6 class="text-muted" style="margin-bottom: 4px;">PO Amount
+        <input value="{{po_object.po_amount}}" type="text" class="form-control" readonly=""></h6>
+      <h6 class="text-muted" style="margin-bottom: 4px;">Tax
+        <input value="{{po_object.tax_rate.tax_value}}" type="text" class="form-control" readonly=""></h6>
+      <h6 class="text-muted" style="margin-bottom: 4px;">Tax Amount
+        <input value="{{po_object.tax_amount}}" type="text" class="form-control" readonly=""></h6>
+      <h6 class="text-muted" style="margin-bottom: 4px;">Total Amount
+        <input value="{{po_object.total_amount}}" type="text" class="form-control" readonly=""></h6>
   </div>
-  <div class="col-md-6 col-lg-3">
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">Tax Rate</h4>
-        <h6 class="text-muted card-subtitle mb-2">{{po_object.tax_rate.tax_name}}</h6>
-        <p class="card-text"></p>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-6 col-lg-3">
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">PO Date</h4>
-        <h6 class="text-muted card-subtitle mb-2">{{po_object.po_date}}</h6>
-        <p class="card-text"></p>
-      </div>
+  <div class="d-lg-none col-lg-4 col-xl-4" style="padding: 8px 15px;padding-top: 8px;">
+    <div>
+      <form method="post">{% csrf_token %}
+        <div style="margin-bottom: 4px;">
+          {{form.item.label}}
+          {{form.item}}
+        </div>
+        <div style="margin-bottom: 4px;">
+          {{form.order_quantity.label}}
+          {{form.order_quantity}}
+        </div>
+        <div style="margin-bottom: 4px;">
+          {{form.purchase_price.label}}
+          {{form.purchase_price}}
+        </div>
+        <div class="form-row">
+          <div class="col" style="margin-top: 12px;">
+            <button class="btn btn-primary" type="submit">Add Item</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
 
-  <div class="row" style="margin-top: 10px;margin-right: 0px;margin-left: 0px;">
-    <div class="col" style="padding-right: 25px;padding-left: 25px;">
-      {% include "purchaseApp/tables/createpurchaseorderitemstable1.html" %}
-    </div>
+<div class="row" style="margin-top: 10px;margin-right: 0px;margin-left: 0px;">
+  <div class="col" style="padding-right: 25px;padding-left: 25px;">
+    {% include "purchaseApp/tables/createpurchaseorderitemstable1.html" %}
   </div>
+</div>
 {% endblock bodyblock %}

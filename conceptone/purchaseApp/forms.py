@@ -31,3 +31,4 @@ class PurchaseOrderSearchForm(forms.Form):
     po_number = forms.CharField(label='PO Number', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control-sm search_field'}))
     supplier = forms.CharField(label='Supplier', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control-sm search_field'}))
     project = forms.CharField(label='Project', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control-sm search_field'}))
+    date = forms.DateField(label='PO Date', widget=forms.DateInput(attrs={'type':'date','class':'form-control form-control-sm search_field'}))
