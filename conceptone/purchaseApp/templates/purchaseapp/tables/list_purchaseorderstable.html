@@ -1,3 +1,4 @@
+    {% if object_list %}
     <table id="purchaseordertable" class="table">
         <thead style="background-color: #247ba0;color: #ffffff;">
             <tr>
@@ -13,7 +14,7 @@
         </thead>
         <tbody style="background-color: #F4F1C9;">
           {% for item in object_list  %}
-          <tr>
+            <tr>
               <td>{{item.po_number}}</td>
               {% if item.published %}
                   <td>Yes</td>
@@ -27,7 +28,12 @@
               <td>{{item.po_amount}}</td>
               <td>{{item.tax_amount}}</td>
               <td>{{item.total_amount}}</td>
-          </tr>
-          {% endfor %}
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
+    {% else %}
+      <div class="col-12 d-flex mt-2">
+        <h3 class="mx-auto">Opps! There is nothing matching your query here</h3>
+      </div>
+    {% endif %}

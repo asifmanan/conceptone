@@ -100,8 +100,16 @@ class Items(models.Model):
         return 'Item'
 
 class TaxRate(models.Model):
+    tax_jurisdiction_choices = [
+    ('KP','Khyber Pakhtunkhwa'),
+    ('Punjab', 'Punjab'),
+    ('Baluchistan','Baluchistan'),
+    ('Sindh','Sindh'),
+    ('Federal','Federal'),
+    ]
     tax_code = models.CharField(max_length=16)
     tax_name = models.CharField(max_length=64)
+    tax_jurisdiction = models.CharField(max_length=64,choices=tax_jurisdiction_choices)
     tax_value = models.DecimalField(max_digits=5, decimal_places=2)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)

@@ -1,5 +1,9 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.urls import reverse, reverse_lazy
+from django.utils import timezone
+import datetime
+from django.template.loader import render_to_string
+from django.http import HttpResponse
 from django.views.generic import (View, TemplateView, ListView, DetailView,
                                 CreateView, UpdateView, DetailView, FormView,
                                 DeleteView,)
@@ -58,9 +62,12 @@ def PurchaseOrderQuery(request):
         query_result = query_result.filter(supplier__supplier_name__icontains=data['supplier'])
     if data['project'] != '':
         query_result = query_result.filter(project__project_name__icontains=data['project'])
+    if data['po_date'] != '':
+        print(data['po_date'])
+        query_result = query_result.filter(po_date__range=[(data['po_date']),(data['po_date'])])
     if data['po_number'] != '':
         query_result = query_result.filter(po_number__icontains=data['po_number'])
-    new_html_table = render_to_string('salesapp/tables/list_purchaseorderstable.html',{'object_list':query_result})
+    new_html_table = render_to_string('purchaseApp/tables/list_purchaseorderstable.html',{'object_list':query_result})
     return HttpResponse(new_html_table)
 
 class DeletePurchaseOrder(DeleteView):

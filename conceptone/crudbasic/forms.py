@@ -17,6 +17,7 @@ class TaxRateForm(forms.ModelForm):
         widgets = {
                 'tax_name':forms.TextInput(attrs={'class':'form-control'}),
                 'tax_code':forms.TextInput(attrs={'class':'form-control'}),
+                'tax_jurisdiction':forms.Select(attrs={'class':'form-control'}),
                 # 'tax_value':forms.NumberInput(attrs={'class':'form-control'}),
                 }
 
