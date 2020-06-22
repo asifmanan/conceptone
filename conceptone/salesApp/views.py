@@ -8,7 +8,7 @@ from django.urls import reverse, reverse_lazy
 from django.template.loader import render_to_string
 from django.http import FileResponse, HttpResponse, HttpResponseRedirect
 from salesApp.models import SaleOrder, SaleInvoice, SaleOrderItem, SaleInvoiceItem
-from salesApp.forms import SaleInvoiceSoForm, SaleInvoiceNewForm, SaleOrderForm, SaleOrderItemForm, SaleInvoiceItemForm, SelectItemFromSo, invoice_item_formset, ViewInvoiceForm, InvoiceSearchForm
+from salesApp.forms import SaleInvoiceSoForm, SaleInvoiceNewForm, SaleOrderForm, SaleOrderItemForm, SaleInvoiceItemForm, SelectItemFromSo, invoice_item_formset, ViewInvoiceForm, InvoiceSearchForm, SaleOrderSearchForm
 from django.views.generic import (View, TemplateView, ListView, DetailView,
                                     CreateView, UpdateView, DetailView, FormView,)
 # Create views
@@ -46,16 +46,28 @@ class AddSaleOrderItems(CreateView):
     def get_success_url(self):
         return reverse_lazy('salesApp:addsaleorderitems',kwargs={'pk':self.object.sale_order.pk})
 
-class ViewSaleOrdersList(ListView):
-    model = SaleOrder
-    form_class = SaleOrderForm
-    template_name = 'salesApp/viewsaleorderslist.html'
+class ListSaleOrders(FormView):
+    form_class = SaleOrderSearchForm
+    template_name = 'salesApp/list_saleorders.html'
     def get_context_data(self, *args, **kwargs):
-        so_list = SaleOrder.objects.all()
-        for sale_order in so_list:
-            sale_order.CalculateSoTotal()
         context = super().get_context_data(*args,**kwargs)
+        context['object_list'] = SaleOrder.objects.all()
         return context
+
+def SaleOrderQuery(request):
+    data = request.GET
+    query_result = SaleOrder.objects.all()
+    if data['customer'] != '':
+        query_result = query_result.filter(customer__customer_name__icontains=data['customer'])
+    if data['project'] != '':
+        query_result = query_result.filter(project__project_name__icontains=data['project'])
+    if data['so_date'] != '':
+        print(data['so_date'])
+        query_result = query_result.filter(customer_po_date__range=[(data['so_date']),(data['so_date'])])
+    if data['so_number'] != '':
+        query_result = query_result.filter(so_number__icontains=data['so_number'])
+    new_html_table = render_to_string('salesApp/tables/list_saleorderstable.html',{'object_list':query_result})
+    return HttpResponse(new_html_table)
 
 class CreateSoInvoice(FormView):
     form_class = SaleInvoiceSoForm

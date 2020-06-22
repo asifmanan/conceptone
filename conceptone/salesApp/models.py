@@ -51,6 +51,7 @@ class SaleOrderItem(models.Model):
     unit_price = models.DecimalField(max_digits=14,decimal_places=2,verbose_name='Sale Price')
     total_price = models.DecimalField(max_digits=14,decimal_places=2,default=0.00,verbose_name='Total Price')
     tax_rate = models.ForeignKey(TaxRate, on_delete=models.PROTECT)
+    so_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00,verbose_name='SO Amount')
     tax_amount = models.DecimalField(max_digits=14,decimal_places=2,verbose_name='Tax Amount')
     total_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
     variation_number = models.IntegerField(default=0)

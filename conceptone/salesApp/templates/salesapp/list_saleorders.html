@@ -1,7 +1,7 @@
-{% extends "purchaseApp/base.html" %}
+{% extends "salesApp/base.html" %}
 {% load static %}
 {% block headblock %}
-    <title>Purchase Orders - ConceptOne</title>
+    <title>Sale Orders - ConceptOne</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     {% comment %} <link rel="stylesheet" href="{% static "css\masterstyles.css" %}"> {% endcomment %}
 {% endblock headblock %}
@@ -9,17 +9,17 @@
 <body style="background-color: #FFFFFF;">
     <div class="rounded mt-2 mb-2 mr-2 ml-2" style="background-color: #f0f0f0;padding-bottom: 12px;">
       <div class="col col-12 pt-2 pb-1">
-          <h2 class="font-raleway">Purchase Orders</h2>
+          <h2 class="font-raleway">Sale Orders</h2>
       </div>
-      <form id="id_search_form" po-search-url = "{% url 'purchaseApp:PurchaseOrderQuery' %}" novalidate>
+      <form id="id_search_form" po-search-url = "{% url 'salesApp:SaleOrderQuery' %}" novalidate>
         <div class="row" style="margin-right: 0px;margin-left: 0px;">
           <div class="col-md-6 col-lg-3">
-              {{form.po_number.label}}
-              {{form.po_number}}
+              {{form.so_number.label}}
+              {{form.so_number}}
           </div>
           <div class="col-md-6 col-lg-3">
-              {{form.supplier.label}}
-              {{form.supplier}}
+              {{form.customer.label}}
+              {{form.customer}}
           </div>
           <div class="col-md-6 col-lg-3">
               {{form.project.label}}
@@ -41,12 +41,12 @@
         {% if invalid_search %}
           <p>Invalid Search Criteria</p>
         {% else %}
-          {% include "purchaseApp/tables/list_purchaseorderstable.html" %}
+          {% include "salesApp/tables/list_saleorderstable.html" %}
         {% endif %}
       </div>
     </div>
 </body>
 {% endblock bodyblock %}
 {% block customjs %}
-  <script src="{% static "purchaseapp/js/po-search.js" %}"></script>
+  <script src="{% static "salesapp/js/so-search.js" %}"></script>
 {% endblock customjs %}

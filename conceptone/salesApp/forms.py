@@ -103,3 +103,9 @@ class InvoiceSearchForm(forms.Form):
     si_number = forms.CharField(label='Invioce Number', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control-sm search_field'}))
     customer = forms.CharField(label='Customer', max_length=200,widget=forms.TextInput(attrs={'class': 'form-control form-control-sm search_field'}))
     project = forms.CharField(label='Project', max_length=200, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control-sm search_field'}))
+
+class SaleOrderSearchForm(forms.Form):
+    so_number = forms.CharField(label='SO Number', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control search_field'}))
+    customer = forms.CharField(label='Customer', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control search_field'}))
+    project = forms.CharField(label='Project', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control search_field'}))
+    date = forms.DateField(label='PO Date', widget=forms.DateInput(attrs={'type':'date','class':'form-control form-control search_field'}))
