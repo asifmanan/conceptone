@@ -11,5 +11,6 @@ urlpatterns=[
     path('purchaseorderquery/',views.PurchaseOrderQuery,name='PurchaseOrderQuery'),
 
     path('purchaseorder/delete/<int:pk>',views.DeletePurchaseOrder.as_view(),name='DeletePurchaseOrder'),
-    path('purchaseorderitem/delete/<int:pk>',views.DeletePurchaseOrderItem.as_view(),name='DeletePurchaseOrderItem')
+    path('purchaseorderitem/delete/<int:pk>',views.DeletePurchaseOrderItem.as_view(),name='DeletePurchaseOrderItem'),
+    path('purchaseorder/publishpoconfirmation/<int:pk>',views.PublishPoConfirmation.as_view(),name='PublishPoConfirmation'),
 ]

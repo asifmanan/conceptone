@@ -27,6 +27,7 @@ class CreatePurchaseOrderItems(FormView):
         self.po_object = PurchaseOrder.objects.get(pk=self.kwargs['pk'])
         context['po_object'] = self.po_object
         context['order_items'] = PurchaseOrderItem.objects.filter(purchase_order=self.po_object)
+        print(self.po_object)
         self.po_object.CalculatePoTotal()
         return context
 
@@ -93,6 +94,40 @@ class DeletePurchaseOrderItem(DeleteView):
         # print(obj.id)
         return reverse_lazy('purchaseApp:CreatePurchaseOrderItems', kwargs={'pk':po_object.id})
 
+class PublishPoConfirmation(UpdateView):
+    model = PurchaseOrder
+    form_class=PurchaseOrderForm
+    template_name = 'purchaseapp/publish_po_confirmation.html'
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args,**kwargs)
+        context['object']=self.object
+        print(self.object.pk)
+        return context
+
+    def form_valid(self, form):
+        # self.object = PurchaseOrder.objects.filter(pk=self.kwargs.pk)
+        if form.is_valid():
+            print(self.object.project.po_date)
+        return super().form_valid(form)
+    def get_success_url(self):
+        print(self.object.project.project_name)
+        return reverse_lazy('purchaseApp:ListPurchaseOrders')
+
+
+def PoPublishConfirmation(request,pk):
+    po_object = get_object_or_404(PurchaseOrder,pk=pk)
+    object_list = PurchaseOrderItem.objects.filter(po_number=po_object).order_by('po_line_number')
+    if request.method == 'POST':
+        if 'proceed' in request.POST:
+            po_object.publish()
+            print(po_obj.po_publish)
+            print(timezone.now())
+            print("PO PUBLISDHED SUCCESSFULLY!")
+            return render(request,'purchaseapp/publishedpoview.html',{'po_object':po_object})
+    return render(request,'purchaseapp/publish_po_conf.html',{'po_object':po_object})
+
+
+#####################################################
 class Published_PoView(DetailView):
     model = PurchaseOrderItem
     def get_queryset(self):
@@ -130,18 +165,6 @@ def PublishedPoView(request,pk):
     po_obj = get_object_or_404(PurchaseOrder,pk=pk)
     page_data = PurchaseOrderItem.objects.filter(po_number=po_obj).order_by('po_line_number')
     return render(request,'crudbasic/PublishedPoView.html',{'po_obj':po_obj,'page_data':page_data})
-
-def PoPublishConfirmation(request,pk):
-    po_obj = get_object_or_404(PurchaseOrder,pk=pk)
-    page_data = PurchaseOrderItem.objects.filter(po_number=po_obj).order_by('po_line_number')
-    if request.method == 'POST':
-        if 'proceed' in request.POST:
-            po_obj.publish()
-            print(po_obj.po_publish)
-            print(timezone.now())
-            print("PO PUBLISDHED SUCCESSFULLY!")
-            return render(request,'crudbasic/publishedpoview.html',{'po_obj':po_obj,'page_data':page_data})
-    return render(request,'crudbasic/publishpoconf.html',{'po_obj':po_obj})
 
 def PrintPurchaseOrder(request,pk):
     po_obj = get_object_or_404(PurchaseOrder,pk=pk)

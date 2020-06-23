@@ -12,8 +12,8 @@
   </div>
   <div class="col-lg-6 col-xl-6 d-flex flex-column" style="padding-right: 16px;">
       <div class="mt-auto ml-auto">
-        <button class="btn btn-success" type="button">Publish</button>
-        <a href={% url 'purchaseApp:DeletePurchaseOrder' po_object.pk %} class="btn btn-danger ml-2" role="button">Delete</a>
+        <a href={% url 'purchaseApp:PublishPoConfirmation' po_object.pk %} class="btn btn-success" role="button">Publish</a>
+        <a href={% url 'purchaseApp:DeletePurchaseOrder' po_object.pk %} class="btn btn-danger" role="button">Delete</a>
       </div>
   </div>
 </div>

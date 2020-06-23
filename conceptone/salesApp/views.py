@@ -52,6 +52,8 @@ class ListSaleOrders(FormView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args,**kwargs)
         context['object_list'] = SaleOrder.objects.all()
+        for items in context['object_list']:
+            items.CalculateSoTotal()
         return context
 
 def SaleOrderQuery(request):

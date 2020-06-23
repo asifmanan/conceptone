@@ -13,6 +13,7 @@ class SaleOrder(models.Model):
     project = models.ForeignKey(Projects, on_delete=models.PROTECT,verbose_name='Project')
     so_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
     tax_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
+    total_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00,verbose_name='Total Amount')
     is_draft = models.BooleanField(default=True)
     is_published = models.BooleanField(default=False)
     publish_date = models.DateTimeField(blank=True,null=True)
@@ -33,6 +34,7 @@ class SaleOrder(models.Model):
             items_total_tax_amount = items_tax['tax_amount__sum']
             self.so_amount = items_total_amount
             self.tax_amount = items_total_tax_amount
+            self.total_amount = items_total_amount + items_total_tax_amount
             self.save()
 
     def __str__(self):
@@ -51,7 +53,6 @@ class SaleOrderItem(models.Model):
     unit_price = models.DecimalField(max_digits=14,decimal_places=2,verbose_name='Sale Price')
     total_price = models.DecimalField(max_digits=14,decimal_places=2,default=0.00,verbose_name='Total Price')
     tax_rate = models.ForeignKey(TaxRate, on_delete=models.PROTECT)
-    so_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00,verbose_name='SO Amount')
     tax_amount = models.DecimalField(max_digits=14,decimal_places=2,verbose_name='Tax Amount')
     total_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
     variation_number = models.IntegerField(default=0)

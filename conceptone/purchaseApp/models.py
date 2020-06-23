@@ -5,7 +5,7 @@ from django.db.models import Sum
 from crudbasic.models import Customers, Items, TaxRate, Projects, Suppliers
 
 class PurchaseOrder(models.Model):
-    po_number = models.CharField(max_length=16)
+    po_number = models.CharField(verbose_name="PO Number",blank=True,max_length=20)
     po_date = models.DateField()
     supplier = models.ForeignKey(Suppliers, on_delete=models.PROTECT)
     project = models.ForeignKey(Projects, on_delete=models.PROTECT)
@@ -20,6 +20,13 @@ class PurchaseOrder(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
 
     def publish(self):
+        published_items = PurchaseOrder.objects.filter(published=True)
+        if published_items.exists():
+            po_number_current = published_items.last().po_number
+            new_po_number = po_number_current + 1
+            self.po_number = new_po_number
+        else:
+            self.po_number = "1"
         self.publish_date = timezone.now()
         self.published = True
         self.save()
