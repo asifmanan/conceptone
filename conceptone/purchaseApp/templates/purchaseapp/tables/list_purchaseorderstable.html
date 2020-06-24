@@ -17,10 +17,11 @@
             <tr>
               <td>{{item.po_number}}</td>
               {% if item.published %}
-                  <td>Yes</td>
+                  <td><a href= {% url 'purchaseApp:CreatePurchaseOrderItems' item.id %}>
+                    Yes</a></td>
               {% else %}
-              <td><a href= {% url 'purchaseApp:CreatePurchaseOrderItems' item.id %}>
-                No</a></td>
+                  <td><a href= {% url 'purchaseApp:CreatePurchaseOrderItems' item.id %}>
+                    No</a></td>
               {% endif %}
               <td>{{item.po_date}}</td>
               <td>{{item.supplier.supplier_name}}</td>

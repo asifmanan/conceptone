@@ -12,8 +12,13 @@
   </div>
   <div class="col-lg-6 col-xl-6 d-flex flex-column" style="padding-right: 16px;">
       <div class="mt-auto ml-auto">
-        <a href={% url 'purchaseApp:PublishPoConfirmation' po_object.pk %} class="btn btn-success" role="button">Publish</a>
-        <a href={% url 'purchaseApp:DeletePurchaseOrder' po_object.pk %} class="btn btn-danger" role="button">Delete</a>
+        <a href={% url 'purchaseApp:ListPurchaseOrders' %} class="btn btn-secondary" role="button">Back to PO List</a>
+        {% if po_object.published %}
+          <a href="#" class="btn btn-primary" role="button">Print</a>
+        {% elif not po_object.published %}
+          <a href={% url 'purchaseApp:PublishPoConfirmation' po_object.pk %} class="btn btn-success" role="button">Publish</a>
+          <a href={% url 'purchaseApp:DeletePurchaseOrder' po_object.pk %} class="btn btn-danger" role="button">Delete</a>
+        {% endif %}
       </div>
   </div>
 </div>
@@ -39,6 +44,7 @@
       <h6 class="text-muted" style="margin-bottom: 4px;">Total Amount
         <input value="{{po_object.total_amount}}" type="text" class="form-control" readonly=""></h6>
   </div>
+  {% if not po_object.published %}
   <div class="d-lg-none col-lg-4 col-xl-4" style="padding: 8px 15px;padding-top: 8px;">
     <div>
       <form method="post">{% csrf_token %}
@@ -62,6 +68,8 @@
       </form>
     </div>
   </div>
+  {% endif %}
+
 </div>
 
 <div class="row" style="margin-top: 10px;margin-right: 0px;margin-left: 0px;">

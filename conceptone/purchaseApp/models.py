@@ -22,11 +22,11 @@ class PurchaseOrder(models.Model):
     def publish(self):
         published_items = PurchaseOrder.objects.filter(published=True)
         if published_items.exists():
-            po_number_current = published_items.last().po_number
-            new_po_number = po_number_current + 1
+            po_number_current = published_items.order_by('po_number').last().po_number
+            new_po_number = int(po_number_current) + 1
             self.po_number = new_po_number
         else:
-            self.po_number = "1"
+            self.po_number = 1
         self.publish_date = timezone.now()
         self.published = True
         self.save()

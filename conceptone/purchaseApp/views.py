@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 import datetime
@@ -94,25 +94,18 @@ class DeletePurchaseOrderItem(DeleteView):
         # print(obj.id)
         return reverse_lazy('purchaseApp:CreatePurchaseOrderItems', kwargs={'pk':po_object.id})
 
-class PublishPoConfirmation(UpdateView):
-    model = PurchaseOrder
-    form_class=PurchaseOrderForm
+class PublishPoConfirmation(TemplateView):
     template_name = 'purchaseapp/publish_po_confirmation.html'
+    def post(self,request,*args,**kwargs):
+        po_object = get_object_or_404(PurchaseOrder,pk=kwargs['pk'])
+        po_object.publish()
+        print("PO Published Successfully")
+        return redirect(reverse_lazy('purchaseApp:ListPurchaseOrders'))
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args,**kwargs)
-        context['object']=self.object
-        print(self.object.pk)
+        context['object']=get_object_or_404(PurchaseOrder,pk=kwargs['pk'])
         return context
-
-    def form_valid(self, form):
-        # self.object = PurchaseOrder.objects.filter(pk=self.kwargs.pk)
-        if form.is_valid():
-            print(self.object.project.po_date)
-        return super().form_valid(form)
-    def get_success_url(self):
-        print(self.object.project.project_name)
-        return reverse_lazy('purchaseApp:ListPurchaseOrders')
-
 
 def PoPublishConfirmation(request,pk):
     po_object = get_object_or_404(PurchaseOrder,pk=pk)
