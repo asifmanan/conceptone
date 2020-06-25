@@ -15,7 +15,7 @@
         <tbody style="background-color: #F4F1C9;">
           {% for item in object_list  %}
             <tr>
-              <td>{{item.po_number}}</td>
+              <td>{{item.po_serial_number}}</td>
               {% if item.published %}
                   <td><a href= {% url 'purchaseApp:CreatePurchaseOrderItems' item.id %}>
                     Yes</a></td>
