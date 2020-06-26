@@ -1,0 +1,32 @@
+{% if object_list %}
+  <table id="invoiceviewtable" class="table">
+    <thead style="background-color: #247ba0;color: #ffffff;">
+        <tr>
+            <th>Invoice No</th>
+            <th>Sale Order No.</th>
+            <th>Invoice Date</th>
+            <th>Customer</th>
+            <th>Project</th>
+            <th>Invoice Amount</th>
+            <th>Tax Amount</th>
+        </tr>
+    </thead>
+    <tbody style="background-color: #F4F1C9;">
+      {% for item in object_list  %}
+      <tr>
+          <td>{{item.si_number}}</td>
+          <td>{{item.sale_order}}</td>
+          <td>{{item.si_date}}</td>
+          <td>{{item.customer}}</td>
+          <td>{{item.project}}</td>
+          <td>{{item.si_amount}}</td>
+          <td>{{item.tax_amount}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <div class="col-12 d-flex mt-2">
+    <h3 class="mx-auto">Opps! There is nothing matching your query here</h3>
+  </div>
+{% endif %}

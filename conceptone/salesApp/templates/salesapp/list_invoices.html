@@ -1,7 +1,7 @@
 {% extends "salesApp/base.html" %}
 {% load static %}
 {% block headblock %}
-    <title>Create New Invoice</title>
+    <title>Invoices - Conceptone</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     {% comment %} <link rel="stylesheet" href="{% static "css\masterstyles.css" %}"> {% endcomment %}
 {% endblock headblock %}
@@ -31,6 +31,7 @@
           </div>
           <div class="col mt-2">
             <button id="id_search_btn" class="btn btn-primary" type="button">Search</button>
+            <button id="reset_btn" class="btn btn-secondary" type="reset">Reset Form</button>
           </div>
         </div>
       </form>
@@ -40,7 +41,7 @@
         {% if invalid_search %}
           <p>Invalid Search Criteria</p>
         {% else %}
-          {% include "salesApp/tables/viewinvoicestable.html" %}
+          {% include "salesApp/tables/list_invoicestable.html" %}
         {% endif %}
       </div>
     </div>

@@ -180,9 +180,9 @@ class CreateInvoiceSo(FormView):
         return reverse('salesApp:createsoinvoice')
 
 
-class ViewInvoices(FormView):
+class ListInvoices(FormView):
     form_class = InvoiceSearchForm
-    template_name = 'salesApp/viewinvoices.html'
+    template_name = 'salesApp/list_invoices.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args,**kwargs)
@@ -203,5 +203,5 @@ def ViewInvoiceList(request):
         query_result = query_result.filter(sale_order__so_number__icontains=data['sale_order'])
     if data['invoice_number'] != '':
         query_result = query_result.filter(si_number__icontains=data['invoice_number'])
-    new_html_table = render_to_string('salesapp/tables/viewinvoicestable.html',{'object_list':query_result})
+    new_html_table = render_to_string('salesapp/tables/list_invoicestable.html',{'object_list':query_result})
     return HttpResponse(new_html_table)
