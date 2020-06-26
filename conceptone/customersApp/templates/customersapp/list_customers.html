@@ -1,33 +1,31 @@
-{% extends "purchaseApp/base.html" %}
+{% extends "customersapp/base.html" %}
 {% load static %}
 {% block headblock %}
-    <title>Purchase Orders - ConceptOne</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-    {% comment %} <link rel="stylesheet" href="{% static "css\masterstyles.css" %}"> {% endcomment %}
+  <title>List Customers - conceptOne</title>
 {% endblock headblock %}
 {% block bodyblock %}
 <body style="background-color: #FFFFFF;">
     <div class="rounded mt-2 mb-2 mr-2 ml-2" style="background-color: #f0f0f0;padding-bottom: 12px;">
       <div class="col col-12 pt-2 pb-1">
-          <h2 class="font-raleway">Purchase Orders</h2>
+          <h2 class="font-raleway">Customers</h2>
       </div>
-      <form id="id_search_form" po-search-url = "{% url 'purchaseApp:PurchaseOrderQuery' %}" novalidate>
+      <form id="id_search_form" customer-search-url = "{% url 'customersApp:CustomerQuery' %}" novalidate>
         <div class="row" style="margin-right: 0px;margin-left: 0px;">
           <div class="col-md-6 col-lg-3">
-              {{form.po_number.label}}
-              {{form.po_number}}
+              {{form.customer_name.label}}
+              {{form.customer_name}}
           </div>
           <div class="col-md-6 col-lg-3">
-              {{form.supplier.label}}
-              {{form.supplier}}
+              {{form.customer_code.label}}
+              {{form.customer_code}}
           </div>
           <div class="col-md-6 col-lg-3">
-              {{form.project.label}}
-              {{form.project}}
+              {{form.customer_ntn_number.label}}
+              {{form.customer_ntn_number}}
           </div>
           <div class="col-md-6 col-lg-3">
-              {{form.date.label}}
-              {{form.date}}
+              {{form.customer_phone.label}}
+              {{form.customer_phone}}
           </div>
           <div class="col-12 mt-2">
             <button id="id_search_btn" class="btn btn-primary" type="button">Search</button>
@@ -38,11 +36,11 @@
     </div>
     <div class="mr-2 ml-2">
       <div class="table-responsive" style="background-color: #ffffff;">
-        {% include "purchaseApp/tables/list_purchaseorderstable.html" %}
+        {% include "customersApp/tables/list_customerstable.html" %}
       </div>
     </div>
 </body>
 {% endblock bodyblock %}
 {% block customjs %}
-  <script src="{% static "purchaseapp/js/po-search.js" %}"></script>
+  <script src="{% static "customersapp/js/po-search.js" %}"></script>
 {% endblock customjs %}
