@@ -8,8 +8,13 @@
 {% block bodyblock %}
 <body style="background-color: #FFFFFF;">
     <div class="rounded mt-2 mb-2 mr-2 ml-2" style="background-color: #f0f0f0;padding-bottom: 12px;">
-      <div class="col col-12 pt-2 pb-1">
-          <h2 class="font-raleway">Purchase Orders</h2>
+      <div class="row pt-2 pb-1">
+        <div class="col-6">
+            <h2 class="ml-3 font-raleway">Purchase Orders</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a class="btn btn-primary mr-3" role="button" href="{% url 'purchaseApp:createpurchaseorder' %}">New Purchase Order</a>
+        </div>
       </div>
       <form id="id_search_form" po-search-url = "{% url 'purchaseApp:PurchaseOrderQuery' %}" novalidate>
         <div class="row" style="margin-right: 0px;margin-left: 0px;">

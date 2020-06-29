@@ -24,7 +24,7 @@ else {
       data: {
         'supplier': $("#id_supplier").val(),
         'project': $("#id_project").val(),
-        'po_number': $("#id_po_number").val(),
+        'po_serial_number': $("#id_po_number").val(),
         'po_date': $("#id_date").val(),
       },
       success: function (new_html_table) {

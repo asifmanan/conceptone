@@ -1,9 +1,9 @@
-<nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-dark">
+<nav class="navbar navbar-dark navbar-expand-lg bg-dark">
   <div class="container-fluid"><a class="navbar-brand" href="#">conceptOne</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navcol-1">
         <ul class="nav navbar-nav flex-grow-1">
             <li class="nav-item" role="presentation">
-              <a class="nav-link active" href="#">Home</a>
+              <a class="nav-link active" href="{% url 'crudbasic:index' %}">Home</a>
             </li>
             <li class="nav-item dropdown">
               <a class="dropdown-toggle nav-link text-light" data-toggle="dropdown" aria-expanded="false" href="#">
@@ -17,7 +17,8 @@
                 </div>
             </li>
             <li class="nav-item dropdown">
-              <a class="dropdown-toggle nav-link text-light" data-toggle="dropdown" aria-expanded="false" href="#">Purchases</a>
+              <a class="dropdown-toggle nav-link text-light" data-toggle="dropdown" aria-expanded="false" href="#">
+                Purchases</a>
                 <div class="dropdown-menu" role="menu">
                   <a class="dropdown-item" role="presentation" href="{% url 'purchaseApp:ListPurchaseOrders' %}">View Purchase Order</a>
                   <a class="dropdown-item" role="presentation" href="{% url 'purchaseApp:createpurchaseorder' %}">New Purchase Order</a>
@@ -25,7 +26,8 @@
                 </div>
             </li>
             <li class="nav-item dropdown">
-              <a class="dropdown-toggle nav-link text-light" data-toggle="dropdown" aria-expanded="false" href="#">Contracts</a>
+              <a class="dropdown-toggle nav-link text-light" data-toggle="dropdown" aria-expanded="false" href="#">
+                Contracts</a>
                 <div class="dropdown-menu" role="menu">
                   <a class="dropdown-item" role="presentation" href="{% url 'crudbasic:projects' %}">View Projects</a>
                   <a class="dropdown-item" role="presentation" href="{% url 'crudbasic:createproject' %}">Create New Project</a>
@@ -38,23 +40,26 @@
                 </div>
             </li>
             <li class="nav-item dropdown">
-              <a class="dropdown-toggle nav-link text-light" data-toggle="dropdown" aria-expanded="false" href="#">Partners</a>
+              <a class="dropdown-toggle nav-link text-light" data-toggle="dropdown" aria-expanded="false" href="#">
+                Partners</a>
                 <div class="dropdown-menu" role="menu">
-                  <a class="dropdown-item" role="presentation" href="{% url 'crudbasic:customers' %}">View Customers</a>
+                  <a class="dropdown-item" role="presentation" href="{% url 'customersApp:ListCustomers' %}">View Customers</a>
                   <a class="dropdown-item" role="presentation" href="{% url 'customersApp:CreateCustomer' %}">Create New Customer</a>
                 <div class="dropdown-divider"></div>
                   <a class="dropdown-item" role="presentation" href="{% url 'crudbasic:suppliers' %}">View Suppliers</a>
                   <a class="dropdown-item" role="presentation" href="{% url 'crudbasic:createsupplier' %}">Create New Supplier</a>
                 </div>
             </li>
-            <li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-light" data-toggle="dropdown" aria-expanded="false" href="#">Inventory</a>
+            <li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-light" data-toggle="dropdown" aria-expanded="false" href="#">
+              Inventory</a>
                 <div class="dropdown-menu" role="menu">
                   <a class="dropdown-item" role="presentation" href="{% url 'crudbasic:items' %}">View Items</a>
                   <a class="dropdown-item" role="presentation" href="{% url 'crudbasic:createitem' %}">Create New Item</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
-              <a class="dropdown-toggle nav-link text-light" data-toggle="dropdown" aria-expanded="false" href="#">Taxes</a>
+              <a class="dropdown-toggle nav-link text-light" data-toggle="dropdown" aria-expanded="false" href="#">
+                Taxes</a>
                 <div class="dropdown-menu" role="menu">
                   <a class="dropdown-item" role="presentation" href="{% url 'crudbasic:taxrates' %}">View Taxes</a>
                   <a class="dropdown-item" role="presentation" href="{% url 'crudbasic:createtax' %}">Create New Tax</a>

@@ -3,7 +3,7 @@
 <title>Create Customer - Conceptone</title>
 {% endblock headblock %}
 {% block bodyblock %}
-    <div class="container bg-light border rounded">
+    <div class="mt-md-2 container bg-light border rounded">
       <h3>New Customer</h3>
       <form method="post">{% csrf_token %}
         <div class="row mb-2">
@@ -46,7 +46,7 @@
         </div>
         <div class="row mb-2">
           <div class="col-12">
-            <button class="btn btn-secondary" type="button" name="button">Cancel</button>
+            <a class="btn btn-secondary" role="button" href="{% url 'customersApp:ListCustomers' %}">Cancel</a>
             <button class="btn btn btn-success" type="submit" name="button">Save</button>
           </div>
         </div>
