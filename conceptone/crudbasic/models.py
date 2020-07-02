@@ -2,48 +2,9 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.db.models import Sum
+from customersApp.models import Customer
 
 # Create your models here.
-class Customers(models.Model):
-    customer_code = models.CharField(max_length=16, unique=True)
-    customer_name = models.CharField(max_length=128, unique=True)
-    customer_address = models.CharField(max_length=264)
-    customer_city = models.CharField(max_length=128)
-    customer_phone = models.CharField(max_length=128, blank=True)
-    customer_fax = models.CharField(max_length=128, blank=True)
-    customer_email = models.EmailField(max_length=192, blank=True)
-    customer_ntn_number = models.CharField(max_length=128, blank=True)
-    created_on = models.DateTimeField(auto_now_add=True)
-    updated_on = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.customer_name
-
-    def this_class_name(self):
-        return 'Customer'
-
-    # def get_absolute_url(self):
-    #     if 'save' in request.POST:
-    #         print('Save was Clicked')
-    #     return reverse('crudbasic:customers')
-
-class Suppliers(models.Model):
-    supplier_code = models.CharField(max_length=16, unique=True)
-    supplier_name = models.CharField(max_length=128, unique=True)
-    supplier_address = models.CharField(max_length=264)
-    supplier_city = models.CharField(max_length=128)
-    supplier_phone = models.CharField(max_length=128, blank=True)
-    supplier_fax = models.CharField(max_length=128, blank=True)
-    supplier_email = models.EmailField(max_length=192, blank=True)
-    supplier_ntn_number = models.CharField(max_length=128, blank=True)
-    created_on = models.DateTimeField(auto_now_add=True)
-    updated_on = models.DateTimeField(auto_now=True)
-
-    def this_class_name(self):
-        return 'Supplier'
-
-    def __str__(self):
-        return self.supplier_name
 
 class Projects(models.Model):
     status_flags = [
@@ -53,7 +14,7 @@ class Projects(models.Model):
     ]
     project_code = models.CharField(max_length=16, unique=True)
     project_name = models.CharField(max_length=128, unique=True)
-    project_customer = models.ForeignKey(Customers, on_delete=models.PROTECT)
+    project_customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
     project_city = models.CharField(max_length=128)
     project_status = models.CharField(max_length=16,choices=status_flags)
     created_on = models.DateTimeField(auto_now_add=True)

@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.template.loader import render_to_string
+from django.http import HttpResponse
 from customersApp.models import Customer
 from customersApp.forms import CustomerForm, CustomerSearchForm
 from django.urls import reverse, reverse_lazy
@@ -8,6 +10,8 @@ class CreateCustomer(CreateView):
     model = Customer
     form_class = CustomerForm
     template_name = 'customersapp/create_customer.html'
+    def get_success_url(self):
+        return reverse_lazy('customersApp:ListCustomers')
 
 class ListCustomers(FormView):
     form_class = CustomerSearchForm
@@ -17,17 +21,25 @@ class ListCustomers(FormView):
         context['object_list'] = Customer.objects.all()
         return context
 
+# class UpdateCustomerView(UpdateView):
+#     model = Customer
+#     form_class = CustomerForm
+#     template_name = 'customersapp/create_customer.html'
+#
+#     def get_success_url(self):
+#         return reverse('customersApp:ListCustomers')
+
 def CustomerQuery(request):
     data = request.GET
-    query_result = PurchaseOrder.objects.all()
+    query_result = Customer.objects.all()
     if data['customer_name'] != '':
-        query_result = query_result.filter(customer__customer_name__icontains=data['customer_name'])
+        query_result = query_result.filter(customer_name__icontains=data['customer_name'])
     if data['customer_ntn_number'] != '':
-        query_result = query_result.filter(customer__customer_ntn_number__icontains=data['customer_ntn_number'])
+        query_result = query_result.filter(customer_ntn_number__icontains=data['customer_ntn_number'])
     if data['customer_phone'] != '':
         # print(data['po_date'])
-        query_result = query_result.filter(customer__customer_phone__range=data['customer_phone'])
+        query_result = query_result.filter(customer_phone__range=data['customer_phone'])
     if data['customer_code'] != '':
-        query_result = query_result.filter(customer__customer_code__icontains=data['customer_code'])
+        query_result = query_result.filter(customer_code__icontains=data['customer_code'])
     new_html_table = render_to_string('customersApp/tables/list_customerstable.html',{'object_list':query_result})
     return HttpResponse(new_html_table)

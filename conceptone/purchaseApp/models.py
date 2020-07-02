@@ -2,13 +2,14 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.db.models import Sum, F
-from crudbasic.models import Customers, Items, TaxRate, Projects, Suppliers
+from crudbasic.models import Items, TaxRate, Projects
+from suppliersApp.models import Supplier
 
 class PurchaseOrder(models.Model):
     po_number = models.CharField(verbose_name='PO Number',max_length=48,blank=True)
     po_serial_number = models.IntegerField(blank=True,default=0)
     po_date = models.DateField()
-    supplier = models.ForeignKey(Suppliers, on_delete=models.PROTECT)
+    supplier = models.ForeignKey(Supplier, on_delete=models.PROTECT)
     project = models.ForeignKey(Projects, on_delete=models.PROTECT)
     po_amount = models.DecimalField(max_digits=14, decimal_places=2, default=0.00)
     tax_rate = models.ForeignKey(TaxRate, on_delete=models.PROTECT)

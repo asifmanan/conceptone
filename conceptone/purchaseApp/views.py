@@ -8,7 +8,8 @@ from django.views.generic import (View, TemplateView, ListView, DetailView,
                                 CreateView, UpdateView, DetailView, FormView,
                                 DeleteView,)
 from purchaseApp.models import PurchaseOrder, PurchaseOrderItem
-from crudbasic.models import Suppliers
+# from crudbasic.models import Suppliers
+from suppliersApp.models import Supplier
 from purchaseApp.forms import PurchaseOrderForm, PurchaseOrderItemForm,PurchaseOrderSearchForm
 # Create your views here.
 # class CreatePurchaseOrder():

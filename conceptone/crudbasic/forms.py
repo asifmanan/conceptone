@@ -1,9 +1,7 @@
 from django import forms
 from django.forms import (formset_factory, modelformset_factory)
 from datetime import datetime
-from crudbasic.models import (Customers,
-                                Suppliers,
-                                Projects,
+from crudbasic.models import (Projects,
                                 Items,
                                 TaxRate,
                                 )
@@ -34,37 +32,6 @@ class TaxRateForm(forms.ModelForm):
 #             'total_price':forms.TextInput(attrs={'class':'form-control form-control-sm'}),
 #             }
 #        )
-
-
-class CustomerForm(forms.ModelForm):
-    class Meta:
-        model = Customers
-        fields = '__all__'
-        widgets = {
-                'customer_code':forms.TextInput(attrs={'class':'form-control'}),
-                'customer_name':forms.TextInput(attrs={'class':'form-control'}),
-                'customer_address':forms.TextInput(attrs={'class':'form-control'}),
-                'customer_city':forms.TextInput(attrs={'class':'form-control'}),
-                'customer_phone':forms.TextInput(attrs={'class':'form-control'}),
-                'customer_fax':forms.TextInput(attrs={'class':'form-control'}),
-                'customer_email':forms.TextInput(attrs={'class':'form-control'}),
-                'customer_ntn_number':forms.TextInput(attrs={'class':'form-control'}),
-        }
-
-class SupplierForm(forms.ModelForm):
-    class Meta:
-        model = Suppliers
-        fields = '__all__'
-        widgets = {
-                'supplier_code':forms.TextInput(attrs={'class':'form-control'}),
-                'supplier_name':forms.TextInput(attrs={'class':'form-control'}),
-                'supplier_address':forms.TextInput(attrs={'class':'form-control'}),
-                'supplier_city':forms.TextInput(attrs={'class':'form-control'}),
-                'supplier_phone':forms.TextInput(attrs={'class':'form-control'}),
-                'supplier_fax':forms.TextInput(attrs={'class':'form-control'}),
-                'supplier_email':forms.TextInput(attrs={'class':'form-control'}),
-                'supplier_ntn_number':forms.TextInput(attrs={'class':'form-control'}),
-        }
 
 class ProjectForm(forms.ModelForm):
     class Meta:

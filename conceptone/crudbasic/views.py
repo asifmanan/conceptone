@@ -7,15 +7,11 @@ from django.forms.formsets import formset_factory
 from django.http import FileResponse
 
 from crudbasic.models import (
-                                Customers,
-                                Suppliers,
                                 Projects,
                                 Items,
                                 TaxRate,
                             )
 from crudbasic.forms import (
-                                CustomerForm,
-                                SupplierForm,
                                 ProjectForm,
                                 ItemForm,
                                 TaxRateForm,
@@ -52,100 +48,6 @@ class TaxRateView(ListView):
         context['main_title'] = 'Tax Rates'
         context['create_link'] = create_link= {'name':'Define New Tax','value':'crudbasic:createtax'}
         return context
-
-
-class CustomerView(TemplateView):
-    template_name = 'crudbasic/basedisplay.html'
-    def get(self, request, *args, **kwargs):
-        main_title = 'Customers'
-        create_link= {'name':'Create New Customer','value':'crudbasic:createcustomer'}
-        search_form = BasicSearch(caller = Customers)
-        table_head_temp = get_col_heads(Customers)
-        table_head = []
-        for idx, val in enumerate(table_head_temp):
-            table_head.append(str(val[1]).split(" ")[1])
-        page_data = Customers.objects.order_by('created_on')
-        return render(request, self.template_name, {'page_data': page_data,
-                                                    'search_form' : search_form,
-                                                    'table_head':table_head,
-                                                    'main_title':main_title,
-                                                    'create_link':create_link
-                                                    })
-
-    def post(self, request, *args, **kwargs):
-        search_form = BasicSearch(request.POST, caller = Customers)
-        if search_form.is_valid():
-            data = request.POST.copy()
-            qby = data.get('search_by')
-            qstrting = data.get('search_for')
-            queryparam = qby+'__'+'contains'
-            search_list = Customers.objects.filter(**{queryparam:qstrting})
-
-            main_title = 'Customers'
-            create_link= {'name':'Create New Customer','value':'crudbasic:createcustomer'}
-            table_head_temp = get_col_heads(Customers)
-            table_head = []
-            for idx, val in enumerate(table_head_temp):
-                table_head.append(str(val[1]).split(" ")[1])
-            page_data = search_list
-        else:
-            search_form = BasicSearch(request.POST, caller = Customers)
-            main_title = 'Customers'
-            create_link = {'name':'Create New Customer','value':'crudbasic:createcustomer'}
-            table_head = None
-            page_data = None
-        return render(request, self.template_name, {'page_data': page_data,
-                                                    'search_form' : search_form,
-                                                    'table_head':table_head,
-                                                    'main_title':main_title,
-                                                    'create_link':create_link
-                                                    })
-
-class SupplierView(TemplateView):
-    template_name = 'crudbasic/basedisplay.html'
-    def get(self, request, *args, **kwargs):
-        main_title = 'Suppliers'
-        create_link= {'name':'Create New Supplier','value':'crudbasic:createsupplier'}
-        search_form = BasicSearch(caller = Suppliers)
-        table_head_temp = get_col_heads(Suppliers)
-        table_head = []
-        for idx, val in enumerate(table_head_temp):
-            table_head.append(str(val[1]).split(" ")[1])
-        page_data = Suppliers.objects.order_by('created_on')
-        return render(request, self.template_name, {'page_data': page_data,
-                                                    'search_form' : search_form,
-                                                    'table_head':table_head,
-                                                    'main_title':main_title,
-                                                    'create_link':create_link
-                                                    })
-    def post(self, request, *args, **kwargs):
-        search_form = BasicSearch(request.POST, caller = Suppliers)
-        if search_form.is_valid():
-            data = request.POST.copy()
-            qby = data.get('search_by')
-            qstrting = data.get('search_for')
-            queryparam = qby+'__'+'contains'
-            search_list = Suppliers.objects.filter(**{queryparam:qstrting})
-
-            main_title = 'Suppliers'
-            create_link= {'name':'Create New Supplier','value':'crudbasic:createsupplier'}
-            table_head_temp = get_col_heads(Suppliers)
-            table_head = []
-            for idx, val in enumerate(table_head_temp):
-                table_head.append(str(val[1]).split(" ")[1])
-            page_data = search_list
-        else:
-            search_form = BasicSearch(caller = Suppliers)
-            main_title = 'Suppliers'
-            create_link= {'name':'Create New Supplier','value':'crudbasic:createsupplier'}
-            table_head = None
-            page_data = None
-        return render(request, self.template_name, {'page_data': page_data,
-                                                    'search_form' : search_form,
-                                                    'table_head':table_head,
-                                                    'main_title':main_title,
-                                                    'create_link':create_link
-                                                    })
 
 class ProjectView(TemplateView):
     template_name = 'crudbasic/basedisplay.html'
@@ -254,30 +156,6 @@ class CreateTaxRateView(CreateView):
         else:
             return reverse('crudbasic:index')
 
-class CreateCustomerView(CreateView):
-    # fields = '__all__'
-    # if defining form_class then fields cannot be used
-    model = Customers
-    form_class = CustomerForm
-    template_name = 'crudbasic/createcustomer.html'
-
-    def get_success_url(self):
-        if 'save-addnew' in self.request.POST:
-            return reverse('crudbasic:createcustomer')
-        else:
-            return reverse('crudbasic:customers')
-
-class CreateSupplierView(CreateView):
-    model = Suppliers
-    form_class = SupplierForm
-    template_name = 'crudbasic/createsupplier.html'
-
-    def get_success_url(self):
-        if 'save-addnew' in self.request.POST:
-            return reverse('crudbasic:createsupplier')
-        if 'save' in self.request.POST:
-            return reverse('crudbasic:suppliers')
-
 class CreateItemView(CreateView):
     model = Items
     form_class = ItemForm
@@ -312,22 +190,6 @@ class UpdateTaxRateView(UpdateView):
     def get_success_url(self):
         return reverse('crudbasic:taxrates')
 
-class UpdateCustomerView(UpdateView):
-    model = Customers
-    form_class = CustomerForm
-    template_name = 'crudbasic/createcustomer.html'
-
-    def get_success_url(self):
-        return reverse('crudbasic:customers')
-
-class UpdateSupplierView(UpdateView):
-    model = Suppliers
-    form_class = SupplierForm
-    template_name = 'crudbasic/createsupplier.html'
-
-    def get_success_url(self):
-        return reverse('crudbasic:suppliers')
-
 class UpdateItemView(UpdateView):
     model = Items
     form_class = ItemForm
@@ -352,16 +214,6 @@ class UpdateProjectView(UpdateView):
 class DeleteTaxRateView(DeleteView):
     model = TaxRate
     success_url = reverse_lazy('crudbasic:taxrates')
-    template_name = 'crudbasic/dialog/objdelconf.html'
-
-class DeleteCustomerView(DeleteView):
-    model = Customers
-    success_url = reverse_lazy('crudbasic:customers')
-    template_name = 'crudbasic/dialog/objdelconf.html'
-
-class DeleteSupplierView(DeleteView):
-    model = Suppliers
-    success_url = reverse_lazy('crudbasic:suppliers')
     template_name = 'crudbasic/dialog/objdelconf.html'
 
 class DeleteItemView(DeleteView):
