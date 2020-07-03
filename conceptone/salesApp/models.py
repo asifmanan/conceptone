@@ -2,7 +2,8 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.db.models import Sum
-from crudbasic.models import Items, TaxRate, Projects
+from crudbasic.models import TaxRate, Projects
+from itemsApp.models import Item
 from customersApp.models import Customer
 
 # Create your models here.
@@ -46,7 +47,7 @@ class SaleOrder(models.Model):
 
 class SaleOrderItem(models.Model):
     so_line_number = models.IntegerField(verbose_name='Line')
-    item = models.ForeignKey(Items, on_delete=models.PROTECT,verbose_name='Item')
+    item = models.ForeignKey(Item, on_delete=models.PROTECT,verbose_name='Item')
     sale_order = models.ForeignKey(SaleOrder, on_delete=models.CASCADE)
     order_quantity = models.DecimalField(max_digits=14,decimal_places=2,default=0.00,verbose_name='Order Quantity')
     available_quantity = models.DecimalField(max_digits=14,decimal_places=2,default=0.00,verbose_name='Available Quantity')

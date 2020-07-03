@@ -53,8 +53,8 @@
             <li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-light" data-toggle="dropdown" aria-expanded="false" href="#">
               Inventory</a>
                 <div class="dropdown-menu" role="menu">
-                  <a class="dropdown-item" role="presentation" href="{% url 'crudbasic:items' %}">View Items</a>
-                  <a class="dropdown-item" role="presentation" href="{% url 'crudbasic:createitem' %}">Create New Item</a>
+                  <a class="dropdown-item" role="presentation" href="{% url 'itemsApp:CreateItem' %}">Create Item</a>
+                  <a class="dropdown-item" role="presentation" href="{% url 'itemsApp:ListItems' %}">View Items</a>
                 </div>
             </li>
             <li class="nav-item dropdown">

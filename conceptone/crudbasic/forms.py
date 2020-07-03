@@ -2,7 +2,6 @@ from django import forms
 from django.forms import (formset_factory, modelformset_factory)
 from datetime import datetime
 from crudbasic.models import (Projects,
-                                Items,
                                 TaxRate,
                                 )
 from crudbasic.basic_functions import get_col_heads
@@ -43,18 +42,6 @@ class ProjectForm(forms.ModelForm):
                 'project_name':forms.TextInput(attrs={'class':'form-control'}),
                 'project_city':forms.TextInput(attrs={'class':'form-control'}),
                 'project_status':forms.Select(attrs={'class':'form-control'}),
-        }
-
-class ItemForm(forms.ModelForm):
-    class Meta:
-        model = Items
-        fields = '__all__'
-        widgets = {
-                'item_code':forms.TextInput(attrs={'class':'form-control'}),
-                'item_description':forms.TextInput(attrs={'class':'form-control'}),
-                'item_uom':forms.TextInput(attrs={'class':'form-control'}),
-                'item_price':forms.TextInput(attrs={'class':'form-control'}),
-                'item_type':forms.Select(attrs={'class':'form-control'}),
         }
 
 

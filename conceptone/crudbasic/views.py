@@ -8,12 +8,10 @@ from django.http import FileResponse
 
 from crudbasic.models import (
                                 Projects,
-                                Items,
                                 TaxRate,
                             )
 from crudbasic.forms import (
                                 ProjectForm,
-                                ItemForm,
                                 TaxRateForm,
                                 BasicSearch,
                             )
@@ -156,17 +154,6 @@ class CreateTaxRateView(CreateView):
         else:
             return reverse('crudbasic:index')
 
-class CreateItemView(CreateView):
-    model = Items
-    form_class = ItemForm
-    template_name = 'crudbasic/createitem.html'
-
-    def get_success_url(self):
-        if 'save-addnew' in self.request.POST:
-            return reverse('crudbasic:createitem')
-        if 'save' in self.request.POST:
-            return reverse('crudbasic:items')
-
 class CreateProjectView(CreateView):
     model = Projects
     form_class = ProjectForm
@@ -190,14 +177,6 @@ class UpdateTaxRateView(UpdateView):
     def get_success_url(self):
         return reverse('crudbasic:taxrates')
 
-class UpdateItemView(UpdateView):
-    model = Items
-    form_class = ItemForm
-    template_name = 'crudbasic/createitem.html'
-
-    def get_success_url(self):
-        return reverse('crudbasic:items')
-
 class UpdateProjectView(UpdateView):
     model = Projects
     form_class = ProjectForm
@@ -214,11 +193,6 @@ class UpdateProjectView(UpdateView):
 class DeleteTaxRateView(DeleteView):
     model = TaxRate
     success_url = reverse_lazy('crudbasic:taxrates')
-    template_name = 'crudbasic/dialog/objdelconf.html'
-
-class DeleteItemView(DeleteView):
-    model = Items
-    success_url = reverse_lazy('crudbasic:items')
     template_name = 'crudbasic/dialog/objdelconf.html'
 
 class DeleteProjectView(DeleteView):

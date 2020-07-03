@@ -38,7 +38,7 @@ def CustomerQuery(request):
         query_result = query_result.filter(customer_ntn_number__icontains=data['customer_ntn_number'])
     if data['customer_phone'] != '':
         # print(data['po_date'])
-        query_result = query_result.filter(customer_phone__range=data['customer_phone'])
+        query_result = query_result.filter(customer_phone__icontains=data['customer_phone'])
     if data['customer_code'] != '':
         query_result = query_result.filter(customer_code__icontains=data['customer_code'])
     new_html_table = render_to_string('customersApp/tables/list_customerstable.html',{'object_list':query_result})
