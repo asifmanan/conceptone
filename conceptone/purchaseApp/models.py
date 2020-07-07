@@ -2,7 +2,8 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.db.models import Sum, F
-from crudbasic.models import TaxRate, Projects
+from crudbasic.models import Projects
+from taxesApp.models import Tax
 from itemsApp.models import Item
 from suppliersApp.models import Supplier
 
@@ -13,7 +14,7 @@ class PurchaseOrder(models.Model):
     supplier = models.ForeignKey(Supplier, on_delete=models.PROTECT)
     project = models.ForeignKey(Projects, on_delete=models.PROTECT)
     po_amount = models.DecimalField(max_digits=14, decimal_places=2, default=0.00)
-    tax_rate = models.ForeignKey(TaxRate, on_delete=models.PROTECT)
+    tax_rate = models.ForeignKey(Tax, on_delete=models.PROTECT)
     tax_amount = models.DecimalField(max_digits=14, decimal_places=2, default=0.00)
     total_amount = models.DecimalField(max_digits=14, decimal_places=2, default=0.00)
     published = models.BooleanField(default=False)
