@@ -18,9 +18,22 @@ class Company(models.Model):
     def __str__(self):
         return self.company_name
 
+class Department(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.PROTECT)
+    department = models.CharField(max_length=192)
+    def __str__(self):
+        return self.department
+
 class Province(models.Model):
     province_code = models.CharField(max_length=16, unique=True)
     province_name = models.CharField(max_length=128, unique=True)
 
     def __str__(self):
         return self.province_name
+
+class City(models.Model):
+    city_code = models.CharField(max_length=16, unique=True)
+    city_name = models.CharField(max_length=256, unique=True)
+
+    def __str__(self):
+        return self.city_name

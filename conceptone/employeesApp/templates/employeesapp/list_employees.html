@@ -1,0 +1,51 @@
+{% extends "employeesapp/base.html" %}
+{% load static %}
+{% block headblock %}
+  <title>List Employees - conceptOne</title>
+{% endblock headblock %}
+{% block bodyblock %}
+<body style="background-color: #FFFFFF;">
+    <div class="rounded mt-2 mb-2 mr-2 ml-2" style="background-color: #f0f0f0;padding-bottom: 12px;">
+      <div class="row pt-2 pb-1">
+        <div class="col col-6 pt-2 pb-1">
+            <h2 class="font-raleway ml-3">Employees</h2>
+        </div>
+        <div class="col text-right col-6 pt-2 pb-1">
+            <a class="btn btn-primary mr-3" role="button" href="{% url 'employeesApp:CreateEmployee' %}">Create New Employee</a>
+        </div>
+      </div>
+      <form id="id_search_form" customer-search-url = "{% url 'customersApp:CustomerQuery' %}" novalidate>
+        <div class="row" style="margin-right: 0px;margin-left: 0px;">
+          <div class="col-md-6 col-lg-3">
+              {{form.employee_name.label}}
+              {{form.employee_name}}
+          </div>
+          <div class="col-md-6 col-lg-3">
+              {{form.employee_id.label}}
+              {{form.employee_id}}
+          </div>
+          <div class="col-md-6 col-lg-3">
+              {{form.department.label}}
+              {{form.department}}
+          </div>
+          <div class="col-md-6 col-lg-3">
+              {{form.phone.label}}
+              {{form.phone}}
+          </div>
+          <div class="col-12 mt-2">
+            <button id="id_search_btn" class="btn btn-primary" type="button">Search</button>
+            <button id="reset_btn" class="btn btn-secondary" type="reset">Reset Form</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="mr-2 ml-2">
+      <div class="table-responsive" style="background-color: #ffffff;">
+        {% include "employeesApp/tables/list_employeestable.html" %}
+      </div>
+    </div>
+</body>
+{% endblock bodyblock %}
+{% block customjs %}
+  <script src="{% static 'customersapp/js/customer-search.js' %}"></script>
+{% endblock customjs %}

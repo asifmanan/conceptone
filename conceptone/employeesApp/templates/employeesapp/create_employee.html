@@ -1,0 +1,139 @@
+{% extends "employeesapp/base.html" %}
+{% block headblock %}
+<title>New Employee - Conceptone</title>
+{% endblock headblock %}
+{% block bodyblock %}
+<div class="container">
+  <div class="mt-2 pl-md-3 pr-md-3">
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <h2>New Employee</h2>
+      </div>
+      <div class="col-xs-12 col-md-6 my-md-auto">
+        <a class="btn btn-primary float-right" role="button" href="{% url 'employeesApp:ListEmployees' %}">View Employees</a>
+      </div>
+    </div>
+    <hr>
+    <form method="post">{% csrf_token %}
+      <div class="form-row">
+        <div class="col-xs-10 col-md-6">
+          <div class="form-group">
+            {{form.first_name.label}}
+            {{form.first_name}}
+          </div>
+        </div>
+        <div class="col-xs-10 col-md-6">
+          <div class="form-group">
+            {{form.last_name.label}}
+            {{form.last_name}}
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-xs-10 col-md-6">
+          <div class="form-group">
+            {{form.gender.label}}
+            {{form.gender}}
+          </div>
+        </div>
+        <div class="col-xs-10 col-md-6">
+          <div class="form-group">
+            {{form.dob.label}}
+            {{form.dob}}
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-xs-10 col-md-6">
+          <div class="form-group">
+            {{form.cnic_number.label}}
+            {{form.cnic_number}}
+          </div>
+        </div>
+        <div class="col-xs-10 col-md-6">
+          <div class="form-group">
+            {{form.employee_id.label}}
+            {{form.employee_id}}
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-xs-10 col-md-6">
+          <div class="form-group">
+            {{form.address.label}}
+            {{form.address}}
+          </div>
+        </div>
+        <div class="col-xs-10 col-md-6">
+          <div class="form-group">
+            {{form.city.label}}
+            {{form.city}}
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-xs-10 col-md-6">
+          <div class="form-group">
+            {{form.phone_1.label}}
+            {{form.phone_1}}
+          </div>
+        </div>
+        <div class="col-xs-10 col-md-6">
+          <div class="form-group">
+            {{form.phone_2.label}}
+            {{form.phone_2}}
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-xs-10 col-md-6">
+          <div class="form-group">
+            {{form.email_1.label}}
+            {{form.email_1}}
+          </div>
+        </div>
+        <div class="col-xs-10 col-md-6">
+          <div class="form-group">
+            {{form.email_2.label}}
+            {{form.email_2}}
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-xs-10 col-md-6">
+          <div class="form-group">
+            {{form.company.label}}
+            {{form.company}}
+          </div>
+        </div>
+        <div class="col-xs-10 col-md-6">
+          <div class="form-group">
+            {{form.department.label}}
+            {{form.department}}
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-xs-10 col-md-6">
+          <div class="form-group">
+            {{form.designation.label}}
+            {{form.designation}}
+          </div>
+        </div>
+        <div class="col-xs-10 col-md-6">
+          <div class="form-group">
+            {{form.joining_date.label}}
+            {{form.joining_date}}
+          </div>
+        </div>
+      </div>
+      <div class="form-row mb-2">
+        <div class="col-xs-10 col-md-12">
+          <div class="border rounded bg-light p-2">
+            <button class="btn btn-lg btn-secondary" type="reset" name="button">Reset</button>
+            <button class="btn btn-lg btn-success" type="submit" name="button">Save</button>
+          </div>
+        </div>
+      </div>
+    </form>
+{% endblock bodyblock %}

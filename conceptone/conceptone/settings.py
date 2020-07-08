@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'purchaseApp',
     'customersApp',
     'suppliersApp',
+    'employeesApp',
     'projectsApp',
     'itemsApp',
     'taxesApp',
