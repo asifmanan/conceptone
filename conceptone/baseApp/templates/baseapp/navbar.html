@@ -3,7 +3,7 @@
     <div class="collapse navbar-collapse" id="navcol-1">
         <ul class="nav navbar-nav flex-grow-1">
             <li class="nav-item" role="presentation">
-              <a class="nav-link active" href="{% url 'crudbasic:index' %}">Home</a>
+              <a class="nav-link active" href="{% url 'baseApp:index' %}">Home</a>
             </li>
             <li class="nav-item dropdown">
               <a class="dropdown-toggle nav-link text-light" data-toggle="dropdown" aria-expanded="false" href="#">
@@ -29,10 +29,10 @@
               <a class="dropdown-toggle nav-link text-light" data-toggle="dropdown" aria-expanded="false" href="#">
                 Contracts</a>
                 <div class="dropdown-menu" role="menu">
-                  <a class="dropdown-item" role="presentation" href="{% url 'crudbasic:projects' %}">View Projects</a>
-                  <a class="dropdown-item" role="presentation" href="{% url 'crudbasic:createproject' %}">Create New Project</a>
-                  <a class="dropdown-item" role="presentation" href="{% url 'crudbasic:createproject' %}">Manage Contracts</a>
-                  <a class="dropdown-item" role="presentation" href="{% url 'crudbasic:createproject' %}">Bill of Quantity</a>
+                  <a class="dropdown-item" role="presentation" href="{% url 'projectsApp:ListProjects' %}">View Projects</a>
+                  <a class="dropdown-item" role="presentation" href="{% url 'projectsApp:CreateProject' %}">Create New Project</a>
+                  <a class="dropdown-item" role="presentation" href="#">Manage Contracts</a>
+                  <a class="dropdown-item" role="presentation" href="#">Bill of Quantity</a>
                 <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="#">Progress</a>
                   <a class="dropdown-item" href="#">Deliverables</a>

@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.db.models import Sum
-from crudbasic.models import Projects
+from projectsApp.models import Project
 from taxesApp.models import Tax
 from itemsApp.models import Item
 from customersApp.models import Customer
@@ -13,7 +13,7 @@ class SaleOrder(models.Model):
     customer_po_number = models.CharField(max_length=48,verbose_name='PO Number')
     customer_po_date = models.DateField(verbose_name='PO Date', null=True)
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT,verbose_name='Customer')
-    project = models.ForeignKey(Projects, on_delete=models.PROTECT,verbose_name='Project')
+    project = models.ForeignKey(Project, on_delete=models.PROTECT,verbose_name='Project')
     so_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
     tax_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
     total_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00,verbose_name='Total Amount')
@@ -78,7 +78,7 @@ class SaleInvoice(models.Model):
     si_number = models.CharField(max_length=24,verbose_name='Invoice Number',null=True)
     customer = models.ForeignKey(Customer,on_delete=models.PROTECT,verbose_name='Customer',null=True)
     # si_customer
-    project = models.ForeignKey(Projects,on_delete=models.PROTECT,verbose_name='Project',null=True)
+    project = models.ForeignKey(Project,on_delete=models.PROTECT,verbose_name='Project',null=True)
     # si_project
     tax_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00, verbose_name='Tax Amount')
     # si_tax_amount

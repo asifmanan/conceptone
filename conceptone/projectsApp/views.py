@@ -10,6 +10,8 @@ class CreateProject(CreateView):
     model = Project
     form_class = ProjectForm
     template_name = 'projectsApp/create_project.html'
+    def get_success_url(self):
+        return reverse_lazy('projectsApp:ListProjects')
 
 class ListProjects(FormView):
     form_class = ProjectSearchForm
