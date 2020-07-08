@@ -6,14 +6,15 @@
 {% block bodyblock %}
 <body style="background-color: #FFFFFF;">
     <div class="rounded mt-2 mb-2 mr-2 ml-2" style="background-color: #f0f0f0;padding-bottom: 12px;">
-      <div class="row pt-2 pb-1">
-        <div class="col col-6 pt-2 pb-1">
-            <h2 class="font-raleway ml-3">Projects</h2>
+        <div class="row" style="margin-right:0; margin-left:0px;">
+          <div class="col-md-6">
+              <h2 class="font-raleway">Projects</h2>
+          </div>
+          <div class="col-md-6 mb-sm-2 mb-md-0">
+              <a class="btn btn-primary float-md-right align-bottom" role="button" href="{% url 'projectsApp:CreateProject' %}">New Project</a>
+          </div>
         </div>
-        <div class="col text-right col-6 pt-2 pb-1">
-            <a class="btn btn-primary mr-3" role="button" href="{% url 'projectsApp:CreateProject' %}">New Project</a>
-        </div>
-      </div>
+
       <form id="id_search_form" item-search-url = "{% url 'itemsApp:ItemQuery' %}" novalidate>
         <div class="row" style="margin-right: 0px;margin-left: 0px;">
           <div class="col-md-6 col-lg-3">
@@ -39,7 +40,7 @@
         </div>
       </form>
     </div>
-    <div class="mr-2 ml-2">
+    <div class="pr-2 pl-2">
       <div class="table-responsive" style="background-color: #ffffff;">
         {% include "projectsapp/tables/list_projectstable.html" %}
       </div>
