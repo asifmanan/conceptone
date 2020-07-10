@@ -74,14 +74,10 @@ class SaleOrderItem(models.Model):
 
 class SaleInvoice(models.Model):
     sale_order = models.ForeignKey(SaleOrder,on_delete=models.PROTECT,verbose_name='SO Number',null=True)
-    # si_sonumber -> sale_order
     si_number = models.CharField(max_length=24,verbose_name='Invoice Number',null=True)
     customer = models.ForeignKey(Customer,on_delete=models.PROTECT,verbose_name='Customer',null=True)
-    # si_customer
     project = models.ForeignKey(Project,on_delete=models.PROTECT,verbose_name='Project',null=True)
-    # si_project
     tax_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00, verbose_name='Tax Amount')
-    # si_tax_amount
     si_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00, verbose_name='Grand Total')
     si_date = models.DateField(verbose_name='Invoice Date')
     is_published = models.BooleanField(default=False)
