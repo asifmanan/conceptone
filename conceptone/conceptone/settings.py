@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'crudbasic',
     'baseApp',
     'salesApp',
+    'standardinvoiceApp',
     'purchaseApp',
     'customersApp',
     'suppliersApp',
