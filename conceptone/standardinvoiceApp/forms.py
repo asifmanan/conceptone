@@ -5,10 +5,11 @@ class StandardInvoiceForm(forms.ModelForm):
     class Meta:
         model = StandardInvoice
         fields = (
-            'invoice_number','invoice_date',
+            'company','invoice_number','invoice_date',
             'customer','project',
         )
         widgets = {
+            'company':forms.Select(attrs={'class':'form-control'}),
             'invoice_number':forms.TextInput(attrs={'class':'form-control'}),
             'invoice_date':forms.DateInput(attrs={'class':'form-control', 'type':'date'}),
             'customer':forms.Select(attrs={'class':'form-control'}),

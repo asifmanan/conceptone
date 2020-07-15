@@ -1,12 +1,14 @@
 from django.db import models
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
+from baseApp.models import Company
 from customersApp.models import Customer
 from projectsApp.models import Project
 from taxesApp.models import Tax
 from itemsApp.models import Item
 # Create your models here.
 class StandardInvoice(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.PROTECT)
     customer = models.ForeignKey(Customer,on_delete=models.PROTECT)
     project = models.ForeignKey(Project,on_delete=models.PROTECT)
     invoice_number = models.CharField(unique=True,max_length=56)

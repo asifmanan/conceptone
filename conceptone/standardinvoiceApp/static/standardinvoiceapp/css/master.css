@@ -1,0 +1,19 @@
+.invoice-info{
+  font-size: 1.2rem;
+  margin-top: 8px;
+  margin-bottom: 2px;
+}
+
+.invoice-calc{
+  background-color: #dadada;
+  border-left: 6px solid;
+  border-color: #0275d8;
+  padding-top: 4px;
+  padding-left:2px;
+  padding-right: 1px;
+}
+
+.hr-narrow-margin{
+  margin-top: 1px;
+  margin-bottom: 3px;
+}
