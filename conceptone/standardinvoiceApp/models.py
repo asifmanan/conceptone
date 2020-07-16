@@ -24,12 +24,14 @@ class StandardInvoice(models.Model):
 
 class StandardInvoiceItem(models.Model):
     invoice = models.ForeignKey(StandardInvoice, on_delete=models.CASCADE)
+    line_number = models.IntegerField()
     item = models.ForeignKey(Item, on_delete=models.PROTECT)
     tax = models.ForeignKey(Tax,on_delete=models.PROTECT)
     quantity = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
     sale_price = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
-    total_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
+    total_price = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
     tax_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
+    total_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 

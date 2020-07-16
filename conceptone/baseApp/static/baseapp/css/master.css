@@ -61,6 +61,13 @@
   overflow-y: scroll;
 }
 
+.invoice-item-table{
+  width:100%;
+  height: 460px;
+  display: block;
+  overflow-y: scroll;
+}
+
 .button-custom{
   width : 100%;
 }

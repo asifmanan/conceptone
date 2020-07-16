@@ -4,7 +4,7 @@
 <title>New Standard Invoice - Conceptone</title>
 {% endblock headblock %}
 {% block bodyblock %}
-<div class="container-fluid">
+<div class="container-fluid" style="height:100%;">
   <div class="row shadow-sm mb-3 pt-1 pb-1">
     <div class="col-xs-12 col-md-6">
       <p style="margin-bottom:2px;"><b>Standard invoice</b></p>
@@ -14,45 +14,77 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-lg-4">
-      <h4>Invoice Ref No.: </h4>
-      <p>Invoice date: </p>
+    <div class="col-12">
+      <h5>Invoice Ref No.: {{invoice.invoice_number}}</h5>
+      <p>Invoice date: {{invoice.invoice_date}} </p>
     </div>
 
   </div>
-  <div class="row">
-    <div class="col-lg-4">
-      <p class="invoice-info"><b>Customer Name</b></p>
+  <div class="row d-flex align-items-end">
+    <div class="col-lg-6 col-xl-4">
+      <p class="invoice-info">{{invoice.customer.customer_name}}</p>
+      <p class="p-min-margin">{{invoice.customer.customer_address}}</p>
+      <p class="p-min-margin">{{invoice.customer.customer_city}}</p>
       <hr class="hr-narrow-margin">
     </div>
-    <div class="col-lg-4">
-      <p class="invoice-info">Project</p>
+    <div class="col-lg-6 col-xl-4">
+      <p class="invoice-info">{{invoice.project.project_name}}</p>
       <hr class="hr-narrow-margin">
     </div>
-    <div class="col-lg-4">
-      <p class="invoice-info">Applicable Tax</p>
+      <div class="d-lg-none col-lg-4 col-xl-4" style="padding: 8px 15px;padding-top: 8px;">
+        <div>
+          <form method="post">{% csrf_token %}
+            <div style="margin-bottom: 4px;">
+              {{form.item.label}}
+              {{form.item}}
+            </div>
+            <div style="margin-bottom: 4px;">
+              {{form.quantity.label}}
+              {{form.quantity}}
+            </div>
+            <div style="margin-bottom: 4px;">
+              {{form.sale_price.label}}
+              {{form.sale_price}}
+            </div>
+            <div style="margin-bottom: 4px;">
+              {{form.tax.label}}
+              {{form.tax}}
+            </div>
+            <div class="form-row">
+              <div class="col" style="margin-top: 12px;">
+                <button class="btn btn-primary" type="submit">Add Item</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    <div class="col-lg-6 col-xl-4">
+      <p class="invoice-amounts">Amount
+        <span style="float:right;">{{invoice.amount_exclusive_tax}}</span>
+      </p>
       <hr class="hr-narrow-margin">
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-4">
-      <p class="invoice-info">Amount
-        <span style="float:right;">123,456,789</span>
+      <p class="invoice-amounts">Tax Amount
+        <span style="float:right;">{{invoice.tax_amount}}</span>
+      </p>
+      <hr class="hr-narrow-margin">
+      <p class="invoice-amounts">Total
+        <span style="float:right;">{{invoice.total_amount}}</span>
       </p>
       <hr class="hr-narrow-margin">
     </div>
-      <div class="col-lg-4">
-        <p class="invoice-info">123,456,789</p>
-        <hr class="hr-narrow-margin">
-      </div>
-      <div class="col-lg-4">
-        <p class="invoice-info">Total Amount</p>
-        <hr class="hr-narrow-margin">
-      </div>
+    <div class="col-lg-6 col-xl-4">
+
+    </div>
+    <div class="col-lg-6 col-xl-4">
+
+    </div>
   </div>
+
   <div class="row mt-2">
     <div class="col">
       {% include "standardinvoiceapp/tables/table_standardinvoiceitem.html" %}
     </div>
+  </div>
+
   </div>
 {% endblock bodyblock %}
