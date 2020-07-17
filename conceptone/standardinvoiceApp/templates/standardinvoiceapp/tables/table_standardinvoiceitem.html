@@ -1,18 +1,18 @@
 <table id="id_standardinvoicetable" class="table">
-    <thead style="background:#e0e0e0;">
+    <thead style="background:#264653;color:#FFFFFF">
         <tr>
-            <th>Line</th>
-            <th>Item Description</th>
-            <th>UoM</th>
-            <th>Quantity</th>
-            <th>Unit Price</th>
-            <th>Tax</th>
-            <th>Tax Amount</th>
-            <th>Total</th>
-            <th>Action</th>
+          <th>Line</th>
+          <th>Item Description</th>
+          <th>UoM</th>
+          <th>Quantity</th>
+          <th>Unit Price</th>
+          <th>Tax</th>
+          <th>Tax Amount</th>
+          <th>Total</th>
+          <th>Action</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody style="background:#f2e9e4;">
       <div>
         <tr class="d-none d-lg-table-row">
           <form method="post">{% csrf_token %}
@@ -30,15 +30,18 @@
       </div>
       {% for item in object_list  %}
         <tr>
-          <td>{{item.employee_id}}</td>
-          <td>{{item.first_name}}</td>
-          <td>{{item.last_name}}</td>
-          <td>{{item.company.company_name}}</td>
-          <td>{{item.department}}</td>
-          <td>{{item.designation}}</td>
-          <td>{{item.phone_1}}</td>
-          <td>{{item.email_1}}</td>
-          <td>{{item.address}}, {{item.city.city_name}}</td>
+          <td>{{item.line_number}}</td>
+          <td>{{item.item.item_description}}</td>
+          <td>{{item.item.item_uom}}</td>
+          <td>{{item.quantity}}</td>
+          <td>{{item.sale_price}}</td>
+          <td>{{item.tax.tax_value}}</td>
+          <td style="text-align:right;">{{item.tax_amount}}</td>
+          <td style="text-align:right;">{{item.total_amount}}</td>
+          <td><form action="{% url 'standardinvoiceApp:DeleteStandardInvoiceItem' item.id %}" method="post">{% csrf_token %}
+            <input type="hidden" name="invoice_item_id" value="{{item.id}}">
+            <button class="btn rounded-0 btn-danger" type="submit">X</button>
+          </form></td>
         </tr>
         {% endfor %}
     </tbody>
