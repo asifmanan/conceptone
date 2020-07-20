@@ -28,3 +28,9 @@ class StandardInvoiceItemForm(forms.ModelForm):
             'sale_price':forms.TextInput(attrs={'class':'form-control'}),
             'tax':forms.Select(attrs={'class':'form-control'}),
         }
+
+class StandardInvoiceSearchForm(forms.Form):
+    invoice_number = forms.CharField(label='Invoice Number', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control search_field'}))
+    customer = forms.CharField(label='Customer', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control search_field'}))
+    project = forms.CharField(label='Project', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control search_field'}))
+    date = forms.DateField(label='Invoice Date', widget=forms.DateInput(attrs={'type':'date','class':'form-control form-control search_field'}))

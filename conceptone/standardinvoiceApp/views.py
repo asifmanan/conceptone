@@ -1,10 +1,16 @@
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
+from django.template.loader import render_to_string
+from django.http import HttpResponse
 
 from django.views.generic import CreateView, ListView, FormView, DeleteView
 
 from standardinvoiceApp.models import StandardInvoice, StandardInvoiceItem
-from standardinvoiceApp.forms import StandardInvoiceForm, StandardInvoiceItemForm
+from standardinvoiceApp.forms import (
+                                        StandardInvoiceForm,
+                                        StandardInvoiceItemForm,
+                                        StandardInvoiceSearchForm,
+                                        )
 # Create your views here.
 class CreateStandardInvoice(CreateView):
     model = StandardInvoice
@@ -59,3 +65,26 @@ class DeleteStandardInvoiceItem(DeleteView):
                 i = i + 1
         self.object.remove_amount_from_invoice()
         return reverse_lazy('standardinvoiceApp:CreateStandardInvoiceItem', kwargs={'pk':invoice.id})
+
+class ListStandardInvoice(FormView):
+    form_class = StandardInvoiceSearchForm
+    template_name = 'standardinvoiceapp/list_standardinvoice.html'
+    def get_context_data(self,*args,**kwargs):
+        context = super().get_context_data(*args,**kwargs)
+        context['object_list'] = StandardInvoice.objects.all().order_by('invoice_date')
+        return context
+
+def StandardInvoiceQuery(request):
+    data = request.GET
+    query_result = StandardInvoice.objects.all()
+    if data['invoice_number'] != '':
+        query_result = query_result.filter(invoice_number__icontains=data['invoice_number'])
+    if data['customer'] != '':
+        query_result = query_result.filter(customer__customer_name__icontains=data['customer'])
+    if data['project'] != '':
+        query_result = query_result.filter(project__project_name__icontains=data['project'])
+    if data['invoice_date'] != '':
+        print(data['invoice_date'])
+        query_result = query_result.filter(invoice_date__range=[(data['invoice_date']),(data['invoice_date'])])
+    new_html_table = render_to_string('standardinvoiceApp/tables/list_standardinvoicetable.html',{'object_list':query_result})
+    return HttpResponse(new_html_table)
