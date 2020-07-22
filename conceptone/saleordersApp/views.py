@@ -36,20 +36,24 @@ class CreateSaleOrderItem(CreateView):
         return context
 
     def form_valid(self,form):
-        line_item = form.save(commit=False)
-        line_item.sale_order = get_object_or_404(SaleOrder,pk=self.kwargs['pk'])
-        current_obj = SaleOrderItem.objects.filter(sale_order=line_item.sale_order).order_by('-line_number').first()
-        if current_obj != None:
-            new_line_number = (current_obj.line_number) + 1
+        if form.is_valid():
+            line_item = form.save(commit=False)
+            line_item.sale_order = get_object_or_404(SaleOrder,pk=self.kwargs['pk'])
+            current_obj = SaleOrderItem.objects.filter(sale_order=line_item.sale_order).order_by('-line_number').first()
+            if current_obj != None:
+                new_line_number = (current_obj.line_number) + 1
+            else:
+                new_line_number = 1
+            line_item.line_number = new_line_number
+            line_item.amount = line_item.sale_price*line_item.order_quantity
+            line_item.tax_amount = line_item.amount*line_item.tax.tax_value
+            line_item.total_amount = line_item.amount+line_item.tax_amount
+            line_item.save()
+            line_item.add_amount_to_saleorder()
+            return super(CreateSaleOrder,self).form_valid(form)
         else:
-            new_line_number = 1
-        line_item.line_number = new_line_number
-        line_item.amount = line_item.sale_price*line_item.order_quantity
-        line_item.tax_amount = line_item.amount*line_item.tax.tax_value
-        line_item.total_amount = line_item.amount+line_item.tax_amount
-        line_item.save()
-        line_item.add_amount_to_saleorder()
-        return super().form_valid(form)
+            print("in form in-valid")
+            return super(CreateSaleOrder,self).form_invalid(form)
 
     def get_success_url(self):
         return reverse_lazy('saleordersApp:CreateSaleOrderItem',kwargs={'pk':self.object.sale_order.pk})
