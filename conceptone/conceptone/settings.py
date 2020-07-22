@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crudbasic',
     'baseApp',
-    'salesApp',
     'standardinvoiceApp',
     'saleordersApp',
     'purchaseApp',
