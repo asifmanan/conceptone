@@ -36,3 +36,9 @@ class SaleOrderItemForm(forms.ModelForm):
                 'order_quantity':forms.TextInput(attrs={'class':'form-control'}),
                 'sale_price':forms.TextInput(attrs={'class':'form-control'}),
         }
+
+class SaleOrderSearchForm(forms.Form):
+    so_number = forms.CharField(label='SO Number', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control search_field'}))
+    buyer = forms.CharField(label='Buyer', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control search_field'}))
+    buyer_po_number = forms.CharField(label='Buyer PO No.', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control search_field'}))
+    buyer_po_date = forms.DateField(label='Buyer PO Date', widget=forms.DateInput(attrs={'type':'date','class':'form-control form-control search_field'}))

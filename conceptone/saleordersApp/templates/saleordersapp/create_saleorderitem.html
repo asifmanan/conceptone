@@ -1,0 +1,91 @@
+{% extends "saleordersapp/base.html" %}
+{% load static %}
+{% block headblock %}
+<title>New Sale Order - conceptOne</title>
+{% endblock headblock %}
+{% block bodyblock %}
+<div class="container-fluid" style="height:100%;">
+  <div class="row shadow-sm mb-3 pt-1 pb-1">
+    <div class="col-xs-12 col-md-6">
+      <p style="margin-bottom:2px;"><b>Sale Order</b></p>
+    </div>
+    <div class="col-xs-12 col-md-6 d-flex flex-column">
+      <a class="btn rounded-0 btn-light ml-auto" role="button" href="{% url 'standardinvoiceApp:ListStandardInvoice' %}">View Sale Orders</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <h5>Sale Order No.: {{saleorder.so_number}}</h5>
+      <p>Sale Order date: {{saleorder.so_date}} </p>
+    </div>
+
+  </div>
+  <div class="row d-flex align-items-end">
+    <div class="col-lg-6 col-xl-4">
+      <p class="saleorder-info">{{saleorder.buyer.customer_name}}</p>
+      <p class="p-min-margin">{{saleorder.buyer.customer_address}}</p>
+      <p class="p-min-margin">{{saleorder.buyer.customer_city}}</p>
+      <hr class="hr-narrow-margin">
+    </div>
+    <div class="col-lg-6 col-xl-4">
+      <p class="saleorder-info">{{saleorder.project.project_name}}</p>
+      <p class="p-min-margin">Buyer PO: {{saleorder.buyer_po_number}}</p>
+      <p class="p-min-margin">Issued on: {{saleorder.buyer_po_date}}</p>
+      <hr class="hr-narrow-margin">
+    </div>
+      <div class="d-lg-none col-lg-4 col-xl-4" style="padding: 8px 15px;padding-top: 8px;">
+        <div>
+          <form method="post">{% csrf_token %}
+            <div style="margin-bottom: 4px;">
+              {{form.item.label}}
+              {{form.item}}
+            </div>
+            <div style="margin-bottom: 4px;">
+              {{form.order_quantity.label}}
+              {{form.order_quantity}}
+            </div>
+            <div style="margin-bottom: 4px;">
+              {{form.sale_price.label}}
+              {{form.sale_price}}
+            </div>
+            <div style="margin-bottom: 4px;">
+              {{form.tax.label}}
+              {{form.tax}}
+            </div>
+            <div class="form-row">
+              <div class="col" style="margin-top: 12px;">
+                <button class="btn btn-primary" type="submit">Add Item</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    <div class="col-lg-6 col-xl-4">
+      <p class="saleorder-amounts">Amount
+        <span style="float:right;">{{saleorder.amount}}</span>
+      </p>
+      <hr class="hr-narrow-margin">
+      <p class="saleorder-amounts">Tax Amount
+        <span style="float:right;">{{saleorder.tax_amount}}</span>
+      </p>
+      <hr class="hr-narrow-margin">
+      <p class="saleorder-amounts">Total
+        <span style="float:right;">{{saleorder.total_amount}}</span>
+      </p>
+      <hr class="hr-narrow-margin">
+    </div>
+    <div class="col-lg-6 col-xl-4">
+
+    </div>
+    <div class="col-lg-6 col-xl-4">
+
+    </div>
+  </div>
+
+  <div class="row mt-2">
+    <div class="col">
+      {% include "saleordersapp/tables/saleorderitem_table.html" %}
+    </div>
+  </div>
+</div>
+{% endblock bodyblock %}

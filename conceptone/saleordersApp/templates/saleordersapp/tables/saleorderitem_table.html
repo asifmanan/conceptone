@@ -1,0 +1,51 @@
+<table id="id_saleordertable" class="table">
+    <thead style="background:#424b54;color:#FFFFFF">
+        <tr>
+          <th>Line</th>
+          <th>Item Description</th>
+          <th>UoM</th>
+          <th>Quantity</th>
+          <th>Unit Price</th>
+          <th>Amount</th>
+          <th>Tax</th>
+          <th>Tax Amount</th>
+          <th>Total</th>
+          <th>Action</th>
+        </tr>
+    </thead>
+    <tbody style="background:#ffeedd;">
+      <div>
+        <tr class="d-none d-lg-table-row">
+          <form method="post">{% csrf_token %}
+            <td></td>
+            <td>{{form.item}}</td>
+            <td></td>
+            <td>{{form.order_quantity}}</td>
+            <td>{{form.sale_price}}</td>
+            <td><input readonly placeholder="0.00" class='form-control' type="text" name="" value=""></td>
+            <td>{{form.tax}}</td>
+            <td><input readonly placeholder="0.00" class='form-control' type="text" name="" value=""></td>
+            <td><input readonly placeholder="0.00" class='form-control' type="text" name="" value=""></td>
+            <td><button class="btn btn-success rounded-0" type="submit"><b>+</b></button></td>
+          </form>
+        </tr>
+      </div>
+      {% for item in object_list  %}
+        <tr>
+          <td>{{item.line_number}}</td>
+          <td>{{item.item.item_description}}</td>
+          <td>{{item.item.item_uom}}</td>
+          <td>{{item.order_quantity}}</td>
+          <td>{{item.sale_price}}</td>
+          <td>{{item.amount}}</td>
+          <td>{{item.tax.tax_value}}</td>
+          <td style="text-align:right;">{{item.tax_amount}}</td>
+          <td style="text-align:right;">{{item.total_amount}}</td>
+          <td><form action="{% url 'saleordersApp:DeleteSaleOrderItem' item.id %}" method="post">{% csrf_token %}
+            <input type="hidden" name="saleorder_item_id" value="{{item.id}}">
+            <button class="btn rounded-0 btn-danger" type="submit">X</button>
+          </form></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

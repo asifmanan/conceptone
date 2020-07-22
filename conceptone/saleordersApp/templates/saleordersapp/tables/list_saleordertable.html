@@ -1,0 +1,40 @@
+{% if object_list %}
+<table id="saleordertable" class="table">
+    <thead style="background-color: #247ba0;color: #ffffff;">
+        <tr>
+            <th>SO No</th>
+            <th>Supplier</th>
+            <th>Date</th>
+            <th>Buyer</th>
+            <th>Buyer PO Number</th>
+            <th>Buyer PO Date</th>
+            <th>Amount</th>
+            <th>Tax Amount</th>
+            <th>Total Amount</th>
+        </tr>
+    </thead>
+    <tbody style="background-color: #F4F1C9;">
+      {% for item in object_list  %}
+        <tr>
+          <td>
+            <a href={% url 'saleordersApp:CreateSaleOrderItem' item.id %}>
+            {{item.so_number}}
+            </a>
+          </td>
+          <td>{{item.supplier.company_name}}</td>
+          <td>{{item.so_date}}</td>
+          <td>{{item.buyer.customer_name}}</td>
+          <td>{{item.buyer_po_number}}</td>
+          <td>{{item.buyer_po_date}}</td>
+          <td>{{item.amount}}</td>
+          <td>{{item.tax_amount}}</td>
+          <td>{{item.total_amount}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+  <div class="col-12 d-flex mt-2">
+    <h3 class="mx-auto">Opps! There is nothing matching your query here</h3>
+  </div>
+{% endif %}
