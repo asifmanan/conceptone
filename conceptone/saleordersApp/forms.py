@@ -31,10 +31,10 @@ class SaleOrderItemForm(forms.ModelForm):
                 'sale_price',
         )
         widgets = {
-                'item':forms.Select(attrs={'class':'form-control'}),
-                'tax':forms.Select(attrs={'class':'form-control'}),
-                'order_quantity':forms.TextInput(attrs={'class':'form-control'}),
-                'sale_price':forms.TextInput(attrs={'class':'form-control'}),
+                'item':forms.Select(attrs={'class':'form-control item-input'}),
+                'tax':forms.Select(attrs={'class':'form-control tax-input'}),
+                'order_quantity':forms.TextInput(attrs={'class':'form-control order-quantity-input'}),
+                'sale_price':forms.TextInput(attrs={'class':'form-control sale-price-input'}),
         }
 
 class SaleOrderSearchForm(forms.Form):

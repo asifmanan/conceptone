@@ -9,6 +9,7 @@ from django.views.generic import (
                                 )
 
 from saleordersApp.models import SaleOrder, SaleOrderItem
+from taxesApp.models import Tax
 from saleordersApp.forms import (
                                 SaleOrderForm,
                                 SaleOrderItemForm,
@@ -95,3 +96,15 @@ def SaleOrderQuery(request):
         query_result = query_result.filter(buyer_po_date__range=[(data['buyer_po_date']),(data['buyer_po_date'])])
     new_html_table = render_to_string('saleordersApp/tables/list_saleordertable.html',{'object_list':query_result})
     return HttpResponse(new_html_table)
+
+def GetTaxRate(request):
+    if request.GET.get('tax_id') == "":
+        data = 0.0
+        return JsonResponse({'data':data})
+    tax_id = request.GET.get('tax_id')
+    print(tax_id)
+    selected_item = Tax.objects.get(pk=tax_id)
+    data = selected_item.tax_value
+    # print(data)
+    #return render(request, 'crudbasic/ajaxhtml/loaditemrates.html',{'item_ra':item_ra})
+    return JsonResponse({'data':data})

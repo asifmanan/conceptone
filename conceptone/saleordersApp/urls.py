@@ -10,4 +10,5 @@ urlpatterns=[
     path('listsaleorder/',views.ListSaleOrder.as_view(),name='ListSaleOrder'),
     #ajax
     path('saleorderquery/',views.SaleOrderQuery,name='SaleOrderQuery'),
+    path('taxrateajaxquery/',views.GetTaxRate,name='GetTaxRate'),
 ]

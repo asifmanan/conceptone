@@ -24,4 +24,4 @@ class Tax(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.tax_code
+        return self.tax_code + "@" + str(self.tax_value)
