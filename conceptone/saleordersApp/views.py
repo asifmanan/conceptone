@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.template.loader import render_to_string
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.generic import (
                                 CreateView,
                                 DeleteView,
@@ -51,10 +51,10 @@ class CreateSaleOrderItem(CreateView):
             line_item.total_amount = line_item.amount+line_item.tax_amount
             line_item.save()
             line_item.add_amount_to_saleorder()
-            return super(CreateSaleOrder,self).form_valid(form)
+            return super().form_valid(form)
         else:
             print("in form in-valid")
-            return super(CreateSaleOrder,self).form_invalid(form)
+            return super().form_invalid(form)
 
     def get_success_url(self):
         return reverse_lazy('saleordersApp:CreateSaleOrderItem',kwargs={'pk':self.object.sale_order.pk})
@@ -105,6 +105,6 @@ def GetTaxRate(request):
     print(tax_id)
     selected_item = Tax.objects.get(pk=tax_id)
     data = selected_item.tax_value
-    # print(data)
+    print(data)
     #return render(request, 'crudbasic/ajaxhtml/loaditemrates.html',{'item_ra':item_ra})
     return JsonResponse({'data':data})

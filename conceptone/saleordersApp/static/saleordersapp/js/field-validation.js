@@ -24,16 +24,22 @@ function id_serializer(i,obj){
 function get_tax_value(){
   var url = $("#id_get_tax_value_url").val();
   var tax_id = $(this).val();
-  $.ajax({
-    url: url,
-    datatype: 'json',
-    data: {
-      'tax_id': tax_id
-    },
-    success: function (data){
-      $("#tax_amount1").val(data.data);
-    }
-  })
+  console.log(tax_id);
+  if(tax_id!=""){
+    $.ajax({
+      url: url,
+      datatype: 'json',
+      data: {
+        'tax_id': tax_id
+      },
+      success: function (data){
+        // console.log(data.data);
+        var tax_value = data.data;
+        var tax_amount = $("#id_amount1").val()*tax_value;
+        $("#id_tax_amount1").val(tax_amount);
+      }
+    })
+  }
 }
 // $('#id_order_quantity0').change(function(){
 //     console.log(($("#id_order_quantity").val()));

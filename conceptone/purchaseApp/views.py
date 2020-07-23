@@ -3,7 +3,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 import datetime
 from django.template.loader import render_to_string
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.generic import (View, TemplateView, ListView, DetailView,
                                 CreateView, UpdateView, DetailView, FormView,
                                 DeleteView,)
