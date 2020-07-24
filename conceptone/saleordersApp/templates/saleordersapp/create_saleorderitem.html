@@ -10,7 +10,7 @@
       <p style="margin-bottom:2px;"><b>Sale Order</b></p>
     </div>
     <div class="col-xs-12 col-md-6 d-flex flex-column">
-      <a class="btn rounded-0 btn-light ml-auto" role="button" href="{% url 'standardinvoiceApp:ListStandardInvoice' %}">View Sale Orders</a>
+      <a class="btn rounded-0 btn-light ml-auto" role="button" href="{% url 'saleordersApp:ListSaleOrder' %}">View Sale Orders</a>
     </div>
   </div>
   <div class="row">
@@ -90,5 +90,5 @@
 </div>
 {% endblock bodyblock %}
 {% block customjs %}
-  <script type="text/javascript" src="{% static "saleordersapp/js/field-validation.js" %}"></script>
+  <script type="text/javascript" src="{% static "saleordersapp/js/create_saleorderitem.js" %}"></script>
 {% endblock customjs %}

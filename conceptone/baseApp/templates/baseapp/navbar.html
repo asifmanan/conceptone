@@ -9,9 +9,9 @@
               <a class="dropdown-toggle nav-link text-light" data-toggle="dropdown" aria-expanded="false" href="#">
                 Sales</a>
                 <div class="dropdown-menu" role="menu">
-                  {% comment %} <a class="dropdown-item" role="presentation" href="{% url 'salesApp:ListSaleOrders' %}">View Sale Orders</a> {% endcomment %}
-                  {% comment %} <a class="dropdown-item" role="presentation" href="{% url 'salesApp:ListInvoices' %}">View Invoices</a> {% endcomment %}
-                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" role="presentation" href="{% url 'saleordersApp:ListSaleOrder' %}">Sale Orders</a>
+                  <a class="dropdown-item" role="presentation" href="{% url 'standardinvoiceApp:ListStandardInvoice' %}">Standard Invoice</a>
+                  {# <div class="dropdown-divider"></div> #}
                   {% comment %} <a class="dropdown-item" role="presentation" href="{% url 'salesApp:createsaleorder' %}">New Sale Order</a> {% endcomment %}
                   {% comment %} <a class="dropdown-item" role="presentation" href="{% url 'salesApp:createsoinvoice' %}">New Invoice</a> {% endcomment %}
                 </div>

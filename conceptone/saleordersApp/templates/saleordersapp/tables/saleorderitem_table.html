@@ -22,11 +22,12 @@
             <td></td>
             <td>{{form.order_quantity}}</td>
             <td>{{form.sale_price}}</td>
-            <td><input id="id_amount1" readonly placeholder="0.00" class='form-control' type="text" name="" value=""></td>
+            <td><input id="id_amount1" readonly placeholder="0" class='form-control' type="text" name="" value=""></td>
             <td>{{form.tax}}</td>
-              <input type="hidden" id="id_get_tax_value_url" name="tax_value" value="{% url 'saleordersApp:GetTaxRate' %}">
-            <td><input id="id_tax_amount1" readonly placeholder="0.00" class='form-control' type="text" name="" value=""></td>
-            <td><input id="id_total_amount1" readonly placeholder="0.00" class='form-control' type="text" name="" value=""></td>
+              <input type="hidden" id="id_get_tax_value_url" name="tax_url" value="{% url 'saleordersApp:GetTaxRate' %}">
+              <input type="hidden" id="id_tax_value" name="tax_value" value=0>
+            <td><input id="id_tax_amount1" readonly placeholder="0" class='form-control' type="text" name="" value=""></td>
+            <td><input id="id_total_amount1" readonly placeholder="0" class='form-control' type="text" name="" value=""></td>
             <td><button class="btn btn-success rounded-0" type="submit"><b>+</b></button></td>
           </form>
         </tr>

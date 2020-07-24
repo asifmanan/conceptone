@@ -102,9 +102,9 @@ def GetTaxRate(request):
         data = 0.0
         return JsonResponse({'data':data})
     tax_id = request.GET.get('tax_id')
-    print(tax_id)
+    # print(tax_id)
     selected_item = Tax.objects.get(pk=tax_id)
     data = selected_item.tax_value
-    print(data)
+    # print(data)
     #return render(request, 'crudbasic/ajaxhtml/loaditemrates.html',{'item_ra':item_ra})
     return JsonResponse({'data':data})
