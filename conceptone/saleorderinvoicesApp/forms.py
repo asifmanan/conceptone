@@ -14,7 +14,7 @@ class SaleOrderInvoiceForm(forms.ModelForm):
                 )
         widgets={
                 'supplier':forms.Select(attrs={'class':'form-control'}),
-                'supplier':forms.Select(attrs={'class':'form-control'}),
-                'supplier':forms.TextInput(attrs={'class':'form-control'}),
-                'invoice_date':forms.DateInput(attrs={'class':'form-control', 'type':'date'}),
+                'sale_order':forms.Select(attrs={'class':'form-control', 'disabled':'True'}),
+                'invoice_number':forms.TextInput(attrs={'class':'form-control', 'disabled':'True'}),
+                'invoice_date':forms.DateInput(attrs={'class':'form-control', 'type':'date','disabled':'True'}),
         }

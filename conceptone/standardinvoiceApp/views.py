@@ -73,7 +73,7 @@ class ListStandardInvoice(FormView):
         context = super().get_context_data(*args,**kwargs)
         context['object_list'] = StandardInvoice.objects.all().order_by('invoice_date')
         return context
-
+#AJAX
 def StandardInvoiceQuery(request):
     data = request.GET
     query_result = StandardInvoice.objects.all()

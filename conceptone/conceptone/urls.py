@@ -21,6 +21,7 @@ urlpatterns = [
     # path('sales/',include("salesApp.urls")),
     path('standardinvoice/',include("standardinvoiceApp.urls")),
     path('saleorders/',include("saleordersApp.urls")),
+    path('saleorderinvoice/',include("saleorderinvoicesApp.urls")),
     path('purchase/',include("purchaseApp.urls")),
     path('customers/',include("customersApp.urls")),
     path('suppliers/',include("suppliersApp.urls")),

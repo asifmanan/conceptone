@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'baseApp',
     'standardinvoiceApp',
     'saleordersApp',
+    'saleorderinvoicesApp',
     'purchaseApp',
     'customersApp',
     'suppliersApp',

@@ -1,4 +1,5 @@
 {% extends "saleorderinvoicesapp/base.html" %}
+{% load static %}
 {% block headblock %}
 <title>New SO Invoice | conceptOne</title>
 {% endblock headblock %}
@@ -13,40 +14,8 @@
     </div>
   </div>
   <form method="post">{% csrf_token %}
-    <div class="form-group row">
-      <div class="col-sm-12 col-md-4 col-lg-2 col-form-label">
-        <b>{{form.supplier.label}}</b>
-      </div>
-      <div class="col-sm-12 col-md-8 col-lg-6">
-        {{form.supplier}}
-      </div>
-    </div>
-
-    <div class="form-group row">
-      <div class="col-sm-12 col-md-4 col-lg-2 col-form-label">
-        {{form.sale_order.label}}
-      </div>
-      <div class="col-sm-12 col-md-8 col-lg-6">
-        {{form.sale_order}}
-      </div>
-    </div>
-
-    <div class="form-group row">
-      <div class="col-sm-12 col-md-4 col-lg-2 col-form-label">
-        {{form.invoice_number.label}}
-      </div>
-      <div class="col-sm-12 col-md-8 col-lg-6">
-        {{form.invoice_number}}
-      </div>
-    </div>
-
-    <div class="form-group row">
-      <div class="col-sm-12 col-md-4 col-lg-2 col-form-label">
-        {{form.invoice_date.label}}
-      </div>
-      <div class="col-sm-12 col-md-8 col-lg-6">
-        {{form.invoice_date}}
-      </div>
+    <div id="id_sale_order_form">
+      {% include "saleorderinvoicesapp/_form_saleorderinvoice.html" %}
     </div>
 
     <div class="form-group row">
@@ -62,3 +31,6 @@
 
 </div>
 {% endblock bodyblock %}
+{% block customjs %}
+  <script type="text/javascript" src="{% static "saleorderinvoicesapp\js\create_saleorderinvoice.js" %}"></script>
+{% endblock customjs %}
