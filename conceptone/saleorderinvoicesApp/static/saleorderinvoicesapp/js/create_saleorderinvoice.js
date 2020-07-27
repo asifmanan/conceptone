@@ -16,6 +16,7 @@ function get_form_data(){
       success: function(data){
         // $("#id_get_form_data_url").val();
         $("#id_sale_order_form").html(data);
+        $("#id_supplier").prop('required',false);
         console.log(data);
       }
     })

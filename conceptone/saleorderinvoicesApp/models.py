@@ -6,7 +6,7 @@ from baseApp.models import Company
 # Create your models here.
 
 class SaleOrderInvoice(models.Model):
-    supplier = models.ForeignKey(Company, on_delete=models.PROTECT)
+    supplier = models.ForeignKey(Company, on_delete=models.PROTECT, blank=True)
     sale_order = models.ForeignKey(SaleOrder, on_delete=models.PROTECT)
     invoice_number = models.CharField(max_length=56)
     invoice_date = models.DateField()

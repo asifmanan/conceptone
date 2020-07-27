@@ -1,4 +1,5 @@
 from django import forms
+from baseApp.models import Company
 from saleorderinvoicesApp.models import (
                                         SaleOrderInvoice,
                                         SaleOrderInvoiceItem,
