@@ -15,6 +15,7 @@ from saleorderinvoicesApp.models import (
                                         )
 from saleorderinvoicesApp.forms import (
                                         SaleOrderInvoiceForm,
+                                        SaleOrderInvoiceSearchForm,
                                         )
 # Create view for SaleOrderInvoice.
 class CreateSaleOrderInvoice(CreateView):
@@ -47,4 +48,12 @@ def GetFormData(request):
     form.fields['sale_order'].widget.attrs.pop('disabled')
     form.fields['invoice_number'].widget.attrs.pop('disabled')
     form.fields['invoice_date'].widget.attrs.pop('disabled')
-    return render(request,'saleorderinvoicesapp/_form_saleorderinvoice.html',{'form':form})
+    return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form':form})
+
+class ListSaleOrderInvioce(FormView):
+    form_class = SaleOrderInvoiceSearchForm
+    template_name = 'saleorderinvoicesApp/list_saleorderinvoice.html'
+    def get_context_data(self,*args,**kwargs):
+        context = super().get_context_data(*args,**kwargs)
+        context['object_list'] = SaleOrderInvoice.objects.all().order_by('invoice_date')
+        return context

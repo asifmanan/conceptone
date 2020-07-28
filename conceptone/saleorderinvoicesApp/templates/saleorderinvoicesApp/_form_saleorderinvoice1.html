@@ -1,0 +1,46 @@
+<div id="id_sale_order_form">
+  <div class="form-group row">
+    <div class="col">
+      <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="">{{form.supplier.label}}</span>
+      </div>
+        {{form.supplier}}
+        <div class="input-group-append">
+          <button id="id_btn_supplier_select" class="btn btn-outline-secondary" type="button" name="button">Confirm</button>
+        </div>
+        <input type="hidden" id="id_get_form_data_url" name="form_data_url" value="{% url 'saleorderinvoicesApp:GetFormData' %}">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-12 col-md-6 col-lg-4 mb-1">
+      <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="">{{form.sale_order.label}}</span>
+      </div>
+      {{form.sale_order}}
+      <div class="input-group-append">
+        <button id="id_btn_saleorder_fetch" class="btn btn-outline-secondary" type="button" name="button">Fetch</button>
+      </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-4 mb-1">
+      <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="">{{form.invoice_number.label}}</span>
+      </div>
+      {{form.invoice_number}}
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-4 mb-1">
+      <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="">{{form.invoice_date.label}}</span>
+      </div>
+      {{form.invoice_date}}
+      </div>
+    </div>
+  </div>
+</div>
