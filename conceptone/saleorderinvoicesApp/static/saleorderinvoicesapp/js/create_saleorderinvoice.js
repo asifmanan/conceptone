@@ -9,8 +9,10 @@ function get_form_data(){
   // console.log("hello!")
   if(company){
     $.ajax({
+      type:"POST",
       url:url,
-      headers: {'X-CSRFToken': '{{ csrf_token }}'},
+      // headers: {'X-CSRFToken': '{{ csrf_token }}'},
+      headers: {'X-CSRFToken':csrftoken},
       datatype: 'json',
       data: {
         'company':company

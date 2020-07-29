@@ -34,12 +34,19 @@ class CreateSaleOrderInvoice(CreateView):
         return render(request, self.template_name,{'form':form})
 
 # AJAX CALL for CreateSaleOrderInvoice View
+class CreateSaleOrderInvoiceInitial(FormView):
+    form_class = SaleOrderInvoiceForm
+    template_name = 'saleorderinvoicesapp/create_saleorderinvoice.html'
+    # def get_context_data(self,*args,**kwargs):
+    #     context = super().get_context_data(*args,**kwargs)
+
+
 def GetFormData(request):
-    if request.GET.get('company') == "":
+    if request.POST.get('company') == "":
         data = 0
         form = SaleOrderInvoiceForm()
         return render(request,'saleorderinvoicesapp/_form_saleorderinvoice.html',{'form':form})
-    company_id = request.GET.get('company')
+    company_id = request.POST.get('company')
     sale_order_list = SaleOrder.objects.filter(supplier__id=company_id)
     form = SaleOrderInvoiceForm()
     form.fields['sale_order'].queryset = sale_order_list
@@ -48,6 +55,7 @@ def GetFormData(request):
     form.fields['sale_order'].widget.attrs.pop('disabled')
     form.fields['invoice_number'].widget.attrs.pop('disabled')
     form.fields['invoice_date'].widget.attrs.pop('disabled')
+    print(request.method)
     return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form':form})
 
 class ListSaleOrderInvioce(FormView):
