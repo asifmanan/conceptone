@@ -10,7 +10,7 @@
           <button id="id_btn_supplier_select" class="btn btn-outline-secondary" type="button" name="button">Confirm</button>
         </div>
       </div>
-      <input type="hidden" id="id_get_form_data_url" name="form_data_url" value="{% url 'saleorderinvoicesApp:GetFormData' %}">
+      <input type="hidden" id="id_select_supplier_url" name="supplier_url" value="{% url 'saleorderinvoicesApp:SelectSupplier' %}">
     </div>
     <div class="col-sm-12 col-md-6">
       <div class="input-group">
@@ -22,6 +22,7 @@
         <button id="id_btn_saleorder_fetch" class="btn btn-outline-secondary" type="button" name="button">Fetch</button>
       </div>
       </div>
+      <input type="hidden" id="id_select_saleorder_url" name="sale_order_url" value="{% url 'saleorderinvoicesApp:SelectSaleOrder' %}">
     </div>
   </div>
 

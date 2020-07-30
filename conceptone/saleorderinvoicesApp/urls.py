@@ -6,7 +6,8 @@ app_name = 'saleorderinvoicesApp'
 urlpatterns=[
     path('createsaleorderinvoice/',views.CreateSaleOrderInvoice.as_view(),name='CreateSaleOrderInvoice'),
     path('listsaleorderinvoice/',views.ListSaleOrderInvioce.as_view(),name='ListSaleOrderInvoice'),
-    path('createsaleorderinvoiceinitial/',views.CreateSaleOrderInvoiceInitial.as_view(),name='CreateSaleOrderInvoiceInitial'),
+    # path('createsaleorderinvoiceinitial/',views.CreateSaleOrderInvoiceInitial.as_view(),name='CreateSaleOrderInvoiceInitial'),
     #AJAX
-    path('ajaxcall/getformdata/',views.GetFormData,name='GetFormData'),
+    path('ajaxcall/selectsupplier/',views.SelectSupplier,name='SelectSupplier'),
+    path('ajaxcall/selectsaleorder/',views.SelectSaleOrder,name='SelectSaleOrder'),
 ]

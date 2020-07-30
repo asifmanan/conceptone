@@ -25,3 +25,15 @@ class SaleOrderInvoiceSearchForm(forms.Form):
     sale_order_no = forms.CharField(label='Sale Order No.', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control search_field'}))
     buyer_po_number = forms.CharField(label='Buyer PO No.', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control search_field'}))
     buyer_po_date = forms.DateField(label='Buyer PO Date', widget=forms.DateInput(attrs={'type':'date','class':'form-control form-control search_field'}))
+
+class SupplierSelectForm(forms.Form):
+    class Meta:
+        model = SaleOrderInvoice
+        fields = (
+                'supplier',
+                'sale_order',
+        )
+        widgets={
+                'supplier':forms.Select(attrs={'class':'form-control'}),
+                'sale_order':forms.Select(attrs={'class':'form-control', 'disabled':'True'}),
+        }
