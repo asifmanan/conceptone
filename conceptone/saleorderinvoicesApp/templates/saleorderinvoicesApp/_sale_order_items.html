@@ -1,0 +1,27 @@
+<div class="">
+  <table id="saleorderitemlist" class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Line</th>
+        <th>Description</th>
+        <th>Order Quantity</th>
+        <th>Available Quantity</th>
+        <th>Billed Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in object_list %}
+      <tr>
+        <td></td>
+        <td>{{item.line_number}}</td>
+        <td>{{item.item.item_description}}</td>
+
+
+      </tr>
+
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>

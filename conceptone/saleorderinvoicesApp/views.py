@@ -46,8 +46,8 @@ def SelectSupplier(request):
         data = 0
         form = SaleOrderInvoiceForm()
         return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form':form})
-    if 'company' in request.POST:
-        print("yayyyy")
+    # if 'company' in request.POST:
+        # print("yayyyy")
 
     company_id = request.POST.get('company')
     sale_order_list = SaleOrder.objects.filter(supplier__id=company_id)
@@ -58,7 +58,6 @@ def SelectSupplier(request):
     form.fields['sale_order'].widget.attrs.pop('disabled')
     form.fields['invoice_number'].widget.attrs.pop('disabled')
     form.fields['invoice_date'].widget.attrs.pop('disabled')
-    # print(request.method)
     return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form':form})
 
 def SelectSaleOrder(request):
@@ -76,10 +75,8 @@ def SelectSaleOrder(request):
     form.fields['sale_order'].disabled = True
     form.fields['supplier'].disabled = True
     sale_order_id = request.POST.get('sale_order')
+    object_list = sale_order_item_list
 
-    if sale_order_item_list.exists():
-        company_id = sale_order_item_list.first().sale_order.supplier.id
-        print(company_id)
     return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form':form})
 
 class ListSaleOrderInvioce(FormView):
