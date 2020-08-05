@@ -1,48 +1,33 @@
 <div id="id_sale_order_form">
-  <div class="form-group row">
-    <div class="col-sm-12 col-md-6">
-      <div class="input-group">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="">{{form.supplier.label}}</span>
-      </div>
-        {{form.supplier}}
-        <div class="input-group-append">
-          <button id="id_btn_supplier_select" class="btn btn-outline-secondary" type="button" name="button">Confirm</button>
+  <form method="post">{% csrf_token %}
+    <div class="form-group row">
+      <div class="col-sm-12 col-md-6 col-lg-4">
+        <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="">{{form.supplier.label}}</span>
         </div>
+          {{form.supplier}}
+          <div class="input-group-append">
+            <button id="id_btn_supplier_select" class="btn btn-outline-secondary" type="button" name="button">Confirm</button>
+          </div>
+        </div>
+        <input type="hidden" id="id_select_supplier_url" name="supplier_url" value="{% url 'saleorderinvoicesApp:SelectSupplier' %}">
       </div>
-      <input type="hidden" id="id_select_supplier_url" name="supplier_url" value="{% url 'saleorderinvoicesApp:SelectSupplier' %}">
-    </div>
-    <div class="col-sm-12 col-md-6">
-      <div class="input-group">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="">{{form.sale_order.label}}</span>
-      </div>
-      {{form.sale_order}}
-      <div class="input-group-append">
-        <button id="id_btn_saleorder_fetch" class="btn btn-outline-secondary" type="button" name="button">Fetch</button>
-      </div>
-      </div>
-      <input type="hidden" id="id_select_saleorder_url" name="sale_order_url" value="{% url 'saleorderinvoicesApp:SelectSaleOrder' %}">
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <div class="col-sm-12 col-md-6 col-lg-4 mb-1">
-      <div class="input-group mb-1">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="">{{form.invoice_number.label}}</span>
-      </div>
-      {{form.invoice_number}}
-      </div>
-      <div class="input-group">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="">{{form.invoice_date.label}}</span>
-      </div>
-      {{form.invoice_date}}
+      <div class="col-sm-12 col-md-6 col-lg-4">
+        <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="">{{form.sale_order.label}}</span>
+        </div>
+        {{form.sale_order}}
+        <div class="input-group-append">
+          <button id="id_btn_saleorder_fetch" class="btn btn-outline-secondary" type="button" name="button">Fetch</button>
+        </div>
+        </div>
+        <input type="hidden" id="id_select_saleorder_url" name="sale_order_url" value="{% url 'saleorderinvoicesApp:SelectSaleOrder' %}">
       </div>
     </div>
-    <div class="col-sm-12 col-md-6 col-lg-4 mb-1">
-
-    </div>
-  </div>
+  </form>
+  {% if object_list %}
+    {% include "saleorderinvoicesapp/_sale_order_items.html" %}
+  {% endif %}
 </div>

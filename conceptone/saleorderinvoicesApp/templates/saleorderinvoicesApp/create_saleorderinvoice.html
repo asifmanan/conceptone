@@ -14,22 +14,9 @@
       <a class="btn rounded-0 btn-outline-primary ml-auto" role="button" href="{% url 'saleordersApp:ListSaleOrder' %}">View SO Invoices</a>
     </div>
   </div>
-  <form method="post">{% csrf_token %}
     <div id="id_sale_order_form">
       {% include "saleorderinvoicesapp/_form_saleorderinvoice1.html" %}
     </div>
-
-    <div class="form-group row">
-      <div class="col-xs-12 col-md-8 col-lg-6">
-        <div class="rounded">
-          <button class="btn btn-primary" type="submit" name="button">Fetch</button>
-          <button class="btn btn-secondary" type="reset" name="button">Reset</button>
-        </div>
-      </div>
-    </div>
-
-  </form>
-
 </div>
 {% endblock bodyblock %}
 {% block customjs %}

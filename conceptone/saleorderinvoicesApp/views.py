@@ -24,27 +24,24 @@ from saleorderinvoicesApp.forms import (
                                         SaleOrderInvoiceSearchForm,
                                         SupplierSelectForm,
                                         )
-# Create view for SaleOrderInvoice.
-class CreateSaleOrderInvoice(CreateView):
-    model = SaleOrderInvoice
-    form_class = SaleOrderInvoiceForm
-    template_name = 'saleorderinvoicesapp/create_saleorderinvoice.html'
 
-    def post(self,request,*args,**kwargs):
-        form = self.form_class(request.POST)
-        print(form)
-        if form.is_valid():
-            sale_order_invoice = form.save(commit=False)
-            sale_order_invoice.supplier = sale_order_invoice.sale_order.supplier
-            sale_order_invoice.save()
-            return HttpResponseRedirect(reverse_lazy('baseApp:index'))
-        return render(request, self.template_name,{'form':form})
+class CreateSaleOrderInvoice(TemplateView):
+    template_name = 'saleorderinvoicesapp/create_saleorderinvoice.html'
+    def get_context_data(self,*args,**kwargs):
+        context = super().get_context_data(*args,**kwargs)
+        form = SaleOrderInvoiceForm()
+        form.fields.pop('invoice_number')
+        form.fields.pop('invoice_date')
+        context['form'] = form
+        return context
 
 # AJAX CALL
 def SelectSupplier(request):
     if request.POST.get('company') == "":
         data = 0
         form = SaleOrderInvoiceForm()
+        form.fields.pop('invoice_number')
+        form.fields.pop('invoice_date')
         return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form':form})
     # if 'company' in request.POST:
         # print("yayyyy")
@@ -56,8 +53,10 @@ def SelectSupplier(request):
     form.fields['supplier'].initial = company_id
     form.fields['supplier'].disabled = True
     form.fields['sale_order'].widget.attrs.pop('disabled')
-    form.fields['invoice_number'].widget.attrs.pop('disabled')
-    form.fields['invoice_date'].widget.attrs.pop('disabled')
+    # form.fields['invoice_number'].widget.attrs.pop('disabled')
+    # form.fields['invoice_date'].widget.attrs.pop('disabled')
+    form.fields.pop('invoice_number')
+    form.fields.pop('invoice_date')
     return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form':form})
 
 def SelectSaleOrder(request):
@@ -74,10 +73,17 @@ def SelectSaleOrder(request):
     form.fields['supplier'].initial = company_id
     form.fields['sale_order'].disabled = True
     form.fields['supplier'].disabled = True
+    form.fields.pop('invoice_number')
+    form.fields.pop('invoice_date')
     sale_order_id = request.POST.get('sale_order')
     object_list = sale_order_item_list
+    return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form':form,'object_list':object_list})
 
-    return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form':form})
+def SelectSaleOrderItem(request):
+    selected_item_list=[]
+    selected_item_list = request.POST.get('sale_order_item[]')
+    print(selected_item_list)
+    return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html')
 
 class ListSaleOrderInvioce(FormView):
     form_class = SaleOrderInvoiceSearchForm
