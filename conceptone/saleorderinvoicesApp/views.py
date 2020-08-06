@@ -47,6 +47,7 @@ def SelectSupplier(request):
         # print("yayyyy")
 
     company_id = request.POST.get('company')
+    request.session['so_invoice_company'] = company_id
     sale_order_list = SaleOrder.objects.filter(supplier__id=company_id)
     form = SaleOrderInvoiceForm()
     form.fields['sale_order'].queryset = sale_order_list
@@ -64,25 +65,32 @@ def SelectSaleOrder(request):
         data = 0
         form = SaleOrderInvoiceForm()
         return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form',form})
-    sale_order_id = request.POST.get('sale_order')
-    sale_order_item_list = SaleOrderItem.objects.filter(sale_order__id=sale_order_id)
-    if sale_order_item_list.exists():
-        company_id = sale_order_item_list.first().sale_order.supplier.id
-    form = SaleOrderInvoiceForm()
-    form.fields['sale_order'].initial = sale_order_id
-    form.fields['supplier'].initial = company_id
-    form.fields['sale_order'].disabled = True
-    form.fields['supplier'].disabled = True
-    form.fields.pop('invoice_number')
-    form.fields.pop('invoice_date')
-    sale_order_id = request.POST.get('sale_order')
-    object_list = sale_order_item_list
+    if 'so_invoice_company' in request.session:
+        initial_selected_company = request.session.pop('so_invoice_company')
+        print("company in sale order: "+initial_selected_company)
+        sale_order_id = request.POST.get('sale_order')
+        sale_order_item_list = SaleOrderItem.objects.filter(sale_order__id=sale_order_id)
+        if sale_order_item_list.exists():
+            company_id = sale_order_item_list.first().sale_order.supplier.id
+        form = SaleOrderInvoiceForm()
+        form.fields['sale_order'].initial = sale_order_id
+        form.fields['supplier'].initial = company_id
+        form.fields['sale_order'].disabled = True
+        form.fields['supplier'].disabled = True
+        form.fields.pop('invoice_number')
+        form.fields.pop('invoice_date')
+        sale_order_id = request.POST.get('sale_order')
+        object_list = sale_order_item_list
+    # else:
+
     return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form':form,'object_list':object_list})
 
 def SelectSaleOrderItem(request):
-    selected_item_list=[]
-    selected_item_list = request.POST.get('sale_order_item[]')
-    print(selected_item_list)
+    selected_item_list = request.POST.getlist('sale_order_item[]')
+    if selected_item_list:
+        print(selected_item_list)
+    if not selected_item_list:
+        print("List is empty")
     return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html')
 
 class ListSaleOrderInvioce(FormView):

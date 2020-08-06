@@ -72,7 +72,7 @@ function select_sale_order_item(){
   var url = $("#id_select_saleorder_item_url").val();
   var sale_order_item = selected_items();
   console.log(sale_order_item);
-  if(sale_order_item){
+  if(!(sale_order_item === undefined || sale_order_item.length==0)){
     $.ajax({
       type:"POST",
       url:url,
