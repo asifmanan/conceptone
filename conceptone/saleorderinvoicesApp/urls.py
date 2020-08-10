@@ -4,7 +4,8 @@ from saleorderinvoicesApp import views
 app_name = 'saleorderinvoicesApp'
 
 urlpatterns=[
-    path('createsaleorderinvoice/',views.CreateSaleOrderInvoice.as_view(),name='CreateSaleOrderInvoice'),
+    path('newsaleorderinvoice/',views.NewSaleOrderInvoice.as_view(),name='NewSaleOrderInvoice'),
+
     path('listsaleorderinvoice/',views.ListSaleOrderInvioce.as_view(),name='ListSaleOrderInvoice'),
     # path('createsaleorderinvoiceinitial/',views.CreateSaleOrderInvoiceInitial.as_view(),name='CreateSaleOrderInvoiceInitial'),
     #AJAX
