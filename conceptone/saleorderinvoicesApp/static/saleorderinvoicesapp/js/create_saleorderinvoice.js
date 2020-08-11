@@ -71,7 +71,7 @@ function select_sale_order_item(){
   const csrftoken = $('input[name="csrfmiddlewaretoken"]').val();
   var url = $("#id_select_saleorder_item_url").val();
   var sale_order_item = selected_items();
-  console.log(sale_order_item);
+  // console.log(sale_order_item);
   if(!(sale_order_item === undefined || sale_order_item.length==0)){
     $.ajax({
       type:"POST",
@@ -82,9 +82,15 @@ function select_sale_order_item(){
       data: {
         'sale_order_item[]':sale_order_item
       },
-      success: function(selected_item_list){
-        console.log("Success");
-        console.log(selected_item_list);
+      success: function(data){
+        if (data['status']=='OK'){
+          console.log("Server Response: OK")
+          window.location.replace(data['url']);
+        }
+        else {
+          console.log("Error Occured!");
+          console.log(data['status']);
+        }
         // $("#id_get_form_data_url").val();
         // $("#id_sale_order_form").html(select_supplier_return);
         // $("#id_supplier").prop('required',false);

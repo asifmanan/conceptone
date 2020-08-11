@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+{% extends "saleorderinvoicesapp/base.html" %}
+{% load static %}
+{% block headblock %}
+<title>New SO Invoice | conceptOne</title>
+<link rel="stylesheet" href="{% static 'saleorderinvoicesapp/css/create_saleorderinvoiceitem.css' %}">
+{% endblock headblock %}
+{% block bodyblock %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-lg-4">
+            <div class="card" style="margin-top: 15px;border-top: 4px solid #c6c6c6 ;border-right-style: none;border-bottom-style: none;border-left-style: none;">
+                <div class="card-body shadow" style="border-style: none;">
+                    <h4 class="card-title">Invoice to</h4>
+                    <h6 class="text-muted card-subtitle mb-2">{{buyer.customer_name}}</h6>
+                    <p class="card-text text-card-detail">{{buyer.customer_address}}, {{buyer.customer_city}}</p>
+                    <p class="card-text text-card-detail">{{buyer.customer_phone}}</p>
+                    <p class="card-text text-card-detail">{{buyer.customer_email}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4">
+            <div class="card" style="margin-top: 15px;border-top: 4px solid #c6c6c6 ;border-right-style: none;border-bottom-style: none;border-left-style: none;">
+                <div class="card-body shadow" style="border-style: none;">
+                    <h4 class="card-title">Project</h4>
+                    <h6 class="text-muted card-subtitle mb-2">{{project.project_name}}</h6>
+                    <p class="card-text text-card-detail"><b>Code </b>{{project.project_code}}</p>
+                    <p class="card-text text-card-detail"><b>Contract no </b>{{project.contract_number}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4">
+            <div class="card" style="margin-top: 15px;border-top: 4px solid #c6c6c6 ;border-right-style: none;border-bottom-style: none;border-left-style: none;">
+                <div class="card-body shadow" style="border-style: none;">
+                    <h4 class="card-title">Sale Order</h4>
+                    <h6 class="text-muted card-subtitle mb-2">{{sale_order.so_number}}</h6>
+                    <p class="card-text text-card-detail"><b>Buyer PO </b> {{sale_order.buyer_po_number}}</p>
+                    <p class="card-text text-card-detail"><b>Amount </b> {{sale_order.amount}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <div class="card" style="background-color: #ffffff;border-style: solid;border-top-width: 4px;border-top-color: #c6c6c6;border-right-style: none;border-bottom-style: none;border-left-style: none;">
+                <div class="card-body shadow-sm">
+                    <h4 class="card-title">Invoice information</h4>
+                    <form>{% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-md-6 col-lg-4 col-xl-3"><label>Invoice Number</label><input class="form-control" type="text"></div>
+                            <div class="col-md-6 col-lg-4 col-xl-3"><label>Invoice Date</label><input class="form-control" type="text"></div>
+                        </div>
+                        <div class="form-row mt-2">
+                            <div class="col">
+                                <div class="table-responsive shadow table-scrollbar" style="height: 370px;">
+                                    <table class="table">
+                                        <thead style="background-color: #87aa8b;color: #ffffff;">
+                                            <tr>
+                                                <th>Line</th>
+                                                <th>Description</th>
+                                                <th>UoM</th>
+                                                <th>Unit Price</th>
+                                                <th>Available Quantity</th>
+                                                <th>Bill Quantity</th>
+                                                <th>Amount</th>
+                                                <th>Tax Rate</th>
+                                                <th>Tax Amount</th>
+                                                <th>Total Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="background-color: #ffffff;">
+                                          {% for item in line_item %}
+                                          <tr>
+                                              <td>{{item.line_number}}</td>
+                                              <td>{{item.item.item_description}}</td>
+                                              <td>{{item.item.item_uom}}</td>
+                                              <td>{{item.sale_price}}</td>
+                                              <td>{{item.order_quantity}}</td>
+                                              <td>{{item.form.bill_quantity}}</td>
+                                              <td><input disabled type="text" name="" value=""></td>
+                                              <td>{{item.tax.tax_value}}</td>
+                                              <td><input disabled type="text" name="" value=""></td>
+                                              <td><input disabled type="text" name="" value=""></td>
+                                          </tr>
+                                          {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row mt-2">
+                        <div class="col">
+                          <button class="btn btn-secondary" type="button">Cancel</button>
+                          <button class="btn btn-primary" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock bodyblock %}

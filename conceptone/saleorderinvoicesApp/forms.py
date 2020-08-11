@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import modelformset_factory
 from baseApp.models import Company
 from saleorderinvoicesApp.models import (
                                         SaleOrderInvoice,
@@ -19,6 +20,18 @@ class SaleOrderInvoiceForm(forms.ModelForm):
                 'invoice_number':forms.TextInput(attrs={'class':'form-control', 'disabled':'True'}),
                 'invoice_date':forms.DateInput(attrs={'class':'form-control', 'type':'date','disabled':'True'}),
         }
+class SaleOrderInvoiceItemForm(forms.ModelForm):
+    class Meta:
+        model = SaleOrderInvoiceItem
+        fields = ('bill_quantity',)
+        widgets={
+            'bill_quantity':forms.TextInput(attrs={'class':'form-control form-control-sm'})
+        }
+
+invoice_item_formset = modelformset_factory(
+    SaleOrderInvoiceItem,
+    form = SaleOrderInvoiceItemForm
+)
 
 class SaleOrderInvoiceSearchForm(forms.Form):
     invoice_number = forms.CharField(label='Invoice Number', max_length=60, required=False, widget=forms.TextInput(attrs={'class': 'form-control form-control search_field'}))
