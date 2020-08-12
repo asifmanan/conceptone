@@ -7,6 +7,7 @@ from saleorderinvoicesApp.models import (
                                         )
 class SaleOrderInvoiceForm(forms.ModelForm):
     class Meta:
+        # prefix='InvoiceForm'
         model = SaleOrderInvoice
         fields = (
                 'supplier',
@@ -20,8 +21,22 @@ class SaleOrderInvoiceForm(forms.ModelForm):
                 'invoice_number':forms.TextInput(attrs={'class':'form-control', 'disabled':'True'}),
                 'invoice_date':forms.DateInput(attrs={'class':'form-control', 'type':'date','disabled':'True'}),
         }
+
+class CreateSaleOrderInvoiceForm(forms.ModelForm):
+    class Meta:
+        model = SaleOrderInvoice
+        fields = (
+            'invoice_number',
+            'invoice_date',
+        )
+        widgets={
+                'invoice_number':forms.TextInput(attrs={'class':'form-control'}),
+                'invoice_date':forms.DateInput(attrs={'class':'form-control', 'type':'date'}),
+        }
+
 class SaleOrderInvoiceItemForm(forms.ModelForm):
     class Meta:
+        # prefix='InvoiceItemForm'
         model = SaleOrderInvoiceItem
         fields = ('bill_quantity',)
         widgets={
