@@ -23,8 +23,8 @@ from saleorderinvoicesApp.forms import (
                                         SaleOrderInvoiceForm,
                                         SaleOrderInvoiceSearchForm,
                                         SupplierSelectForm,
-                                        invoice_item_formset,
                                         SaleOrderInvoiceItemForm,
+                                        SaleOrderInvoiceItemFormset,
                                         CreateSaleOrderInvoiceForm,
                                         )
 
@@ -116,7 +116,7 @@ def SelectSaleOrderItem(request):
 
 class CreateSaleOrderInvoiceItem(FormView):
     model = SaleOrderInvoiceItem
-    form_class = invoice_item_formset
+    form_class = SaleOrderInvoiceItemForm
     template_name = 'saleorderinvoicesapp/createsaleorderinvoiceitem.html'
     # def get(self,request,*args,**kwargs):
     #     if 'so_invoice_selected_item' not in self.request.session:
@@ -135,7 +135,7 @@ class CreateSaleOrderInvoiceItem(FormView):
             'form-INITIAL_FORMS': '0',
             'form-MAX_NUM_FORMS': '',
         }
-        item_formset = invoice_item_formset(formdata)
+        item_formset = SaleOrderInvoiceItemFormset(formdata)
         form_list = []
         for form in item_formset:
             element = {
@@ -161,34 +161,51 @@ class CreateSaleOrderInvoiceItem(FormView):
         context['project'] = sale_order.project
 
         return context
+    def acquire_saleorder_data(self,*args,**kwargs):
+        id_selected_item = self.request.session['so_invoice_selected_item']
+        line_item = SaleOrderItem.objects.filter(id__in=id_selected_item)
+        sale_order = line_item.first().sale_order
+        return (line_item,sale_order)
 
-    def form_valid(self,form,*arg,**kwargs):
+    def post(self,request,*args,**kwargs):
         invoice_form = CreateSaleOrderInvoiceForm(self.request.POST)
-        item_formset = invoice_item_formset(self.request.POST)
-        if invoice_form.is_valid():
-            context = self.get_context_data(**kwargs)
-            sale_order = context['sale_order']
-            invoice_form_data = invoice_form.cleaned_data
-            print(invoice_form_data)
-            invoice_number = invoice_form_data['invoice_number']
-            invoice_date = invoice_form_data['invoice_date']
-            print('invoice number: ',invoice_number)
-            print('invoice date: ',invoice_date)
-            invoice = SaleOrderInvoice()
-            invoice.invoice_number = invoice_number
-            invoice.invoice_date = invoice_date
-            invoice.sale_order = sale_order
-            invoice.buyer = sale_order.buyer
-            invoice.supplier = sale_order.supplier
-            invoice.save()
-            if invoice.id:
-                print('invoice Id: '+str(invoice.id))
-                print('invoice number: '+(invoice.invoice_number))
+        item_formset = SaleOrderInvoiceItemFormset(self.request.POST)
+        if item_formset.is_valid() and invoice_form.is_valid():
+            # form_package = {'item_formset':item_formset,'invoice_form':invoice_form,}
+            return self.form_valid(item_formset,invoice_form)
 
+    def form_valid(self,item_formset,invoice_form,*arg,**kwargs):
+        line_item, sale_order = self.acquire_saleorder_data(**kwargs)
+        print('Line Items: ', line_item)
+        print('Sale Order', sale_order)
+        invoice_form_data = invoice_form.cleaned_data
+        item_formset_data = item_formset.cleaned_data
+        for item_form_qty, so_item_qty in zip(item_formset_data,line_item):
+            if item_form_qty['bill_quantity'] <= so_item_qty.order_quantity:
+                print('OK')
+            elif item_form_qty['bill_quantity'] > so_item_qty.order_quantity:
+                print('NOT OK')
+                return self.form_invalid(item_formset)
 
+        # print(invoice_form_data)
+        invoice_number = invoice_form_data['invoice_number']
+        invoice_date = invoice_form_data['invoice_date']
+        print('invoice number: ',invoice_number)
+        print('invoice date: ',invoice_date)
 
-        else:
-            self.invoice_form = invoice_form
+        # creating invoice
+        # invoice = SaleOrderInvoice()
+        # invoice.invoice_number = invoice_number
+        # invoice.invoice_date = invoice_date
+        # invoice.sale_order = sale_order
+        # invoice.buyer = sale_order.buyer
+        # invoice.supplier = sale_order.supplier
+        # invoice.save()
+
+        # if invoice.id:
+        #     print('invoice Id: '+str(invoice.id))
+        #     print('invoice number: '+(invoice.invoice_number))
+
         return super().form_valid(item_formset)
 
     def get_success_url(self,*args,**kwargs):

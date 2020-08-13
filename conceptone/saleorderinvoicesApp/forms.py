@@ -43,7 +43,7 @@ class SaleOrderInvoiceItemForm(forms.ModelForm):
             'bill_quantity':forms.TextInput(attrs={'class':'form-control form-control-sm'})
         }
 
-invoice_item_formset = modelformset_factory(
+SaleOrderInvoiceItemFormset = modelformset_factory(
     SaleOrderInvoiceItem,
     form = SaleOrderInvoiceItemForm
 )
