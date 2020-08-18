@@ -174,6 +174,10 @@ class CreateSaleOrderInvoiceItem(FormView):
             # form_package = {'item_formset':item_formset,'invoice_form':invoice_form,}
             return self.form_valid(item_formset,invoice_form)
 
+    def form_invalid(self,invoice_form,item_formset):
+        print("in form Invalid")
+        return super().form_invalid(item_formset)
+
     def form_valid(self,item_formset,invoice_form,*arg,**kwargs):
         line_item, sale_order = self.acquire_saleorder_data(**kwargs)
         print('Line Items: ', line_item)
@@ -185,7 +189,7 @@ class CreateSaleOrderInvoiceItem(FormView):
                 print('OK')
             elif item_form_qty['bill_quantity'] > so_item_qty.order_quantity:
                 print('NOT OK')
-                return self.form_invalid(item_formset)
+                return self.form_invalid(invoice_form,item_formset)
 
         # print(invoice_form_data)
         invoice_number = invoice_form_data['invoice_number']
