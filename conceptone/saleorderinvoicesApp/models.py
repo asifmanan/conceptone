@@ -8,7 +8,7 @@ from baseApp.models import Company
 class SaleOrderInvoice(models.Model):
     supplier = models.ForeignKey(Company, on_delete=models.PROTECT, blank=True)
     sale_order = models.ForeignKey(SaleOrder, on_delete=models.PROTECT)
-    invoice_number = models.CharField(max_length=56)
+    invoice_number = models.CharField(max_length=56, unique=True)
     invoice_date = models.DateField()
     amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
     tax_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)

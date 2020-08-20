@@ -173,6 +173,10 @@ class CreateSaleOrderInvoiceItem(FormView):
         if item_formset.is_valid() and invoice_form.is_valid():
             # form_package = {'item_formset':item_formset,'invoice_form':invoice_form,}
             return self.form_valid(item_formset,invoice_form)
+        else:
+            context = self.get_context_data(**kwargs)
+            context['invoice_form'] = invoice_form
+            return self.render_to_response(context)
 
     def form_invalid(self,invoice_form,item_formset,**kwargs):
         print("in form Invalid")
@@ -201,6 +205,7 @@ class CreateSaleOrderInvoiceItem(FormView):
         print('invoice date: ',invoice_date)
 
         # creating invoice
+        # try:
         # invoice = SaleOrderInvoice()
         # invoice.invoice_number = invoice_number
         # invoice.invoice_date = invoice_date
@@ -208,7 +213,8 @@ class CreateSaleOrderInvoiceItem(FormView):
         # invoice.buyer = sale_order.buyer
         # invoice.supplier = sale_order.supplier
         # invoice.save()
-
+        #
+        #
         # if invoice.id:
         #     print('invoice Id: '+str(invoice.id))
         #     print('invoice number: '+(invoice.invoice_number))
