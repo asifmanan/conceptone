@@ -147,11 +147,7 @@ class CreateSaleOrderInvoiceItem(FormView):
         for item in line_item:
             item.form=form_list[i]
             i=i+1
-        # invoice_form = CreateSaleOrderInvoiceForm()
-        # invoice_form.fields.pop('supplier')
-        # invoice_form.fields.pop('sale_order')
-        # invoice_form.fields['invoice_number'].widget.attrs.pop('disabled')
-        # invoice_form.fields['invoice_date'].widget.attrs.pop('disabled')
+
         invoice_form = CreateSaleOrderInvoiceForm()
         context['invoice_form'] = invoice_form
         context['formset'] = item_formset
@@ -161,6 +157,7 @@ class CreateSaleOrderInvoiceItem(FormView):
         context['project'] = sale_order.project
 
         return context
+        
     def acquire_saleorder_data(self,*args,**kwargs):
         id_selected_item = self.request.session['so_invoice_selected_item']
         line_item = SaleOrderItem.objects.filter(id__in=id_selected_item)
