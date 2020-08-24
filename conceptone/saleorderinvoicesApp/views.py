@@ -125,28 +125,21 @@ class CreateSaleOrderInvoiceItem(FormView):
 
     def get_context_data(self,*args,**kwargs):
         context = super().get_context_data(*args,**kwargs)
-        # id_selected_item = self.request.session.pop('so_invoice_selected_item')
-        id_selected_item = self.request.session['so_invoice_selected_item']
-        line_item = SaleOrderItem.objects.filter(id__in=id_selected_item)
-        sale_order = line_item.first().sale_order
-        no_of_items = len(id_selected_item)
+        line_item,sale_order = self.acquire_saleorder_data(*args,**kwargs)
+        no_of_items = len(line_item)
+
         formdata={
             'form-TOTAL_FORMS': no_of_items,
             'form-INITIAL_FORMS': '0',
             'form-MAX_NUM_FORMS': '',
         }
         item_formset = SaleOrderInvoiceItemFormset(formdata)
-        form_list = []
-        for form in item_formset:
-            element = {
-                'bill_quantity':form['bill_quantity'],
-                'id_form' : form['id'],
-            }
-            form_list.append(element)
-        i=0
-        for item in line_item:
-            item.form=form_list[i]
-            i=i+1
+        data = {
+                'line_item':line_item,
+                'item_formset':item_formset,
+                }
+        line_item = self.encapsulate_formset(**data)
+
 
         invoice_form = CreateSaleOrderInvoiceForm()
         context['invoice_form'] = invoice_form
@@ -157,7 +150,22 @@ class CreateSaleOrderInvoiceItem(FormView):
         context['project'] = sale_order.project
 
         return context
-        
+
+    def encapsulate_formset(self,**kwargs):
+        form_list = []
+        for form in kwargs['item_formset']:
+            element = {
+                'bill_quantity':form['bill_quantity'],
+                'id_form' : form['id'],
+            }
+            form_list.append(element)
+        i=0
+        for item in kwargs['line_item']:
+            item.form=form_list[i]
+            i=i+1
+        return kwargs['line_item']
+
+
     def acquire_saleorder_data(self,*args,**kwargs):
         id_selected_item = self.request.session['so_invoice_selected_item']
         line_item = SaleOrderItem.objects.filter(id__in=id_selected_item)
@@ -168,20 +176,27 @@ class CreateSaleOrderInvoiceItem(FormView):
         invoice_form = CreateSaleOrderInvoiceForm(self.request.POST)
         item_formset = SaleOrderInvoiceItemFormset(self.request.POST)
         if item_formset.is_valid() and invoice_form.is_valid():
-            # form_package = {'item_formset':item_formset,'invoice_form':invoice_form,}
-            return self.form_valid(item_formset,invoice_form)
+            invoice_form_data = invoice_form.cleaned_data
+            item_formset_data = item_formset.cleaned_data
+            print(invoice_form_data)
+            return self.form_valid(invoice_form,item_formset)
         else:
-            context = self.get_context_data(**kwargs)
-            context['invoice_form'] = invoice_form
-            return self.render_to_response(context)
+            return self.form_invalid(invoice_form,item_formset)
 
     def form_invalid(self,invoice_form,item_formset,**kwargs):
         print("in form Invalid")
-        print(invoice_form)
-        print(kwargs)
-        return super().form_invalid(item_formset,**kwargs)
+        context = self.get_context_data(**kwargs)
+        line_item = context['line_item']
+        data = {
+                'line_item':line_item,
+                'item_formset':item_formset,
+                }
+        line_item = self.encapsulate_formset(**data)
+        context['invoice_form'] = invoice_form
+        context['line_item'] = line_item
+        return self.render_to_response(context)
 
-    def form_valid(self,item_formset,invoice_form,*arg,**kwargs):
+    def form_valid(self,invoice_form,item_formset,*arg,**kwargs):
         line_item, sale_order = self.acquire_saleorder_data(**kwargs)
         print('Line Items: ', line_item)
         print('Sale Order', sale_order)
@@ -195,7 +210,6 @@ class CreateSaleOrderInvoiceItem(FormView):
                 print('NOT OK')
                 return self.form_invalid(invoice_form,item_formset,**kwargs)
 
-        # print(invoice_form)
         invoice_number = invoice_form_data['invoice_number']
         invoice_date = invoice_form_data['invoice_date']
         print('invoice number: ',invoice_number)
