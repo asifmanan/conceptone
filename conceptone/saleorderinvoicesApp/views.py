@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404, render_to_resp
 from django.forms import modelformset_factory
 from django.urls import reverse, reverse_lazy
 from django.template.loader import render_to_string
+from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.views.generic import (
                                 CreateView,
@@ -175,13 +176,42 @@ class CreateSaleOrderInvoiceItem(FormView):
     def post(self,request,*args,**kwargs):
         invoice_form = CreateSaleOrderInvoiceForm(self.request.POST)
         item_formset = SaleOrderInvoiceItemFormset(self.request.POST)
-        if item_formset.is_valid() and invoice_form.is_valid():
-            invoice_form_data = invoice_form.cleaned_data
+
+        # if item_formset.is_valid() and invoice_form.is_valid():
+        #     invoice_form_data = invoice_form.cleaned_data
+        #     item_formset_data = item_formset.cleaned_data
+        #     line_item,sale_order = self.acquire_saleorder_data(**kwargs)
+        #     for item_form_qty, so_item_qty in zip(item_formset_data,line_item):
+        #         if item_form_qty['bill_quantity'] <= so_item_qty.order_quantity:
+        #             print('OK')
+        #         elif item_form_qty['bill_quantity'] > so_item_qty.order_quantity:
+        #             print('NOT OK')
+        #             messages.warning(self.request,"One of more BILL QUANTITY is greater than ORDER QUANTITY")
+        #             return self.form_invalid(invoice_form,item_formset,**kwargs)
+
+        if item_formset.is_valid():
+            invalid_flag = False
             item_formset_data = item_formset.cleaned_data
-            print(invoice_form_data)
-            return self.form_valid(invoice_form,item_formset)
-        else:
+            line_item,sale_order = self.acquire_saleorder_data(**kwargs)
+            for item_form_qty, so_item_qty in zip(item_formset_data,line_item):
+                if item_form_qty['bill_quantity'] <= so_item_qty.order_quantity:
+                    print('OK')
+                elif item_form_qty['bill_quantity'] > so_item_qty.order_quantity:
+                    print('NOT OK')
+                    invalid_flag = True
+                    messages.warning(self.request,"One of more BILL QUANTITY is greater than ORDER QUANTITY.")
+        elif not item_formset.is_valid():
+            messages.warning(self.request,"One of more values in BILL QUANTITIES are invalid.")
+            invalid_flag = True
+
+        if not invoice_form.is_valid():
+            invalid_flag = True
+
+        if invalid_flag:
             return self.form_invalid(invoice_form,item_formset)
+        else:
+            return self.form_valid(invoice_form,item_formset)
+
 
     def form_invalid(self,invoice_form,item_formset,**kwargs):
         print("in form Invalid")
@@ -203,12 +233,8 @@ class CreateSaleOrderInvoiceItem(FormView):
         invoice_form_data = invoice_form.cleaned_data
         item_formset_data = item_formset.cleaned_data
         print(item_formset.cleaned_data)
-        for item_form_qty, so_item_qty in zip(item_formset_data,line_item):
-            if item_form_qty['bill_quantity'] <= so_item_qty.order_quantity:
-                print('OK')
-            elif item_form_qty['bill_quantity'] > so_item_qty.order_quantity:
-                print('NOT OK')
-                return self.form_invalid(invoice_form,item_formset,**kwargs)
+
+
 
         invoice_number = invoice_form_data['invoice_number']
         invoice_date = invoice_form_data['invoice_date']

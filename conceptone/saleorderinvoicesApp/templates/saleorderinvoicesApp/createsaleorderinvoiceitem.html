@@ -7,7 +7,31 @@
 {% endblock headblock %}
 {% block bodyblock %}
 <div class="container-fluid">
-    <div class="row">
+{% if invoice_form.errors %}
+  {% for field in invoice_form %}
+    {% for error in field.errors %}
+    <div class="mt-1 mb-0 alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      {{error|escape}}
+    </div>
+    {% endfor%}
+  {% endfor %}
+{% endif%}
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="mb-0 alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+
+      <div class="row">
         <div class="col-12 col-lg-4">
             <div class="card" style="margin-top: 15px;border-top: 4px solid #c6c6c6 ;border-right-style: none;border-bottom-style: none;border-left-style: none;">
                 <div class="card-body shadow" style="border-style: none;">
@@ -50,20 +74,11 @@
                             <div class="col-md-6 col-lg-4 col-xl-3">
                               {{invoice_form.invoice_number.label}}
                               {{invoice_form.invoice_number}}
-                              {% if invoice_form.invoice_number.errors %}
-                                  {% for error in invoice_form.invoice_number.errors %}
-                                  <li>{{error|escape}}</li>
-                                  {% endfor%}
-                              {% endif%}
+
                             </div>
                             <div class="col-md-6 col-lg-4 col-xl-3">
                               {{invoice_form.invoice_date.label}}
                               {{invoice_form.invoice_date}}
-                              {% if invoice_form.invoice_date.errors %}
-                                  {% for error in invoice_form.invoice_date.errors %}
-                                  <li>{{error|escape}}</li>
-                                  {% endfor%}
-                              {% endif%}
                             </div>
                         </div>
                         <div class="form-row mt-2">
