@@ -22,7 +22,7 @@
 
 {% if messages %}
   {% for message in messages %}
-    <div class="mb-0 alert alert-danger alert-dismissible" role="alert">
+    <div class="mt-1 mb-0 alert alert-danger alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -31,11 +31,17 @@
   {% endfor %}
 {% endif %}
 
+<div class="row pt-1">
+  <div class="col-12">
+    <h4 style="margin-top:6px;margin-bottom:2px;">New Sale Order Invoice</h4>
+  </div>
+</div>
+
       <div class="row">
         <div class="col-12 col-lg-4">
-            <div class="card" style="margin-top: 15px;border-top: 4px solid #c6c6c6 ;border-right-style: none;border-bottom-style: none;border-left-style: none;">
-                <div class="card-body shadow" style="border-style: none;">
-                    <h4 class="card-title">Invoice to</h4>
+            <div class="card" style="margin-top: 8px;border-right-style: none;border-bottom-style: none;border-left-style: none;">
+                <div class="card-body shadow-sm" style="border-style: none;">
+                    <h5 class="card-title">Invoice to</h5>
                     <h6 class="text-muted card-subtitle mb-2">{{buyer.customer_name}}</h6>
                     <p class="card-text text-card-detail">{{buyer.customer_address}}, {{buyer.customer_city}}</p>
                     <p class="card-text text-card-detail">{{buyer.customer_phone}}</p>
@@ -44,9 +50,9 @@
             </div>
         </div>
         <div class="col-12 col-lg-4">
-            <div class="card" style="margin-top: 15px;border-top: 4px solid #c6c6c6 ;border-right-style: none;border-bottom-style: none;border-left-style: none;">
-                <div class="card-body shadow" style="border-style: none;">
-                    <h4 class="card-title">Project</h4>
+            <div class="card" style="margin-top: 8px;border-right-style: none;border-bottom-style: none;border-left-style: none;">
+                <div class="card-body shadow-sm" style="border-style: none;">
+                    <h5 class="card-title">Project</h5>
                     <h6 class="text-muted card-subtitle mb-2">{{project.project_name}}</h6>
                     <p class="card-text text-card-detail"><b>Code </b>{{project.project_code}}</p>
                     <p class="card-text text-card-detail"><b>Contract no </b>{{project.contract_number}}</p>
@@ -54,9 +60,9 @@
             </div>
         </div>
         <div class="col-12 col-lg-4">
-            <div class="card" style="margin-top: 15px;border-top: 4px solid #c6c6c6 ;border-right-style: none;border-bottom-style: none;border-left-style: none;">
-                <div class="card-body shadow" style="border-style: none;">
-                    <h4 class="card-title">Sale Order</h4>
+            <div class="card" style="margin-top: 8px;border-right-style: none;border-bottom-style: none;border-left-style: none;">
+                <div class="card-body shadow-sm" style="border-style: none;">
+                    <h5 class="card-title">Sale Order</h5>
                     <h6 class="text-muted card-subtitle mb-2">{{sale_order.so_number}}</h6>
                     <p class="card-text text-card-detail"><b>Buyer PO </b> {{sale_order.buyer_po_number}}</p>
                     <p class="card-text text-card-detail"><b>Amount </b> {{sale_order.amount}}</p>
@@ -83,9 +89,9 @@
                         </div>
                         <div class="form-row mt-2">
                             <div class="col">
-                                <div class="table-responsive shadow table-scrollbar" style="height: 370px;">
-                                    <table class="table">
-                                        <thead style="background-color: #87aa8b;color: #ffffff;">
+                                <div class="table-responsive shadow table-scrollbar" style="height: 370px;background-color: #DCDCDC;">
+                                    <table class="table table-sm">
+                                        <thead class="bg-secondary" style="color: #ffffff;">
                                             <tr>
                                                 <th>Line</th>
                                                 <th>Description</th>
@@ -99,20 +105,20 @@
                                                 <th>Total Amount</th>
                                             </tr>
                                         </thead>
-                                        <tbody style="background-color: #ffffff;">
+                                        <tbody class="table-bordered" style="background-color: #DCDCDC;">
                                           {{formset.management_form}}
                                           {% for item in line_item %}
-                                          <tr>
-                                              <td>{{item.line_number}}</td>
-                                              <td>{{item.item.item_description}}</td>
-                                              <td>{{item.item.item_uom}}</td>
-                                              <td>{{item.sale_price}}</td>
-                                              <td>{{item.order_quantity}}</td>
-                                              <td>{{item.form.bill_quantity}}{{item.form.id_form}}</td>
-                                              <td><input disabled type="text" name="" value=""></td>
-                                              <td>{{item.tax.tax_value}}</td>
-                                              <td><input disabled type="text" name="" value=""></td>
-                                              <td><input disabled type="text" name="" value=""></td>
+                                          <tr style="padding:0px;margin:0px;">
+                                              <td style="padding:0px;padding-left: 2px;padding-right: 2px;margin:0px;">{{item.line_number}}</td>
+                                              <td style="padding:0px;padding-left: 2px;padding-right: 2px;margin:0px;">{{item.item.item_description}}</td>
+                                              <td style="padding:0px;padding-left: 2px;padding-right: 2px;margin:0px;">{{item.item.item_uom}}</td>
+                                              <td style="padding:0px;padding-left: 2px;padding-right: 2px;margin:0px;">{{item.sale_price}}</td>
+                                              <td style="padding:0px;padding-left: 2px;padding-right: 2px;margin:0px;">{{item.order_quantity}}</td>
+                                              <td style="padding:0px;padding-left: 2px;padding-right: 2px;margin:0px;">{{item.form.bill_quantity}}{{item.form.id_form}}</td>
+                                              <td style="padding:0px;padding-left: 2px;padding-right: 2px;margin:0px;"><input disabled type="text" name="" value=""></td>
+                                              <td style="padding:0px;padding-left: 2px;padding-right: 2px;margin:0px;">{{item.tax.tax_value}}</td>
+                                              <td style="padding:0px;padding-left: 2px;padding-right: 2px;margin:0px;"><input disabled type="text" name="" value=""></td>
+                                              <td style="padding:0px;padding-left: 2px;padding-right: 2px;margin:0px;"><input disabled type="text" name="" value=""></td>
                                           </tr>
                                           {% endfor %}
                                         </tbody>
