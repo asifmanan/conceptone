@@ -40,7 +40,7 @@ class SaleOrderInvoiceItemForm(forms.ModelForm):
         model = SaleOrderInvoiceItem
         fields = ('bill_quantity',)
         widgets={
-            'bill_quantity':forms.TextInput(attrs={'class':'form-control form-control-sm'})
+            'bill_quantity':forms.TextInput(attrs={'class':'form-control form-control-sm','required':'required'})
         }
 
 SaleOrderInvoiceItemFormset = modelformset_factory(

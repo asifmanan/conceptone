@@ -39,8 +39,8 @@
 
       <div class="row">
         <div class="col-12 col-lg-4">
-            <div class="card" style="margin-top: 8px;border-right-style: none;border-bottom-style: none;border-left-style: none;">
-                <div class="card-body shadow-sm" style="border-style: none;">
+            <div class="card h-100" style="margin-top: 8px;border-right-style: none;border-bottom-style: none;border-left-style: none;">
+                <div class="card-body flex-column d-flex shadow-sm" style="border-style: none;">
                     <h5 class="card-title">Invoice to</h5>
                     <h6 class="text-muted card-subtitle mb-2">{{buyer.customer_name}}</h6>
                     <p class="card-text text-card-detail">{{buyer.customer_address}}, {{buyer.customer_city}}</p>
@@ -50,8 +50,8 @@
             </div>
         </div>
         <div class="col-12 col-lg-4">
-            <div class="card" style="margin-top: 8px;border-right-style: none;border-bottom-style: none;border-left-style: none;">
-                <div class="card-body shadow-sm" style="border-style: none;">
+            <div class="card h-100" style="margin-top: 8px;border-right-style: none;border-bottom-style: none;border-left-style: none;">
+                <div class="card-body flex-column d-flex shadow-sm" style="border-style: none;">
                     <h5 class="card-title">Project</h5>
                     <h6 class="text-muted card-subtitle mb-2">{{project.project_name}}</h6>
                     <p class="card-text text-card-detail"><b>Code </b>{{project.project_code}}</p>
@@ -60,8 +60,8 @@
             </div>
         </div>
         <div class="col-12 col-lg-4">
-            <div class="card" style="margin-top: 8px;border-right-style: none;border-bottom-style: none;border-left-style: none;">
-                <div class="card-body shadow-sm" style="border-style: none;">
+            <div class="card h-100" style="margin-top: 8px;border-right-style: none;border-bottom-style: none;border-left-style: none;">
+                <div class="card-body flex-column d-flex shadow-sm" style="border-style: none;">
                     <h5 class="card-title">Sale Order</h5>
                     <h6 class="text-muted card-subtitle mb-2">{{sale_order.so_number}}</h6>
                     <p class="card-text text-card-detail"><b>Buyer PO </b> {{sale_order.buyer_po_number}}</p>
@@ -89,41 +89,41 @@
                         </div>
                         <div class="form-row mt-2">
                             <div class="col">
-                                <div class="table-responsive shadow table-scrollbar" style="height: 370px;background-color: #DCDCDC;">
-                                    <table class="table table-sm">
-                                        <thead class="bg-secondary" style="color: #ffffff;">
-                                            <tr>
-                                                <th>Line</th>
-                                                <th>Description</th>
-                                                <th>UoM</th>
-                                                <th>Unit Price</th>
-                                                <th>Available Quantity</th>
-                                                <th>Bill Quantity</th>
-                                                <th>Amount</th>
-                                                <th>Tax Rate</th>
-                                                <th>Tax Amount</th>
-                                                <th>Total Amount</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-bordered" style="background-color: #DCDCDC;">
-                                          {{formset.management_form}}
-                                          {% for item in line_item %}
-                                          <tr style="padding:0px;margin:0px;">
-                                              <td style="padding:0px;padding-left: 2px;padding-right: 2px;margin:0px;">{{item.line_number}}</td>
-                                              <td style="padding:0px;padding-left: 2px;padding-right: 2px;margin:0px;">{{item.item.item_description}}</td>
-                                              <td style="padding:0px;padding-left: 2px;padding-right: 2px;margin:0px;">{{item.item.item_uom}}</td>
-                                              <td style="padding:0px;padding-left: 2px;padding-right: 2px;margin:0px;">{{item.sale_price}}</td>
-                                              <td style="padding:0px;padding-left: 2px;padding-right: 2px;margin:0px;">{{item.order_quantity}}</td>
-                                              <td style="padding:0px;padding-left: 2px;padding-right: 2px;margin:0px;">{{item.form.bill_quantity}}{{item.form.id_form}}</td>
-                                              <td style="padding:0px;padding-left: 2px;padding-right: 2px;margin:0px;"><input disabled type="text" name="" value=""></td>
-                                              <td style="padding:0px;padding-left: 2px;padding-right: 2px;margin:0px;">{{item.tax.tax_value}}</td>
-                                              <td style="padding:0px;padding-left: 2px;padding-right: 2px;margin:0px;"><input disabled type="text" name="" value=""></td>
-                                              <td style="padding:0px;padding-left: 2px;padding-right: 2px;margin:0px;"><input disabled type="text" name="" value=""></td>
+                              <div class="table-responsive shadow-sm table-scrollbar" style="height: 370px;">
+                                  <table class="table">
+                                      <thead class="" style="background-color: #87aa8b;color: #ffffff;">
+                                          <tr>
+                                              <th>Line</th>
+                                              <th>Description</th>
+                                              <th>UoM</th>
+                                              <th>Unit Price</th>
+                                              <th>Available Quantity</th>
+                                              <th>Bill Quantity</th>
+                                              <th>Amount</th>
+                                              <th>Tax Rate</th>
+                                              <th>Tax Amount</th>
+                                              <th>Total Amount</th>
                                           </tr>
-                                          {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
+                                      </thead>
+                                      <tbody style="background-color: #ffffff;">
+                                        {{formset.management_form}}
+                                        {% for item in line_item %}
+                                        <tr style="border-bottom:2px solid #87aa8b;">
+                                            <td style="width:5%">{{item.line_number}}</td>
+                                            <td title="{{item.item.item_description}}" style="white-space: nowrap;text-overflow:ellipsis; overflow: hidden; max-width:1px;width:17%">{{item.item.item_description}}</td>
+                                            <td style="width:7%">{{item.item.item_uom}}</td>
+                                            <td style="width:10%">{{item.sale_price}}</td>
+                                            <td style="width:10%">{{item.order_quantity}}</td>
+                                            <td style="width:13%">{{item.form.bill_quantity}}{{item.form.id_form}}</td>
+                                            <td style="width:10%"><input class="form-control form-control-sm" disabled type="text" name="" value=""></td>
+                                            <td style="width:7%">{{item.tax.tax_value}}</td>
+                                            <td style="width:10%"><input class="form-control form-control-sm" disabled type="text" name="" value=""></td>
+                                            <td style="width:10%"><input class="form-control form-control-sm" disabled type="text" name="" value=""></td>
+                                        </tr>
+                                        {% endfor %}
+                                      </tbody>
+                                  </table>
+                              </div>
                             </div>
                         </div>
                         <div class="row mt-2">
