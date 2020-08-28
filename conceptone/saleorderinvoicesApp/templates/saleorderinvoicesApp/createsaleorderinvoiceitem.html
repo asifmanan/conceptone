@@ -89,7 +89,7 @@
                         </div>
                         <div class="form-row mt-2">
                             <div class="col">
-                              <div class="table-responsive shadow-sm table-scrollbar" style="height: 370px;">
+                              <div class="table-responsive shadow-sm table-scrollbar" style="height: 370px;border:2px solid #87aa8b;border-top:none;">
                                   <table class="table">
                                       <thead class="" style="background-color: #87aa8b;color: #ffffff;">
                                           <tr>
@@ -109,22 +109,36 @@
                                         {{formset.management_form}}
                                         {% for item in line_item %}
                                         <tr style="border-bottom:2px solid #87aa8b;">
-                                            <td style="width:5%">{{item.line_number}}</td>
-                                            <td title="{{item.item.item_description}}" style="white-space: nowrap;text-overflow:ellipsis; overflow: hidden; max-width:1px;width:17%">{{item.item.item_description}}</td>
-                                            <td style="width:7%">{{item.item.item_uom}}</td>
-                                            <td style="width:10%">{{item.sale_price}}</td>
-                                            <td style="width:10%">{{item.order_quantity}}</td>
-                                            <td style="width:13%">{{item.form.bill_quantity}}{{item.form.id_form}}</td>
-                                            <td style="width:10%"><input class="form-control form-control-sm" disabled type="text" name="" value=""></td>
-                                            <td style="width:7%">{{item.tax.tax_value}}</td>
-                                            <td style="width:10%"><input class="form-control form-control-sm" disabled type="text" name="" value=""></td>
-                                            <td style="width:10%"><input class="form-control form-control-sm" disabled type="text" name="" value=""></td>
+                                            <td style="width:4%">{{item.line_number}}</td>
+                                            <td title="{{item.item.item_description}}" style="white-space: nowrap;text-overflow:ellipsis; overflow: hidden; max-width:1px;width:16%">{{item.item.item_description}}</td>
+                                            <td style="width:8%">{{item.item.item_uom}}</td>
+                                            <td style="width:8%">{{item.sale_price}}</td>
+                                            <td style="width:8%">{{item.order_quantity}}</td>
+                                            <td style="width:12%">{{item.form.bill_quantity}}{{item.form.id_form}}</td>
+                                            <td style="width:12%"><input class="form-control form-control-sm" disabled type="text" name="" value=""></td>
+                                            <td style="width:8%">{{item.tax.tax_value}}</td>
+                                            <td style="width:12%"><input class="form-control form-control-sm" disabled type="text" name="" value=""></td>
+                                            <td style="width:12%"><input class="form-control form-control-sm" disabled type="text" name="" value=""></td>
                                         </tr>
                                         {% endfor %}
                                       </tbody>
                                   </table>
                               </div>
                             </div>
+                        </div>
+                        <div class="row mt-2">
+                          <div class="col-xl-4">
+                            <label for="id-amount">Amount</label>
+                            <input readonly id="id-amount" class="form-control" type="text" name="" value="">
+                          </div>
+                          <div class="col-xl-4">
+                            <label for="id-tax-amount">Tax Amount</label>
+                            <input readonly id="id-tax-amount" class="form-control" type="text" name="" value="">
+                          </div>
+                          <div class="col-xl-4">
+                            <label for="id-total-amount">Total Amount</label>
+                            <input readonly id="id-total-amount" class="form-control" type="text" name="" value="">
+                          </div>
                         </div>
                         <div class="row mt-2">
                             <div class="col">

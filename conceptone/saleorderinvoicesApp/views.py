@@ -119,10 +119,10 @@ class CreateSaleOrderInvoiceItem(FormView):
     model = SaleOrderInvoiceItem
     form_class = SaleOrderInvoiceItemForm
     template_name = 'saleorderinvoicesapp/createsaleorderinvoiceitem.html'
-    # def get(self,request,*args,**kwargs):
-    #     if 'so_invoice_selected_item' not in self.request.session:
-    #         return redirect('saleorderinvoicesApp:NewSaleOrderInvoice')
-    #     return super().get(request,*args,**kwargs)
+    def get(self,request,*args,**kwargs):
+        if 'so_invoice_selected_item' and 'so_invoice_saleorder' and 'so_invoice_company' not in self.request.session:
+            return redirect('saleorderinvoicesApp:NewSaleOrderInvoice')
+        return super().get(request,*args,**kwargs)
 
     def get_context_data(self,*args,**kwargs):
         context = super().get_context_data(*args,**kwargs)
@@ -243,22 +243,43 @@ class CreateSaleOrderInvoiceItem(FormView):
 
         # creating invoice
         # try:
-        # invoice = SaleOrderInvoice()
-        # invoice.invoice_number = invoice_number
-        # invoice.invoice_date = invoice_date
-        # invoice.sale_order = sale_order
-        # invoice.buyer = sale_order.buyer
-        # invoice.supplier = sale_order.supplier
-        # invoice.save()
-        #
-        #
+
+        invoice = SaleOrderInvoice()
+        invoice.invoice_number = invoice_number
+        invoice.invoice_date = invoice_date
+        invoice.sale_order = sale_order
+        invoice.buyer = sale_order.buyer
+        invoice.supplier = sale_order.supplier
+        invoice.save()
+
+
         # if invoice.id:
         #     print('invoice Id: '+str(invoice.id))
         #     print('invoice number: '+(invoice.invoice_number))
+        # try:
+
+        # for item in line_item:
+        #     print(item.sale_price)
+
+        for form, item in zip(item_formset,line_item):
+            invoice_line_item = form.save(commit=False)
+            invoice_line_item.sale_order_invoice = invoice
+            invoice_line_item.item = item
+            invoice_line_item.amount = invoice_line_item.bill_quantity*item.sale_price
+            invoice_line_item.tax_amount = invoice_line_item.amount*item.tax.tax_value
+            invoice_line_item.total_amount = invoice_line_item.amount+invoice_line_item.tax_amount
+            invoice_line_item.save()
+
+
 
         return super().form_valid(item_formset)
 
     def get_success_url(self,*args,**kwargs):
+        #delete session data
+        del self.request.session['so_invoice_company']
+        del self.request.session["so_invoice_saleorder"]
+        del self.request.session["so_invoice_selected_item"]
+
         return reverse('saleorderinvoicesApp:NewSaleOrderInvoice')
 
 class ListSaleOrderInvioce(FormView):
