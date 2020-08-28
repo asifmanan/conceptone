@@ -15,6 +15,21 @@ class SaleOrderInvoice(models.Model):
     total_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
+
+    def CalculateTotal(self):
+        items = SaleOrderInvoiceItem.objects.filter(sale_order_invoice=self)
+        if items.exists():
+            items_sum = items.aggregate(Sum('amount'))
+            invoice_items_sum = items_sum['amount__sum']
+            items_tax = items.aggregate(Sum('tax_amount'))
+            invoice_items_tax_sum = items_tax['tax_amount__sum']
+            total_amount = invoice_items_sum+invoice_items_tax_sum
+            self.amount = invoice_items_sum
+            self.tax_amount = invoice_items_tax_sum
+            self.total_amount = total_amount
+            self.save()
+
+
     def __str__(self):
         return self.invoice_number
 

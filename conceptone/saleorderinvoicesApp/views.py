@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.views.generic import (
                                 CreateView,
+                                DetailView,
                                 DeleteView,
                                 FormView,
                                 TemplateView,
@@ -30,7 +31,7 @@ from saleorderinvoicesApp.forms import (
                                         )
 
 class NewSaleOrderInvoice(TemplateView):
-    template_name = 'saleorderinvoicesapp/create_saleorderinvoice.html'
+    template_name = 'saleorderinvoicesapp/newsaleorderinvoice.html'
     def get_context_data(self,*args,**kwargs):
         context = super().get_context_data(*args,**kwargs)
         form = SaleOrderInvoiceForm()
@@ -38,82 +39,6 @@ class NewSaleOrderInvoice(TemplateView):
         form.fields.pop('invoice_date')
         context['form'] = form
         return context
-
-# AJAX CALL
-def SelectSupplier(request):
-    if request.POST.get('company') == "":
-        data = 0
-        form = SaleOrderInvoiceForm()
-        form.fields.pop('invoice_number')
-        form.fields.pop('invoice_date')
-        return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form':form})
-
-    company_id = request.POST.get('company')
-    request.session['so_invoice_company'] = company_id
-    sale_order_list = SaleOrder.objects.filter(supplier__id=company_id)
-    form = SaleOrderInvoiceForm()
-    form.fields['sale_order'].queryset = sale_order_list
-    form.fields['supplier'].initial = company_id
-    form.fields['supplier'].disabled = True
-    form.fields['sale_order'].widget.attrs.pop('disabled')
-    # form.fields['invoice_number'].widget.attrs.pop('disabled')
-    # form.fields['invoice_date'].widget.attrs.pop('disabled')
-    form.fields.pop('invoice_number')
-    form.fields.pop('invoice_date')
-    return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form':form})
-
-# AJAX CALL
-def SelectSaleOrder(request):
-    if request.POST.get('sale_order') == "":
-        data = 0
-        form = SaleOrderInvoiceForm()
-        form.fields.pop('invoice_number')
-        form.fields.pop('invoice_date')
-        return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form',form})
-    if 'so_invoice_company' in request.session:
-        initial_selected_company = request.session['so_invoice_company']
-        sale_order_id = request.POST.get('sale_order')
-        sale_order_item_list = SaleOrderItem.objects.filter(sale_order__id=sale_order_id)
-        if sale_order_item_list.exists():
-            company_id = str(sale_order_item_list.first().sale_order.supplier.id)
-            if initial_selected_company==company_id:
-                request.session["so_invoice_saleorder"] = sale_order_id
-                form = SaleOrderInvoiceForm()
-                form.fields['sale_order'].initial = sale_order_id
-                form.fields['supplier'].initial = company_id
-                form.fields['sale_order'].disabled = True
-                form.fields['supplier'].disabled = True
-                form.fields.pop('invoice_number')
-                form.fields.pop('invoice_date')
-                sale_order_id = request.POST.get('sale_order')
-                object_list = sale_order_item_list
-                return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form':form,'object_list':object_list})
-            else:
-                print("Error SaleOrder Company does not match")
-    elif 'so_invoice_company' not in request.session:
-        form = SaleOrderInvoiceForm()
-        form.fields.pop('invoice_number')
-        form.fields.pop('invoice_date')
-        return render(request, 'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form':form})
-
-def SelectSaleOrderItem(request):
-    selected_item_list = request.POST.getlist('sale_order_item[]')
-    if selected_item_list:
-        print(selected_item_list)
-        request.session["so_invoice_selected_item"] = selected_item_list
-        print(request.session["so_invoice_selected_item"])
-        url = reverse('saleorderinvoicesApp:CreateSaleOrderInvoiceItem')
-        data={
-            'url':url,
-            'status':'OK',
-        }
-        print("url: ",url)
-    elif not selected_item_list:
-        data={
-            'status':'FAIL',
-        }
-        print("List is empty")
-    return JsonResponse(data)
 
 class CreateSaleOrderInvoiceItem(FormView):
     model = SaleOrderInvoiceItem
@@ -177,27 +102,14 @@ class CreateSaleOrderInvoiceItem(FormView):
         invoice_form = CreateSaleOrderInvoiceForm(self.request.POST)
         item_formset = SaleOrderInvoiceItemFormset(self.request.POST)
 
-        # if item_formset.is_valid() and invoice_form.is_valid():
-        #     invoice_form_data = invoice_form.cleaned_data
-        #     item_formset_data = item_formset.cleaned_data
-        #     line_item,sale_order = self.acquire_saleorder_data(**kwargs)
-        #     for item_form_qty, so_item_qty in zip(item_formset_data,line_item):
-        #         if item_form_qty['bill_quantity'] <= so_item_qty.order_quantity:
-        #             print('OK')
-        #         elif item_form_qty['bill_quantity'] > so_item_qty.order_quantity:
-        #             print('NOT OK')
-        #             messages.warning(self.request,"One of more BILL QUANTITY is greater than ORDER QUANTITY")
-        #             return self.form_invalid(invoice_form,item_formset,**kwargs)
-
         if item_formset.is_valid():
             invalid_flag = False
             item_formset_data = item_formset.cleaned_data
             line_item,sale_order = self.acquire_saleorder_data(**kwargs)
             for item_form_qty, so_item_qty in zip(item_formset_data,line_item):
                 if item_form_qty['bill_quantity'] <= so_item_qty.order_quantity:
-                    print('OK')
+                    pass
                 elif item_form_qty['bill_quantity'] > so_item_qty.order_quantity:
-                    print('NOT OK')
                     invalid_flag = True
                     messages.warning(self.request,"One of more BILL QUANTITY is greater than ORDER QUANTITY.")
         elif not item_formset.is_valid():
@@ -212,9 +124,7 @@ class CreateSaleOrderInvoiceItem(FormView):
         else:
             return self.form_valid(invoice_form,item_formset)
 
-
     def form_invalid(self,invoice_form,item_formset,**kwargs):
-        print("in form Invalid")
         context = self.get_context_data(**kwargs)
         line_item = context['line_item']
         data = {
@@ -228,22 +138,10 @@ class CreateSaleOrderInvoiceItem(FormView):
 
     def form_valid(self,invoice_form,item_formset,*arg,**kwargs):
         line_item, sale_order = self.acquire_saleorder_data(**kwargs)
-        print('Line Items: ', line_item)
-        print('Sale Order', sale_order)
         invoice_form_data = invoice_form.cleaned_data
-        item_formset_data = item_formset.cleaned_data
-        print(item_formset.cleaned_data)
-
-
-
         invoice_number = invoice_form_data['invoice_number']
         invoice_date = invoice_form_data['invoice_date']
-        print('invoice number: ',invoice_number)
-        print('invoice date: ',invoice_date)
-
         # creating invoice
-        # try:
-
         invoice = SaleOrderInvoice()
         invoice.invoice_number = invoice_number
         invoice.invoice_date = invoice_date
@@ -251,16 +149,10 @@ class CreateSaleOrderInvoiceItem(FormView):
         invoice.buyer = sale_order.buyer
         invoice.supplier = sale_order.supplier
         invoice.save()
-
-
-        # if invoice.id:
-        #     print('invoice Id: '+str(invoice.id))
-        #     print('invoice number: '+(invoice.invoice_number))
         # try:
-
         # for item in line_item:
         #     print(item.sale_price)
-
+        #Creating Invoice Line Items
         for form, item in zip(item_formset,line_item):
             invoice_line_item = form.save(commit=False)
             invoice_line_item.sale_order_invoice = invoice
@@ -270,7 +162,7 @@ class CreateSaleOrderInvoiceItem(FormView):
             invoice_line_item.total_amount = invoice_line_item.amount+invoice_line_item.tax_amount
             invoice_line_item.save()
 
-
+        invoice.CalculateTotal()
 
         return super().form_valid(item_formset)
 
@@ -289,3 +181,88 @@ class ListSaleOrderInvioce(FormView):
         context = super().get_context_data(*args,**kwargs)
         context['object_list'] = SaleOrderInvoice.objects.all().order_by('invoice_date')
         return context
+
+class DetailSaleOrderInvoice(DetailView):
+    model = SaleOrderInvoice
+    template_name = 'saleorderinvoicesapp/detailsaleorderinvoice.html'
+    def get_context_data(self,*args,**kwargs):
+        context = super().get_context_data(*args,**kwargs)
+        context['sale_order_items'] = SaleOrderInvoiceItem.objects.filter(sale_order_invoice=self.object)
+        return context
+
+# AJAX CALL
+def SelectSupplier(request):
+    if request.POST.get('company') == "":
+        data = 0
+        form = SaleOrderInvoiceForm()
+        form.fields.pop('invoice_number')
+        form.fields.pop('invoice_date')
+        return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form':form})
+
+    company_id = request.POST.get('company')
+    request.session['so_invoice_company'] = company_id
+    sale_order_list = SaleOrder.objects.filter(supplier__id=company_id)
+    form = SaleOrderInvoiceForm()
+    form.fields['sale_order'].queryset = sale_order_list
+    form.fields['supplier'].initial = company_id
+    form.fields['supplier'].disabled = True
+    form.fields['sale_order'].widget.attrs.pop('disabled')
+    # form.fields['invoice_number'].widget.attrs.pop('disabled')
+    # form.fields['invoice_date'].widget.attrs.pop('disabled')
+    form.fields.pop('invoice_number')
+    form.fields.pop('invoice_date')
+    return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form':form})
+
+# AJAX CALL
+def SelectSaleOrder(request):
+    if request.POST.get('sale_order') == "":
+        data = 0
+        form = SaleOrderInvoiceForm()
+        form.fields.pop('invoice_number')
+        form.fields.pop('invoice_date')
+        return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form',form})
+    if 'so_invoice_company' in request.session:
+        initial_selected_company = request.session['so_invoice_company']
+        sale_order_id = request.POST.get('sale_order')
+        sale_order_item_list = SaleOrderItem.objects.filter(sale_order__id=sale_order_id)
+        if sale_order_item_list.exists():
+            company_id = str(sale_order_item_list.first().sale_order.supplier.id)
+            if initial_selected_company==company_id:
+                request.session["so_invoice_saleorder"] = sale_order_id
+                form = SaleOrderInvoiceForm()
+                form.fields['sale_order'].initial = sale_order_id
+                form.fields['supplier'].initial = company_id
+                form.fields['sale_order'].disabled = True
+                form.fields['supplier'].disabled = True
+                form.fields.pop('invoice_number')
+                form.fields.pop('invoice_date')
+                sale_order_id = request.POST.get('sale_order')
+                object_list = sale_order_item_list
+                return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form':form,'object_list':object_list})
+            else:
+                print("Error SaleOrder Company does not match")
+    elif 'so_invoice_company' not in request.session:
+        form = SaleOrderInvoiceForm()
+        form.fields.pop('invoice_number')
+        form.fields.pop('invoice_date')
+        return render(request, 'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form':form})
+
+#AJAX CALL
+def SelectSaleOrderItem(request):
+    selected_item_list = request.POST.getlist('sale_order_item[]')
+    if selected_item_list:
+        print(selected_item_list)
+        request.session["so_invoice_selected_item"] = selected_item_list
+        print(request.session["so_invoice_selected_item"])
+        url = reverse('saleorderinvoicesApp:CreateSaleOrderInvoiceItem')
+        data={
+            'url':url,
+            'status':'OK',
+        }
+        print("url: ",url)
+    elif not selected_item_list:
+        data={
+            'status':'FAIL',
+        }
+        print("List is empty")
+    return JsonResponse(data)
