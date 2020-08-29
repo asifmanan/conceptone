@@ -101,7 +101,8 @@ class CreateSaleOrderInvoiceItem(FormView):
     def post(self,request,*args,**kwargs):
         invoice_form = CreateSaleOrderInvoiceForm(self.request.POST)
         item_formset = SaleOrderInvoiceItemFormset(self.request.POST)
-
+        if 'cancel' in self.request.POST:
+            return get_success_url(*args,**kwargs)
         if item_formset.is_valid():
             invalid_flag = False
             item_formset_data = item_formset.cleaned_data
@@ -173,6 +174,13 @@ class CreateSaleOrderInvoiceItem(FormView):
         del self.request.session["so_invoice_selected_item"]
 
         return reverse('saleorderinvoicesApp:NewSaleOrderInvoice')
+
+def CancelNewSaleOrderInvoiceSession(request):
+    del request.session['so_invoice_company']
+    del request.session["so_invoice_saleorder"]
+    del request.session["so_invoice_selected_item"]
+
+    return redirect('saleorderinvoicesApp:NewSaleOrderInvoice')
 
 class ListSaleOrderInvioce(FormView):
     form_class = SaleOrderInvoiceSearchForm

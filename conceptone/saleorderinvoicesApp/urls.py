@@ -9,6 +9,9 @@ urlpatterns=[
     path('listsaleorderinvoice/',views.ListSaleOrderInvioce.as_view(),name='ListSaleOrderInvoice'),
     path('detailsaleorderinvoice/',views.DetailSaleOrderInvoice.as_view(),name='DetailSaleOrderInvoice'),
     # path('createsaleorderinvoiceinitial/',views.CreateSaleOrderInvoiceInitial.as_view(),name='CreateSaleOrderInvoiceInitial'),
+    # Function views:
+    path('cancelnewsaleorderinvoice/',views.CancelNewSaleOrderInvoiceSession,name='CancelNewSaleOrderInvoiceSession'),
+
     #AJAX
     path('ajaxcall/selectsupplier/',views.SelectSupplier,name='SelectSupplier'),
     path('ajaxcall/selectsaleorder/',views.SelectSaleOrder,name='SelectSaleOrder'),
