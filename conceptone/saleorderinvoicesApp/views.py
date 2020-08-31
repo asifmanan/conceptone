@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.forms import modelformset_factory
 from django.urls import reverse, reverse_lazy
+from django.db.models import Sum
 from django.template.loader import render_to_string
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse

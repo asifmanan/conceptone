@@ -42,3 +42,15 @@ class SaleOrderInvoiceItem(models.Model):
     total_amount = models.DecimalField(max_digits=14,decimal_places=2)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
+
+    def add_amount_to_saleorderinvoice(self):
+        self.sale_order_invoice.amount += self.amount
+        self.sale_order_invoice.tax_amount += self.tax_amount
+        self.sale_order_invoice.total_amount += self.amount + self.tax_amount
+        self.sale_order_invoice.save()
+
+    def remove_amount_from_saleorderinvoice(self):
+        self.sale_order_invoice.amount -= self.amount
+        self.sale_order_invoice.tax_amount -= self.tax_amount
+        self.sale_order_invoice.total_amount -= self.amount + self.tax_amount
+        self.sale_order_invoice.save()
