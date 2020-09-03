@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+{% extends "saleorderinvoicesapp/base.html" %}
+{% load static %}
+{% block headblock %}
+<title>Sale Order Invoice | conceptOne</title>
+{% endblock headblock%}
+
+{% block bodyblock %}
+    <div class="container">
+        <div class="card mt-2">
+            <div class="card-body">
+                <h4 class="card-title">SALE ORDER INVOICE</h4>
+                <h6 class="text-muted card-subtitle mb-2">INVOICE NO</h6>
+                <hr style="margin-right: -20px;margin-left: -20px;">
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 col-xl-6">
+                        <div class="table-responsive table-borderless">
+                            <table class="table table-bordered table-sm">
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 98px;padding: 0px;">PO number</td>
+                                        <td class="font-weight-bold" style="padding: 0px;">100292000</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-6">
+                        <div class="table-responsive table-borderless">
+                            <table class="table table-bordered table-sm">
+                                <tbody>
+                                    <tr>
+                                        <td style="padding: 0px;width: 98px;">Invoice date</td>
+                                        <td class="font-weight-bold" style="padding: 0px;">10/9/2020</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 mt-2">
+                        <h6 class="text-muted" style="margin-bottom: 0px;">INVOICE TO</h6>
+                        <p class="font-weight-bold" style="margin-bottom: 0px;">Huawei Technologies Co., Ltd</p>
+                        <p style="margin-bottom: 0px;">Address</p>
+                        <p style="margin-bottom: 0px;">NTN</p>
+                        <p style="margin-bottom: 0px;">STRN</p>
+                        <p style="margin-bottom: 0px;">Phone</p>
+                        <p style="margin-bottom: 0px;">Email</p>
+                    </div>
+                    <div class="col-md-6 col-lg-6 mt-2">
+                        <h6 class="text-muted" style="margin-bottom: 0px;">INVOICE FROM</h6>
+                        <p class="font-weight-bold" style="margin-bottom: 0px;">Amanullah Khan &amp; Co (Pvt) Ltd</p>
+                        <p style="margin-bottom: 0px;">Address</p>
+                        <p style="margin-bottom: 0px;">NTN</p>
+                        <p style="margin-bottom: 0px;">STRN</p>
+                        <p style="margin-bottom: 0px;">Phone</p>
+                        <p style="margin-bottom: 0px;">Email</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mt-4">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr class="table-active">
+                                        <th scope="col">Sr</th>
+                                        <th scope="col">Po Line</th>
+                                        <th>Item Description</th>
+                                        <th>UoM</th>
+                                        <th class="text-right">Rate</th>
+                                        <th class="text-right">Amount</th>
+                                        <th class="text-right">Tax Rate</th>
+                                        <th class="text-right">Tax Amount</th>
+                                        <th class="text-right">Total Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Cell 1</td>
+                                        <td>Cell 2</td>
+                                        <td>Cell 3</td>
+                                        <td>Cell 4</td>
+                                        <td class="text-right">Cell 5</td>
+                                        <td class="text-right">Cell 6</td>
+                                        <td class="text-right">Cell 7</td>
+                                        <td class="text-right">Cell 8</td>
+                                        <td class="text-right">Cell 9</td>
+                                    </tr>
+                                    <tr class="bg-light">
+                                        <td class="text-right font-weight-bold" colspan="7">Sub total</td>
+                                        <td class="text-right font-weight-bold" colspan="2">Cell 9</td>
+                                    </tr>
+                                    <tr class="bg-light">
+                                        <td class="text-right font-weight-bold" colspan="7">Tax amount</td>
+                                        <td class="text-right font-weight-bold" colspan="2">Cell 9</td>
+                                    </tr>
+                                    <tr class="bg-light">
+                                        <td class="text-right font-weight-bold" colspan="7">Total amount</td>
+                                        <td class="text-right font-weight-bold" colspan="2">Cell 9</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock bodyblock%}
+{% block customjs %}
+
+{% endblock customjs %}
