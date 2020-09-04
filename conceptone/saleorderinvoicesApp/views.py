@@ -174,7 +174,7 @@ class CreateSaleOrderInvoiceItem(FormView):
         del self.request.session["so_invoice_saleorder"]
         del self.request.session["so_invoice_selected_item"]
 
-        return reverse('saleorderinvoicesApp:NewSaleOrderInvoice')
+        return reverse('saleorderinvoicesApp:DetailSaleOrderInvoice',kwargs=self.pk)
 
 def CancelNewSaleOrderInvoiceSession(request):
     del request.session['so_invoice_company']
@@ -193,10 +193,11 @@ class ListSaleOrderInvioce(FormView):
 
 class DetailSaleOrderInvoice(DetailView):
     model = SaleOrderInvoice
-    template_name = 'saleorderinvoicesapp/detailsaleorderinvoice.html'
+    context_object_name = 'saleorderinvoice'
+    template_name = 'saleorderinvoicesapp/detail_saleorderinvoice.html'
     def get_context_data(self,*args,**kwargs):
         context = super().get_context_data(*args,**kwargs)
-        context['sale_order_items'] = SaleOrderInvoiceItem.objects.filter(sale_order_invoice=self.object)
+        context['invoice_items'] = SaleOrderInvoiceItem.objects.filter(sale_order_invoice=self.object)
         return context
 
 # AJAX CALL

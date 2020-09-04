@@ -7,7 +7,7 @@ urlpatterns=[
     path('newsaleorderinvoice/',views.NewSaleOrderInvoice.as_view(),name='NewSaleOrderInvoice'),
     path('createsaleorderinvoiceitem/',views.CreateSaleOrderInvoiceItem.as_view(),name='CreateSaleOrderInvoiceItem'),
     path('listsaleorderinvoice/',views.ListSaleOrderInvioce.as_view(),name='ListSaleOrderInvoice'),
-    path('detailsaleorderinvoice/',views.DetailSaleOrderInvoice.as_view(),name='DetailSaleOrderInvoice'),
+    path('detailsaleorderinvoice/<int:pk>',views.DetailSaleOrderInvoice.as_view(),name='DetailSaleOrderInvoice'),
     # path('createsaleorderinvoiceinitial/',views.CreateSaleOrderInvoiceInitial.as_view(),name='CreateSaleOrderInvoiceInitial'),
     # Function views:
     path('cancelnewsaleorderinvoice/',views.CancelNewSaleOrderInvoiceSession,name='CancelNewSaleOrderInvoiceSession'),

@@ -6,11 +6,11 @@
 {% endblock headblock%}
 
 {% block bodyblock %}
-    <div class="container">
+    <div class="container-fluid">
         <div class="card mt-2">
             <div class="card-body">
                 <h4 class="card-title">SALE ORDER INVOICE</h4>
-                <h6 class="text-muted card-subtitle mb-2">INVOICE NO</h6>
+                <h6 class="text-muted card-subtitle mb-2">{{saleorderinvoice.invoice_number}}</h6>
                 <hr style="margin-right: -20px;margin-left: -20px;">
                 <div class="row">
                     <div class="col-md-6 col-lg-6 col-xl-6">
@@ -19,7 +19,7 @@
                                 <tbody>
                                     <tr>
                                         <td style="width: 98px;padding: 0px;">PO number</td>
-                                        <td class="font-weight-bold" style="padding: 0px;">100292000</td>
+                                        <td class="font-weight-bold" style="padding: 0px;">{{saleorderinvoice.sale_order.buyer_po_number}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -31,7 +31,7 @@
                                 <tbody>
                                     <tr>
                                         <td style="padding: 0px;width: 98px;">Invoice date</td>
-                                        <td class="font-weight-bold" style="padding: 0px;">10/9/2020</td>
+                                        <td class="font-weight-bold" style="padding: 0px;">{{saleorderinvoice.invoice_date}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -41,33 +41,33 @@
                 <div class="row">
                     <div class="col-md-6 col-lg-6 mt-2">
                         <h6 class="text-muted" style="margin-bottom: 0px;">INVOICE TO</h6>
-                        <p class="font-weight-bold" style="margin-bottom: 0px;">Huawei Technologies Co., Ltd</p>
-                        <p style="margin-bottom: 0px;">Address</p>
-                        <p style="margin-bottom: 0px;">NTN</p>
+                        <p class="font-weight-bold" style="margin-bottom: 0px;">{{saleorderinvoice.sale_order.buyer.customer_name}}</p>
+                        <p style="margin-bottom: 0px;">NTN <strong>{{saleorderinvoice.sale_order.buyer.customer_ntn_number}}</strong></p>
                         <p style="margin-bottom: 0px;">STRN</p>
-                        <p style="margin-bottom: 0px;">Phone</p>
-                        <p style="margin-bottom: 0px;">Email</p>
+                        <p style="margin-bottom: 0px;">{{saleorderinvoice.sale_order.buyer.customer_address}}, {{saleorderinvoice.sale_order.buyer.customer_city}}</p>
+                        <p style="margin-bottom: 0px;">{{saleorderinvoice.sale_order.buyer.customer_phone}}</p>
+                        <p style="margin-bottom: 0px;">{{saleorderinvoice.sale_order.buyer.customer_email}}</p>
                     </div>
                     <div class="col-md-6 col-lg-6 mt-2">
                         <h6 class="text-muted" style="margin-bottom: 0px;">INVOICE FROM</h6>
-                        <p class="font-weight-bold" style="margin-bottom: 0px;">Amanullah Khan &amp; Co (Pvt) Ltd</p>
-                        <p style="margin-bottom: 0px;">Address</p>
-                        <p style="margin-bottom: 0px;">NTN</p>
+                        <p class="font-weight-bold" style="margin-bottom: 0px;">{{saleorderinvoice.sale_order.supplier.company_name}}</p>
+                        <p style="margin-bottom: 0px;">NTN <strong>{{saleorderinvoice.sale_order.supplier.company_ntn_number}}</strong> </p>
                         <p style="margin-bottom: 0px;">STRN</p>
-                        <p style="margin-bottom: 0px;">Phone</p>
-                        <p style="margin-bottom: 0px;">Email</p>
+                        <p style="margin-bottom: 0px;">{{saleorderinvoice.sale_order.supplier.company_address}}, {{saleorderinvoice.sale_order.supplier.company_city}}</p>
+                        <p style="margin-bottom: 0px;">{{saleorderinvoice.sale_order.supplier.company_phone}}</p>
+                        <p style="margin-bottom: 0px;">{{saleorderinvoice.sale_order.supplier.company_email}}</p>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col mt-4">
+                <div class="row mt-4">
+                  <div class="col-12">
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr class="table-active">
-                                        <th scope="col">Sr</th>
-                                        <th scope="col">Po Line</th>
-                                        <th>Item Description</th>
-                                        <th>UoM</th>
+                                        <th class="">Sr</th>
+                                        <th class="">Po Line</th>
+                                        <th class="">Item Description</th>
+                                        <th class="">UoM</th>
                                         <th class="text-right">Rate</th>
                                         <th class="text-right">Amount</th>
                                         <th class="text-right">Tax Rate</th>
@@ -76,28 +76,37 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Cell 1</td>
-                                        <td>Cell 2</td>
-                                        <td>Cell 3</td>
-                                        <td>Cell 4</td>
-                                        <td class="text-right">Cell 5</td>
-                                        <td class="text-right">Cell 6</td>
-                                        <td class="text-right">Cell 7</td>
-                                        <td class="text-right">Cell 8</td>
-                                        <td class="text-right">Cell 9</td>
+                                  {% if invoice_items %}
+                                    {% for line_item in invoice_items %}
+                                    <tr class="">
+                                        <td class="">1</td>
+                                        <td class="">{{line_item.item.line_number}}</td>
+                                        <td class="">{{line_item.item.item.item_description}}</td>
+                                        <td class="">{{line_item.item.item.item_uom}}</td>
+                                        <td class="text-right">{{line_item.item.sale_price}}</td>
+                                        <td class="text-right">{{line_item.amount}}</td>
+                                        <td class="text-right">{{line_item.item.tax.tax_value}}</td>
+                                        <td class="text-right">{{line_item.tax_amount}}</td>
+                                        <td class="text-right">{{line_item.total_amount}}</td>
                                     </tr>
+                                    {% endfor %}
+                                  {% else %}
+                                    <tr>
+                                      <td colspan="9">No items exists in this invoice</td>
+                                    </tr>
+                                  {% endif %}
+
                                     <tr class="bg-light">
                                         <td class="text-right font-weight-bold" colspan="7">Sub total</td>
-                                        <td class="text-right font-weight-bold" colspan="2">Cell 9</td>
+                                        <td class="text-right font-weight-bold" colspan="2">{{saleorderinvoice.amount}}</td>
                                     </tr>
                                     <tr class="bg-light">
                                         <td class="text-right font-weight-bold" colspan="7">Tax amount</td>
-                                        <td class="text-right font-weight-bold" colspan="2">Cell 9</td>
+                                        <td class="text-right font-weight-bold" colspan="2">{{saleorderinvoice.tax_amount}}</td>
                                     </tr>
                                     <tr class="bg-light">
                                         <td class="text-right font-weight-bold" colspan="7">Total amount</td>
-                                        <td class="text-right font-weight-bold" colspan="2">Cell 9</td>
+                                        <td class="text-right font-weight-bold" colspan="2">{{saleorderinvoice.total_amount}}</td>
                                     </tr>
                                 </tbody>
                             </table>

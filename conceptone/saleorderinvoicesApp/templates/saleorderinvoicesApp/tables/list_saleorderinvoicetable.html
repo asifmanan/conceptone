@@ -17,7 +17,7 @@
       {% for item in object_list  %}
         <tr>
           <td>
-            <a href={% url 'standardinvoiceApp:CreateStandardInvoiceItem' item.id %}>
+            <a href={% url 'saleorderinvoicesApp:DetailSaleOrderInvoice' item.id %}>
             {{item.invoice_number}}
             </a>
           </td>
