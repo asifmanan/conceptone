@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.forms import modelformset_factory
 from django.urls import reverse, reverse_lazy
-from django.db.models import Sum
 from django.template.loader import render_to_string
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -21,6 +20,7 @@ from saleordersApp.models import (
 from saleorderinvoicesApp.models import (
                                         SaleOrderInvoice,
                                         SaleOrderInvoiceItem,
+                                        PublishedSaleOrderInvoice,
                                         )
 from saleorderinvoicesApp.forms import (
                                         SaleOrderInvoiceForm,
@@ -165,6 +165,7 @@ class CreateSaleOrderInvoiceItem(FormView):
             invoice_line_item.save()
 
         invoice.CalculateTotal()
+        self.invoice=invoice
 
         return super().form_valid(item_formset)
 
@@ -174,7 +175,7 @@ class CreateSaleOrderInvoiceItem(FormView):
         del self.request.session["so_invoice_saleorder"]
         del self.request.session["so_invoice_selected_item"]
 
-        return reverse('saleorderinvoicesApp:DetailSaleOrderInvoice',kwargs=self.pk)
+        return reverse('saleorderinvoicesApp:DetailSaleOrderInvoice',kwargs={'pk':self.invoice.id})
 
 def CancelNewSaleOrderInvoiceSession(request):
     del request.session['so_invoice_company']
@@ -199,6 +200,15 @@ class DetailSaleOrderInvoice(DetailView):
         context = super().get_context_data(*args,**kwargs)
         context['invoice_items'] = SaleOrderInvoiceItem.objects.filter(sale_order_invoice=self.object)
         return context
+
+class PublishSaleOrderInvoice(View):
+    def post(self, request, *args, **kwargs):
+        print(self.kwargs['pk'])
+        invoice = get_object_or_404(SaleOrderInvoice,pk=self.kwargs['pk'])
+        p_invoice = PublishedSaleOrderInvoice.create(invoice)
+        # p_invoice.save()
+        print(p_invoice)
+        return redirect('saleorderinvoicesApp:ListSaleOrderInvoice')
 
 # AJAX CALL
 def SelectSupplier(request):

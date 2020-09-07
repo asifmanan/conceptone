@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.db.models import Sum
 from saleordersApp.models import SaleOrder, SaleOrderItem
 from baseApp.models import Company
 
@@ -33,9 +34,28 @@ class SaleOrderInvoice(models.Model):
     def __str__(self):
         return self.invoice_number
 
+class PublishedSaleOrderInvoice(models.Model):
+    invoice = models.ForeignKey(SaleOrderInvoice, on_delete=models.PROTECT)
+    invoice_number = models.CharField(max_length=56, unique=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    @classmethod
+    def create(cls,unpublished_invoice):
+        p_invoice = cls(invoice=unpublished_invoice)
+        return p_invoice
+
+    def PublishInvoice(self,invoice,*args,**kwargs):
+        if not self.invoice_number:
+            invoice_year = self.invoice.invoice_date.year
+            project_code = self.invoice.sale_order.buyer.customer_code
+            invoice_uid = self.id + 10000
+            invoice_number = invoice_year + project_code + '-' + str(invoice_uid)
+            self.save()
+
 class SaleOrderInvoiceItem(models.Model):
     sale_order_invoice = models.ForeignKey(SaleOrderInvoice, on_delete=models.PROTECT)
-    item = models.ForeignKey(SaleOrderItem, on_delete=models.PROTECT)
+    item = models.ForeignKey(SaleOrderItem, on_delete=models.CASCADE)
     bill_quantity = models.DecimalField(max_digits=14,decimal_places=4)
     amount = models.DecimalField(max_digits=14,decimal_places=2)
     tax_amount = models.DecimalField(max_digits=14,decimal_places=2)

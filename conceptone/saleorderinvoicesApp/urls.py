@@ -11,7 +11,7 @@ urlpatterns=[
     # path('createsaleorderinvoiceinitial/',views.CreateSaleOrderInvoiceInitial.as_view(),name='CreateSaleOrderInvoiceInitial'),
     # Function views:
     path('cancelnewsaleorderinvoice/',views.CancelNewSaleOrderInvoiceSession,name='CancelNewSaleOrderInvoiceSession'),
-
+    path('publishsaleorderinvoice/<int:pk>',views.PublishSaleOrderInvoice.as_view(),name='PublishSaleOrderInvoice'),
     #AJAX
     path('ajaxcall/selectsupplier/',views.SelectSupplier,name='SelectSupplier'),
     path('ajaxcall/selectsaleorder/',views.SelectSaleOrder,name='SelectSaleOrder'),

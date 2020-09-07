@@ -9,9 +9,19 @@
     <div class="container-fluid">
         <div class="card mt-2">
             <div class="card-body">
-                <h4 class="card-title">SALE ORDER INVOICE</h4>
-                <h6 class="text-muted card-subtitle mb-2">{{saleorderinvoice.invoice_number}}</h6>
-                <hr style="margin-right: -20px;margin-left: -20px;">
+              <div class="row">
+                <div class="col">
+                  <h4 class="card-title">SALE ORDER INVOICE</h4>
+                  <h6 class="text-muted card-subtitle mb-2">{{saleorderinvoice.invoice_number}}</h6>
+                </div>
+                <div class="col text-right">
+                  <form action="{% url 'saleorderinvoicesApp:PublishSaleOrderInvoice' object.pk %}" method="post">{% csrf_token %}
+                    <button class="btn btn-primary" type="button" name="button">Print</button>
+                    <button class="btn btn-success" type="submit" name="button">Publish</button>
+                  </form>
+                </div>
+              </div>
+              <hr style="margin-right: -20px;margin-left: -20px;">
                 <div class="row">
                     <div class="col-md-6 col-lg-6 col-xl-6">
                         <div class="table-responsive table-borderless">
