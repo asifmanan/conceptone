@@ -206,8 +206,7 @@ class PublishSaleOrderInvoice(View):
         print(self.kwargs['pk'])
         invoice = get_object_or_404(SaleOrderInvoice,pk=self.kwargs['pk'])
         p_invoice = PublishedSaleOrderInvoice.create(invoice)
-        # p_invoice.save()
-        print(p_invoice)
+        print(p_invoice.id)
         return redirect('saleorderinvoicesApp:ListSaleOrderInvoice')
 
 # AJAX CALL

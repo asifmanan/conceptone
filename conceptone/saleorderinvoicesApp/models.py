@@ -35,23 +35,30 @@ class SaleOrderInvoice(models.Model):
         return self.invoice_number
 
 class PublishedSaleOrderInvoice(models.Model):
-    invoice = models.ForeignKey(SaleOrderInvoice, on_delete=models.PROTECT)
-    invoice_number = models.CharField(max_length=56, unique=True)
+    invoice = models.ForeignKey(SaleOrderInvoice, on_delete=models.DO_NOTHING)
+    invoice_number = models.CharField(max_length=56, unique=True,null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
     @classmethod
     def create(cls,unpublished_invoice):
         p_invoice = cls(invoice=unpublished_invoice)
+        p_invoice.invoice_number=None
+        p_invoice.save()
+        p_invoice.invoice_number = p_invoice.PublishInvoice()
+        p_invoice.save()
+        if not p_invoice.invoice_number:
+            del p_invoice
         return p_invoice
 
-    def PublishInvoice(self,invoice,*args,**kwargs):
+    def PublishInvoice(self,*args,**kwargs):
         if not self.invoice_number:
             invoice_year = self.invoice.invoice_date.year
             project_code = self.invoice.sale_order.buyer.customer_code
             invoice_uid = self.id + 10000
-            invoice_number = invoice_year + project_code + '-' + str(invoice_uid)
-            self.save()
+            invoice_number = str(invoice_year) + project_code + '-' + str(invoice_uid)
+            # print(invoice_number)
+            return invoice_number or None
 
 class SaleOrderInvoiceItem(models.Model):
     sale_order_invoice = models.ForeignKey(SaleOrderInvoice, on_delete=models.PROTECT)
