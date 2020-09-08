@@ -195,7 +195,7 @@ class ListSaleOrderInvioce(FormView):
             if hasattr(invoice, 'published_invoice'):
                 print(invoice.published_invoice.invoice_number)
 
-        print("HELLO!")
+        # print("HELLO!")
         # for invoice in published_invoices:
         #     print('invoice no. ',{}.format(invoice))
         return context
@@ -211,10 +211,10 @@ class DetailSaleOrderInvoice(DetailView):
 
 class PublishSaleOrderInvoice(View):
     def post(self, request, *args, **kwargs):
-        print(self.kwargs['pk'])
+        # print(self.kwargs['pk'])
         invoice = get_object_or_404(SaleOrderInvoice,pk=self.kwargs['pk'])
         p_invoice = PublishedSaleOrderInvoice.create(invoice)
-        print(p_invoice.id)
+        # print(p_invoice.id)
         return redirect('saleorderinvoicesApp:ListSaleOrderInvoice')
 
 # AJAX CALL

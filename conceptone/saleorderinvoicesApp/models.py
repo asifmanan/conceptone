@@ -56,7 +56,7 @@ class PublishedSaleOrderInvoice(models.Model):
 
     def PublishInvoice(self,*args,**kwargs):
         if not self.invoice_number:
-            invoice_year = self.invoice.invoice_date.year
+            invoice_year = self.invoice.invoice_date.strftime("%y")
             project_code = self.invoice.sale_order.buyer.customer_code
             invoice_uid = self.id + 10000
             invoice_number = str(invoice_year) + project_code + '-' + str(invoice_uid)
