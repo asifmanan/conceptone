@@ -35,10 +35,13 @@ class SaleOrderInvoice(models.Model):
         return self.invoice_number
 
 class PublishedSaleOrderInvoice(models.Model):
-    invoice = models.ForeignKey(SaleOrderInvoice, on_delete=models.DO_NOTHING)
+    invoice = models.OneToOneField(SaleOrderInvoice, on_delete=models.PROTECT, related_name='published_invoice')
     invoice_number = models.CharField(max_length=56, unique=True,null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.invoice_number
 
     @classmethod
     def create(cls,unpublished_invoice):
@@ -61,8 +64,8 @@ class PublishedSaleOrderInvoice(models.Model):
             return invoice_number or None
 
 class SaleOrderInvoiceItem(models.Model):
-    sale_order_invoice = models.ForeignKey(SaleOrderInvoice, on_delete=models.PROTECT)
-    item = models.ForeignKey(SaleOrderItem, on_delete=models.CASCADE)
+    sale_order_invoice = models.ForeignKey(SaleOrderInvoice, on_delete=models.CASCADE)
+    item = models.ForeignKey(SaleOrderItem, on_delete=models.PROTECT)
     bill_quantity = models.DecimalField(max_digits=14,decimal_places=4)
     amount = models.DecimalField(max_digits=14,decimal_places=2)
     tax_amount = models.DecimalField(max_digits=14,decimal_places=2)

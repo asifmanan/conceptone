@@ -189,7 +189,15 @@ class ListSaleOrderInvioce(FormView):
     template_name = 'saleorderinvoicesApp/list_saleorderinvoice.html'
     def get_context_data(self,*args,**kwargs):
         context = super().get_context_data(*args,**kwargs)
-        context['object_list'] = SaleOrderInvoice.objects.all().order_by('invoice_date')
+        sale_order_invoices = SaleOrderInvoice.objects.all().order_by('invoice_date')
+        context['object_list'] = sale_order_invoices
+        for invoice in sale_order_invoices:
+            if hasattr(invoice, 'published_invoice'):
+                print(invoice.published_invoice.invoice_number)
+
+        print("HELLO!")
+        # for invoice in published_invoices:
+        #     print('invoice no. ',{}.format(invoice))
         return context
 
 class DetailSaleOrderInvoice(DetailView):
