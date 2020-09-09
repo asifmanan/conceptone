@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.views.generic import (
                                 CreateView,
                                 DetailView,
+                                ListView,
                                 DeleteView,
                                 FormView,
                                 TemplateView,
@@ -191,9 +192,9 @@ class ListSaleOrderInvioce(FormView):
         context = super().get_context_data(*args,**kwargs)
         sale_order_invoices = SaleOrderInvoice.objects.all().order_by('invoice_date')
         context['object_list'] = sale_order_invoices
-        for invoice in sale_order_invoices:
-            if hasattr(invoice, 'published_invoice'):
-                print(invoice.published_invoice.invoice_number)
+        # for invoice in sale_order_invoices:
+        #     if hasattr(invoice, 'published_invoice'):
+        #         print(invoice.published_invoice.invoice_number)
 
         # print("HELLO!")
         # for invoice in published_invoices:
@@ -209,12 +210,16 @@ class DetailSaleOrderInvoice(DetailView):
         context['invoice_items'] = SaleOrderInvoiceItem.objects.filter(sale_order_invoice=self.object)
         return context
 
+class ListPublishedInvoice(ListView):
+    model = PublishedSaleOrderInvoice
+    template_name = 'listpublishedsaleorderinvoice.html'
+
+
 class PublishSaleOrderInvoice(View):
     def post(self, request, *args, **kwargs):
-        # print(self.kwargs['pk'])
         invoice = get_object_or_404(SaleOrderInvoice,pk=self.kwargs['pk'])
-        p_invoice = PublishedSaleOrderInvoice.create(invoice)
-        # print(p_invoice.id)
+        published_invoice = invoice.PublishInvoice()
+        print(published_invoice)
         return redirect('saleorderinvoicesApp:ListSaleOrderInvoice')
 
 # AJAX CALL

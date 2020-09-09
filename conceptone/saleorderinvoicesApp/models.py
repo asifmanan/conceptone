@@ -14,6 +14,7 @@ class SaleOrderInvoice(models.Model):
     amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
     tax_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
     total_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
+    is_published = models.BooleanField(default=False)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
@@ -30,6 +31,14 @@ class SaleOrderInvoice(models.Model):
             self.total_amount = total_amount
             self.save()
 
+    def PublishInvoice(self):
+        published_invoice = PublishedSaleOrderInvoice.create(self)
+        if published_invoice:
+            self.is_published = True
+            self.save()
+            return published_invoice
+        else:
+            return None
 
     def __str__(self):
         return self.invoice_number
@@ -48,19 +57,18 @@ class PublishedSaleOrderInvoice(models.Model):
         p_invoice = cls(invoice=unpublished_invoice)
         p_invoice.invoice_number=None
         p_invoice.save()
-        p_invoice.invoice_number = p_invoice.PublishInvoice()
+        p_invoice.invoice_number = p_invoice.GetInvoiceNumber()
         p_invoice.save()
         if not p_invoice.invoice_number:
             del p_invoice
         return p_invoice
 
-    def PublishInvoice(self,*args,**kwargs):
+    def GetInvoiceNumber(self,*args,**kwargs):
         if not self.invoice_number:
             invoice_year = self.invoice.invoice_date.strftime("%y")
             project_code = self.invoice.sale_order.buyer.customer_code
             invoice_uid = self.id + 10000
             invoice_number = str(invoice_year) + project_code + '-' + str(invoice_uid)
-            # print(invoice_number)
             return invoice_number or None
 
 class SaleOrderInvoiceItem(models.Model):
