@@ -210,9 +210,10 @@ class DetailSaleOrderInvoice(DetailView):
         context['invoice_items'] = SaleOrderInvoiceItem.objects.filter(sale_order_invoice=self.object)
         return context
 
-class ListPublishedInvoice(ListView):
+class ListPublishedSaleOrderInvoice(ListView):
     model = PublishedSaleOrderInvoice
-    template_name = 'listpublishedsaleorderinvoice.html'
+    context_object_name = 'published_invoices'
+    template_name = 'saleorderinvoicesapp/list_publishedsaleorderinvoice.html'
 
 
 class PublishSaleOrderInvoice(View):
