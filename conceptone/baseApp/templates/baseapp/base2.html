@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html style="height:100%">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'baseapp/css/base2.css' %}">
+    {% block headblock %}
+    {% endblock headblock %}
+</head>
+<body style="height:100%; position:relative;">
+    {% include "baseapp/topnav.html" %}
+    <div id="wrapper" class="mt-1">
+      {% include "baseapp/sidenav.html" %}
+      <div class="page-content-wrapper">
+          <div class="container-fluid h-100 float-left" style="max-height:100vh;">
+              {% block bodyblock %}
+              {% endblock bodyblock %}
+          </div>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'baseapp/js/base2.js' %}"></script>
+    {% block customjs %}
+    {% endblock customjs %}
+</body>
+
+</html>

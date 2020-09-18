@@ -11,10 +11,13 @@
     <link rel="stylesheet" href="{% static 'saleorderinvoicesapp/css/master.css' %}">
 </head>
 
-<body style="height: 100%;">
+<body class="" style="height: 100%;">
+
     <div class="container-fluid h-100 float-left" style="max-height:100vh;">
+
         <div class="row h-100">
             <div class="col d-flex flex-column vh-100">
+              {% include "baseapp/navbar.html" %}
                 <div class="mt-2">
                   <h5 style="color: #60695c;">PUBLISHED INVOICES</h5>
                 </div>
@@ -73,7 +76,7 @@
               </div>
               <div class="flex-grow-1 overflow-auto mt-3 mb-2 shadow-sm" style="border-radius: 6px;border: 1px solid #ced4da ;">
                   <div>
-                      <div class="table-responsive-md bg-white">
+                      <div class="table-responsive-md">
                           <table class="table" style="border-collapse:collapse; width:100%">
                               <thead style="color: #ffffff;position: sticky;top: 0;border-bottom-width: 2px;border-bottom-style: solid;">
                                   <tr class="bg-blue-1" style="position: sticky;top: 0;background: #004c87;">
@@ -85,15 +88,15 @@
                                       <th style="position: sticky;top: 0;">Total Amount</th>
                                   </tr>
                               </thead>
-                              <tbody class="bg-light">
+                              <tbody class="">
                                 {% if object_list %}
                                   {% for invoice in published_invoices %}
-                                    <tr style="background: rgb(255,255,255);">
-                                        <td>
+                                    <tr style="background-color:#f0f0f0;">
+                                        <td class="table-padding-none">
                                             <p>{{invoice.invoice_number}}</p>
                                         </td>
-                                        <td>{{invoice.invoice.sale_order.buyer.customer_name}}</td>
-                                        <td>{{invoice.invoice.sale_order.project.project_name}}</td>
+                                        <td class="table-padding-none">{{invoice.invoice.sale_order.buyer.customer_name}}</td>
+                                        <td style="padding:0px;">{{invoice.invoice.sale_order.project.project_name}}</td>
                                         <td>{{invoice.invoice.amount}}</td>
                                         <td>{{invoice.invoice.tax_amount}}</td>
                                         <td>{{invoice.invoice.total_amount}}</td>

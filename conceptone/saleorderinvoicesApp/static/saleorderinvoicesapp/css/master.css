@@ -52,6 +52,14 @@ table, p {
   margin: 0px;
 }
 
+table, td {
+  padding:0px;
+}
+
+.table-padding-none {
+  padding-left: 0px;
+}
+
 .btn-textbox.focus, .btn-textbox:focus {
   box-shadow: none;
 }
