@@ -68,7 +68,9 @@
                         <tr class="bg-blue-1" style="position: sticky;top: 0;background: #004c87;">
                             <th style="position: sticky;top: 0;">Invoice No</th>
                             <th style="position: sticky;top: 0;">SO No.</th>
-                            <th style="position: sticky;top: 0;">Company</th>
+                            <th style="position: sticky;top: 0;">Customer</th>
+                            <th style="position: sticky;top: 0;">Project</th>
+                            <th style="position: sticky;top: 0;">Invoice Date</th>
                             <th style="position: sticky;top: 0;">Amount</th>
                             <th style="position: sticky;top: 0;">Tax Amount</th>
                             <th style="position: sticky;top: 0;">Total Amount</th>
@@ -76,16 +78,20 @@
                     </thead>
                     <tbody class="">
                       {% if object_list %}
-                        {% for invoice in published_invoices %}
+                        {% for invoice in unpublished_invoices %}
                           <tr style="background-color:#f0f0f0;">
                               <td class="table-padding-none">
-                                  <p>{{invoice.invoice_number}}</p>
+                                <a href={% url 'saleorderinvoicesApp:DetailSaleOrderInvoice' invoice.id %}>
+                                  {{invoice.invoice_number}}
+                                </a>
                               </td>
-                              <td class="table-padding-none">{{invoice.invoice.sale_order.buyer.customer_name}}</td>
-                              <td style="padding:0px;">{{invoice.invoice.sale_order.project.project_name}}</td>
-                              <td>{{invoice.invoice.amount}}</td>
-                              <td>{{invoice.invoice.tax_amount}}</td>
-                              <td>{{invoice.invoice.total_amount}}</td>
+                              <td class="">{{invoice.sale_order.so_number}}</td>
+                              <td style="">{{invoice.sale_order.buyer.customer_name}}</td>
+                              <td style="">{{invoice.sale_order.project.project_name}}</td>
+                              <td style="">{{invoice.invoice_date}}</td>
+                              <td>{{invoice.amount}}</td>
+                              <td>{{invoice.tax_amount}}</td>
+                              <td>{{invoice.total_amount}}</td>
                           </tr>
                         {% endfor %}
                       {% else %}

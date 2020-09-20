@@ -201,6 +201,12 @@ class ListSaleOrderInvioce(FormView):
         #     print('invoice no. ',{}.format(invoice))
         return context
 
+class ListUnpublishedSaleOrderInvoice(ListView):
+    model = SaleOrderInvoice
+    context_object_name = 'unpublished_invoices'
+    queryset = SaleOrderInvoice.objects.filter(is_published='False')
+    template_name = 'saleorderinvoicesapp/list_unpublishedsaleorderinvoice.html'
+
 class ListPublishedSaleOrderInvoice(ListView):
     model = PublishedSaleOrderInvoice
     context_object_name = 'published_invoices'
