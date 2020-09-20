@@ -190,7 +190,7 @@ class ListSaleOrderInvioce(FormView):
     template_name = 'saleorderinvoicesApp/list_saleorderinvoice.html'
     def get_context_data(self,*args,**kwargs):
         context = super().get_context_data(*args,**kwargs)
-        sale_order_invoices = SaleOrderInvoice.objects.all().order_by('invoice_date')
+        sale_order_invoices = SaleOrderInvoice.objects.all().filter(is_published='False').order_by('invoice_date')
         context['object_list'] = sale_order_invoices
         # for invoice in sale_order_invoices:
         #     if hasattr(invoice, 'published_invoice'):
@@ -201,6 +201,11 @@ class ListSaleOrderInvioce(FormView):
         #     print('invoice no. ',{}.format(invoice))
         return context
 
+class ListPublishedSaleOrderInvoice(ListView):
+    model = PublishedSaleOrderInvoice
+    context_object_name = 'published_invoices'
+    template_name = 'saleorderinvoicesapp/list_publishedsaleorderinvoice.html'
+
 class DetailSaleOrderInvoice(DetailView):
     model = SaleOrderInvoice
     context_object_name = 'saleorderinvoice'
@@ -209,11 +214,6 @@ class DetailSaleOrderInvoice(DetailView):
         context = super().get_context_data(*args,**kwargs)
         context['invoice_items'] = SaleOrderInvoiceItem.objects.filter(sale_order_invoice=self.object)
         return context
-
-class ListPublishedSaleOrderInvoice(ListView):
-    model = PublishedSaleOrderInvoice
-    context_object_name = 'published_invoices'
-    template_name = 'saleorderinvoicesapp/list_publishedsaleorderinvoice.html'
 
 
 class PublishSaleOrderInvoice(View):
