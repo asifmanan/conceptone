@@ -214,8 +214,8 @@ class ListPublishedSaleOrderInvoice(ListView):
 
 class DetailSaleOrderInvoice(DetailView):
     model = SaleOrderInvoice
-    context_object_name = 'saleorderinvoice'
-    template_name = 'saleorderinvoicesapp/detail_saleorderinvoice.html'
+    context_object_name = 'invoice'
+    template_name = 'saleorderinvoicesapp/detailsaleorderinvoice.html'
     def get_context_data(self,*args,**kwargs):
         context = super().get_context_data(*args,**kwargs)
         context['invoice_items'] = SaleOrderInvoiceItem.objects.filter(sale_order_invoice=self.object)

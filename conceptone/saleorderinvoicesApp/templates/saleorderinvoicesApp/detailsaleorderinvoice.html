@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+{% extends "saleorderinvoicesapp/base.html" %}
+{% load static %}
+{% block headblock %}
+  <title>View Invoice | conceptOne</title>
+{% endblock %}
+{% block bodyblock %}
+    <div class="mt-2">
+      <h5 style="color: #60695c;">SALE ORDER INVOICE</h5>
+    </div>
+
+    <div class="shadow-sm" style="padding: 10px;border: 1px solid #ced4da;">
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-3 mb-2">
+            <div style="border-left-style: solid;border-left-color: #0080ff;padding-left: 6px;">
+                <h6 class="text-muted mb-2">INVOICE INFORMATION</h6>
+                <h6 style="margin-bottom: 0px;margin-top: -6px;">{{ invoice.invoice_number }}</h6>
+                <p style="margin-bottom: 0px;">{{ invoice.invoice_date }}</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3 mb-2">
+            <div style="border-left-style: solid;border-left-color: #0080ff;padding-left: 6px;">
+                <h6 class="text-muted">INVOICE TO</h6>
+                <h6 style="margin-bottom: 0px;margin-top: -6px;">{{ invoice.sale_order.buyer.customer_name }}</h6>
+                <p style="margin-bottom: 0px;">{{ invoice.sale_order.buyer.customer_code }}</p></div>
+        </div>
+          <div class="col-12 col-md-6 col-lg-3 mb-2">
+              <div style="border-left-style: solid;border-left-color: #0080ff;padding-left: 6px;">
+                  <h6 class="text-muted">PROJECT</h6>
+                  <h6 style="margin-bottom: 0px;margin-top: -6px;">{{ invoice.sale_order.project.project_name}}</h6>
+                  <p style="margin-bottom: 0px;">{{ invoice.sale_order.project.project_code }}</p></div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3 mb-2">
+              <div style="border-left-style: solid;border-left-color: #0080ff;padding-left: 6px;">
+                  <h6 class="text-muted">SALE ORDER</h6>
+                  <h6 style="margin-bottom: 0px;margin-top: -6px;">{{ invoice.sale_order.so_number }}</h6>
+                  <p style="margin-bottom: 0px;">Customer PO: {{ invoice.sale_order.buyer_po_number }}</p></div>
+          </div>
+      </div>
+    </div>
+
+    <div class="flex-grow-1 overflow-auto mt-3 mb-2 shadow-sm" style="border-radius: 6px;border: 1px solid #ced4da;">
+        <div>
+            <div class="table-responsive-md">
+                <table class="table" style="border-collapse:collapse; width:100%">
+                    <thead style="color: #ffffff;position: sticky;top: 0;border-bottom-width: 2px;border-bottom-style: solid;">
+                        <tr class="bg-blue-1" style="background: #004c87;">
+                            <th style="position: sticky;top: 0;background: #004c87;">Line</th>
+                            <th style="position: sticky;top: 0;background: #004c87;">Item Description</th>
+                            <th style="position: sticky;top: 0;background: #004c87;">UoM</th>
+                            <th style="position: sticky;top: 0;background: #004c87;">Rate</th>
+                            <th style="position: sticky;top: 0;background: #004c87;">Quantity</th>
+                            <th style="position: sticky;top: 0;background: #004c87;">Amount</th>
+                            <th style="position: sticky;top: 0;background: #004c87;">Tax Rate</th>
+                            <th style="position: sticky;top: 0;background: #004c87;">Tax Amount</th>
+                            <th style="position: sticky;top: 0;background: #004c87;">Total Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody class="">
+                      {% if invoice_items %}
+                        {% for line_item in invoice_items %}
+                          <tr style="background-color:#f0f0f0;">
+                              <td>{{line_item.item.line_number}}</td>
+                              <td>{{line_item.item.item.item_description}}</td>
+                              <td>{{line_item.item.item.item_uom}}</td>
+                              <td>{{line_item.item.sale_price}}</td>
+                              <td>{{line_item.bill_quantity}}</td>
+                              <td>{{line_item.amount}}</td>
+                              <td>{{line_item.item.tax.tax_value}}</td>
+                              <td>{{line_item.tax_amount}}</td>
+                              <td>{{line_item.total_amount}}</td>
+                          </tr>
+                        {% endfor %}
+                      {% else %}
+                        <tr>
+                          <td colspan="9">No items exists in this invoice</td>
+                        </tr>
+                      {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div>
+        <nav>
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+            </ul>
+        </nav>
+    </div>
+{% endblock bodyblock %}
+{% block customjs %}
+
+{% endblock customjs %}
