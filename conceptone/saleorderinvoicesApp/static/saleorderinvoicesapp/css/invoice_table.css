@@ -1,0 +1,52 @@
+.table td input {
+  width: 100%;
+  /*border: 1px solid #ced4da;*/
+  border: none;
+}
+
+.table td input:focus {
+  outline: 1px solid #2eb4ff;
+}
+
+.invoice_table thead td, .invoice_table thead th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+  color: #585858;
+  padding: 4px 1px;
+  border: 1px solid #ced4da;
+  text-align: center;
+}
+
+.invoice_table tbody td {
+  border: 1px solid #ced4da;
+  padding: 1px;
+  text-align: center;
+}
+.invoice_table.number_field tbody td{
+  text-align: right;
+}
+.invoice_total input {
+  display: block;
+  width: 100%;
+  border: 1px solid #ced4da;
+  background-color: #f1f1f1;
+}
+
+.invoice_total input:hover {
+  outline: none;
+}
+
+.invoice_total div div label {
+  margin-bottom: 0px;
+  font-weight: 600;
+}
+
+.row.invoice_total {
+  padding: 4px 12px;
+  border: 1px;
+}
+
+.invoice_total {
+  padding: 8px 15px;
+  border: 1px solid #ced4da;
+}

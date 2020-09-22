@@ -81,9 +81,7 @@
                         {% if object_list %}
                           {% for invoice in published_invoices %}
                             <tr style="background: rgb(255,255,255);">
-                                <td>
-                                    <p>{{invoice.invoice_number}}</p>
-                                </td>
+                                <td><a href="{% url 'saleorderinvoicesApp:DetailSaleOrderInvoice' invoice.invoice.id %}">{{invoice.invoice_number}}</a></td>
                                 <td>{{invoice.invoice.sale_order.buyer.customer_name}}</td>
                                 <td>{{invoice.invoice.sale_order.project.project_name}}</td>
                                 <td>{{invoice.invoice.amount}}</td>
