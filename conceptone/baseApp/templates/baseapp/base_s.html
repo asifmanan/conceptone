@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'baseapp/css/sidebar-menu.css' %}">
+    {% block headblock %}
+    {% endblock headblock %}
+</head>
+
+<body class="" style="background: #f6f7fb;">
+    <nav class="navbar navbar-light navbar-expand-md bg-white shadow-sm" style="padding-left: 0px;margin-left: -15px;z-index:1100;position:sticky;top:0;">
+        <div class="container-fluid">
+            <div style="width:250px;"><button class="btn ml-4 ml-md-2 sidebar-toggler" id="menu-toggle" type="button" style="margin-left: 2px;border-style: none;border-color: #e5e5e5;"><span class="navbar-toggler-icon"></span></button></div><button data-toggle="collapse" class="navbar-toggler"
+                data-target="#navcol-1" style="border-style: none;outline:none;"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse pl-3 pl-md-0" id="navcol-1">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item"><a class="nav-link active" href="#" style="margin-left: 8px;">First Item</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" style="margin-left: 8px;">Second Item</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" style="margin-left: 8px;">Third Item</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="wrapper">
+        <div id="sidebar-wrapper" style="border-width: 1px;border-color: #e4e4e4;border-right-style: solid;background: #404e67;">
+            <ul class="sidebar-nav">
+                <li> <a href="#">Sales</a> </li>
+                <li> <a href="#">Purchases</a> </li>
+                <li> <a href="#">Projects</a> </li>
+                <li> <a href="#">Customers</a> </li>
+                <li> <a href="#">Items</a> </li>
+            </ul>
+        </div>
+        <div class="page-content-wrapper">
+              {% block bodyblock %}
+              {% endblock bodyblock %}
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static "baseapp/js/currency-format.js" %}"></script>
+    <script src="{% static "baseapp/js/sidebar-menu.js" %}"></script>
+    {% block customjs %}
+    {% endblock customjs %}
+</body>
+
+</html>
