@@ -1,69 +1,89 @@
 <!DOCTYPE html>
-{% extends "saleorderinvoicesapp/base.html" %}
+{% extends "baseapp/base_s.html" %}
 {% load static %}
 {% block headblock %}
   <title>Published Invoices | conceptOne</title>
 {% endblock %}
 {% block bodyblock %}
-    <div class="mt-2" style="border-left:2px;">
-      <h5 style="color: #60695c;border-left:8px solid #ffd600;">DRAFT INVOICES</h5>
-    </div>
-    <div class="shadow-sm" style="border: 1px solid #ced4da ;">
-        <form>
-          <div class="input-group"><input class="form-control form-control-lg txt-search-custom" type="text" placeholder="Search" style="border-top-left-radius: 0px;border-bottom-left-radius: 0px;border-width: 1px;border-style: solid;border-top-style: none;border-right-style: none;border-bottom-style: none;border-left-style: none;">
-            <div class="input-group-append">
-              <button class="btn btn-textbox" type="button">
-                <i class="fa fa-search"></i></button>
-              <button class="btn btn-textbox" type="button" data-toggle="modal" data-target="#id-modal-advanced-search">
-                <i class="fa fa-ellipsis-v"></i></button></div>
+<div class="container-fluid">
+  <div class="row mb-2">
+      <div class="col-md-12">
+          <div class="mt-3 shadow-sm" style="background: #ffffff;padding: 8px;border: 1px solid #ced4da;border-radius: 4px;">
+              <div class="row">
+                  <div class="col">
+                      <div style="margin: -8px;padding: 8px;">
+                          <h5 style="color: #60695c;margin-bottom: 2px;">DRAFT INVOICES&nbsp;</h5>
+                          <div class="shadow-sm" style="border: 1px solid #ced4da ;">
+                              <form>
+                                <div class="input-group"><input class="form-control form-control-lg txt-search-custom" type="text" placeholder="Search" style="border-top-left-radius: 0px;border-bottom-left-radius: 0px;border-width: 1px;border-style: solid;border-top-style: none;border-right-style: none;border-bottom-style: none;border-left-style: none;">
+                                  <div class="input-group-append">
+                                    <button class="btn btn-textbox" type="button">
+                                      <i class="fa fa-search"></i></button>
+                                    <button class="btn btn-textbox" type="button" data-toggle="modal" data-target="#id-modal-advanced-search">
+                                      <i class="fa fa-ellipsis-v"></i></button></div>
+                                </div>
+                              </form>
+                          </div>
+                          <div class="modal fade" role="dialog" tabindex="-1" id="id-modal-advanced-search">
+                              <div class="modal-dialog modal-lg" role="document">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <h4 class="modal-title">Advanced Search</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                                      <div class="modal-body">
+                                          <form>
+                                              <div class="form-row mb-1">
+                                                  <div class="col-md-4 col-lg-3 col-xl-3"><label class="col-form-label">Invoice No.</label></div>
+                                                  <div class="col-md-8 col-lg-9 col-xl-9"><input class="form-control" type="text"></div>
+                                              </div>
+                                              <div class="form-row mb-1">
+                                                  <div class="col-md-4 col-lg-3 col-xl-3"><label class="col-form-label">Project</label></div>
+                                                  <div class="col-md-8 col-lg-9 col-xl-9"><input class="form-control" type="text"></div>
+                                              </div>
+                                              <div class="form-row mb-1">
+                                                  <div class="col-md-4 col-lg-3 col-xl-3"><label class="col-form-label">Customer</label></div>
+                                                  <div class="col-md-8 col-lg-9 col-xl-9"><input class="form-control" type="text"></div>
+                                              </div>
+                                              <div class="form-row mb-1">
+                                                  <div class="col-md-4 col-lg-3 col-xl-3"><label class="col-form-label">Date Range</label></div>
+                                                  <div class="col-md-4 col-lg-3 col-xl-3"><input class="form-control" type="text"></div>
+                                                  <div class="col-md-4 col-lg-3 col-xl-3"><input class="form-control" type="text"></div>
+                                              </div>
+                                              <div class="form-row mb-1">
+                                                  <div class="col-md-4 col-lg-3 col-xl-3"><label class="col-form-label">Sale Order No.</label></div>
+                                                  <div class="col-md-8 col-lg-9 col-xl-9"><input class="form-control" type="text"></div>
+                                              </div>
+                                              <div class="form-row mb-1">
+                                                  <div class="col-md-4 col-lg-3 col-xl-3"><label class="col-form-label">Customer PO No.</label></div>
+                                                  <div class="col-md-8 col-lg-9 col-xl-9"><input class="form-control" type="text"></div>
+                                              </div>
+                                          </form>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button">Search</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
           </div>
-        </form>
-    </div>
-
-    <div class="modal fade" role="dialog" tabindex="-1" id="id-modal-advanced-search">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Advanced Search</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-row mb-1">
-                            <div class="col-md-4 col-lg-3 col-xl-3"><label class="col-form-label">Invoice No.</label></div>
-                            <div class="col-md-8 col-lg-9 col-xl-9"><input class="form-control" type="text"></div>
-                        </div>
-                        <div class="form-row mb-1">
-                            <div class="col-md-4 col-lg-3 col-xl-3"><label class="col-form-label">Project</label></div>
-                            <div class="col-md-8 col-lg-9 col-xl-9"><input class="form-control" type="text"></div>
-                        </div>
-                        <div class="form-row mb-1">
-                            <div class="col-md-4 col-lg-3 col-xl-3"><label class="col-form-label">Customer</label></div>
-                            <div class="col-md-8 col-lg-9 col-xl-9"><input class="form-control" type="text"></div>
-                        </div>
-                        <div class="form-row mb-1">
-                            <div class="col-md-4 col-lg-3 col-xl-3"><label class="col-form-label">Date Range</label></div>
-                            <div class="col-md-4 col-lg-3 col-xl-3"><input class="form-control" type="text"></div>
-                            <div class="col-md-4 col-lg-3 col-xl-3"><input class="form-control" type="text"></div>
-                        </div>
-                        <div class="form-row mb-1">
-                            <div class="col-md-4 col-lg-3 col-xl-3"><label class="col-form-label">Sale Order No.</label></div>
-                            <div class="col-md-8 col-lg-9 col-xl-9"><input class="form-control" type="text"></div>
-                        </div>
-                        <div class="form-row mb-1">
-                            <div class="col-md-4 col-lg-3 col-xl-3"><label class="col-form-label">Customer PO No.</label></div>
-                            <div class="col-md-8 col-lg-9 col-xl-9"><input class="form-control" type="text"></div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                  <button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button">Search</button>
-                </div>
+      </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col">
+      <div class="shadow-sm" style="background: #ffffff;padding: 8px;border: 1px solid #ced4da;border-radius: 4px;">
+          <div class="row">
+            <div class="col">
+                <h6 style="color: #60695c;margin-bottom: 4px;">Invoice Items</h6>
             </div>
-        </div>
-    </div>
-    <div class="flex-grow-1 overflow-auto mt-3 mb-2 shadow-sm" style="border-radius: 6px;border: 1px solid #ced4da ;">
-        <div>
-            <div class="table-responsive-md">
-                <table class="table" style="border-collapse:collapse; width:100%">
+
+          </div>
+          <div class="row">
+            <div class="col">
+              {% if unpublished_invoices %}
+              <div class="table-responsive-lg">
+                  <table class="table" style="border-collapse:collapse; width:100%">
                     <thead style="color: #ffffff;position: sticky;top: 0;border-bottom-width: 2px;border-bottom-style: solid;">
                         <tr class="bg-blue-1" style="position: sticky;top: 0;background: #004c87;">
                             <th style="position: sticky;top: 0;">Invoice No</th>
@@ -76,47 +96,55 @@
                             <th style="position: sticky;top: 0;">Total Amount</th>
                         </tr>
                     </thead>
-                    <tbody class="">
-                      {% if object_list %}
-                        {% for invoice in unpublished_invoices %}
-                          <tr style="background-color:#f0f0f0;">
-                              <td class="table-padding-none">
-                                <a href={% url 'saleorderinvoicesApp:DetailSaleOrderInvoice' invoice.id %}>
-                                  {{invoice.invoice_number}}
-                                </a>
-                              </td>
-                              <td class="">{{invoice.sale_order.so_number}}</td>
-                              <td style="">{{invoice.sale_order.buyer.customer_name}}</td>
-                              <td style="">{{invoice.sale_order.project.project_name}}</td>
-                              <td style="">{{invoice.invoice_date}}</td>
-                              <td>{{invoice.amount}}</td>
-                              <td>{{invoice.tax_amount}}</td>
-                              <td>{{invoice.total_amount}}</td>
-                          </tr>
-                        {% endfor %}
-                      {% else %}
-                        <tr>
-                          <td colspan="6" rowspan="6">There are no items here!</td>
+                    <tbody>
+                      {% for invoice in unpublished_invoices %}
+                        <tr style="background-color:#f9f9f9;">
+                            <td class="table-padding-none">
+                              <a href={% url 'saleorderinvoicesApp:DetailSaleOrderInvoice' invoice.id %}>
+                                {{invoice.invoice_number}}
+                              </a>
+                            </td>
+                            <td class="">{{invoice.sale_order.so_number}}</td>
+                            <td style="">{{invoice.sale_order.buyer.customer_name}}</td>
+                            <td style="">{{invoice.sale_order.project.project_name}}</td>
+                            <td style="">{{invoice.invoice_date}}</td>
+                            <td>{{invoice.amount}}</td>
+                            <td>{{invoice.tax_amount}}</td>
+                            <td>{{invoice.total_amount}}</td>
                         </tr>
-                      {% endif %}
+                      {% endfor %}
+                        <tr><td></td></tr>
+                        <tr><td></td></tr>
+                        <tr><td></td></tr>
+                        <tr><td></td></tr>
+                        <tr><td></td></tr>
+                        <tr><td></td></tr>
+                        <tr><td></td></tr>
                     </tbody>
-                </table>
+                  </table>
+              </div>
+              {% else %}
+                <p class"text-muted">There are no items in this invoice</p>
+              {% endif %}
             </div>
-        </div>
+          </div>
+      </div>
     </div>
-    <div>
-        <nav>
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-            </ul>
-        </nav>
-    </div>
+  </div>
+  <div>
+      <nav>
+          <ul class="pagination">
+              <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">4</a></li>
+              <li class="page-item"><a class="page-link" href="#">5</a></li>
+              <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+          </ul>
+      </nav>
+  </div>
+</div>
 {% endblock bodyblock %}
 {% block customjs %}
 

@@ -20,8 +20,16 @@
                                 <div style="display: inline-block;margin-right: 12px;"><i class="fa fa-calendar-o" style="margin-right: 4px;"></i>
                                     <p style="margin-bottom: 0px;display: inline-block;color: #8c8c8c;">{{invoice.invoice_date}}</p>
                                 </div>
-                                <div style="display:inline-block;"><i class="fa fa-unlock-alt" style="margin-right: 4px;"></i>
-                                    <p style="margin-bottom: 0px;display: inline-block;color: #8c8c8c;">{% if invoice.is_published %}Draft {% else %}Published{% endif %}<br></p>
+                                <div style="display:inline-block;">
+                                    <p style="margin-bottom: 0px;display: inline-block;color: #8c8c8c;">
+                                      {% if invoice.is_published %}
+                                        <i class="fa fa-lock" style="margin-right: 4px;"></i>
+                                        Published
+                                      {% else %}
+                                        <i class="fa fa-unlock-alt" style="margin-right: 4px;"></i>
+                                        Draft
+                                      {% endif %}<br>
+                                    </p>
                                 </div>
                             </div>
                             <hr style="margin: 4px -8px;margin-top: 2px;">
@@ -56,7 +64,15 @@
     <div class="row mb-2">
         <div class="col">
             <div class="shadow-sm" style="background: #ffffff;padding: 8px;border: 1px solid #ced4da;border-radius: 4px;">
-                <h6 style="color: #60695c;margin-bottom: 4px;">Invoice Items</h6>
+              <div class="row">
+                  <div class="col">
+                      <h6 style="color: #60695c;margin-bottom: 4px;">Invoice Items</h6>
+                  </div>
+                  <div class="col text-right">
+                      <button class="btn btn-link" id="id--toggle-table-view" type="button" style="padding: 0px;">
+                        <i class="fa fa-chevron-down"></i></button>
+                  </div>
+              </div>
                 <div>
                   {% if invoice_items %}
 
@@ -79,7 +95,7 @@
                                 {% for line_item in invoice_items %}
                                   <tr>
                                       <td>{{line_item.item.line_number}}</td>
-                                      <td class="description--field">{{line_item.item.item.item_description}}</td>
+                                      <td class="description--field compressed">{{line_item.item.item.item_description}}</td>
                                       <td>{{line_item.item.item.item_uom}}</td>
                                       <td class="amount--field">{{line_item.item.sale_price}}</td>
                                       <td class="amount--field">{{line_item.item.bill_quantity}}</td>
@@ -121,7 +137,6 @@
                           </div>
                       </div>
                       {% endif %}
-
                     </div>
                 </div>
             </div>
@@ -129,3 +144,7 @@
     </div>
 </div>
 {% endblock bodyblock %}
+{% block customjs %}
+  <script src="{% static "baseapp/js/currency-format.js" %}"></script>
+  <script src="{% static "baseapp/js/calc-table.js" %}"></script>
+{% endblock customjs %}

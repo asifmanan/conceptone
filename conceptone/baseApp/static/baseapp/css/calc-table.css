@@ -42,3 +42,10 @@ table td.total--field, table th.total--field {
 table td.description--field, table th.description--field {
   text-align: left;
 }
+
+.table td.compressed {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 1px;
+}
