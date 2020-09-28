@@ -205,7 +205,7 @@ class ListUnpublishedSaleOrderInvoice(ListView):
     model = SaleOrderInvoice
     context_object_name = 'unpublished_invoices'
     queryset = SaleOrderInvoice.objects.filter(is_published='False')
-    template_name = 'saleorderinvoicesapp/list_unpublishedsaleorderinvoice.html'
+    template_name = 'saleorderinvoicesapp/list_usaleorderinvoices.html'
 
 class ListPublishedSaleOrderInvoice(ListView):
     model = PublishedSaleOrderInvoice

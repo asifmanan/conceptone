@@ -1,0 +1,25 @@
+.list--table thead td, .list--table thead th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+  color: #585858;
+  padding: 4px 3px;
+  border: 1px solid #ced4da;
+  text-align: left;
+}
+
+.list--table tbody td {
+  padding: 2px 3px;
+  border: 1px solid #ced4da;
+  text-align: left;
+}
+
+table td.amount--field, table th.amount--field {
+  text-align: right;
+}
+
+table td.compressed {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 40px;
+}

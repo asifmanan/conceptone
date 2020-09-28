@@ -19,9 +19,8 @@
                 data-target="#navcol-1" style="border-style: none;outline:none;"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse pl-3 pl-md-0" id="navcol-1">
                 <ul class="nav navbar-nav">
-                    <li class="nav-item"><a class="nav-link active" href="#" style="margin-left: 8px;">First Item</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#" style="margin-left: 8px;">Second Item</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#" style="margin-left: 8px;">Third Item</a></li>
+                  {% block topnavblock %}
+                  {% endblock topnavblock %}
                 </ul>
             </div>
         </div>

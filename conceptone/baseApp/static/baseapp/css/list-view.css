@@ -1,0 +1,31 @@
+.subtitle--text {
+  color: #60695c;
+  font-weight: 600;
+}
+
+.mb--8px {
+  margin-bottom: 8px;
+}
+
+.mb--0px {
+  margin-bottom: 0px;
+}
+
+.mb--4px {
+  margin-bottom: 4px;
+}
+
+.content--div {
+  background: #ffffff;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+@media (max-width:767px) {
+  .btn--sm-block {
+    width: 100%;
+    display: block;
+    margin-bottom: 4px;
+  }
+}
