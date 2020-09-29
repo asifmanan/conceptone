@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+{% extends "baseapp/base_s.html" %}
+{% load static %}
+{% block headblock %}
+  <link rel="stylesheet" href="{% static "baseapp/css/list-view.css"%}">
+  <link rel="stylesheet" href="{% static "baseapp/css/list-table.css"%}">
+  <title>Published Invoices | conceptOne</title>
+{% endblock headblock %}
+{% block topnavblock %}
+  <li class="nav-item"><a class="nav-link" href="#" style="margin-left: 8px;">Saleorders</a></li>
+  <li class="nav-item"><a class="nav-link active" href="#" style="margin-left: 8px;">Saleorder Invoices</a></li>
+  <li class="nav-item"><a class="nav-link" href="#" style="margin-left: 8px;">Standard Invoices</a></li>
+{% endblock topnavblock %}
+{% block bodyblock %}
+<div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-md-12">
+                        <div class="mt-3 shadow-sm content--div">
+                            <div class="row">
+                                <div class="col">
+                                    <div style="margin: -8px;padding: 8px;">
+                                        <h5 style="color: #60695c;margin-bottom: 2px;">SALEORDER INVOICE&nbsp;</h5>
+                                        <div>
+                                            <div class="tab--title tab--active"><a class="tab--link" href="#"><i class="fa fa-lock" style="margin-right: 4px;"></i><p class="tab--title-text">Published<br></p></a></div>
+                                            <div class="tab--title tab--inactive"><a class="tab--link" href="#"><i class="fa fa-unlock-alt" style="margin-right: 4px;color:inherit;"></i><p class="tab--title-text">Draft<br></p></a></div>
+                                            <div class="tab--title tab--inactive"><a class="tab--link" href="#"><i class="fa fa-plus" style="margin-right: 4px;color:inherit;"></i><p class="tab--title-text">New<br></p></a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col">
+                        <div class="shadow-sm content--div">
+                            <div><input type="text" class="form-control search-input mb--8px" placeholder="Invoice Number"></div>
+                            <div id="adv-filters" class="collapse">
+                                <div class="row">
+                                    <div class="col-12 col-lg-6 col-xl-3 mb-2">
+                                        <p class="subtitle--text mb--0px">Invoice Date (from - to)</p><input class="form-control form-control-sm mb--8px" type="date"><input class="form-control form-control-sm" type="date"></div>
+                                    <div class="col-12 col-lg-6 col-xl-3 mb-2">
+                                        <p class="subtitle--text mb--0px">Customer</p><input type="text" class="form-control form-control-sm search-input mb--8px" placeholder="Customer Name"><input type="text" class="form-control form-control-sm" placeholder="Customer Code"></div>
+                                    <div
+                                        class="col-12 col-lg-6 col-xl-3 mb-2">
+                                        <p class="subtitle--text mb--0px">Project</p><input type="text" class="form-control form-control-sm mb--8px" placeholder="Project Name"><input type="text" class="form-control form-control-sm" placeholder="Project Code"></div>
+                                <div class="col-12 col-lg-6 col-xl-3 mb-2">
+                                    <p class="subtitle--text mb--0px">Order</p><input type="text" class="form-control form-control-sm mb--8px" placeholder="Sale Order Number"><input type="text" class="form-control form-control-sm" placeholder="Customer Order Number"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="row mt-2">
+                                <div class="col"><button class="btn btn-primary btn--sm-block" type="button">Search</button><button class="btn btn-secondary ml-md-1 btn--sm-block" type="button">Reset</button><button class="btn btn-link ml-md-1 btn--sm-block" type="button"
+                                        data-toggle="collapse" data-target="#adv-filters">More Filters</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col">
+                    <div class="shadow-sm content--div">
+                        <div>
+                            <div class="row">
+                                <div class="col">
+                                    <h6 style="color: #60695c;margin-bottom: 4px;">Published Invoices</h6>
+                                </div>
+                                <div class="col text-right"><button class="btn btn-link btn-sm" id="id--toggle-table-view" type="button"><i class="fa fa-caret-down"></i></button></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="table-responsive-lg list--table">
+                                <table class="table list--table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:4%">#</th>
+                                            <th class="description--field" style="width:14%">Invoice #</th>
+                                            <th style="width:14%;">S.Order #</th>
+                                            <th style="width:14%;">P.Order #</th>
+                                            <th style="width:20%;">Customer</th>
+                                            <th style="width:20%;">Project</th>
+                                            <th class="text-right" style="width:14%;">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td class="collapse--field compressed">211109-100321</td>
+                                            <td>Cell 3</td>
+                                            <td>1000</td>
+                                            <td class="collapse--field compressed">CMPak LDI Limited</td>
+                                            <td class="collapse--field compressed">CMPak NORTH Y2019 PROJECT</td>
+                                            <td class="amount--field">585000475</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>211109-100321</td>
+                                            <td>Cell 3</td>
+                                            <td>1000</td>
+                                            <td class="expandable--field compressed">CMPak LDI Limited</td>
+                                            <td class="expandable--field compressed">CMPak NORTH Y2019 PROJECT</td>
+                                            <td class="amount--field">585000475</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col">
+                    <nav>
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">4</a></li>
+                            <li class="page-item"><a class="page-link" href="#">5</a></li>
+                            <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+{% endblock bodyblock %}
+{% block customjs %}
+  <script type="text/javascript" src="{% static "baseapp/js/currency-format.js" %}"></script>
+{% endblock customjs %}
