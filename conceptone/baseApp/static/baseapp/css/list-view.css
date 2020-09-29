@@ -30,13 +30,6 @@
   border-radius: 4px;
 }
 
-.tab--title-text {
-  margin-bottom: 0px;
-  display: inline-block;
-  color: inherit;
-  text-decoration: inherit;
-}
-
 .tab--active {
   background-color: #e8e9ea;
   color: #000000;
@@ -51,11 +44,17 @@
   background-color: #f8f9fa;
   color: #000;
   cursor: pointer;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 a.tab--link {
+  margin-bottom: 0px;
+  display: inline-block;
   color: inherit;
+  text-decoration: inherit;
+}
+
+a.tab--link:hover,a.tab--link.hover {
   text-decoration: none;
 }
 

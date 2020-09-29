@@ -21,14 +21,11 @@
                                     <div style="margin: -8px;padding: 8px;">
                                         <h5 style="color: #60695c;margin-bottom: 2px;">SALEORDER INVOICE&nbsp;</h5>
                                         <div>
-                                            <div class="tab--title tab--active"><a class="tab--link" href="{% url "saleorderinvoicesApp:ListPublishedSaleOrderInvoice" %}"><i class="fa fa-lock" style="margin-right: 4px;"></i>
-                                              <p class="tab--title-text">Published<br></p></a>
+                                            <div class="tab--title tab--active"><a class="tab--link" href="{% url "saleorderinvoicesApp:ListPublishedSaleOrderInvoice" %}"><i class="fa fa-lock" style="margin-right: 4px;"></i>Published</a>
                                             </div>
-                                            <div class="tab--title tab--inactive"><a class="tab--link" href="{% url "saleorderinvoicesApp:ListUnpublishedSaleOrderInvoice" %}"><i class="fa fa-unlock-alt" style="margin-right: 4px;color:inherit;"></i>
-                                              <p class="tab--title-text">Draft<br></p></a>
+                                            <div class="tab--title tab--inactive"><a class="tab--link" href="{% url "saleorderinvoicesApp:ListUnpublishedSaleOrderInvoice" %}"><i class="fa fa-unlock-alt" style="margin-right: 4px;color:inherit;"></i>Draft</a>
                                             </div>
-                                            <div class="tab--title tab--inactive"><a class="tab--link" href="#"><i class="fa fa-plus" style="margin-right: 4px;color:inherit;"></i>
-                                              <p class="tab--title-text">New<br></p></a>
+                                            <div class="tab--title tab--inactive"><a class="tab--link" href="#"><i class="fa fa-plus tab--link" style="margin-right: 4px;color:inherit;"></i>New</a>
                                             </div>
                                         </div>
                                     </div>
@@ -68,13 +65,15 @@
                     <div class="shadow-sm content--div">
                         <div>
                             <div class="row">
-                                <div class="col">
-                                    <h6 style="color: #60695c;margin-bottom: 4px;">Published Invoices</h6>
+                                <div class="col-8">
+                                    <h6 style="color: #60695c;margin-bottom: 2px;">Published Invoices</h6>
                                 </div>
-                                <div class="col text-right"><button class="btn btn-link btn-sm" id="id--toggle-table-view" type="button"><i class="fa fa-caret-down"></i></button></div>
+                                <div class="col-4 text-right"><button class="btn btn-link btn-sm" style="padding: 0px;margin-bottom:0px;" id="id--toggle-table-view" type="button"><i class="fa fa-caret-down" style="padding:0px;"></i></button></div>
                             </div>
                         </div>
                         <div>
+                          {% if published_invoices %}
+
                             <div class="table-responsive-lg list--table">
                                 <table class="table list--table">
                                     <thead>
@@ -89,27 +88,23 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td class="collapse--field compressed">211109-100321</td>
-                                            <td>Cell 3</td>
-                                            <td>1000</td>
-                                            <td class="collapse--field compressed">CMPak LDI Limited</td>
-                                            <td class="collapse--field compressed">CMPak NORTH Y2019 PROJECT</td>
-                                            <td class="amount--field">585000475</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>211109-100321</td>
-                                            <td>Cell 3</td>
-                                            <td>1000</td>
-                                            <td class="expandable--field compressed">CMPak LDI Limited</td>
-                                            <td class="expandable--field compressed">CMPak NORTH Y2019 PROJECT</td>
-                                            <td class="amount--field">585000475</td>
-                                        </tr>
+                                      {% for invoice in published_invoices  %}
+                                      <tr>
+                                          <td>1</td>
+                                          <td class="collapse--field compressed">{{invoice.invoice_number}}</td>
+                                          <td>Cell 3</td>
+                                          <td>1000</td>
+                                          <td class="collapse--field compressed">CMPak LDI Limited</td>
+                                          <td class="collapse--field compressed">CMPak NORTH Y2019 PROJECT</td>
+                                          <td class="amount--field">585000475</td>
+                                      </tr>
+                                      {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
+                            {% else %}
+                              <p class"text-muted">There are no drafts to show</p>
+                            {% endif %}
                         </div>
                         <div></div>
                     </div>

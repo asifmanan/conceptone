@@ -20,14 +20,12 @@
                           <div style="margin: -8px;padding: 8px;">
                               <h5 style="color: #60695c;margin-bottom: 2px;">SALEORDER INVOICE&nbsp;</h5>
                               <div>
-                                  <div class="tab--title tab--inactive"><a class="tab--link" href="{% url "saleorderinvoicesApp:ListPublishedSaleOrderInvoice" %}"><i class="fa fa-lock" style="margin-right: 4px;"></i>
-                                    <p class="tab--title-text">Published<br></p></a>
+                                  <div class="tab--title tab--inactive"><a class="tab--link" href="{% url "saleorderinvoicesApp:ListPublishedSaleOrderInvoice" %}"><i class="fa fa-lock tab--link" style="margin-right: 4px;"></i>Published</a>
                                   </div>
-                                  <div class="tab--title tab--active"><a class="tab--link" href="{% url "saleorderinvoicesApp:ListUnpublishedSaleOrderInvoice" %}"><i class="fa fa-unlock-alt" style="margin-right: 4px;color:inherit;"></i>
-                                    <p class="tab--title-text">Draft<br></p></a>
+                                  <div class="tab--title tab--active"><a class="tab--link" href="{% url "saleorderinvoicesApp:ListUnpublishedSaleOrderInvoice" %}"><i class="fa fa-unlock-alt tab--link" style="margin-right: 4px;color:inherit;"></i>Draft</a>
                                   </div>
-                                  <div class="tab--title tab--inactive"><a class="tab--link" href="#"><i class="fa fa-plus" style="margin-right: 4px;color:inherit;"></i>
-                                    <p class="tab--title-text">New<br></p></a>
+                                  <div class="tab--title tab--inactive">
+                                    <a class="tab--link" href="#"><i class="fa fa-plus tab--link" style="margin-right: 4px;color:inherit;"></i>New</a>
                                   </div>
                               </div>
                           </div>
@@ -70,9 +68,10 @@
                     <div class="shadow-sm" style="background: #ffffff;padding: 8px;border: 1px solid #ced4da;border-radius: 4px;">
                         <div>
                             <div class="row">
-                                <div class="col">
-                                    <h6 style="color: #60695c;margin-bottom: 4px;">List of Invoices</h6>
+                                <div class="col-8">
+                                    <h6 style="color: #60695c;margin-bottom: 4px;">Draft Invoices</h6>
                                 </div>
+                                <div class="col-4 text-right"><button class="btn btn-link btn-sm" style="padding: 0px;margin-bottom:0px;" id="id--toggle-table-view" type="button"><i class="fa fa-caret-down" style="padding:0px;"></i></button></div>
                             </div>
                         </div>
                         <div>
