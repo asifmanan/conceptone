@@ -210,7 +210,7 @@ class ListUnpublishedSaleOrderInvoice(ListView):
 class ListPublishedSaleOrderInvoice(ListView):
     model = PublishedSaleOrderInvoice
     context_object_name = 'published_invoices'
-    template_name = 'saleorderinvoicesapp/list_publishedsaleorderinvoice.html'
+    template_name = 'saleorderinvoicesapp/list_psaleorderinvoices.html'
 
 class DetailSaleOrderInvoice(DetailView):
     model = SaleOrderInvoice

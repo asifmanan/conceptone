@@ -21,9 +21,15 @@
                                     <div style="margin: -8px;padding: 8px;">
                                         <h5 style="color: #60695c;margin-bottom: 2px;">SALEORDER INVOICE&nbsp;</h5>
                                         <div>
-                                            <div class="tab--title tab--active"><a class="tab--link" href="#"><i class="fa fa-lock" style="margin-right: 4px;"></i><p class="tab--title-text">Published<br></p></a></div>
-                                            <div class="tab--title tab--inactive"><a class="tab--link" href="#"><i class="fa fa-unlock-alt" style="margin-right: 4px;color:inherit;"></i><p class="tab--title-text">Draft<br></p></a></div>
-                                            <div class="tab--title tab--inactive"><a class="tab--link" href="#"><i class="fa fa-plus" style="margin-right: 4px;color:inherit;"></i><p class="tab--title-text">New<br></p></a></div>
+                                            <div class="tab--title tab--active"><a class="tab--link" href="{% url "saleorderinvoicesApp:ListPublishedSaleOrderInvoice" %}"><i class="fa fa-lock" style="margin-right: 4px;"></i>
+                                              <p class="tab--title-text">Published<br></p></a>
+                                            </div>
+                                            <div class="tab--title tab--inactive"><a class="tab--link" href="{% url "saleorderinvoicesApp:ListUnpublishedSaleOrderInvoice" %}"><i class="fa fa-unlock-alt" style="margin-right: 4px;color:inherit;"></i>
+                                              <p class="tab--title-text">Draft<br></p></a>
+                                            </div>
+                                            <div class="tab--title tab--inactive"><a class="tab--link" href="#"><i class="fa fa-plus" style="margin-right: 4px;color:inherit;"></i>
+                                              <p class="tab--title-text">New<br></p></a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
