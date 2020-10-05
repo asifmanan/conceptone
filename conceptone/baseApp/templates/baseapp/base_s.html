@@ -27,13 +27,56 @@
     </nav>
     <div id="wrapper">
         <div id="sidebar-wrapper" style="border-width: 1px;border-color: #e4e4e4;border-right-style: solid;background: #404e67;">
-            <ul class="sidebar-nav">
-                <li> <a href="#">Sales</a> </li>
-                <li> <a href="#">Purchases</a> </li>
-                <li> <a href="#">Projects</a> </li>
-                <li> <a href="#">Customers</a> </li>
-                <li> <a href="#">Items</a> </li>
-            </ul>
+          <ul class="sidebar-nav">
+              <li><button class="btn sidenav-btn-collapse" type="button">Sales</button>
+                  <div class="sidebar-collapse-menu">
+                    <a class="sublink" href="#">Saleorder</a>
+                    <a class="sublink" href="#">Saleorder Invoice</a>
+                    <a class="sublink" href="#">Standard Invoice</a>
+                  </div>
+              </li>
+              <li><button class="btn sidenav-btn-collapse" type="button">Purchases</button>
+                  <div class="sidebar-collapse-menu">
+                    <a class="sublink" href="#">Purchase Order</a>
+                    <a class="sublink" href="#">Purchase Invoice</a>
+                    <a class="sublink" href="#">Standard Invoice</a>
+                  </div>
+              </li>
+              <li><button class="btn sidenav-btn-collapse" type="button">Projects</button>
+                  <div class="sidebar-collapse-menu">
+                    <a class="sublink" href="#">Manage Contracts</a>
+                    <a class="sublink" href="#">Manage Projects</a>
+                    <a class="sublink" href="#">BoQ</a>
+                    <a class="sublink" href="#">Delivery Units</a>
+                  </div>
+              </li>
+              <li><button class="btn sidenav-btn-collapse" type="button">Partners</button>
+                  <div class="sidebar-collapse-menu">
+                    <a class="sublink" href="#">Manager Customers</a>
+                    <a class="sublink" href="#">Manage Suppliers</a>
+                  </div>
+              </li>
+              <li><button class="btn sidenav-btn-collapse" type="button">Inventory</button>
+                  <div class="sidebar-collapse-menu">
+                    <a class="sublink" href="#">Items</a>
+                    <a class="sublink" href="#">Warehouses</a>
+                    <a class="sublink" href="#">Shipments</a>
+                    <a class="sublink" href="#">Assets Issuance</a>
+                  </div>
+              </li>
+              <li><button class="btn sidenav-btn-collapse" type="button">Tax Management</button>
+                  <div class="sidebar-collapse-menu">
+                    <a class="sublink" href="#">Tax</a>
+                    <a class="sublink" href="#">Tax Authorities</a>
+                  </div>
+              </li>
+              <li><button class="btn sidenav-btn-collapse" type="button">Human Resource</button>
+                  <div class="sidebar-collapse-menu">
+                    <a class="sublink" href="#">Manage Employees</a>
+                    <a class="sublink" href="#">Manage Salaries</a>
+                  </div>
+              </li>
+          </ul>
         </div>
         <div class="page-content-wrapper">
               {% block bodyblock %}

@@ -60,10 +60,25 @@
   color: #c7c7c7;
 }
 
+.sidebar-nav li button {
+  display: block;
+  text-decoration: none;
+  color: #c7c7c7;
+  width: 100%;
+  text-align: left;
+  border: none;
+  height: 40px;
+  text-indent: 10px;
+}
+
 .sidebar-nav li a:hover {
   text-decoration: none;
   color: #ffffff;
-  /*background: #e8e8e8;*/
+}
+
+.sidebar-nav li button:hover {
+  text-decoration: none;
+  color: #ffffff;
 }
 
 .sidebar-nav li a:active, .sidebar-nav li a:focus {
@@ -153,4 +168,20 @@
   background-color: transparent;
   border: 1px solid transparent;
   border-radius: .25rem;
+}
+
+.sublink {
+  padding-left: 20px;
+}
+
+.sidebar-collapse-menu {
+  height: 0px;
+  display: block;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.sidebar-collapse-menu.show {
+  height: 120px;
+  transition: all 0.4s ease;
 }
