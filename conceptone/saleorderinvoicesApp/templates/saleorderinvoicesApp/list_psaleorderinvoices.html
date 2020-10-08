@@ -7,9 +7,7 @@
   <title>Published Invoices | conceptOne</title>
 {% endblock headblock %}
 {% block topnavblock %}
-  <li class="nav-item"><a class="nav-link" href="#" style="margin-left: 8px;">Saleorders</a></li>
-  <li class="nav-item"><a class="nav-link active" href="#" style="margin-left: 8px;">Saleorder Invoices</a></li>
-  <li class="nav-item"><a class="nav-link" href="#" style="margin-left: 8px;">Standard Invoices</a></li>
+  {% include "saleorderinvoicesapp/_top_navlinks.html" %}
 {% endblock topnavblock %}
 {% block bodyblock %}
 <div class="container-fluid">
@@ -21,12 +19,10 @@
                                     <div style="margin: -8px;padding: 8px;">
                                         <h5 style="color: #60695c;margin-bottom: 2px;">SALEORDER INVOICE&nbsp;</h5>
                                         <div>
-                                            <div class="tab--title tab--active"><a class="tab--link" href="{% url "saleorderinvoicesApp:ListPublishedSaleOrderInvoice" %}"><i class="fa fa-lock" style="margin-right: 4px;"></i>Published</a>
-                                            </div>
-                                            <div class="tab--title tab--inactive"><a class="tab--link" href="{% url "saleorderinvoicesApp:ListUnpublishedSaleOrderInvoice" %}"><i class="fa fa-unlock-alt" style="margin-right: 4px;color:inherit;"></i>Draft</a>
-                                            </div>
-                                            <div class="tab--title tab--inactive"><a class="tab--link" href="#"><i class="fa fa-plus tab--link" style="margin-right: 4px;color:inherit;"></i>New</a>
-                                            </div>
+                                          <div class="tab--title tab--active">
+                                            <i class="fa fa-file"></i>
+                                                <p class="tab--title-text">Published Invoices</p>
+                                          </div>
                                         </div>
                                     </div>
                                 </div>
@@ -90,13 +86,14 @@
                                     <tbody>
                                       {% for invoice in published_invoices  %}
                                       <tr>
-                                          <td>1</td>
-                                          <td class="collapse--field compressed">{{invoice.invoice_number}}</td>
-                                          <td>Cell 3</td>
-                                          <td>1000</td>
-                                          <td class="collapse--field compressed">CMPak LDI Limited</td>
-                                          <td class="collapse--field compressed">CMPak NORTH Y2019 PROJECT</td>
-                                          <td class="amount--field">585000475</td>
+                                          <td>{{forloop.counter}}</td>
+                                          <td class="collapse--field compressed">
+                                            <a href="{% url 'saleorderinvoicesApp:DetailSaleOrderInvoice' invoice.invoice.id %}">{{invoice.invoice_number}}</a></td>
+                                          <td>{{invoice.invoice.sale_order.so_number}}</td>
+                                          <td>{{invoice.invoice.sale_order.buyer_po_number}}</td>
+                                          <td class="collapse--field compressed">{{invoice.invoice.sale_order.buyer.customer_name}}</td>
+                                          <td class="collapse--field compressed">{{invoice.invoice.sale_order.project.project_name}}</td>
+                                          <td class="amount--field">{{invoice.invoice.total_amount}}</td>
                                       </tr>
                                       {% endfor %}
                                     </tbody>

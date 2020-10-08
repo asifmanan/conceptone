@@ -6,9 +6,7 @@
   <title>Draft Invoices | conceptOne</title>
 {% endblock headblock %}
 {% block topnavblock %}
-  <li class="nav-item"><a class="nav-link" href="#" style="margin-left: 8px;">Saleorders</a></li>
-  <li class="nav-item"><a class="nav-link active" href="#" style="margin-left: 8px;">Saleorder Invoices</a></li>
-  <li class="nav-item"><a class="nav-link" href="#" style="margin-left: 8px;">Standard Invoices</a></li>
+  {% include "saleorderinvoicesapp/_top_navlinks.html" %}
 {% endblock topnavblock %}
 {% block bodyblock %}
 <div class="container-fluid">
@@ -20,13 +18,10 @@
                           <div style="margin: -8px;padding: 8px;">
                               <h5 style="color: #60695c;margin-bottom: 2px;">SALEORDER INVOICE&nbsp;</h5>
                               <div>
-                                  <div class="tab--title tab--inactive"><a class="tab--link" href="{% url "saleorderinvoicesApp:ListPublishedSaleOrderInvoice" %}"><i class="fa fa-lock tab--link" style="margin-right: 4px;"></i>Published</a>
-                                  </div>
-                                  <div class="tab--title tab--active"><a class="tab--link" href="{% url "saleorderinvoicesApp:ListUnpublishedSaleOrderInvoice" %}"><i class="fa fa-unlock-alt tab--link" style="margin-right: 4px;color:inherit;"></i>Draft</a>
-                                  </div>
-                                  <div class="tab--title tab--inactive">
-                                    <a class="tab--link" href="#"><i class="fa fa-plus tab--link" style="margin-right: 4px;color:inherit;"></i>New</a>
-                                  </div>
+                                <div class="tab--title tab--active">
+                                  <i class="fa fa-file-o"></i>
+                                      <p class="tab--title-text">Draft Invoices</p>
+                                </div>
                               </div>
                           </div>
                       </div>
@@ -92,7 +87,7 @@
                                     <tbody>
                                       {% for invoice in unpublished_invoices %}
                                         <tr>
-                                          <td>1</td>
+                                          <td>{{forloop.counter}}</td>
                                           <td class="description--field compressed">
                                             <a href="{% url 'saleorderinvoicesApp:DetailSaleOrderInvoice' invoice.id %}">{{invoice.invoice_number}}</a>
                                             </td>

@@ -30,6 +30,13 @@
   border-radius: 4px;
 }
 
+.tab--title-text {
+  margin-bottom: 0px;
+  display: inline-block;
+  color: inherit;
+  text-decoration: inherit;
+}
+
 .tab--active {
   background-color: #e8e9ea;
   color: #000000;

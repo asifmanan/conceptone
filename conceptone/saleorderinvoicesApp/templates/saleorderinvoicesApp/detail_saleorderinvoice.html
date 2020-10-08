@@ -4,6 +4,9 @@
   <link rel="stylesheet" href="{% static "baseapp/css/calc-table.css" %}">
   <title>SaleOrder Invoice | conceptOne</title>
 {% endblock headblock %}
+{% block topnavblock %}
+  {% include "saleorderinvoicesapp/_top_navlinks.html" %}
+{% endblock topnavblock %}
 {% block bodyblock %}
 <div class="container-fluid">
     <div class="row mb-2">
@@ -95,7 +98,7 @@
                                 {% for line_item in invoice_items %}
                                   <tr>
                                       <td>{{line_item.item.line_number}}</td>
-                                      <td class="description--field collapse--field compressed">{{line_item.item.item.item_description}}</td>
+                                      <td class="description--field compressed">{{line_item.item.item.item_description}}</td>
                                       <td>{{line_item.item.item.item_uom}}</td>
                                       <td class="amount--field">{{line_item.item.sale_price}}</td>
                                       <td class="amount--field">{{line_item.item.bill_quantity}}</td>
