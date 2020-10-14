@@ -33,7 +33,7 @@ from saleorderinvoicesApp.forms import (
                                         )
 
 class NewSaleOrderInvoice(TemplateView):
-    template_name = 'saleorderinvoicesapp/newsaleorderinvoice.html'
+    template_name = 'saleorderinvoicesapp/new_saleorderinvoice.html'
     def get_context_data(self,*args,**kwargs):
         context = super().get_context_data(*args,**kwargs)
         form = SaleOrderInvoiceForm()
