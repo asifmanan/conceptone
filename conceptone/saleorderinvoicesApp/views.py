@@ -30,15 +30,17 @@ from saleorderinvoicesApp.forms import (
                                         SaleOrderInvoiceItemForm,
                                         SaleOrderInvoiceItemFormset,
                                         CreateSaleOrderInvoiceForm,
+
+                                        SelectSaleorderForm,
                                         )
 
 class NewSaleOrderInvoice(TemplateView):
     template_name = 'saleorderinvoicesapp/new_saleorderinvoice.html'
     def get_context_data(self,*args,**kwargs):
         context = super().get_context_data(*args,**kwargs)
-        form = SaleOrderInvoiceForm()
-        form.fields.pop('invoice_number')
-        form.fields.pop('invoice_date')
+        form = SelectSaleorderForm()
+        # form.fields.pop('invoice_number')
+        # form.fields.pop('invoice_date')
         context['form'] = form
         return context
 

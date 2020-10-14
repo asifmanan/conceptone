@@ -5,6 +5,13 @@ from saleorderinvoicesApp.models import (
                                         SaleOrderInvoice,
                                         SaleOrderInvoiceItem,
                                         )
+from baseApp.models import Company
+from customersApp.models import Customer
+
+class SelectSaleorderForm(forms.Form):
+    company = forms.ModelChoiceField(queryset=Company.objects.all(),widget=forms.Select(attrs={'class':'form-control '}),empty_label="Select Company")
+    customer = forms.ModelChoiceField(queryset=Customer.objects.all(),widget=forms.Select(attrs={'class':'form-control '}),empty_label="Select Customer")
+
 class SaleOrderInvoiceForm(forms.ModelForm):
     class Meta:
         # prefix='InvoiceForm'
