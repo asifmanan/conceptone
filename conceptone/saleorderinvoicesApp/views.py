@@ -39,10 +39,23 @@ class NewSaleOrderInvoice(TemplateView):
     def get_context_data(self,*args,**kwargs):
         context = super().get_context_data(*args,**kwargs)
         form = SelectSaleorderForm()
-        # form.fields.pop('invoice_number')
-        # form.fields.pop('invoice_date')
         context['form'] = form
         return context
+
+#AJAX Call Function
+def FetchSaleOrder(request):
+    company = request.POST.get('company')
+    sale_order = request.POST.get('sale_order')
+    check_flag = 0
+    if company == "" or sale_order == "":
+        check_flag = 1
+        data = {'check_flag':check_flag}
+        # return render(request,'saleorderinvoicesapp/_form_selectsaleorder.html',{'form',form},{'check_flag':check_flag})
+        return HttpResponse(data)
+    print("Company: "+company)
+    print("Sale Order: "+sale_order)
+    data = {"company":company,"sale_order":sale_order,"check_flag":check_flag}
+    return HttpResponse(data)
 
 class CreateSaleOrderInvoiceItem(FormView):
     model = SaleOrderInvoiceItem
@@ -236,7 +249,7 @@ def SelectSupplier(request):
     if request.POST.get('company') == "":
         data = 0
         form = SaleOrderInvoiceForm()
-        form.fields.pop('invoice_number')
+        form.fields.pop('company')
         form.fields.pop('invoice_date')
         return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form':form})
 

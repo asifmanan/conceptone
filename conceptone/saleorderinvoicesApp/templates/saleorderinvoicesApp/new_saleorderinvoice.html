@@ -18,24 +18,22 @@
                               <div style="margin: -8px;padding: 8px;">
                                   <h5 style="color: #60695c;margin-bottom: 2px;">NEW SALEORDER INVOICE&nbsp;</h5>
                                   <div class="mt-2">
-                                      <div class="row">
-                                          <div class="col-12 col-lg-4">
-                                              <div class="input-group">
-                                                {{form.company}}
-                                                  <div class="input-group-append"><button class="btn btn-primary" type="button"><i class="fa fa-circle-o"></i></button></div>
-                                              </div>
+                                    <div id="id_div_select_supplier_form">
+                                      <form action="{% url 'saleorderinvoicesApp:SelectSupplier'  %}" method="post">{% csrf_token %}
+                                        <div class="row">
+                                          <div class="col-12 col-lg-5 col-xl-4">
+                                              {{form.company}}
                                           </div>
-                                          <div class="col-12 col-lg-4 mt-2 mt-lg-0">
-                                              <div class="input-group"><select class="form-control"><option value="" selected="">Select Customer</option><option value="13">Customer 1</option></select>
-                                                  <div class="input-group-append"><button class="btn btn-primary" type="button"><i class="fa fa-circle-o"></i></button></div>
-                                              </div>
+                                          <div class="col-12 col-lg-5 col-xl-4 mt-2 mt-lg-0">
+                                              {{form.sale_order}}
                                           </div>
-                                          <div class="col-12 col-lg-4 mt-2 mt-lg-0">
-                                              <div class="input-group"><select class="form-control"><option value="" selected="">Select Saleorder</option><option value="13">Customer 1</option></select>
-                                                  <div class="input-group-append"><button class="btn btn-primary" type="button"><i class="fa fa-circle-o"></i></button></div>
-                                              </div>
+                                          <input type="hidden" id="id_fetch_saleorder_url" name="saleorder_url" value="{% url 'saleorderinvoicesApp:FetchSaleOrder' %}">
+                                          <div class="col-12 col-lg-2 col-xl-2 mt-2 mt-lg-0">
+                                              <button id="id_btn_fetch_so" class="btn btn-primary btn--sm-block" type="submit" name="button">Fetch</button>
                                           </div>
-                                      </div>
+                                        </div>
+                                      </form>
+                                    </div>
                                   </div>
                               </div>
                           </div>
@@ -145,4 +143,5 @@
 {% endblock bodyblock %}
 {% block customjs %}
   <script type="text/javascript" src="{% static "baseapp/js/currency-format.js" %}"></script>
+  <script type="text/javascript" src="{% static "saleorderinvoicesapp\js\new_saleorderinvoice.js" %}"></script>
 {% endblock customjs %}

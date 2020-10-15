@@ -15,6 +15,8 @@ urlpatterns=[
     path('cancelnewsaleorderinvoice/',views.CancelNewSaleOrderInvoiceSession,name='CancelNewSaleOrderInvoiceSession'),
     path('publishsaleorderinvoice/<int:pk>',views.PublishSaleOrderInvoice.as_view(),name='PublishSaleOrderInvoice'),
     #AJAX
+    path('ajaxcall/fetchsaleorder/',views.FetchSaleOrder,name='FetchSaleOrder'),
+
     path('ajaxcall/selectsupplier/',views.SelectSupplier,name='SelectSupplier'),
     path('ajaxcall/selectsaleorder/',views.SelectSaleOrder,name='SelectSaleOrder'),
     path('ajaxcall/selectsaleorderitem/',views.SelectSaleOrderItem,name='SelectSaleOrderItem'),

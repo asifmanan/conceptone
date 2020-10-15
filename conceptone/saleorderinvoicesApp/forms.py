@@ -9,8 +9,8 @@ from baseApp.models import Company
 from customersApp.models import Customer
 
 class SelectSaleorderForm(forms.Form):
-    company = forms.ModelChoiceField(queryset=Company.objects.all(),widget=forms.Select(attrs={'class':'form-control '}),empty_label="Select Company")
-    customer = forms.ModelChoiceField(queryset=Customer.objects.all(),widget=forms.Select(attrs={'class':'form-control '}),empty_label="Select Customer")
+    company = forms.ModelChoiceField(queryset=Company.objects.all(),widget=forms.Select(attrs={'class':'form-control','required':'True'}),empty_label="Select Company")
+    sale_order = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Saleorder #','required':'True'}))
 
 class SaleOrderInvoiceForm(forms.ModelForm):
     class Meta:
