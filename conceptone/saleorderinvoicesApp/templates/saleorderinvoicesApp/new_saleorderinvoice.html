@@ -16,25 +16,25 @@
                       <div class="row">
                           <div class="col">
                               <div style="margin: -8px;padding: 8px;">
-                                  <h5 style="color: #60695c;margin-bottom: 2px;">NEW SALEORDER INVOICE&nbsp;</h5>
-                                  <div class="mt-2">
-                                    <div id="id_div_select_supplier_form">
-                                      <form action="{% url 'saleorderinvoicesApp:SelectSupplier'  %}" method="post">{% csrf_token %}
-                                        <div class="row">
-                                          <div class="col-12 col-lg-5 col-xl-4">
-                                              {{form.company}}
-                                          </div>
-                                          <div class="col-12 col-lg-5 col-xl-4 mt-2 mt-lg-0">
-                                              {{form.sale_order}}
-                                          </div>
-                                          <input type="hidden" id="id_fetch_saleorder_url" name="saleorder_url" value="{% url 'saleorderinvoicesApp:FetchSaleOrder' %}">
-                                          <div class="col-12 col-lg-2 col-xl-2 mt-2 mt-lg-0">
-                                              <button id="id_btn_fetch_so" class="btn btn-primary btn--sm-block" type="submit" name="button">Fetch</button>
-                                          </div>
+                                <h5 style="color: #60695c;margin-bottom: 2px;">NEW SALEORDER INVOICE&nbsp;</h5>
+                                <div class="mt-2">
+                                  <div id="id_div_select_supplier_form">
+                                    <form action="{% url 'saleorderinvoicesApp:FetchSaleOrder'  %}" method="post">{% csrf_token %}
+                                      <div class="row">
+                                        <div class="col-12 col-lg-5 col-xl-4">
+                                          {{form.company}}
                                         </div>
-                                      </form>
-                                    </div>
+                                        <div class="col-12 col-lg-5 col-xl-4 mt-2 mt-lg-0">
+                                          {{form.sale_order}}
+                                        </div>
+                                        <input type="hidden" id="id_fetch_saleorder_url" name="saleorder_url" value="{% url 'saleorderinvoicesApp:FetchSaleOrder' %}">
+                                        <div class="col-12 col-lg-2 col-xl-2 mt-2 mt-lg-0">
+                                            <button id="id_btn_fetch_so" class="btn btn-primary btn--sm-block" type="submit" name="button">Fetch</button>
+                                        </div>
+                                      </div>
+                                    </form>
                                   </div>
+                                </div>
                               </div>
                           </div>
                       </div>

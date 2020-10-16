@@ -7,8 +7,8 @@ $(document).ready(function(){
 function fetch_saleorder(e){
   var company = $("#id_company").val();
   var sale_order = $("#id_sale_order").val();
-  console.log(company);
-  console.log(sale_order);
+  // console.log(company);
+  // console.log(sale_order);
 
   if(company && sale_order){
     e.preventDefault();
@@ -24,17 +24,16 @@ function fetch_saleorder(e){
         'sale_order':sale_order,
       },
       success: function(data){
-        console.log(data.check_flag)
-        if (data.check_flag == 1){
+        console.log(data['check_flag'])
+        if (data['check_flag'] == 1){
           console.log("Condition Failed")
           // $("#id_div_select_supplier_form").html(data)
         }
         else{
-          console.log(data.company);
-          console.log(data.sale_order);
-          console.log(data.check_flag);
+          console.log(data['company']);
+          console.log(data['sale_order']);
+          console.log(data['check_flag']);
         }
-
       }
     })
   }

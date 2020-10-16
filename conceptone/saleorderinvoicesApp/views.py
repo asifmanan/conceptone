@@ -44,18 +44,24 @@ class NewSaleOrderInvoice(TemplateView):
 
 #AJAX Call Function
 def FetchSaleOrder(request):
-    company = request.POST.get('company')
-    sale_order = request.POST.get('sale_order')
+    company_sid = request.POST.get('company')
+    sale_order_number = request.POST.get('sale_order')
+    sale_order = SaleOrder.objects.filter(so_number=sale_order_number)
     check_flag = 0
-    if company == "" or sale_order == "":
+    if company_sid == "" or sale_order_number == "" or not sale_order:
         check_flag = 1
         data = {'check_flag':check_flag}
         # return render(request,'saleorderinvoicesapp/_form_selectsaleorder.html',{'form',form},{'check_flag':check_flag})
-        return HttpResponse(data)
-    print("Company: "+company)
-    print("Sale Order: "+sale_order)
-    data = {"company":company,"sale_order":sale_order,"check_flag":check_flag}
-    return HttpResponse(data)
+        return JsonResponse(data)
+    else:
+        sale_order = sale_order[0]
+        print("Company: "+company_sid)
+        print("Sale Order: "+sale_order_number)
+        sale_order_items = SaleOrderItem.objects.filter(sale_order=sale_order)
+        for items in sale_order_items:
+            print(items)
+        data = {"company":company_sid,"sale_order":sale_order_number,"check_flag":check_flag}
+        return JsonResponse(data)
 
 class CreateSaleOrderInvoiceItem(FormView):
     model = SaleOrderInvoiceItem
