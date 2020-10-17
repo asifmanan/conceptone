@@ -3,6 +3,12 @@ $(document).ready(function(){
   // $('body').on('click','#id_btn_saleorder_fetch',select_sale_order);
   // $('body').on('click','#id_sale_order_item_selection',select_sale_order_item);
 });
+// $(document).ajaxStop(function(){
+//   $(document).on("click","#id--toggle-table-view", function(e){
+//     e.preventDefault();
+//     $(".description--field").toggleClass("compressed");
+//   })
+// })
 
 function fetch_saleorder(e){
   var company = $("#id_company").val();
@@ -24,15 +30,18 @@ function fetch_saleorder(e){
         'sale_order':sale_order,
       },
       success: function(data){
-        console.log(data['check_flag'])
+        // console.log(data['check_flag'])
         if (data['check_flag'] == 1){
           console.log("Condition Failed")
           // $("#id_div_select_supplier_form").html(data)
         }
         else{
-          console.log(data['company']);
-          console.log(data['sale_order']);
-          console.log(data['check_flag']);
+          $("#id_saleorder_info_section").html(data)
+          $(".input--amount--field").each(convert_number_input)
+
+          // console.log(data['company']);
+          // console.log(data['sale_order']);
+          // console.log(data['check_flag']);
         }
       }
     })
@@ -41,4 +50,11 @@ function fetch_saleorder(e){
     // e.preventDefault();
     // console.log("invalid Inputs")
   }
+}
+
+function convert_number_input(){
+    var raw_num = $(this).val();
+    console.log(raw_num);
+    var num = Number(raw_num).toLocaleString('en');
+    $(this).val(num);
 }

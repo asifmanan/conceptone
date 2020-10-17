@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
+from django.core import serializers
 from django.forms import modelformset_factory
 from django.urls import reverse, reverse_lazy
 from django.template.loader import render_to_string
@@ -46,7 +47,7 @@ class NewSaleOrderInvoice(TemplateView):
 def FetchSaleOrder(request):
     company_sid = request.POST.get('company')
     sale_order_number = request.POST.get('sale_order')
-    sale_order = SaleOrder.objects.filter(so_number=sale_order_number)
+    sale_order = SaleOrder.objects.filter(so_number=sale_order_number,supplier__id=company_sid)
     check_flag = 0
     if company_sid == "" or sale_order_number == "" or not sale_order:
         check_flag = 1
@@ -55,13 +56,16 @@ def FetchSaleOrder(request):
         return JsonResponse(data)
     else:
         sale_order = sale_order[0]
-        print("Company: "+company_sid)
-        print("Sale Order: "+sale_order_number)
+        # print("Company: "+company_sid)
+        # print("Sale Order: "+sale_order_number)
         sale_order_items = SaleOrderItem.objects.filter(sale_order=sale_order)
-        for items in sale_order_items:
-            print(items)
-        data = {"company":company_sid,"sale_order":sale_order_number,"check_flag":check_flag}
-        return JsonResponse(data)
+        # for items in sale_order_items:
+        #     print(items)
+        saleorder_info_html = render(request,'saleorderinvoicesapp/_info_id_saleorder_info_section.html',{'sale_order_info':sale_order,'sale_order_items':sale_order_items})
+        # saleorder_info_html = serializers.serialize("json",saleorder_info_html)
+        # data = {"company":company_sid,"sale_order":sale_order_number,"check_flag":check_flag,'saleorder_info_html':saleorder_info_html}
+        # data = serializers.serialize("json",data)
+        return HttpResponse(saleorder_info_html)
 
 class CreateSaleOrderInvoiceItem(FormView):
     model = SaleOrderInvoiceItem

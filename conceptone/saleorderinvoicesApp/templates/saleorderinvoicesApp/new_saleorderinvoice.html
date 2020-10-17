@@ -41,89 +41,101 @@
                   </div>
               </div>
           </div>
-          <div class="row mb-2">
-              <div class="col">
-                  <div class="shadow-sm content--div">
-                      <h6 class="div-subtitle">Saleorder Information</h6>
-                      <div class="row">
-                          <div class="col-12 col-lg-6 mb-1">
-                              <div class="input-group input-group-sm">
-                                  <div class="input-group-prepend"><span class="input-group-text">Project</span></div><input type="text" class="form-control input-info-display" readonly=""></div>
-                          </div>
-                          <div class="col-12 col-lg-6 mb-1">
-                              <div class="input-group input-group-sm">
-                                  <div class="input-group-prepend"><span class="input-group-text">Amount</span></div><input type="text" class="form-control input-info-display" readonly=""></div>
-                          </div>
-                          <div class="col-12 col-lg-6 mb-1">
-                              <div class="input-group input-group-sm">
-                                  <div class="input-group-prepend"><span class="input-group-text">Saleorder#</span></div><input type="text" class="form-control input-info-display" readonly=""></div>
-                          </div>
-                          <div class="col-12 col-lg-6">
-                              <div class="input-group input-group-sm">
-                                  <div class="input-group-prepend"><span class="input-group-text">Total Amount</span></div><input type="text" class="form-control input-info-display" readonly=""></div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
+          <div id="id_saleorder_info_section">
+            <div class="row mb-2">
+                <div class="col">
+                    <div class="shadow-sm content--div">
+                        <h6 class="div-subtitle">Saleorder Information</h6>
+                        <div class="row">
+                            <div class="col-12 col-xl-6 mb-1">
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group-prepend"><span class="input-group-text">Project</span></div><input type="text" class="form-control input-info-display" readonly=""></div>
+                            </div>
+                            <div class="col-12 col-xl-6 mb-1">
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group-prepend"><span class="input-group-text">Customer</span></div><input type="text" class="form-control input-info-display" readonly=""></div>
+                            </div>
+                            <div class="col-12 col-xl-6 mb-1">
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group-prepend"><span class="input-group-text">Saleorder#</span></div><input type="text" class="form-control input-info-display" readonly=""></div>
+                            </div>
+                            <div class="col-12 col-xl-6 mb-1">
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group-prepend"><span class="input-group-text">Buyer PO#</span></div><input type="text" class="form-control input-info-display" readonly=""></div>
+                            </div>
+                            <div class="col-12 col-xl-6 mb-1">
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group-prepend"><span class="input-group-text">Amount</span></div><input type="text" class="form-control input-info-display" readonly=""></div>
+                            </div>
+                            <div class="col-12 col-xl-6 mb-1">
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group-prepend"><span class="input-group-text">T.Amount</span></div><input type="text" class="form-control input-info-display" readonly=""></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col">
+                    <div id="id_items-div" class="shadow-sm content--div">
+                        <div>
+                            <div class="row">
+                                <div class="col-8">
+                                    <h6 class="div-subtitle">Saleorder Items</h6>
+                                </div>
+                                <div class="col-4 text-right"><button class="btn btn-link btn-sm" id="id--toggle-table-view" type="button"><i class="fa fa-caret-down"></i></button></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="table-responsive-lg list--table">
+                                <table class="table list--table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" style="width: 4%;"><input type="checkbox"></th>
+                                            <th class="text-center" style="width: 4%;">#</th>
+                                            <th class="description--field" style="width:20%">Item</th>
+                                            <th class="text-right" style="width: 8%;">Price</th>
+                                            <th class="text-center" style="width:8%;">Line</th>
+                                            <th class="text-center" style="width:8%;">Shipment</th>
+                                            <th class="text-right" style="width:16%;">Order Qty</th>
+                                            <th class="text-right" style="width:16%;">Billed Qty</th>
+                                            <th class="text-right">Avail. Qty</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center"><input type="checkbox"></td>
+                                            <td>1</td>
+                                            <td class="description--field collapse--field compressed">a quick brown fox jumped over the lazy dog</td>
+                                            <td class="amount--field">548725</td>
+                                            <td class="text-center">1</td>
+                                            <td class="text-center">1</td>
+                                            <td class="amount--field">100</td>
+                                            <td class="amount--field">585000475</td>
+                                            <td class="amount--field">1299</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><input type="checkbox"></td>
+                                            <td>1</td>
+                                            <td class="description--field collapse--field compressed">a quick brown fox jumped over the lazy dog</td>
+                                            <td class="amount--field">548725</td>
+                                            <td class="text-center">1</td>
+                                            <td class="text-center">1</td>
+                                            <td class="amount--field">100</td>
+                                            <td class="amount--field">585000475</td>
+                                            <td class="amount--field">1299</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div></div>
+                        </div>
+                    </div>
+                </div>
           </div>
-          <div class="row mb-2">
-              <div class="col">
-                  <div id="id_items-div" class="shadow-sm content--div">
-                      <div>
-                          <div class="row">
-                              <div class="col-8">
-                                  <h6 class="div-subtitle">Saleorder Items</h6>
-                              </div>
-                              <div class="col-4 text-right"><button class="btn btn-link btn-sm" id="id--toggle-table-view" type="button"><i class="fa fa-caret-down"></i></button></div>
-                          </div>
-                      </div>
-                      <div>
-                          <div class="table-responsive-lg list--table">
-                              <table class="table list--table">
-                                  <thead>
-                                      <tr>
-                                          <th class="text-center" style="width: 4%;"><input type="checkbox"></th>
-                                          <th class="text-center" style="width: 4%;">#</th>
-                                          <th class="description--field" style="width:20%">Item</th>
-                                          <th class="text-right" style="width: 8%;">Price</th>
-                                          <th class="text-center" style="width:8%;">Line</th>
-                                          <th class="text-center" style="width:8%;">Shipment</th>
-                                          <th class="text-right" style="width:16%;">Order Qty</th>
-                                          <th class="text-right" style="width:16%;">Billed Qty</th>
-                                          <th class="text-right">Avail. Qty</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                      <tr>
-                                          <td class="text-center"><input type="checkbox"></td>
-                                          <td>1</td>
-                                          <td class="description--field collapse--field compressed">a quick brown fox jumped over the lazy dog</td>
-                                          <td class="amount--field">548725</td>
-                                          <td class="text-center">1</td>
-                                          <td class="text-center">1</td>
-                                          <td class="amount--field">100</td>
-                                          <td class="amount--field">585000475</td>
-                                          <td class="amount--field">1299</td>
-                                      </tr>
-                                      <tr>
-                                          <td class="text-center"><input type="checkbox"></td>
-                                          <td>1</td>
-                                          <td class="description--field collapse--field compressed">a quick brown fox jumped over the lazy dog</td>
-                                          <td class="amount--field">548725</td>
-                                          <td class="text-center">1</td>
-                                          <td class="text-center">1</td>
-                                          <td class="amount--field">100</td>
-                                          <td class="amount--field">585000475</td>
-                                          <td class="amount--field">1299</td>
-                                      </tr>
-                                  </tbody>
-                              </table>
-                          </div>
-                      </div>
-                      <div></div>
-                      </div>
-                  </div>
-              </div>
+
+
               <div class="row mb-2">
                   <div class="col">
                       <nav>

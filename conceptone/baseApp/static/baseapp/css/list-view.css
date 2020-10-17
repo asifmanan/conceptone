@@ -99,6 +99,10 @@ table td.amount--field, table th.amount--field {
   text-align: right;
 }
 
+input[readonly].input--amount--field {
+  text-align: left;
+}
+
 h6.div-subtitle {
   color: #60696c;
   margin-bottom: 2px;
