@@ -48,6 +48,8 @@ function select_items(){
   $('input[name="saleorderitem"]:checked').each(function(){
     selected_item.push($(this).val());
   });
+  selected_item.push('a');
+  console.log(selected_item);
   if (selected_item.length===0) {
     console.log("Not Selected");
   }
@@ -64,6 +66,9 @@ function select_items(){
         'selected_item':selected_item,
       },
       success: function(data){
+        if(data['value_error'] == 1){
+          console.log("Value Error Occured")
+        }
         if (data['check_flag'] == 1){
           console.log("Condition Failed")
         }
@@ -81,7 +86,6 @@ function select_items(){
 
 function convert_number_input(){
     var raw_num = $(this).val();
-    // console.log(raw_num);
     var num = Number(raw_num).toLocaleString('en');
     $(this).val(num);
 }

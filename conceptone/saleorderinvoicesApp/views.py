@@ -70,11 +70,18 @@ def FetchSaleOrder(request):
 
 def SelectSaleorderItem(request):
     check_flag = 1
+    value_error = 0
     if 'selected_item[]' in request.POST and 'saleorder_info' in request.session:
         sale_order_item = request.POST.getlist('selected_item[]')
+        try:
+            sale_order_item = list(map(int,sale_order_item))
+        except ValueError:
+            value_error = 1
+        if set(sale_order_item).issubset(request.session['saleorder_info']['saleorderitems']):
+            print("List Test Passed")
         check_flag = 0
         print(sale_order_item)
-    data = {'check_flag':check_flag}
+    data = {'check_flag':check_flag,'value_error':value_error}
     return JsonResponse(data)
 
 class CreateSaleOrderInvoiceItem(FormView):
