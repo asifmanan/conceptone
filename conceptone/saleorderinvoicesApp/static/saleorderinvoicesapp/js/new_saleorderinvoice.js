@@ -10,11 +10,9 @@ $(document).ready(function(){
 //     $(".description--field").toggleClass("compressed");
 //   })
 // })
-
 function fetch_saleorder(e){
   var company = $("#id_company").val();
   var sale_order = $("#id_sale_order").val();
-
   if(company && sale_order){
     e.preventDefault();
     const csrftoken = $('input[name="csrfmiddlewaretoken"]').val();
@@ -46,9 +44,16 @@ function fetch_saleorder(e){
 }
 
 function select_items(){
+  var selected_item = [];
   $('input[name="saleorderitem"]:checked').each(function(){
-    console.log(this.value);
+    selected_item.push($(this).val());
   });
+  if (selected_item.length===0) {
+    console.log("Not Selected");
+  }
+  else {
+    console.log("Selected");
+  }
 }
 
 function convert_number_input(){
