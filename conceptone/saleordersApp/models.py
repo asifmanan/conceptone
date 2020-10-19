@@ -43,6 +43,8 @@ class SaleOrderItem(models.Model):
     item = models.ForeignKey(Item, on_delete=models.PROTECT)
     tax = models.ForeignKey(Tax, on_delete=models.PROTECT)
     order_quantity = models.DecimalField(max_digits=14,decimal_places=2)
+    billed_quantity = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
+    available_quantity = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
     sale_price = models.DecimalField(max_digits=14,decimal_places=2)
     amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)
     tax_amount = models.DecimalField(max_digits=14,decimal_places=2,default=0.00)

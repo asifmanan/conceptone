@@ -45,6 +45,8 @@ class NewSaleOrderInvoice(TemplateView):
 
 #AJAX Call Function
 def FetchSaleOrder(request):
+    if request.session['saleorder_info']:
+        print("YAAYYY!")
     company_sid = request.POST.get('company')
     sale_order_number = request.POST.get('sale_order')
     sale_order = SaleOrder.objects.filter(so_number=sale_order_number,supplier__id=company_sid)
@@ -52,19 +54,17 @@ def FetchSaleOrder(request):
     if company_sid == "" or sale_order_number == "" or not sale_order:
         check_flag = 1
         data = {'check_flag':check_flag}
-        # return render(request,'saleorderinvoicesapp/_form_selectsaleorder.html',{'form',form},{'check_flag':check_flag})
         return JsonResponse(data)
     else:
         sale_order = sale_order[0]
-        # print("Company: "+company_sid)
-        # print("Sale Order: "+sale_order_number)
         sale_order_items = SaleOrderItem.objects.filter(sale_order=sale_order)
-        # for items in sale_order_items:
-        #     print(items)
-        saleorder_info_html = render(request,'saleorderinvoicesapp/_info_id_saleorder_info_section.html',{'sale_order_info':sale_order,'sale_order_items':sale_order_items})
-        # saleorder_info_html = serializers.serialize("json",saleorder_info_html)
-        # data = {"company":company_sid,"sale_order":sale_order_number,"check_flag":check_flag,'saleorder_info_html':saleorder_info_html}
-        # data = serializers.serialize("json",data)
+        saleorder_info_html = render(request,'saleorderinvoicesapp/_new_saleorderinvoice_info.html',{'sale_order_info':sale_order,'sale_order_items':sale_order_items})
+        item_list=[]
+        for item in sale_order_items:
+            item_list.append(item.id)
+        saleorder_info = {'saleordernumber':sale_order.so_number,'saleorderitems':item_list}
+        request.session['saleorder_info'] = saleorder_info
+        print(request.session['saleorder_info'])
         return HttpResponse(saleorder_info_html)
 
 class CreateSaleOrderInvoiceItem(FormView):

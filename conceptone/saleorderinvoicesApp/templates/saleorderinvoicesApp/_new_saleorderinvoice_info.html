@@ -70,15 +70,15 @@
                           <tbody>
                             {% for item in sale_order_items %}
                               <tr>
-                                  <td class="text-center"><input type="checkbox"></td>
+                                  <td class="text-center"><input type="checkbox" name="saleorderitem" value="{{item.id}}"></td>
                                   <td>{{forloop.counter}}</td>
                                   <td class="description--field collapse--field compressed">{{item.item.item_description}}</td>
                                   <td class="amount--field">{{item.sale_price}}</td>
                                   <td class="text-center">{{item.line_number}}</td>
                                   <td class="text-center">1</td>
                                   <td class="amount--field">{{item.order_quantity}}</td>
-                                  <td class="amount--field">N/A</td>
-                                  <td class="amount--field">N/A</td>
+                                  <td class="amount--field">{{item.billed_quantity}}</td>
+                                  <td class="amount--field">{{item.available_quantity}}</td>
                               </tr>
                             {% endfor %}
                           </tbody>
@@ -89,5 +89,15 @@
               <div></div>
               </div>
           </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="shadow-sm content--div">
+            <button id="id_btn_select_items" class="btn btn-primary" type="button" name="button">Next</button>
+            <button class="btn btn-secondary" type="button" name="button">Cancel</button>
+          </div>
+
+        </div>
+
       </div>
 </div>

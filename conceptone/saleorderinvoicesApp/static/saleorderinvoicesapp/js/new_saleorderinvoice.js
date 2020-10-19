@@ -1,5 +1,6 @@
 $(document).ready(function(){
   $('body').on('click','#id_btn_fetch_so',fetch_saleorder);
+  $('body').on('click','#id_btn_select_items',select_items);
   // $('body').on('click','#id_btn_saleorder_fetch',select_sale_order);
   // $('body').on('click','#id_sale_order_item_selection',select_sale_order_item);
 });
@@ -13,8 +14,6 @@ $(document).ready(function(){
 function fetch_saleorder(e){
   var company = $("#id_company").val();
   var sale_order = $("#id_sale_order").val();
-  // console.log(company);
-  // console.log(sale_order);
 
   if(company && sale_order){
     e.preventDefault();
@@ -30,18 +29,12 @@ function fetch_saleorder(e){
         'sale_order':sale_order,
       },
       success: function(data){
-        // console.log(data['check_flag'])
         if (data['check_flag'] == 1){
           console.log("Condition Failed")
-          // $("#id_div_select_supplier_form").html(data)
         }
         else{
           $("#id_saleorder_info_section").html(data)
           $(".input--amount--field").each(convert_number_input)
-
-          // console.log(data['company']);
-          // console.log(data['sale_order']);
-          // console.log(data['check_flag']);
         }
       }
     })
@@ -52,9 +45,15 @@ function fetch_saleorder(e){
   }
 }
 
+function select_items(){
+  $('input[name="saleorderitem"]:checked').each(function(){
+    console.log(this.value);
+  });
+}
+
 function convert_number_input(){
     var raw_num = $(this).val();
-    console.log(raw_num);
+    // console.log(raw_num);
     var num = Number(raw_num).toLocaleString('en');
     $(this).val(num);
 }
