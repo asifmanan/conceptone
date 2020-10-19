@@ -45,7 +45,7 @@ class NewSaleOrderInvoice(TemplateView):
 
 #AJAX Call Function
 def FetchSaleOrder(request):
-    if request.session['saleorder_info']:
+    if request.session.get('saleorder_info'):
         print("YAAYYY!")
     company_sid = request.POST.get('company')
     sale_order_number = request.POST.get('sale_order')
@@ -64,8 +64,18 @@ def FetchSaleOrder(request):
             item_list.append(item.id)
         saleorder_info = {'saleordernumber':sale_order.so_number,'saleorderitems':item_list}
         request.session['saleorder_info'] = saleorder_info
+        request.session['saleorder_info']
         print(request.session['saleorder_info'])
         return HttpResponse(saleorder_info_html)
+
+def SelectSaleorderItem(request):
+    check_flag = 1
+    if 'selected_item[]' in request.POST and 'saleorder_info' in request.session:
+        sale_order_item = request.POST.getlist('selected_item[]')
+        check_flag = 0
+        print(sale_order_item)
+    data = {'check_flag':check_flag}
+    return JsonResponse(data)
 
 class CreateSaleOrderInvoiceItem(FormView):
     model = SaleOrderInvoiceItem

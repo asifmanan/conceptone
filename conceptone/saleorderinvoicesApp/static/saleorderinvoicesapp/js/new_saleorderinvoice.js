@@ -52,7 +52,30 @@ function select_items(){
     console.log("Not Selected");
   }
   else {
-    console.log("Selected");
+    const csrftoken = $('input[name="csrfmiddlewaretoken"]').val();
+    var url = $("#id_submit_saleorder_items_url").val();
+    console.log(selected_item.length);
+    $.ajax({
+      type:"POST",
+      url:url,
+      headers: {'X-CSRFToken':csrftoken},
+      datatype:'json',
+      data:{
+        'selected_item':selected_item,
+      },
+      success: function(data){
+        if (data['check_flag'] == 1){
+          console.log("Condition Failed")
+        }
+        else{
+          // $("#id_saleorder_info_section").html(data)
+          // $(".input--amount--field").each(convert_number_input)
+          console.log("Operation Successful")
+        }
+      }
+    })
+
+    // console.log("Selected");
   }
 }
 
