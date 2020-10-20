@@ -48,7 +48,6 @@ function select_items(){
   $('input[name="saleorderitem"]:checked').each(function(){
     selected_item.push($(this).val());
   });
-  selected_item.push('a');
   console.log(selected_item);
   if (selected_item.length===0) {
     console.log("Not Selected");
@@ -73,6 +72,7 @@ function select_items(){
           console.log("Condition Failed")
         }
         else{
+          $("#id_items-div").html(data)
           // $("#id_saleorder_info_section").html(data)
           // $(".input--amount--field").each(convert_number_input)
           console.log("Operation Successful")

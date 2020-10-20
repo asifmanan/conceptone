@@ -79,8 +79,34 @@ def SelectSaleorderItem(request):
             value_error = 1
         if set(sale_order_item).issubset(request.session['saleorder_info']['saleorderitems']):
             print("List Test Passed")
-        check_flag = 0
-        print(sale_order_item)
+            check_flag = 0
+            # print(sale_order_item)
+            no_of_items = len(sale_order_item)
+            invoice_line_item = SaleOrderItem.objects.filter(id__in=sale_order_item)
+            formset_data = {
+                'form-TOTAL_FORMS': no_of_items,
+                'form-INITIAL_FORMS': '0',
+                'form-MAX_NUM_FORMS': '',
+            }
+            invoice_item_formset = SaleOrderInvoiceItemFormset(formset_data)
+
+            form_list = []
+            for form in invoice_item_formset:
+                element = {
+                    'bill_quantity':form['bill_quantity'],
+                    'id_form' : form['id'],
+                }
+                form_list.append(element)
+            i=0
+            for item in invoice_line_item:
+                item.invoice_item_form=form_list[i]
+                i=i+1
+
+            invoice_form = CreateSaleOrderInvoiceForm()
+            new_saleorder_invoice = render(request,'saleorderinvoicesapp/_create_saleorderinvoice_div.html',{'formset':invoice_item_formset,'invoice_line_items':invoice_line_item})
+            print("Before Response")
+            return HttpResponse(new_saleorder_invoice)
+
     data = {'check_flag':check_flag,'value_error':value_error}
     return JsonResponse(data)
 
@@ -278,7 +304,15 @@ def SelectSupplier(request):
         form = SaleOrderInvoiceForm()
         form.fields.pop('company')
         form.fields.pop('invoice_date')
-        return render(request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form':form})
+        return
+
+
+
+
+
+
+
+        (request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form':form})
 
     company_id = request.POST.get('company')
     request.session['so_invoice_company'] = company_id
