@@ -103,11 +103,21 @@ def SelectSaleorderItem(request):
                 i=i+1
 
             invoice_form = CreateSaleOrderInvoiceForm()
-            new_saleorder_invoice = render(request,'saleorderinvoicesapp/_create_saleorderinvoice_div.html',{'formset':invoice_item_formset,'invoice_line_items':invoice_line_item})
+            new_saleorder_invoice = render(request,'saleorderinvoicesapp/_create_saleorderinvoice_div.html',{'formset':invoice_item_formset,'invoice_line_items':invoice_line_item,'invoice_form':invoice_form})
             print("Before Response")
             return HttpResponse(new_saleorder_invoice)
 
     data = {'check_flag':check_flag,'value_error':value_error}
+    return JsonResponse(data)
+
+def CreateNewSaleOrderInvoiceItem(request):
+    invoice_number = request.POST.get('invoice_num')
+    if invoice_number:
+        print(invoice_number)
+        data={'invoice_number':invoice_number}
+    else:
+        check_flag=1
+        data={'check_flag':check_flag}
     return JsonResponse(data)
 
 class CreateSaleOrderInvoiceItem(FormView):

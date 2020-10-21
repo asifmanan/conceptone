@@ -1,6 +1,7 @@
 $(document).ready(function(){
   $('body').on('click','#id_btn_fetch_so',fetch_saleorder);
   $('body').on('click','#id_btn_select_items',select_items);
+  $('body').on('click','#id_btn_submit_invoice_items',submit_invoice);
   // $('body').on('click','#id_btn_saleorder_fetch',select_sale_order);
   // $('body').on('click','#id_sale_order_item_selection',select_sale_order_item);
 });
@@ -48,14 +49,14 @@ function select_items(){
   $('input[name="saleorderitem"]:checked').each(function(){
     selected_item.push($(this).val());
   });
-  console.log(selected_item);
+  // console.log(selected_item);
   if (selected_item.length===0) {
-    console.log("Not Selected");
+    // console.log("Not Selected");
   }
   else {
     const csrftoken = $('input[name="csrfmiddlewaretoken"]').val();
     var url = $("#id_submit_saleorder_items_url").val();
-    console.log(selected_item.length);
+    // console.log(selected_item.length);
     $.ajax({
       type:"POST",
       url:url,
@@ -72,7 +73,7 @@ function select_items(){
           console.log("Condition Failed")
         }
         else{
-          $("#id_items-div").html(data)
+          $("#id_items_section").html(data)
           // $("#id_saleorder_info_section").html(data)
           // $(".input--amount--field").each(convert_number_input)
           console.log("Operation Successful")
@@ -81,6 +82,48 @@ function select_items(){
     })
 
     // console.log("Selected");
+  }
+}
+
+function submit_invoice(e){
+  var inv_num = $("#id_invoice_number").val();
+  var inv_dt = $("#id_invoice_date").val();
+  var bl_qtys = [];
+  var bq_fd_ct = 0;
+  $("input[name$='bill_quantity']").each(function(){
+    bq_fd_ct++;
+    if($(this).val()!==""){
+      bl_qtys.push($(this).val());
+      // console.log($(this).val())
+    }
+  })
+  if (inv_num && inv_dt && bl_qtys.length !== 0 && bl_qtys.length === bq_fd_ct){
+    e.preventDefault();
+    // console.log(inv_num);
+    // console.log(inv_dt);
+    // for (x in bl_qtys){
+    //   console.log(bl_qtys[x]);
+    // }
+    const csrftoken = $('input[name="csrfmiddlewaretoken"]').val();
+    const url = $("#id_submit_saleorderinvoice_items_url").val();
+    $.ajax({
+      type:"post",
+      url: url,
+      headers: {'X-CSRFToken':csrftoken},
+      datatype:'json',
+      data:{
+        'invoice_num':inv_num,
+        'invoice_date':inv_dt,
+        'bill_quantities':bl_qtys,
+        'bill_quantities_count':bq_fd_ct,
+      },
+      success:function(data){
+        console.log("Invoice Saved Successfully")
+      }
+    })
+  }
+  else{
+    // console.log("Enter Invoice Data");
   }
 }
 

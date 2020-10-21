@@ -37,8 +37,8 @@ class CreateSaleOrderInvoiceForm(forms.ModelForm):
             'invoice_date',
         )
         widgets={
-                'invoice_number':forms.TextInput(attrs={'class':'form-control'}),
-                'invoice_date':forms.DateInput(attrs={'class':'form-control', 'type':'date'}),
+                'invoice_number':forms.TextInput(attrs={'class':'form-control','required':'required'}),
+                'invoice_date':forms.DateInput(attrs={'class':'form-control', 'type':'date','required':'required'}),
         }
 
 class SaleOrderInvoiceItemForm(forms.ModelForm):

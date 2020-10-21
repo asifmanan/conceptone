@@ -17,6 +17,7 @@ urlpatterns=[
     #AJAX
     path('ajaxcall/fetchsaleorder/',views.FetchSaleOrder,name='FetchSaleOrder'),
     path('ajaxcall/selectsaleorderitem/',views.SelectSaleorderItem,name='SelectSaleorderItem'),
+    path('ajaxcall/createnewsaleorderinvoiceitem/',views.CreateNewSaleOrderInvoiceItem,name='CreateNewSaleOrderInvoiceItem'),
 
     path('ajaxcall/selectsupplier/',views.SelectSupplier,name='SelectSupplier'),
     path('ajaxcall/selectsaleorder/',views.SelectSaleOrder,name='SelectSaleOrder'),
