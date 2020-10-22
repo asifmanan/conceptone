@@ -101,9 +101,10 @@ function submit_invoice(e){
     e.preventDefault();
     // console.log(inv_num);
     // console.log(inv_dt);
-    // for (x in bl_qtys){
-    //   console.log(bl_qtys[x]);
-    // }
+    for (x in bl_qtys){
+      console.log(bl_qtys[x]);
+    }
+    console.log(bl_qtys);
     const csrftoken = $('input[name="csrfmiddlewaretoken"]').val();
     const url = $("#id_submit_saleorderinvoice_items_url").val();
     $.ajax({
@@ -118,7 +119,20 @@ function submit_invoice(e){
         'bill_quantities_count':bq_fd_ct,
       },
       success:function(data){
-        console.log("Invoice Saved Successfully")
+        if (data['check_flag']==1){
+          console.log("Operation failed at server side");
+        }
+        if (data['value_error']==1){
+          console.log("Value Error Occured in the data")
+          $("#id_error_message").html(data["error_message"])
+        }
+        else {
+          console.log("Invoice Saved Successfully");
+        }
+      },
+      error:function(xhr,errmsg,err) {
+            $('#id_error_message').html("<div class='mt-1 mb-2 alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Oops! We have encountered an error: '+errmsg+'</div>"); // add the error to the dom
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
       }
     })
   }

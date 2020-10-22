@@ -4,6 +4,7 @@ from django.forms import modelformset_factory
 from django.urls import reverse, reverse_lazy
 from django.template.loader import render_to_string
 from django.contrib import messages
+from decimal import Decimal
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.views.generic import (
                                 CreateView,
@@ -112,12 +113,28 @@ def SelectSaleorderItem(request):
 
 def CreateNewSaleOrderInvoiceItem(request):
     invoice_number = request.POST.get('invoice_num')
-    if invoice_number:
+    invoice_date = request.POST.get('invoice_date')
+    bill_quantities = request.POST.getlist('bill_quantities[]')
+    try:
+        bill_quantities = [float(x.strip(' "')) for x in bill_quantities]
+    except ValueError:
+        message = "One of more fields in bill quantity is invalid, please rectify and try again."
+        error_message = render_to_string('saleorderinvoicesapp/errormessages/_bill_quantities_error.html',{'message':message})
+        data = {'value_error':1,'error_message':error_message}
+        return JsonResponse(data)
+    if (invoice_number and invoice_date and bill_quantities):
         print(invoice_number)
+        print(invoice_date)
+        print(bill_quantities)
+        invoice_form = CreateSaleOrderInvoiceForm({'invoice_number':invoice_number,'invoice_date':invoice_date})
+        print(invoice_form)
+        if invoice_form.is_valid():
+            print("Invoice form is valid..")
         data={'invoice_number':invoice_number}
     else:
-        check_flag=1
-        data={'check_flag':check_flag}
+        message = "Oops! Something went wrong!"
+        error_message = render_to_string('saleorderinvoicesapp/errormessages/_bill_quantities_error.html',{'message':message})
+        data={'check_flag':1,'error_message':error_message}
     return JsonResponse(data)
 
 class CreateSaleOrderInvoiceItem(FormView):
