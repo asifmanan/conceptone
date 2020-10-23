@@ -22,4 +22,7 @@ urlpatterns=[
     path('ajaxcall/selectsupplier/',views.SelectSupplier,name='SelectSupplier'),
     path('ajaxcall/selectsaleorder/',views.SelectSaleOrder,name='SelectSaleOrder'),
     path('ajaxcall/selectsaleorderitem/',views.SelectSaleOrderItem,name='SelectSaleOrderItem'),
+
+    path('test/testformview/',views.TestFormView.as_view(),name='TestFormView'),
+
 ]

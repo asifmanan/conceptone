@@ -90,6 +90,14 @@ function submit_invoice(e){
   var inv_dt = $("#id_invoice_date").val();
   var bl_qtys = [];
   var bq_fd_ct = 0;
+  var form_TOTAL_FORMS = $('input[name="form-TOTAL_FORMS"]').val();
+  var form_INITIAL_FORMS = $('input[name="form-INITIAL_FORMS"]').val();
+  var form_MIN_NUM_FORMS = $('input[name="form-MIN_NUM_FORMS"]').val();
+  var form_MAX_NUM_FORMS = $('input[name="form-MAX_NUM_FORMS"]').val();
+  console.log(form_TOTAL_FORMS);
+  console.log(form_INITIAL_FORMS);
+  console.log(form_MIN_NUM_FORMS);
+  console.log(form_MAX_NUM_FORMS);
   $("input[name$='bill_quantity']").each(function(){
     bq_fd_ct++;
     if($(this).val()!==""){
@@ -113,8 +121,13 @@ function submit_invoice(e){
       headers: {'X-CSRFToken':csrftoken},
       datatype:'json',
       data:{
+        'csrfmiddlewaretoken':csrftoken,
         'invoice_num':inv_num,
         'invoice_date':inv_dt,
+        'form-TOTAL_FORMS': form_TOTAL_FORMS,
+        'form-INITIAL_FORMS': form_INITIAL_FORMS,
+        'form-MIN_NUM_FORMS': form_MIN_NUM_FORMS,
+        'form-MAX_NUM_FORMS': form_MAX_NUM_FORMS,
         'bill_quantities':bl_qtys,
         'bill_quantities_count':bq_fd_ct,
       },

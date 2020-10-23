@@ -36,6 +36,27 @@ from saleorderinvoicesApp.forms import (
                                         SelectSaleorderForm,
                                         )
 
+class TestFormView(FormView):
+    form_class = CreateSaleOrderInvoiceForm
+    template_name = 'saleorderinvoicesapp/testformviewtemplate.html'
+    def get_context_data(self,*args,**kwargs):
+        context = super().get_context_data(*args,**kwargs)
+        formset_data = {
+            'form-TOTAL_FORMS': 3,
+            'form-INITIAL_FORMS': '0',
+            'form-MIN_NUM_FORMS': '1',
+            'form-MAX_NUM_FORMS': '100',
+        }
+        invoice_item_formset = SaleOrderInvoiceItemFormset(formset_data)
+        formset = invoice_item_formset
+        context['formset'] = formset
+        return context
+
+    def post(self,request,*args,**kwargs):
+        print(self.request.POST)
+        form = CreateSaleOrderInvoiceForm(self.request.POST)
+        return HttpResponse(render(self.request,self.template_name,{'form':form}))
+
 class NewSaleOrderInvoice(TemplateView):
     template_name = 'saleorderinvoicesapp/new_saleorderinvoice.html'
     def get_context_data(self,*args,**kwargs):
@@ -87,7 +108,8 @@ def SelectSaleorderItem(request):
             formset_data = {
                 'form-TOTAL_FORMS': no_of_items,
                 'form-INITIAL_FORMS': '0',
-                'form-MAX_NUM_FORMS': '',
+                'form-MIN_NUM_FORMS': '1',
+                'form-MAX_NUM_FORMS': '100',
             }
             invoice_item_formset = SaleOrderInvoiceItemFormset(formset_data)
 
@@ -115,6 +137,7 @@ def CreateNewSaleOrderInvoiceItem(request):
     invoice_number = request.POST.get('invoice_num')
     invoice_date = request.POST.get('invoice_date')
     bill_quantities = request.POST.getlist('bill_quantities[]')
+    print(request.POST)
     try:
         bill_quantities = [float(x.strip(' "')) for x in bill_quantities]
     except ValueError:
@@ -127,7 +150,7 @@ def CreateNewSaleOrderInvoiceItem(request):
         print(invoice_date)
         print(bill_quantities)
         invoice_form = CreateSaleOrderInvoiceForm({'invoice_number':invoice_number,'invoice_date':invoice_date})
-        print(invoice_form)
+        # print(invoice_form)
         if invoice_form.is_valid():
             print("Invoice form is valid..")
         data={'invoice_number':invoice_number}
