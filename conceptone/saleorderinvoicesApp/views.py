@@ -55,7 +55,12 @@ class TestFormView(FormView):
     def post(self,request,*args,**kwargs):
         print(self.request.POST)
         form = CreateSaleOrderInvoiceForm(self.request.POST)
-        return HttpResponse(render(self.request,self.template_name,{'form':form}))
+        item_formset = SaleOrderInvoiceItemFormset(self.request.POST)
+        print(item_formset)
+        if item_formset.is_valid():
+            for bill in item_formset.forms:
+                print(bill.cleaned_data)
+        return HttpResponse(render(self.request,self.template_name,{'form':form,'formset':item_formset}))
 
 class NewSaleOrderInvoice(TemplateView):
     template_name = 'saleorderinvoicesapp/new_saleorderinvoice.html'
@@ -134,25 +139,35 @@ def SelectSaleorderItem(request):
     return JsonResponse(data)
 
 def CreateNewSaleOrderInvoiceItem(request):
-    invoice_number = request.POST.get('invoice_num')
+    invoice_number = request.POST.get('invoice_number')
     invoice_date = request.POST.get('invoice_date')
-    bill_quantities = request.POST.getlist('bill_quantities[]')
+    bill_quantity = request.POST.getlist('bill_quantity')
     print(request.POST)
     try:
-        bill_quantities = [float(x.strip(' "')) for x in bill_quantities]
+        bill_quantity = [float(x.strip(' "')) for x in bill_quantity]
     except ValueError:
         message = "One of more fields in bill quantity is invalid, please rectify and try again."
         error_message = render_to_string('saleorderinvoicesapp/errormessages/_bill_quantities_error.html',{'message':message})
         data = {'value_error':1,'error_message':error_message}
         return JsonResponse(data)
-    if (invoice_number and invoice_date and bill_quantities):
-        print(invoice_number)
-        print(invoice_date)
-        print(bill_quantities)
-        invoice_form = CreateSaleOrderInvoiceForm({'invoice_number':invoice_number,'invoice_date':invoice_date})
+    if (invoice_number and invoice_date and bill_quantity):
+        # print(invoice_number)
+        # print(invoice_date)
+        # print(bill_quantities)
+        # invoice_form = CreateSaleOrderInvoiceForm({'invoice_number':invoice_number,'invoice_date':invoice_date})
+        invoice_form = CreateSaleOrderInvoiceForm(request.POST)
+        invoice_item = SaleOrderInvoiceItemFormset(request.POST)
+        if invoice_item.is_valid():
+            print("----formset is valid----")
+            for form in invoice_item:
+                print(form.cleaned_data)
+        # print(invoice_form)
+        # print("#############################################")
+        # print(invoice_item)
         # print(invoice_form)
         if invoice_form.is_valid():
             print("Invoice form is valid..")
+            print(invoice_form.cleaned_data)
         data={'invoice_number':invoice_number}
     else:
         message = "Oops! Something went wrong!"

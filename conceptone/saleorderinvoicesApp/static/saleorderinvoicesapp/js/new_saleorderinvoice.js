@@ -94,6 +94,7 @@ function submit_invoice(e){
   var form_INITIAL_FORMS = $('input[name="form-INITIAL_FORMS"]').val();
   var form_MIN_NUM_FORMS = $('input[name="form-MIN_NUM_FORMS"]').val();
   var form_MAX_NUM_FORMS = $('input[name="form-MAX_NUM_FORMS"]').val();
+  var formset_dict = {};
   console.log(form_TOTAL_FORMS);
   console.log(form_INITIAL_FORMS);
   console.log(form_MIN_NUM_FORMS);
@@ -101,10 +102,12 @@ function submit_invoice(e){
   $("input[name$='bill_quantity']").each(function(){
     bq_fd_ct++;
     if($(this).val()!==""){
+      formset_dict[$(this).attr("name")]=$(this).val();
       bl_qtys.push($(this).val());
       // console.log($(this).val())
     }
   })
+  console.log(formset_dict);
   if (inv_num && inv_dt && bl_qtys.length !== 0 && bl_qtys.length === bq_fd_ct){
     e.preventDefault();
     // console.log(inv_num);
@@ -121,16 +124,18 @@ function submit_invoice(e){
       headers: {'X-CSRFToken':csrftoken},
       datatype:'json',
       data:{
+        // serializedData,
         'csrfmiddlewaretoken':csrftoken,
-        'invoice_num':inv_num,
+        'invoice_number':inv_num,
         'invoice_date':inv_dt,
         'form-TOTAL_FORMS': form_TOTAL_FORMS,
         'form-INITIAL_FORMS': form_INITIAL_FORMS,
         'form-MIN_NUM_FORMS': form_MIN_NUM_FORMS,
         'form-MAX_NUM_FORMS': form_MAX_NUM_FORMS,
-        'bill_quantities':bl_qtys,
+        'bill_quantity':bl_qtys,
         'bill_quantities_count':bq_fd_ct,
       },
+      traditional : true,
       success:function(data){
         if (data['check_flag']==1){
           console.log("Operation failed at server side");

@@ -8,6 +8,18 @@ from saleorderinvoicesApp.models import (
 from baseApp.models import Company
 from customersApp.models import Customer
 
+class SupplierSelectForm(forms.Form):
+    class Meta:
+        model = SaleOrderInvoice
+        fields = (
+                'supplier',
+                'sale_order',
+        )
+        widgets={
+                'supplier':forms.Select(attrs={'class':'form-control'}),
+                'sale_order':forms.Select(attrs={'class':'form-control', 'disabled':'True'}),
+        }
+
 class SelectSaleorderForm(forms.Form):
     company = forms.ModelChoiceField(queryset=Company.objects.all(),widget=forms.Select(attrs={'class':'form-control','required':'True'}),empty_label="Select Company")
     sale_order = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Saleorder #','required':'True'}))

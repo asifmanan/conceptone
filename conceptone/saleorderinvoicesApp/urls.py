@@ -5,6 +5,7 @@ app_name = 'saleorderinvoicesApp'
 
 urlpatterns=[
     path('newsaleorderinvoice/',views.NewSaleOrderInvoice.as_view(),name='NewSaleOrderInvoice'),
+    # path('newsaleorderinvoice1/',views.NewSaleOrderInvoice_old.as_view(),name='NewSaleOrderInvoice1'),
     path('createsaleorderinvoiceitem/',views.CreateSaleOrderInvoiceItem.as_view(),name='CreateSaleOrderInvoiceItem'),
     path('listsaleorderinvoice/',views.ListSaleOrderInvioce.as_view(),name='ListSaleOrderInvoice'),
     path('listpublishedsaleorderinvoice/',views.ListPublishedSaleOrderInvoice.as_view(),name='ListPublishedSaleOrderInvoice'),
