@@ -95,10 +95,11 @@ function submit_invoice(e){
   var form_MIN_NUM_FORMS = $('input[name="form-MIN_NUM_FORMS"]').val();
   var form_MAX_NUM_FORMS = $('input[name="form-MAX_NUM_FORMS"]').val();
   var formset_dict = {};
-  console.log(form_TOTAL_FORMS);
-  console.log(form_INITIAL_FORMS);
-  console.log(form_MIN_NUM_FORMS);
-  console.log(form_MAX_NUM_FORMS);
+  // console.log(form_TOTAL_FORMS);
+  // console.log(form_INITIAL_FORMS);
+  // console.log(form_MIN_NUM_FORMS);
+  // console.log(form_MAX_NUM_FORMS);
+  // var form_data = $(form).serialize();
   $("input[name$='bill_quantity']").each(function(){
     bq_fd_ct++;
     if($(this).val()!==""){
@@ -107,23 +108,26 @@ function submit_invoice(e){
       // console.log($(this).val())
     }
   })
-  console.log(formset_dict);
+  // console.log(formset_dict);
+  var my_form = $('form').serialize();
+  console.log(my_form);
   if (inv_num && inv_dt && bl_qtys.length !== 0 && bl_qtys.length === bq_fd_ct){
     e.preventDefault();
     // console.log(inv_num);
     // console.log(inv_dt);
-    for (x in bl_qtys){
-      console.log(bl_qtys[x]);
-    }
-    console.log(bl_qtys);
+    // for (x in bl_qtys){
+    //   console.log(bl_qtys[x]);
+    // }
+    // console.log(bl_qtys);
     const csrftoken = $('input[name="csrfmiddlewaretoken"]').val();
     const url = $("#id_submit_saleorderinvoice_items_url").val();
     $.ajax({
-      type:"post",
       url: url,
+      type:"post",
       headers: {'X-CSRFToken':csrftoken},
       datatype:'json',
       data:{
+        // 'form_data':form_data}
         // serializedData,
         'csrfmiddlewaretoken':csrftoken,
         'invoice_number':inv_num,
@@ -134,6 +138,8 @@ function submit_invoice(e){
         'form-MAX_NUM_FORMS': form_MAX_NUM_FORMS,
         'bill_quantity':bl_qtys,
         'bill_quantities_count':bq_fd_ct,
+        'formset':formset_dict,
+        'form_data':my_form,
       },
       traditional : true,
       success:function(data){

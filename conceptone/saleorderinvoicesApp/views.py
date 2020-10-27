@@ -142,7 +142,11 @@ def CreateNewSaleOrderInvoiceItem(request):
     invoice_number = request.POST.get('invoice_number')
     invoice_date = request.POST.get('invoice_date')
     bill_quantity = request.POST.getlist('bill_quantity')
-    print(request.POST)
+    form_data = request.POST.get('form_data')
+    # invoice_form = CreateSaleOrderInvoiceForm(form_data)
+    print(invoice_form)
+    print(form_data)
+    # print(request.POST)
     try:
         bill_quantity = [float(x.strip(' "')) for x in bill_quantity]
     except ValueError:
