@@ -42,6 +42,9 @@
         </div>
     </div>
           <div class="mb-1" id="id_saleorder_info_section">
+            {% if sale_order_info %}
+              {% include "saleorderinvoicesapp/_new_saleorderinvoice_info.html" %}
+            {% endif %}
           </div>
 </div>
 {% endblock bodyblock %}

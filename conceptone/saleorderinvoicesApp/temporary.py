@@ -7,6 +7,33 @@ class CreateSaleOrderInvoiceItem(FormView):
             return redirect('saleorderinvoicesApp:NewSaleOrderInvoice')
         return super().get(request,*args,**kwargs)
 
+    def post(self,request,*args,**kwargs):
+        invoice_form = CreateSaleOrderInvoiceForm(self.request.POST)
+        item_formset = SaleOrderInvoiceItemFormset(self.request.POST)
+        if 'cancel' in self.request.POST:
+            return get_success_url(*args,**kwargs)
+        if item_formset.is_valid():
+            invalid_flag = False
+            item_formset_data = item_formset.cleaned_data
+            line_item,sale_order = self.acquire_saleorder_data(**kwargs)
+            for item_form_qty, so_item_qty in zip(item_formset_data,line_item):
+                if item_form_qty['bill_quantity'] <= so_item_qty.order_quantity:
+                    pass
+                elif item_form_qty['bill_quantity'] > so_item_qty.order_quantity:
+                    invalid_flag = True
+                    messages.warning(self.request,"One of more BILL QUANTITY is greater than ORDER QUANTITY.")
+        elif not item_formset.is_valid():
+            messages.warning(self.request,"One of more values in BILL QUANTITIES are invalid.")
+            invalid_flag = True
+
+        if not invoice_form.is_valid():
+            invalid_flag = True
+
+        if invalid_flag:
+            return self.form_invalid(invoice_form,item_formset)
+        else:
+            return self.form_valid(invoice_form,item_formset)
+
     def get_context_data(self,*args,**kwargs):
         context = super().get_context_data(*args,**kwargs)
         line_item,sale_order = self.acquire_saleorder_data(*args,**kwargs)
@@ -55,33 +82,6 @@ class CreateSaleOrderInvoiceItem(FormView):
         line_item = SaleOrderItem.objects.filter(id__in=id_selected_item)
         sale_order = line_item.first().sale_order
         return (line_item,sale_order)
-
-    def post(self,request,*args,**kwargs):
-        invoice_form = CreateSaleOrderInvoiceForm(self.request.POST)
-        item_formset = SaleOrderInvoiceItemFormset(self.request.POST)
-        if 'cancel' in self.request.POST:
-            return get_success_url(*args,**kwargs)
-        if item_formset.is_valid():
-            invalid_flag = False
-            item_formset_data = item_formset.cleaned_data
-            line_item,sale_order = self.acquire_saleorder_data(**kwargs)
-            for item_form_qty, so_item_qty in zip(item_formset_data,line_item):
-                if item_form_qty['bill_quantity'] <= so_item_qty.order_quantity:
-                    pass
-                elif item_form_qty['bill_quantity'] > so_item_qty.order_quantity:
-                    invalid_flag = True
-                    messages.warning(self.request,"One of more BILL QUANTITY is greater than ORDER QUANTITY.")
-        elif not item_formset.is_valid():
-            messages.warning(self.request,"One of more values in BILL QUANTITIES are invalid.")
-            invalid_flag = True
-
-        if not invoice_form.is_valid():
-            invalid_flag = True
-
-        if invalid_flag:
-            return self.form_invalid(invoice_form,item_formset)
-        else:
-            return self.form_valid(invoice_form,item_formset)
 
     def form_invalid(self,invoice_form,item_formset,**kwargs):
         context = self.get_context_data(**kwargs)

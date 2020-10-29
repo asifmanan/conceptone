@@ -1,104 +1,102 @@
 <!DOCTYPE html>
-<div id="id_saleorder_info_section">
+<div class="row mb-2">
+    <div class="col">
+        <div class="shadow-sm content--div">
+            <h6 class="div-subtitle">Saleorder Information</h6>
+            <div class="row">
+                <div class="col-12 col-xl-6 mb-1">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend"><span style="width:90px" class="input-group-text">Customer</span></div>
+                        <input type="text" value="{{sale_order_info.buyer.customer_name}}" class="form-control input-info-display" readonly=""></div>
+                </div>
+                <div class="col-12 col-xl-6 mb-1">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend"><span style="width:90px" class="input-group-text">Project</span></div>
+                        <input type="text" value="{{sale_order_info.project.project_name}}" class="form-control input-info-display" readonly=""></div>
+                </div>
+                <div class="col-12 col-xl-6 mb-1">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend"><span style="width:90px" class="input-group-text">Saleorder#</span></div>
+                        <input type="text" value="{{sale_order_info.so_number}}" class="form-control input-info-display" readonly=""></div>
+                </div>
+                <div class="col-12 col-xl-6 mb-1">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend"><span style="width:90px" class="input-group-text">Buyer PO#</span></div>
+                        <input type="text" value="{{sale_order_info.buyer_po_number}}" class="form-control input-info-display" readonly=""></div>
+                </div>
+                <div class="col-12 col-xl-6 mb-1">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend"><span style="width:90px" class="input-group-text">Amount</span></div>
+                        <input type="text" value="{{sale_order_info.amount}}" class="form-control input-info-display input--amount--field" readonly=""></div>
+                </div>
+                <div class="col-12 col-xl-6 mb-1">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend"><span style="width:90px" class="input-group-text">T.Amount</span></div>
+                        <input type="text" value="{{sale_order_info.total_amount}}" class="form-control input-info-display input--amount--field" readonly=""></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="" id="id_items_section">
   <div class="row mb-2">
       <div class="col">
           <div class="shadow-sm content--div">
-              <h6 class="div-subtitle">Saleorder Information</h6>
-              <div class="row">
-                  <div class="col-12 col-xl-6 mb-1">
-                      <div class="input-group input-group-sm">
-                          <div class="input-group-prepend"><span style="width:90px" class="input-group-text">Customer</span></div>
-                          <input type="text" value="{{sale_order_info.buyer.customer_name}}" class="form-control input-info-display" readonly=""></div>
+              <div>
+                  <div class="row">
+                      <div class="col-8">
+                          <h6 class="div-subtitle">Saleorder Items</h6>
+                      </div>
+                      <div class="col-4 text-right"><button class="btn btn-link btn-sm" id="id--toggle-table-view" type="button"><i class="fa fa-caret-down"></i></button></div>
                   </div>
-                  <div class="col-12 col-xl-6 mb-1">
-                      <div class="input-group input-group-sm">
-                          <div class="input-group-prepend"><span style="width:90px" class="input-group-text">Project</span></div>
-                          <input type="text" value="{{sale_order_info.project.project_name}}" class="form-control input-info-display" readonly=""></div>
+              </div>
+              <div>
+                  <div class="table-responsive-lg list--table">
+                      <table class="table list--table">
+                          <thead>
+                              <tr>
+                                  <th class="text-center" style="width: 4%;"><input type="checkbox"></th>
+                                  <th class="text-center" style="width: 4%;">#</th>
+                                  <th class="description--field" style="width:20%">Item</th>
+                                  <th class="text-right" style="width: 8%;">Price</th>
+                                  <th class="text-center" style="width:8%;">Line</th>
+                                  <th class="text-center" style="width:8%;">Shipment</th>
+                                  <th class="text-right" style="width:16%;">Order Qty</th>
+                                  <th class="text-right" style="width:16%;">Billed Qty</th>
+                                  <th class="text-right" style="width:16%;">Avail. Qty</th>
+                              </tr>
+                          </thead>
+                          {% if sale_order_items %}
+                          <tbody>
+                            {% for item in sale_order_items %}
+                              <tr>
+                                  <td class="text-center"><input type="checkbox" name="saleorderitem" value="{{item.id}}"></td>
+                                  <td>{{forloop.counter}}</td>
+                                  <td class="description--field collapse--field compressed">{{item.item.item_description}}</td>
+                                  <td class="amount--field">{{item.sale_price}}</td>
+                                  <td class="text-center">{{item.line_number}}</td>
+                                  <td class="text-center">1</td>
+                                  <td class="amount--field">{{item.order_quantity}}</td>
+                                  <td class="amount--field">{{item.billed_quantity}}</td>
+                                  <td class="amount--field">{{item.available_quantity}}</td>
+                              </tr>
+                            {% endfor %}
+                          </tbody>
+                          {% endif %}
+                      </table>
                   </div>
-                  <div class="col-12 col-xl-6 mb-1">
-                      <div class="input-group input-group-sm">
-                          <div class="input-group-prepend"><span style="width:90px" class="input-group-text">Saleorder#</span></div>
-                          <input type="text" value="{{sale_order_info.so_number}}" class="form-control input-info-display" readonly=""></div>
-                  </div>
-                  <div class="col-12 col-xl-6 mb-1">
-                      <div class="input-group input-group-sm">
-                          <div class="input-group-prepend"><span style="width:90px" class="input-group-text">Buyer PO#</span></div>
-                          <input type="text" value="{{sale_order_info.buyer_po_number}}" class="form-control input-info-display" readonly=""></div>
-                  </div>
-                  <div class="col-12 col-xl-6 mb-1">
-                      <div class="input-group input-group-sm">
-                          <div class="input-group-prepend"><span style="width:90px" class="input-group-text">Amount</span></div>
-                          <input type="text" value="{{sale_order_info.amount}}" class="form-control input-info-display input--amount--field" readonly=""></div>
-                  </div>
-                  <div class="col-12 col-xl-6 mb-1">
-                      <div class="input-group input-group-sm">
-                          <div class="input-group-prepend"><span style="width:90px" class="input-group-text">T.Amount</span></div>
-                          <input type="text" value="{{sale_order_info.total_amount}}" class="form-control input-info-display input--amount--field" readonly=""></div>
-                  </div>
+              </div>
+              <div></div>
               </div>
           </div>
       </div>
-  </div>
-  <div class="" id="id_items_section">
-    <div class="row mb-2">
+      <div class="row">
         <div class="col">
-            <div class="shadow-sm content--div">
-                <div>
-                    <div class="row">
-                        <div class="col-8">
-                            <h6 class="div-subtitle">Saleorder Items</h6>
-                        </div>
-                        <div class="col-4 text-right"><button class="btn btn-link btn-sm" id="id--toggle-table-view" type="button"><i class="fa fa-caret-down"></i></button></div>
-                    </div>
-                </div>
-                <div>
-                    <div class="table-responsive-lg list--table">
-                        <table class="table list--table">
-                            <thead>
-                                <tr>
-                                    <th class="text-center" style="width: 4%;"><input type="checkbox"></th>
-                                    <th class="text-center" style="width: 4%;">#</th>
-                                    <th class="description--field" style="width:20%">Item</th>
-                                    <th class="text-right" style="width: 8%;">Price</th>
-                                    <th class="text-center" style="width:8%;">Line</th>
-                                    <th class="text-center" style="width:8%;">Shipment</th>
-                                    <th class="text-right" style="width:16%;">Order Qty</th>
-                                    <th class="text-right" style="width:16%;">Billed Qty</th>
-                                    <th class="text-right" style="width:16%;">Avail. Qty</th>
-                                </tr>
-                            </thead>
-                            {% if sale_order_items %}
-                            <tbody>
-                              {% for item in sale_order_items %}
-                                <tr>
-                                    <td class="text-center"><input type="checkbox" name="saleorderitem" value="{{item.id}}"></td>
-                                    <td>{{forloop.counter}}</td>
-                                    <td class="description--field collapse--field compressed">{{item.item.item_description}}</td>
-                                    <td class="amount--field">{{item.sale_price}}</td>
-                                    <td class="text-center">{{item.line_number}}</td>
-                                    <td class="text-center">1</td>
-                                    <td class="amount--field">{{item.order_quantity}}</td>
-                                    <td class="amount--field">{{item.billed_quantity}}</td>
-                                    <td class="amount--field">{{item.available_quantity}}</td>
-                                </tr>
-                              {% endfor %}
-                            </tbody>
-                            {% endif %}
-                        </table>
-                    </div>
-                </div>
-                <div></div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div class="shadow-sm content--div">
-              <button id="id_btn_select_items" class="btn btn-primary" type="button" name="button">Next</button>
-              <button class="btn btn-secondary" type="button" name="button">Cancel</button>
-              <input type="hidden" id="id_submit_saleorder_items_url" name="" value="{% url 'saleorderinvoicesApp:SelectSaleorderItem' %}">
-            </div>
+          <div class="shadow-sm content--div">
+            <button id="id_btn_select_items" class="btn btn-primary" type="button" name="button">Next</button>
+            <button class="btn btn-secondary" type="button" name="button">Cancel</button>
+            <input type="hidden" id="id_submit_saleorder_items_url" name="" value="{% url 'saleorderinvoicesApp:SelectSaleorderItem' %}">
           </div>
         </div>
-  </div>
-  </div>
+      </div>
+</div>
