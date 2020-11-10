@@ -104,7 +104,7 @@ class NewSaleOrderInvoice(FormView):
             form_list.append(element)
         i=0
         for item in kwargs['line_item']:
-            item.form=form_list[i]
+            item.invoice_item_form=form_list[i]
             i=i+1
         return kwargs['line_item']
 
@@ -120,6 +120,8 @@ class NewSaleOrderInvoice(FormView):
                     'item_formset':invoice_item_formset,
                     }
             line_item = self.encapsulate_formset(**data)
+            # for line in line_item:
+            #     print(line.form)
             sale_order_form_initial = {'company':sale_order[0].supplier,'sale_order':sale_order[0].so_number}
             form = SelectSaleorderForm(initial = sale_order_form_initial)
             context['form'] = form
@@ -127,7 +129,7 @@ class NewSaleOrderInvoice(FormView):
             # context['form'].fields['sale_order'].initial = sale_order[0].so_number
             context['sale_order_info'] = sale_order[0]
             context['invoice_form'] = invoice_form
-            context['line_item'] = line_item
+            context['invoice_line_items'] = line_item
             return self.render_to_response(context)
     def form_valid(self,invoice_form,invoice_item_formset,*args,**kwargs):
         invoice_form_data = invoice_form.cleaned_data

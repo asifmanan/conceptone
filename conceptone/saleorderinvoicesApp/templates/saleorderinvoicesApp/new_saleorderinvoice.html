@@ -46,6 +46,11 @@
               {% include "saleorderinvoicesapp/_new_saleorderinvoice_info.html" %}
             {% endif %}
           </div>
+          <div class="">
+            {% if invoice_line_items %}
+              {% include "saleorderinvoicesapp/_create_saleorderinvoice_div.html" %}
+            {% endif %}
+          </div>
 </div>
 {% endblock bodyblock %}
 {% block customjs %}
