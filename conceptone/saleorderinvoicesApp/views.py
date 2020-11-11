@@ -103,6 +103,7 @@ class NewSaleOrderInvoice(FormView):
             }
             form_list.append(element)
         i=0
+        print(form_list)
         for item in kwargs['line_item']:
             item.invoice_item_form=form_list[i]
             i=i+1
@@ -148,7 +149,8 @@ class NewSaleOrderInvoice(FormView):
 #AJAX Call Function
 def FetchSaleOrder(request):
     if request.session.get('saleorder_info'):
-        print("YAAYYY!")
+        # print("YAAYYY!")
+        pass
     company_sid = request.POST.get('company')
     sale_order_number = request.POST.get('sale_order')
     sale_order = SaleOrder.objects.filter(so_number=sale_order_number,supplier__id=company_sid)
@@ -167,7 +169,7 @@ def FetchSaleOrder(request):
         saleorder_info = {'saleordernumber':sale_order.so_number,'saleorderitems':item_list}
         request.session['saleorder_info'] = saleorder_info
         # request.session['saleorder_info']
-        print(request.session['saleorder_info'])
+        # print(request.session['saleorder_info'])
         return HttpResponse(saleorder_info_html)
 
 def SelectSaleorderItem(request):
@@ -180,12 +182,12 @@ def SelectSaleorderItem(request):
         except ValueError:
             value_error = 1
         if set(sale_order_item).issubset(request.session['saleorder_info']['saleorderitems']):
-            print("List Test Passed")
+            # print("List Test Passed")
             mysession_var = request.session['saleorder_info']
             mysession_var['selecteditem'] = sale_order_item
 
             request.session['saleorder_info'] = mysession_var
-            print(request.session['saleorder_info'])
+            # print(request.session['saleorder_info'])
             check_flag = 0
             # print(sale_order_item)
             no_of_items = len(sale_order_item)
@@ -212,7 +214,7 @@ def SelectSaleorderItem(request):
 
             invoice_form = CreateSaleOrderInvoiceForm()
             new_saleorder_invoice = render(request,'saleorderinvoicesapp/_create_saleorderinvoice_div.html',{'formset':invoice_item_formset,'invoice_line_items':invoice_line_item,'invoice_form':invoice_form})
-            print("Before Response")
+            # print("Before Response")
             return HttpResponse(new_saleorder_invoice)
 
     data = {'check_flag':check_flag,'value_error':value_error}
@@ -223,7 +225,7 @@ def CreateNewSaleOrderInvoiceItem(request):
     invoice_date = request.POST.get('invoice_date')
     bill_quantity = request.POST.getlist('bill_quantity')
     form_data = request.POST.get('form_data')
-    print(form_data)
+    # print(form_data)
     inv_form = request.POST['invoice_form']
     # invoice_form = CreateSaleOrderInvoiceForm(form_data)
     # print(invoice_form)
@@ -253,6 +255,7 @@ def CreateNewSaleOrderInvoiceItem(request):
             print("----formset is valid----")
             for form in invoice_item:
                 print(form.cleaned_data)
+                pass
         # print(invoice_form)
         # print("#############################################")
         # print(invoice_item)
