@@ -170,7 +170,7 @@ def SelectSaleorderItem(request):
 
     data = {'check_flag':check_flag,'value_error':value_error}
     if not check_flag:
-        return reverse()
+        return redirect("saleorderinvoicesApp:CreateSaleOrderInvoiceItem")
 
 class CreateSaleOrderInvoiceItem(FormView):
     model = SaleOrderInvoiceItem
@@ -367,12 +367,6 @@ def SelectSupplier(request):
         form.fields.pop('company')
         form.fields.pop('invoice_date')
         return
-
-
-
-
-
-
 
         (request,'saleorderinvoicesapp/_form_saleorderinvoice1.html',{'form':form})
 
