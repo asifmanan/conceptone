@@ -162,6 +162,7 @@ def SelectSaleorderItem(request):
             mysession_var['selecteditem'] = sale_order_item
 
             request.session['saleorder_info'] = mysession_var
+            print(request.session['saleorder_info'])
             # print(request.session['saleorder_info'])
             check_flag = 0
             # print(sale_order_item)
@@ -177,7 +178,9 @@ class CreateSaleOrderInvoiceItem(FormView):
     form_class = SaleOrderInvoiceItemForm
     template_name = 'saleorderinvoicesapp/createsaleorderinvoiceitem.html'
     def get(self,request,*args,**kwargs):
-        if 'so_invoice_selected_item' and 'so_invoice_saleorder' and 'so_invoice_company' not in self.request.session:
+        # if 'so_invoice_selected_item' and 'so_invoice_saleorder' and 'so_invoice_company' not in self.request.session:
+        if 'saleorder_info' not in request.session and 'selecteditem' not in self.request.session['saleorder_info']:
+            print("SALE ORDER INFO NOT FOUND")
             return redirect('saleorderinvoicesApp:NewSaleOrderInvoice')
         return super().get(request,*args,**kwargs)
 
@@ -225,7 +228,7 @@ class CreateSaleOrderInvoiceItem(FormView):
 
 
     def acquire_saleorder_data(self,*args,**kwargs):
-        id_selected_item = self.request.session['so_invoice_selected_item']
+        id_selected_item = self.request.session['saleorder_info']['selecteditem']
         line_item = SaleOrderItem.objects.filter(id__in=id_selected_item)
         sale_order = line_item.first().sale_order
         return (line_item,sale_order)
