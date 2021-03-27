@@ -43,31 +43,39 @@ class NewSaleOrderInvoice(FormView):
     def post(self,request,*args,**kwargs):
         print("---IN POST METHOD---")
         print(self.request.session['saleorder_info'])
-        invoice_form = CreateSaleOrderInvoiceForm(self.request.POST)
-        invoice_item_formset = SaleOrderInvoiceItemFormset(self.request.POST)
-        if invoice_item_formset.is_valid():
-            print(request.session['saleorder_info']['selecteditem'])
-            if request.session['saleorder_info']['selecteditem']:
-                invalid_flag = False
-                selected_item = request.session['saleorder_info']['selecteditem']
-                saleorder_item = SaleOrderItem.objects.filter(id__in=selected_item)
-                invoice_item_formset_data = invoice_item_formset.cleaned_data
-                for item_form_qty, so_item_qty in zip(invoice_item_formset_data,saleorder_item):
-                    if item_form_qty['bill_quantity'] <= so_item_qty.order_quantity:
-                        pass
-                    elif item_form_qty['bill_quantity'] > so_item_qty.order_quantity:
-                        invalid_flag = True
-                        messages.warning(self.request,"One or more BILL QUANTITY is greater than ORDER QUANTITY.")
-        elif not invoice_item_formset.is_valid():
-            messages.warning(self.request,"One of more values in BILL QUANTITIES are invalid.")
-            invalid_flag = True
-        if not invoice_form.is_valid():
-            invalid_flag = True
+        selected_item = self.request.POST.getlist("saleorderitem")
+        if not selected_item:
+            print("NOTHING IS SELECTED")
+            return redirect("saleorderinvoicesApp:NewSaleOrderInvoice")
+        print(selected_item)
+        # form = SelectSaleorderItemForm(self.request.POST)
+        # print(form)
+        # selected_items =
+        # invoice_form = CreateSaleOrderInvoiceForm(self.request.POST)
+        # invoice_item_formset = SaleOrderInvoiceItemFormset(self.request.POST)
+        # if invoice_item_formset.is_valid():
+        #     print(request.session['saleorder_info']['selecteditem'])
+        #     if request.session['saleorder_info']['selecteditem']:
+        #         invalid_flag = False
+        #         selected_item = request.session['saleorder_info']['selecteditem']
+        #         saleorder_item = SaleOrderItem.objects.filter(id__in=selected_item)
+        #         invoice_item_formset_data = invoice_item_formset.cleaned_data
+        #         for item_form_qty, so_item_qty in zip(invoice_item_formset_data,saleorder_item):
+        #             if item_form_qty['bill_quantity'] <= so_item_qty.order_quantity:
+        #                 pass
+        #             elif item_form_qty['bill_quantity'] > so_item_qty.order_quantity:
+        #                 invalid_flag = True
+        #                 messages.warning(self.request,"One or more BILL QUANTITY is greater than ORDER QUANTITY.")
+        # elif not invoice_item_formset.is_valid():
+        #     messages.warning(self.request,"One of more values in BILL QUANTITIES are invalid.")
+        #     invalid_flag = True
+        # if not invoice_form.is_valid():
+        #     invalid_flag = True
 
-        if invalid_flag:
-            return self.form_invalid(invoice_form,invoice_item_formset)
-        else:
-            return self.form_valid(invoice_form,invoice_item_formset)
+        # if invalid_flag:
+        #     return self.form_invalid(invoice_form,invoice_item_formset)
+        # else:
+        #     return self.form_valid(invoice_form,invoice_item_formset)
 
     def encapsulate_formset(self,**kwargs):
         form_list = []
@@ -162,6 +170,7 @@ def SelectSaleorderItem(request):
             mysession_var['selecteditem'] = sale_order_item
 
             request.session['saleorder_info'] = mysession_var
+            print("IN SELECTSALEORDERITEM METHOD")
             print(request.session['saleorder_info'])
             # print(request.session['saleorder_info'])
             check_flag = 0

@@ -1,7 +1,7 @@
 $(document).ready(function(){
   $('body').on('click','#id_btn_fetch_so',fetch_saleorder);
-  $('body').on('click','#id_btn_select_items',select_items);
-  $('body').on('click','#id_btn_submit_invoice_items',submit_invoice);
+  // $('body').on('click','#id_btn_select_items',select_items);
+  // $('body').on('click','#id_btn_submit_invoice_items',submit_invoice);
   // $('body').on('click','#id_btn_saleorder_fetch',select_sale_order);
   // $('body').on('click','#id_sale_order_item_selection',select_sale_order_item);
 });
@@ -44,46 +44,46 @@ function fetch_saleorder(e){
   }
 }
 
-function select_items(){
-  var selected_item = [];
-  $('input[name="saleorderitem"]:checked').each(function(){
-    selected_item.push($(this).val());
-  });
-  // console.log(selected_item);
-  if (selected_item.length===0) {
-    // console.log("Not Selected");
-  }
-  else {
-    const csrftoken = $('input[name="csrfmiddlewaretoken"]').val();
-    var url = $("#id_submit_saleorder_items_url").val();
-    // console.log(selected_item.length);
-    $.ajax({
-      type:"POST",
-      url:url,
-      headers: {'X-CSRFToken':csrftoken},
-      datatype:'json',
-      data:{
-        'selected_item':selected_item,
-      },
-      success: function(data){
-        if(data['value_error'] == 1){
-          console.log("Value Error Occured")
-        }
-        if (data['check_flag'] == 1){
-          console.log("Condition Failed")
-        }
-        else{
-          $("#id_items_section").html(data)
-          // $("#id_saleorder_info_section").html(data)
-          // $(".input--amount--field").each(convert_number_input)
-          console.log("Operation Successful")
-        }
-      }
-    })
-
-    // console.log("Selected");
-  }
-}
+// function select_items(){
+//   var selected_item = [];
+//   $('input[name="saleorderitem"]:checked').each(function(){
+//     selected_item.push($(this).val());
+//   });
+//   // console.log(selected_item);
+//   if (selected_item.length===0) {
+//     // console.log("Not Selected");
+//   }
+//   else {
+//     const csrftoken = $('input[name="csrfmiddlewaretoken"]').val();
+//     var url = $("#id_submit_saleorder_items_url").val();
+//     // console.log(selected_item.length);
+//     $.ajax({
+//       type:"POST",
+//       url:url,
+//       headers: {'X-CSRFToken':csrftoken},
+//       datatype:'json',
+//       data:{
+//         'selected_item':selected_item,
+//       },
+//       success: function(data){
+//         if(data['value_error'] == 1){
+//           console.log("Value Error Occured")
+//         }
+//         if (data['check_flag'] == 1){
+//           console.log("Condition Failed")
+//         }
+//         else{
+//           $("#id_items_section").html(data)
+//           // $("#id_saleorder_info_section").html(data)
+//           // $(".input--amount--field").each(convert_number_input)
+//           console.log("Operation Successful")
+//         }
+//       }
+//     })
+//
+//     // console.log("Selected");
+//   }
+// }
 
 function submit_invoice(e){
 }

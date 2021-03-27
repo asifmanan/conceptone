@@ -39,6 +39,8 @@
     </div>
 </div>
 <div class="" id="id_items_section">
+  <form method="post">
+    {% csrf_token %}
   <div class="row mb-2">
       <div class="col">
           <div class="shadow-sm content--div">
@@ -93,10 +95,11 @@
       <div class="row">
         <div class="col">
           <div class="shadow-sm content--div">
-            <button id="id_btn_select_items" class="btn btn-primary" type="button" name="button">Next</button>
+            <button id="id_btn_select_items" class="btn btn-primary" type="submit" name="button">Next</button>
             <button class="btn btn-secondary" type="button" name="button">Cancel</button>
             <input type="hidden" id="id_submit_saleorder_items_url" name="" value="{% url 'saleorderinvoicesApp:SelectSaleorderItem' %}">
           </div>
         </div>
       </div>
+    </form>
 </div>
