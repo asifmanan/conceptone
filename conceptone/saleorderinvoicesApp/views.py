@@ -42,11 +42,16 @@ class NewSaleOrderInvoice(FormView):
     template_name = 'saleorderinvoicesapp/new_saleorderinvoice.html'
     def post(self,request,*args,**kwargs):
         print("---IN POST METHOD---")
-        print(self.request.session['saleorder_info'])
+        # print(self.request.session['saleorder_info'])
+        sale_order = SaleOrder.object.filter()
         selected_item = self.request.POST.getlist("saleorderitem")
+        form = SelectSaleorderForm(self.request.POST)
+        print(form)
+        if form.is_valid():
+            print(form)
         if not selected_item:
             print("NOTHING IS SELECTED")
-            return redirect("saleorderinvoicesApp:NewSaleOrderInvoice")
+            return render(request,'saleorderinvoicesapp/new_saleorderinvoice.html',{'form':form})
         print(selected_item)
         # form = SelectSaleorderItemForm(self.request.POST)
         # print(form)
