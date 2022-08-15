@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404, render_to_response
+from django.shortcuts import render, redirect, get_object_or_404, render
 from django.core import serializers
 from django.forms import modelformset_factory
 from django.urls import reverse, reverse_lazy
@@ -43,7 +43,7 @@ class NewSaleOrderInvoice(FormView):
     def post(self,request,*args,**kwargs):
         print("---IN POST METHOD---")
         # print(self.request.session['saleorder_info'])
-        sale_order = SaleOrder.object.filter()
+        sale_order = SaleOrder.objects.filter()
         selected_item = self.request.POST.getlist("saleorderitem")
         form = SelectSaleorderForm(self.request.POST)
         print(form)
@@ -119,7 +119,7 @@ class NewSaleOrderInvoice(FormView):
             context['sale_order_info'] = sale_order[0]
             context['invoice_form'] = invoice_form
             context['invoice_line_items'] = line_item
-            return self.render_to_response(context)
+            return render(request,context)
     def form_valid(self,invoice_form,invoice_item_formset,*args,**kwargs):
         invoice_form_data = invoice_form.cleaned_data
         invoice_number = invoice_form_data['invoice_number']
@@ -284,7 +284,8 @@ class CreateSaleOrderInvoiceItem(FormView):
         line_item = self.encapsulate_formset(**data)
         context['invoice_form'] = invoice_form
         context['line_item'] = line_item
-        return self.render_to_response(context)
+        # return self.render_to_response(context)
+        return self.render(request,context)
 
     def form_valid(self,invoice_form,item_formset,*arg,**kwargs):
         line_item, sale_order = self.acquire_saleorder_data(**kwargs)
