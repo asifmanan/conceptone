@@ -1,0 +1,83 @@
+<nav class="navbar navbar-light navbar-expand-lg bg-light shadow-sm" style="margin-left:-15px;margin-right:-15px;">
+  <div class="container-fluid"><a class="navbar-brand" href="#">conceptOne</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navcol-1">
+        <ul class="nav navbar-nav flex-grow-1">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" href="{% url 'baseApp:index' %}">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">
+                Sales</a>
+                <div class="dropdown-menu" role="menu">
+                  <a class="dropdown-item" role="presentation" href="{% url 'saleordersApp:ListSaleOrder' %}">Sale Orders</a>
+                  <a class="dropdown-item" role="presentation" href="{% url 'standardinvoiceApp:ListStandardInvoice' %}">Standard Invoice</a>
+                  <a class="dropdown-item" role="presentation" href="{% url 'saleorderinvoicesApp:ListSaleOrderInvoice' %}">Sale Order Invoice</a>
+                  {# <div class="dropdown-divider"></div> #}
+                  {% comment %} <a class="dropdown-item" role="presentation" href="{% url 'salesApp:createsaleorder' %}">New Sale Order</a> {% endcomment %}
+                  {% comment %} <a class="dropdown-item" role="presentation" href="{% url 'salesApp:createsoinvoice' %}">New Invoice</a> {% endcomment %}
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">
+                Purchases</a>
+                <div class="dropdown-menu" role="menu">
+                  <a class="dropdown-item" role="presentation" href="{% url 'purchaseApp:ListPurchaseOrders' %}">View Purchase Order</a>
+                  <a class="dropdown-item" role="presentation" href="{% url 'purchaseApp:createpurchaseorder' %}">New Purchase Order</a>
+                  <a class="dropdown-item" role="presentation" href="#">Third Item</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">
+                Contracts</a>
+                <div class="dropdown-menu" role="menu">
+                  <a class="dropdown-item" role="presentation" href="{% url 'projectsApp:ListProjects' %}">View Projects</a>
+                  <a class="dropdown-item" role="presentation" href="{% url 'projectsApp:CreateProject' %}">Create New Project</a>
+                  <a class="dropdown-item" role="presentation" href="#">Manage Contracts</a>
+                  <a class="dropdown-item" role="presentation" href="#">Bill of Quantity</a>
+                <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Progress</a>
+                  <a class="dropdown-item" href="#">Deliverables</a>
+                  <a class="dropdown-item" href="#">Receivable Maturity</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">
+                Partners</a>
+                <div class="dropdown-menu" role="menu">
+                  <a class="dropdown-item" role="presentation" href="{% url 'customersApp:ListCustomers' %}">View Customers</a>
+                  <a class="dropdown-item" role="presentation" href="{% url 'customersApp:CreateCustomer' %}">Create New Customer</a>
+                <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" role="presentation" href="{% url 'suppliersApp:ListSuppliers' %}">View Suppliers</a>
+                  <a class="dropdown-item" role="presentation" href="{% url 'suppliersApp:CreateSupplier' %}">Create New Supplier</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">
+              Inventory</a>
+                <div class="dropdown-menu" role="menu">
+                  <a class="dropdown-item" role="presentation" href="{% url 'itemsApp:CreateItem' %}">Create Item</a>
+                  <a class="dropdown-item" role="presentation" href="{% url 'itemsApp:ListItems' %}">View Items</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">
+                Taxes</a>
+                <div class="dropdown-menu" role="menu">
+                  <a class="dropdown-item" role="presentation" href="{% url 'taxesApp:ListTaxes' %}">Taxes</a>
+                  <a class="dropdown-item" role="presentation" href="{% url 'taxesApp:ListTaxAuthorities' %}">Tax Authorities</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown" role="presentation">
+              <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">
+                HR</a>
+                <div class="dropdown-menu" role="menu">
+                  <a class="dropdown-item" role="presentation" href="{% url 'employeesApp:CreateEmployee' %}">New Employee</a>
+                  <a class="dropdown-item" role="presentation" href="{% url 'employeesApp:ListEmployees' %}">View Employees</a>
+                </div>
+            </li>
+            <li class="nav-item flex-shrink-1 ml-auto" role="presentation">
+              <a class="nav-link" href="#"><i class="fa fa-user"></i></a>
+            </li>
+        </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% extends 'purchaseapp/base.html' %}
+{% block headblock %}
+{% endblock headblock %}
+{% block bodyblock %}
+<div class="container">
+  <form method="post">{% csrf_token %}
+      <h3>Confirmation</h3>
+      <p>
+        Are you sure you want to Publish the PO issued to
+        <b>{{object.supplier.supplier_name}}</b>
+      </p>
+      <input class="btn btn-success" type="submit" name="proceed" value="Proceed">
+      <a class="btn btn-secondary" href="../{{po_object.pk}}">Not Now</a>
+  </form>
+</div>
+{% endblock %}

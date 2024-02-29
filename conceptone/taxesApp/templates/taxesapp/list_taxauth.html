@@ -1,0 +1,25 @@
+{% extends "taxesapp/base.html" %}
+{% load static %}
+{% block headblock %}
+  <title>List Tax Authorities - conceptOne</title>
+{% endblock headblock %}
+{% block bodyblock %}
+<body style="background-color: #FFFFFF;">
+    <div class="rounded mt-2 mb-2 mr-2 ml-2" style="background-color: #f0f0f0;padding-bottom: 12px;">
+      <div class="row pt-2 pb-1">
+        <div class="col col-6 pt-2 pb-1">
+            <h2 class="font-raleway ml-3">Tax Authorities</h2>
+        </div>
+        <div class="col text-right col-6 pt-2 pb-1">
+            <a class="btn btn-primary" role="button" href="{% url 'taxesApp:CreateTaxAuthority' %}">new tax authority</a>
+            <a class="btn btn-info mr-3" role="button" href="{% url 'taxesApp:ListTaxes' %}">view tax</a>
+        </div>
+      </div>
+    </div>
+    <div class="mr-2 ml-2">
+      <div class="table-responsive" style="background-color: #ffffff;">
+        {% include "taxesapp/tables/list_taxauthtable.html" %}
+      </div>
+    </div>
+</body>
+{% endblock bodyblock %}

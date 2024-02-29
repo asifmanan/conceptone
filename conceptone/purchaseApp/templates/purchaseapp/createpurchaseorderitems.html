@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% extends "purchaseApp/base.html" %}
+{% load static %}
+{% block headblock %}
+    <title>New Purchase Order</title>
+    <link rel="stylesheet" type="text/css" href="{% static "purchaseapp\css\masterstyles.css" %}">
+{% endblock headblock %}
+{% block bodyblock %}
+<div class="row" style="margin-right: 0px;margin-left: 0px;margin-bottom: 8px;">
+  <div class="col-lg-6">
+      <h2>New Purchase Order</h2>
+  </div>
+  <div class="col-lg-6 col-xl-6 d-flex flex-column" style="padding-right: 16px;">
+      <div class="mt-auto ml-auto">
+        <a href={% url 'purchaseApp:ListPurchaseOrders' %} class="btn btn-secondary" role="button">Back to PO List</a>
+        {% if po_object.published %}
+          <a href="#" class="btn btn-primary" role="button">Print</a>
+        {% elif not po_object.published %}
+          <a href={% url 'purchaseApp:PublishPoConfirmation' po_object.pk %} class="btn btn-success" role="button">Publish</a>
+          <a href={% url 'purchaseApp:DeletePurchaseOrder' po_object.pk %} class="btn btn-danger" role="button">Delete</a>
+        {% endif %}
+      </div>
+  </div>
+</div>
+<div class="row" style="margin-top: 0px;margin-right: 15px;margin-left: 15px;">
+  <div class="col-lg-4 col-xl-4" style="padding: 8px 15px;">
+      <h6 class="text-muted" style="margin-bottom: 4px;">Supplier
+        <input value="{{po_object.supplier.supplier_name}}" type="text" class="form-control" readonly="">
+      </h6>
+      <h6 class="text-muted" style="margin-bottom: 4px;">Project
+        <input value="{{po_object.project.project_name}}" type="text" class="form-control" readonly=""></h6>
+      <h6 class="text-muted" style="margin-bottom: 4px;">Tax
+        <input value="{{po_object.tax_rate.tax_name}}" type="text" class="form-control" readonly=""></h6>
+      <h6 class="text-muted" style="margin-bottom: 4px;">Date
+        <input value="{{po_object.po_date}}" type="text" class="form-control" readonly=""></h6>
+  </div>
+  <div class="col-lg-4 col-xl-4" style="padding: 8px 15px;">
+      <h6 class="text-muted" style="margin-bottom: 4px;">PO Amount
+        <input value="{{po_object.po_amount}}" type="text" class="form-control" readonly=""></h6>
+      <h6 class="text-muted" style="margin-bottom: 4px;">Tax
+        <input value="{{po_object.tax_rate.tax_value}}" type="text" class="form-control" readonly=""></h6>
+      <h6 class="text-muted" style="margin-bottom: 4px;">Tax Amount
+        <input value="{{po_object.tax_amount}}" type="text" class="form-control" readonly=""></h6>
+      <h6 class="text-muted" style="margin-bottom: 4px;">Total Amount
+        <input value="{{po_object.total_amount}}" type="text" class="form-control" readonly=""></h6>
+  </div>
+  {% if not po_object.published %}
+  <div class="d-lg-none col-lg-4 col-xl-4" style="padding: 8px 15px;padding-top: 8px;">
+    <div>
+      <form method="post">{% csrf_token %}
+        <div style="margin-bottom: 4px;">
+          {{form.item.label}}
+          {{form.item}}
+        </div>
+        <div style="margin-bottom: 4px;">
+          {{form.order_quantity.label}}
+          {{form.order_quantity}}
+        </div>
+        <div style="margin-bottom: 4px;">
+          {{form.purchase_price.label}}
+          {{form.purchase_price}}
+        </div>
+        <div class="form-row">
+          <div class="col" style="margin-top: 12px;">
+            <button class="btn btn-primary" type="submit">Add Item</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  {% endif %}
+
+</div>
+
+<div class="row" style="margin-top: 10px;margin-right: 0px;margin-left: 0px;">
+  <div class="col" style="padding-right: 25px;padding-left: 25px;">
+    {% include "purchaseApp/tables/createpurchaseorderitemstable1.html" %}
+  </div>
+</div>
+{% endblock bodyblock %}

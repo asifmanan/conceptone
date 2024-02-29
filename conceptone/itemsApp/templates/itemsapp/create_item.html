@@ -1,0 +1,47 @@
+{% extends "itemsapp/base.html" %}
+{% block headblock %}
+<title>Create Item - Conceptone</title>
+{% endblock headblock %}
+{% block bodyblock %}
+    <div class="mt-md-2 container bg-light border rounded">
+      <h3>New Item</h3>
+      <form method="post">{% csrf_token %}
+        <div class="row mb-2">
+          <div class="col-md-2">
+            {{ form.item_code.label }}
+            {{ form.item_code }}
+          </div>
+          <div class="col-md-5">
+            {{ form.item_type.label }}
+            {{ form.item_type }}
+          </div>
+          <div class="col-md-5">
+            {{ form.item_sub_type.label }}
+            {{ form.item_sub_type }}
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-md-12">
+            {{ form.item_description.label }}
+            {{ form.item_description }}
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-md-4">
+            {{ form.item_uom.label}}
+            {{ form.item_uom }}
+          </div>
+          <div class="col-md-4">
+            {{ form.item_price.label }}
+            {{ form.item_price }}
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-12">
+            <a class="btn btn-secondary" role="button" href="{% url 'itemsApp:ListItems' %}">Cancel</a>
+            <button class="btn btn btn-success" type="submit" name="button">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+{% endblock bodyblock %}

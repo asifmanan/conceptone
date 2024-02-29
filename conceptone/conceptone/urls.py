@@ -17,6 +17,17 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('',include("crudbasic.urls")),
+    path('',include("baseApp.urls")),
+    # path('sales/',include("salesApp.urls")),
+    path('standardinvoice/',include("standardinvoiceApp.urls")),
+    path('saleorders/',include("saleordersApp.urls")),
+    path('saleorderinvoice/',include("saleorderinvoicesApp.urls")),
+    path('purchase/',include("purchaseApp.urls")),
+    path('customers/',include("customersApp.urls")),
+    path('suppliers/',include("suppliersApp.urls")),
+    path('employees/',include("employeesApp.urls")),
+    path('projects/',include("projectsApp.urls")),
+    path('items/',include("itemsApp.urls")),
+    path('taxes/',include("taxesApp.urls")),
     path('admin/', admin.site.urls),
 ]

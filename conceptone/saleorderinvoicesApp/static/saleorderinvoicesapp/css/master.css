@@ -1,0 +1,75 @@
+/* select[readonly]{
+  pointer-events: none; */
+  /* color: #828282; // If you also want the disabled input color. */
+/* } */
+
+.bg-table-gray {
+  background-color: #8d99ae;
+}
+
+.bg-dark-1 {
+  background-color: #353535;
+}
+
+.bg-dark-2 {
+  background-color: #264653;
+}
+
+.bg-red-1 {
+  background-color: #a11d33;
+}
+
+.bg-red-2 {
+  background-color: #e63946;
+}
+
+.bg-red-3 {
+  background-color: #d62828;
+}
+
+.bg-red-4 {
+  background-color: #db3a34;
+}
+
+.bg-green-1 {
+  background-color: #2a9d8f;
+}
+
+.bg-blue-1 {
+  background-color: #004c87;
+}
+
+.bg-blue-2 {
+  background-color: #0f3252;
+  color: white;
+}
+
+.bg-silversand {
+  background-color: #c5d6d8;
+}
+
+table, p {
+  margin: 0px;
+}
+
+table, td {
+  padding:0px;
+}
+
+.table-padding-none {
+  padding-left: 0px;
+}
+
+.btn-textbox.focus, .btn-textbox:focus {
+  box-shadow: none;
+}
+
+.btn-textbox.hover, .btn-textbox:hover{
+  /* background-color: #ced4da; */
+  background-color: #dedede;
+}
+
+.txt-search-custom:focus {
+  box-shadow: none;
+  border-bottom: 1px solid #007bff !important;
+}

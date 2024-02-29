@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>This is a test page</h1>
+    <form class="" method="post">{% csrf_token %}
+      <div class="row">
+        <div class="col">
+          {{form.invoice_number.label}}
+          {{form.invoice_number}}
+        </div>
+        <div class="col">
+          {{form.invoice_date.label}}
+          {{form.invoice_date}}
+        </div>
+        {{formset.management_form}}
+        {% for form in formset  %}
+        <div class="col">
+          {{form}}
+        </div>
+        {% endfor %}
+        <div class="col">
+          <button class="btn btn-primary" type="submit" name="button">Submit</button>
+        </div>
+      </div>
+    </form>
+
+  </body>
+</html>

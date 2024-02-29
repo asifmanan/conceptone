@@ -1,0 +1,36 @@
+{# invoice number and invoice date fields #}
+<div class="form-group row">
+  <div class="col-sm-12 col-md-6 col-lg-4 mb-1">
+    <div class="input-group mb-1">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="">{{form.invoice_number.label}}</span>
+    </div>
+    {{form.invoice_number}}
+    </div>
+    <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="">{{form.invoice_date.label}}</span>
+    </div>
+    {{form.invoice_date}}
+    </div>
+  </div>
+  <div class="col-sm-12 col-md-6 col-lg-4 mb-1">
+  </div>
+</div>
+
+# CreateView for saleorderitem creation
+# Create view for SaleOrderInvoice.
+# class CreateSaleOrderInvoice(CreateView):
+#     model = SaleOrderInvoice
+#     form_class = SaleOrderInvoiceForm
+#     template_name = 'saleorderinvoicesapp/create_saleorderinvoice.html'
+#
+#     def post(self,request,*args,**kwargs):
+#         form = self.form_class(request.POST)
+#         print(form)
+#         if form.is_valid():
+#             sale_order_invoice = form.save(commit=False)
+#             sale_order_invoice.supplier = sale_order_invoice.sale_order.supplier
+#             sale_order_invoice.save()
+#             return HttpResponseRedirect(reverse_lazy('baseApp:index'))
+#         return render(request, self.template_name,{'form':form})

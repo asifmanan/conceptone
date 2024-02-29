@@ -1,0 +1,31 @@
+.table-scrollbar::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  background-color: #F5F5F5;
+}
+
+.table-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.table-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #87aa8b;
+}
+
+.text-card-detail{
+  margin-bottom: 1px;
+}
+/* other table properties
+.scrolable-table {
+  display: block;
+  overflow-y: scroll;
+}
+
+.scrolable-table {
+  display: block;
+  overflow-y: scroll;
+}
+
+.table-scrolable {
+  display: block;
+  overflow-y: scroll;
+} */

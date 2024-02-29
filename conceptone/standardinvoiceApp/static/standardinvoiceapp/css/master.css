@@ -1,0 +1,40 @@
+.invoice-info{
+  font-size: 1.2rem;
+  margin-top: 8px;
+  margin-bottom: 2px;
+}
+
+.invoice-amounts{
+  margin-top: 8px;
+  margin-bottom: 2px;
+}
+
+.p-min-margin{
+  margin-top: 1px;
+  margin-bottom:1px;
+}
+
+.invoice-calc{
+  background-color: #dadada;
+  border-left: 6px solid;
+  border-color: #0275d8;
+  padding-top: 4px;
+  padding-left:2px;
+  padding-right: 1px;
+}
+
+.bg-lightgreen{
+  background-color: #d8f3dc;
+}
+
+.hr-narrow-margin{
+  margin-top: 1px;
+  margin-bottom: 3px;
+}
+
+.invoice-item-table{
+  width:100%;
+  height: 460px;
+  display: block;
+  overflow-y: scroll;
+}

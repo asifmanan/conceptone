@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'baseapp/css/sidebar-menu.css' %}">
+    {% block headblock %}
+    {% endblock headblock %}
+</head>
+
+<body class="" style="background: #f6f7fb;">
+    <nav class="navbar navbar-light navbar-expand-md bg-white shadow-sm" style="padding-left: 0px;margin-left: -15px;z-index:1100;position:sticky;top:0;">
+        <div class="container-fluid">
+            <div style="width:250px;"><button class="btn ml-4 ml-md-2 sidebar-toggler" id="menu-toggle" type="button" style="margin-left: 2px;border-style: none;border-color: #e5e5e5;"><span class="navbar-toggler-icon"></span></button></div><button data-toggle="collapse" class="navbar-toggler"
+                data-target="#navcol-1" style="border-style: none;outline:none;"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse pl-3 pl-md-0" id="navcol-1">
+                <ul class="nav navbar-nav">
+                  {% block topnavblock %}
+                  {% endblock topnavblock %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="wrapper">
+        <div id="sidebar-wrapper" style="border-width: 1px;border-color: #e4e4e4;border-right-style: solid;background: #404e67;">
+          <ul class="sidebar-nav">
+              <li><button class="btn sidenav-btn-collapse" type="button">Sales</button>
+                  <div class="sidebar-collapse-menu">
+                    <a class="sublink" href="#">Saleorder</a>
+                    <a class="sublink" href="#">Saleorder Invoice</a>
+                    <a class="sublink" href="#">Standard Invoice</a>
+                  </div>
+              </li>
+              <li><button class="btn sidenav-btn-collapse" type="button">Purchases</button>
+                  <div class="sidebar-collapse-menu">
+                    <a class="sublink" href="#">Purchase Order</a>
+                    <a class="sublink" href="#">Purchase Invoice</a>
+                    <a class="sublink" href="#">Standard Invoice</a>
+                  </div>
+              </li>
+              <li><button class="btn sidenav-btn-collapse" type="button">Projects</button>
+                  <div class="sidebar-collapse-menu">
+                    <a class="sublink" href="#">Manage Contracts</a>
+                    <a class="sublink" href="#">Manage Projects</a>
+                    <a class="sublink" href="#">BoQ</a>
+                    <a class="sublink" href="#">Delivery Units</a>
+                  </div>
+              </li>
+              <li><button class="btn sidenav-btn-collapse" type="button">Partners</button>
+                  <div class="sidebar-collapse-menu">
+                    <a class="sublink" href="#">Manager Customers</a>
+                    <a class="sublink" href="#">Manage Suppliers</a>
+                  </div>
+              </li>
+              <li><button class="btn sidenav-btn-collapse" type="button">Inventory</button>
+                  <div class="sidebar-collapse-menu">
+                    <a class="sublink" href="#">Items</a>
+                    <a class="sublink" href="#">Warehouses</a>
+                    <a class="sublink" href="#">Shipments</a>
+                    <a class="sublink" href="#">Assets Issuance</a>
+                  </div>
+              </li>
+              <li><button class="btn sidenav-btn-collapse" type="button">Tax Management</button>
+                  <div class="sidebar-collapse-menu">
+                    <a class="sublink" href="#">Tax</a>
+                    <a class="sublink" href="#">Tax Authorities</a>
+                  </div>
+              </li>
+              <li><button class="btn sidenav-btn-collapse" type="button">Human Resource</button>
+                  <div class="sidebar-collapse-menu">
+                    <a class="sublink" href="#">Manage Employees</a>
+                    <a class="sublink" href="#">Manage Salaries</a>
+                  </div>
+              </li>
+          </ul>
+        </div>
+        <div class="page-content-wrapper">
+              {% block bodyblock %}
+              {% endblock bodyblock %}
+        </div>
+    </div>
+    {% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script> {% endcomment %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static "baseapp/js/sidebar-menu.js" %}"></script>
+    {% block customjs %}
+    {% endblock customjs %}
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+{% if object_list %}
+<table id="standardinvoicetable" class="table">
+    <thead style="background-color: #247ba0;color: #ffffff;">
+        <tr>
+            <th>Invoice No</th>
+            <th>Company</th>
+            <th>Customer</th>
+            <th>Project</th>
+            <th>Invoice Date</th>
+            <th>Amount</th>
+            <th>Tax Amount</th>
+            <th>Total Amount</th>
+        </tr>
+    </thead>
+    <tbody style="background-color: #F4F1C9;">
+      {% for item in object_list  %}
+        <tr>
+          <td>
+            <a href={% url 'standardinvoiceApp:CreateStandardInvoiceItem' item.id %}>
+            {{item.invoice_number}}
+            </a>
+          </td>
+          <td>{{item.company}}</td>
+          <td>{{item.customer}}</td>
+          <td>{{item.project}}</td>
+          <td>{{item.invoice_date}}</td>
+          <td>{{item.amount_exclusive_tax}}</td>
+          <td>{{item.tax_amount}}</td>
+          <td>{{item.total_amount}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+  <div class="col-12 d-flex mt-2">
+    <h3 class="mx-auto">Opps! There is nothing matching your query here</h3>
+  </div>
+{% endif %}

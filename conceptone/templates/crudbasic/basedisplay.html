@@ -46,6 +46,8 @@
           {% include 'crudbasic/tables/purchaseordertable.html' %}
         {% elif main_title == 'Purchase Orders (Items)' %}
           {% include 'crudbasic/tables/orderitemtable.html' %}
+          {% elif main_title == 'New Purchase' %}
+            {% include 'crudbasic/tables/poitemstable.html' %}
         {% endif %}
       </tbody>
     </table>

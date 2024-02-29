@@ -1,0 +1,116 @@
+{% extends "crudbasic/base.html" %}
+{% block body_block %}
+  <div class="container pb-1">
+    <div class="row mb-0 mb-0 ml-1 mr-1 mt-1">
+      {# <div class="col-md-6"> #}
+        <h3>New Purchase</h3>
+      {# </div> #}
+      {# <div class="col-md-6 ml-auto"> #}
+        <button class="btn btn-primary ml-auto mr-2" type="submit" name="button">Print</button>
+        <a href="../publish/{{po_obj.pk}}" class="btn btn-danger mr-0">Publish</a>
+      {# </div> #}
+    </div>
+    <hr>
+      <div class="row mb-0">
+        <div class="col-md-6">
+          <p>Supplier: <b>{{ po_obj.po_supplier }}</b></p>
+          <p>Address: {{po_obj.po_supplier.supplier_address}}</p>
+          <p>City: {{po_obj.po_supplier.supplier_city}}</p>
+        </div>
+        <div class="col-md-6">
+          <p>Date: <b>{{ po_obj.po_date }}</b></p>
+          <p>Total Amount: {{po_obj.po_amount}}</p>
+        </div>
+      </div>
+      <div class="row mb-1">
+        <div class="col-md-6">
+          <p>Po Number: <b>{{ po_obj.po_number }}</b></p>
+        </div>
+        <div class="col-md-6">
+          <p>Tax Rate: <b>{{ po_obj.po_tax.tax_value }}%</b></p>
+        </div>
+      </div>
+      <hr>
+      <form method="POST" id = "poitemform" data-items-url ="{% url 'crudbasic:loaditemrates' %}" novalidate>{% csrf_token %}
+        <div class="row mb-2">
+          <!-- <div class="col-md-1">
+            {{ form.po_line_number.label }}
+          </div> -->
+          <div class="col-md-8">
+            {{ form.order_item.label }}
+          </div>
+          <div class="col-md-1">
+            {{ form.order_quantity.label }}
+          </div>
+          <div class="col-md-1">
+            {{ form.purchase_price.label }}
+          </div>
+        </div>
+        <div class="row form-row mb-1">
+          <div class="input-group col-md-8">
+            {{ form.order_item}}
+          </div>
+          <div class="input-group col-md-1">
+            {{ form.order_quantity}}
+          </div>
+          <div class="input-group col-md-1">
+            {{ form.purchase_price}}
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-primary btn-sm mb-2" type="submit" name="button">Add Item</button>
+          </div>
+        </div>
+      </form>
+      {% if page_data %}
+      <div class="mt-0 pb-3 pt-1">
+        <table class="table table-bordered table-striped table-sm table-properties">
+          <thead class="">
+            <tr>
+              <th scope="col">PO Number</th>
+              <th scope="col">Line Number</th>
+              <th scope="col">Item Description</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Unit Price</th>
+              <th scope="col">Total Price</th>
+              <th scope="col">Variation Number</th>
+              <th scope="col">Variation Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% include 'crudbasic/tables/poitemstable.html' %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+  </div>
+{% block custom_js %}
+  <script type="text/javascript">
+    function auto_complete(){
+      // var oq = document.getElementById("order_quantity").value;
+      // var pp = document.getElementById("purchase_price").value;
+      // var tp = oq*pp;
+      // document.getElementById("total_price").setAttribute("value", tp);
+    }
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+      $("#itemselect").change(function () {
+        var url = $("#poitemform").attr("data-items-url");  // get the url of the `load_cities` view
+        var itemId = $(this).val();  // get the selected country ID from the HTML input
+        $("#order_quantity").val(itemId);
+        $.ajax({                       // initialize an AJAX request
+          url: url,
+          datatype: 'json',                   // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+          data: {
+            'item': itemId       // add the country id to the GET parameters
+          },
+          success: function (data) {   // `data` is the return of the `load_cities` view function
+            $("#order_quantity").val('0');
+            $("#purchase_price").val(data.data);  // replace the contents of the city input with the data that came from the server
+          }
+        });
+      });
+    </script>
+{% endblock custom_js %}
+{% endblock body_block %}

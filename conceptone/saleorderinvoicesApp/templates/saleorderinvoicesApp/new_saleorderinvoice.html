@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% extends "baseapp/base_s.html" %}
+{% load static %}
+{% block headblock %}
+  <link rel="stylesheet" href="{% static "baseapp/css/list-view.css"%}">
+  <title>New Saleorder Invoice | conceptOne</title>
+{% endblock headblock %}
+{% block topnavblock %}
+  {% include "saleorderinvoicesapp/_top_navlinks.html" %}
+{% endblock topnavblock %}
+{% block bodyblock %}
+<div class="container-fluid">
+    <div class="row mb-2">
+        <div class="col-md-12">
+            <div class="mt-3 shadow-sm content--div">
+                <div class="row">
+                    <div class="col">
+                        <div style="margin: -8px;padding: 8px;">
+                          <h5 style="color: #60695c;margin-bottom: 2px;">NEW SALEORDER INVOICE&nbsp;</h5>
+                          <div class="mt-2">
+                            <div id="id_div_select_supplier_form">
+                              <form action="{% url 'saleorderinvoicesApp:FetchSaleOrder'  %}" method="post">{% csrf_token %}
+                                <div class="row">
+                                  <div class="col-12 col-lg-5 col-xl-4">
+                                    {{form.company}}
+                                  </div>
+                                  <div class="col-12 col-lg-5 col-xl-4 mt-2 mt-lg-0">
+                                    {{form.sale_order}}
+                                  </div>
+                                  <input type="hidden" id="id_fetch_saleorder_url" name="saleorder_url" value="{% url 'saleorderinvoicesApp:FetchSaleOrder' %}">
+                                  <div class="col-12 col-lg-2 col-xl-2 mt-2 mt-lg-0">
+                                      <button id="id_btn_fetch_so" class="btn btn-primary btn--sm-block" type="submit" name="button">Fetch</button>
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+          <div class="mb-1" id="id_saleorder_info_section">
+            {% if sale_order_info %}
+              {% include "saleorderinvoicesapp/_new_saleorderinvoice_info.html" %}
+            {% endif %}
+          </div>
+          <div class="">
+            {% if invoice_line_items %}
+              {% include "saleorderinvoicesapp/_create_saleorderinvoice_div.html" %}
+            {% endif %}
+          </div>
+</div>
+{% endblock bodyblock %}
+{% block customjs %}
+  <script type="text/javascript" src="{% static "baseapp/js/currency-format.js" %}"></script>
+  <script type="text/javascript" src="{% static "saleorderinvoicesapp\js\new_saleorderinvoice.js" %}"></script>
+{% endblock customjs %}

@@ -2,12 +2,18 @@
 {% for po in page_data %}
 <tr>
   <td>
-    <a href="update/{{po.id}}">{{ po.po_number }}</a>
+    {% if po.po_publish == True %}
+      <a href="poadditems/{{po.id}}">{{ po.po_number }}</a>
+    {% else %}
+      <a href="update/{{po.id}}">{{ po.po_number }}</a>
+    {% endif %}
   </td>
   <td>{{ po.po_date }}</td>
   <td>{{ po.po_supplier }}</td>
   <td>{{ po.po_amount }}</td>
   <td>{{ po.po_tax }}</td>
   <td>{{ po.po_draft }}</td>
+  <td>{{ po.po_publish }}</td>
+  <td>{{ po.po_publish_date }}</td>
 </tr>
 {% endfor %}

@@ -1,0 +1,78 @@
+<form method="post">{% csrf_token %}
+<div class="row mb-2">
+    <div class="col">
+        <div class="shadow-sm content--div">
+            <div>
+                <div class="row">
+                    <div class="col-8">
+                        <h6 class="div-subtitle">New Saleorder Invoice</h6>
+                    </div>
+                    <div class="col-4 text-right"><button class="btn btn-link btn-sm" id="id--toggle-table-view" type="button"><i class="fa fa-caret-down"></i></button></div>
+                </div>
+            </div>
+            <div>
+                <div class="row mb-2">
+                  <div class="col-12 col-lg-6 col-xl-3">
+                    {{invoice_form.invoice_number.label}}
+                    {{invoice_form.invoice_number}}
+                  </div>
+                  <div class="col-12 col-lg-6 col-xl-3">
+                    {{invoice_form.invoice_date.label}}
+                    {{invoice_form.invoice_date}}
+                  </div>
+                </div>
+                <div class="table-responsive-lg list--table">
+                    <table class="table list--table">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width: 4%;">#</th>
+                                <th class="description--field" style="width:16%">Item</th>
+                                <th class="text-right" style="width: 8%;">Price</th>
+                                <th class="text-center" style="width:8%;">Line</th>
+                                <th class="text-center" style="width:8%;">Shipment</th>
+                                <th class="text-right" style="width:8%;">Avail.Qty</th>
+                                <th class="" style="width:12%;">Bill Qty</th>
+                                <th class="" style="width:12%;">Tax</th>
+                                <th class="" style="width:12%;">Tax Amount</th>
+                                <th class="" style="width:12%;">Total</th>
+                            </tr>
+                        </thead>
+                        {% if invoice_line_items %}
+                        {{formset.management_form}}
+                        <tbody>
+                          {% for invoice_line in invoice_line_items %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td class="description--field collapse--field compressed">{{invoice_line.item.item_description}}</td>
+                                <td class="amount--field">{{invoice_line.sale_price}}</td>
+                                <td class="text-center">{{invoice_line.line_number}}</td>
+                                <td class="text-center">1</td>
+                                <td class="amount--field">{{invoice_line.available_quantity}}</td>
+                                <td class="amount--field">{{invoice_line.invoice_item_form.bill_quantity}}</td>
+                                <td class="amount--field">{{invoice_line.tax.tax_value}}</td>
+                                <td class="amount--field">{{invoice_line.tax_amount}}</td>
+                                <td class="amount--field">{{invoice_line.total_amount}}</td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+          <div></div>
+          </div>
+      </div>
+  </div>
+  <div id="id_error_message">
+
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="shadow-sm content--div">
+        <button id="id_btn_submit_invoice_items" class="btn btn-success" type="submit" name="button" value="submit">Submit</button>
+        <button class="btn btn-secondary" type="button" name="button">Cancel</button>
+        <input type="hidden" id="id_submit_saleorderinvoice_items_url" name="" value="{% url 'saleorderinvoicesApp:CreateNewSaleOrderInvoiceItem' %}">
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,30 @@
+{% if object_list %}
+<table id="id_itemstable" class="table">
+    <thead style="background-color: #247ba0;color: #ffffff;">
+        <tr>
+            <th>Code</th>
+            <th>Item description</th>
+            <th>UoM</th>
+            <th>Item type</th>
+            <th>Item sub type</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody style="background-color: #F4F1C9;">
+      {% for item in object_list  %}
+        <tr>
+          <td>{{item.item_code}}</td>
+          <td>{{item.item_description}}</td>
+          <td>{{item.item_uom}}</td>
+          <td>{{item.item_type}}</td>
+          <td>{{item.item_sub_type}}</td>
+          <td>{{item.item_price}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+  <div class="col-12 d-flex mt-2">
+    <h3 class="mx-auto">Opps! There is nothing matching your query here</h3>
+  </div>
+{% endif %}

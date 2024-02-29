@@ -1,0 +1,30 @@
+{% if object_list %}
+<table id="id_taxestable" class="table">
+    <thead style="background-color: #247ba0;color: #ffffff;">
+        <tr>
+            <th>Code</th>
+            <th>Tax description</th>
+            <th>Tax Display Name</th>
+            <th>Tax Value</th>
+            <th>Tax Authority</th>
+            <th>Jurisdiction</th>
+        </tr>
+    </thead>
+    <tbody style="background-color: #F4F1C9;">
+      {% for item in object_list  %}
+        <tr>
+          <td>{{item.tax_code}}</td>
+          <td>{{item.tax_description}}</td>
+          <td>{{item.tax_display_name}}</td>
+          <td>{{item.tax_value}}</td>
+          <td>{{item.tax_authority.authority_name}}</td>
+          <td>{{item.tax_authority.authority_jurisdiction}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+  <div class="col-12 d-flex mt-2">
+    <h3 class="mx-auto">Opps! There is nothing here</h3>
+  </div>
+{% endif %}

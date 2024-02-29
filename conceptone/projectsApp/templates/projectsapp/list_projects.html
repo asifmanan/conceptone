@@ -1,0 +1,57 @@
+{% extends "projectsapp/base.html" %}
+{% load static %}
+{% block headblock %}
+<title>List Projects - ConceptOne</title>
+{% endblock headblock %}
+{% block bodyblock %}
+<body style="background-color: #FFFFFF;">
+  <div class="container-fluid">
+    <div class="mt-2 mb-2" style="padding-bottom: 12px;">
+        <div class="row">
+          <div class="col-md-6">
+            <h3 class="font-raleway">Projects</h3>
+          </div>
+          <div class="col-md-6 mb-sm-2 mb-md-0">
+            <a class="btn btn-outline-primary float-md-right rounded-0" role="button" href="{% url 'projectsApp:CreateProject' %}">+ Add New Project</a>
+          </div>
+        </div>
+        <hr style="margin-top:4px;">
+      <form id="id_search_form" item-search-url = "{% url 'itemsApp:ItemQuery' %}" novalidate>
+        <div class="row">
+          <div class="col-md-6 col-lg-3">
+              {{form.company.label}}
+              {{form.company}}
+          </div>
+          <div class="col-md-6 col-lg-3">
+              {{form.project_code.label}}
+              {{form.project_code}}
+          </div>
+          <div class="col-md-6 col-lg-3">
+              {{form.project_name.label}}
+              {{form.project_name}}
+          </div>
+          <div class="col-md-6 col-lg-3">
+              {{form.customer.label}}
+              {{form.customer}}
+          </div>
+          <div class="col-12 mt-2">
+            <button id="id_search_btn" class="btn btn-primary rounded-0" type="button">Search</button>
+            <button id="reset_btn" class="btn btn-secondary rounded-0" type="reset">Reset Form</button>
+          </div>
+        </div>
+      </form>
+    </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="table-responsive" style="background-color: #ffffff;">
+            {% include "projectsapp/tables/list_projectstable.html" %}
+          </div>
+        </div>
+      </div>
+  </div>
+
+</body>
+{% endblock bodyblock %}
+{% block customjs %}
+
+{% endblock customjs %}

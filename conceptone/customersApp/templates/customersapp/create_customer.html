@@ -1,0 +1,55 @@
+{% extends "customersapp/base.html" %}
+{% block headblock %}
+<title>Create Customer - Conceptone</title>
+{% endblock headblock %}
+{% block bodyblock %}
+    <div class="mt-md-2 container bg-light border rounded">
+      <h3>New Customer</h3>
+      <form method="post">{% csrf_token %}
+        <div class="row mb-2">
+          <div class="col-md-2">
+            {{ form.customer_code.label }}
+            {{ form.customer_code }}
+          </div>
+          <div class="col-md-6">
+            {{ form.customer_name.label }}
+            {{ form.customer_name }}
+          </div>
+          <div class="col-md-4">
+            {{ form.customer_ntn_number.label }}
+            {{ form.customer_ntn_number }}
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-md-8">
+            {{ form.customer_address.label }}
+            {{ form.customer_address }}
+          </div>
+          <div class="col-md-4">
+            {{ form.customer_city.label }}
+            {{ form.customer_city }}
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-md-4">
+            {{ form.customer_phone.label}}
+            {{ form.customer_phone }}
+          </div>
+          <div class="col-md-4">
+            {{ form.customer_fax.label }}
+            {{ form.customer_fax }}
+          </div>
+          <div class="col-md-4">
+            {{ form.customer_email.label }}
+            {{ form.customer_email }}
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-12">
+            <a class="btn btn-secondary" role="button" href="{% url 'customersApp:ListCustomers' %}">Cancel</a>
+            <button class="btn btn btn-success" type="submit" name="button">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+{% endblock bodyblock %}

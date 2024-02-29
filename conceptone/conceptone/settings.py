@@ -39,7 +39,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'crudbasic'
+    'crudbasic',
+    'baseApp',
+    'standardinvoiceApp',
+    'saleordersApp',
+    'saleorderinvoicesApp',
+    'purchaseApp',
+    'customersApp',
+    'suppliersApp',
+    'employeesApp',
+    'projectsApp',
+    'itemsApp',
+    'taxesApp',
 ]
 
 MIDDLEWARE = [
@@ -83,7 +94,7 @@ DATABASES = {
     }
 }
 
-
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 

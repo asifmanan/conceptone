@@ -1,0 +1,34 @@
+{% if object_list %}
+<table id="id_projectstable" class="table">
+    <thead style="background-color: #247ba0;color: #ffffff;">
+        <tr>
+            <th>Company</th>
+            <th>Project Code</th>
+            <th>Project Name</th>
+            <th>Customer</th>
+            <th>Contract Number</th>
+            <th>Project Status</th>
+            <th>Award Date</th>
+            <th>Delivery Date</th>
+        </tr>
+    </thead>
+    <tbody style="background-color: #F4F1C9;">
+      {% for item in object_list  %}
+        <tr>
+          <td>{{item.company.company_name}}</td>
+          <td>{{item.project_code}}</td>
+          <td>{{item.project_name}}</td>
+          <td>{{item.customer.customer_name}}</td>
+          <td>{{item.contract_number}}</td>
+          <td>{{item.project_status}}</td>
+          <td>{{item.award_date}}</td>
+          <td>{{item.delivery_date}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+  <div class="col-12 d-flex mt-2">
+    <h3 class="mx-auto">Opps! There is nothing matching your query here</h3>
+  </div>
+{% endif %}

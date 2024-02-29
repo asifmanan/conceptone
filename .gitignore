@@ -2,7 +2,13 @@
 conceptone/conceptone/__pycache__/
 conceptone/crudbasic/__pycache__/
 conceptone/crudbasic/migrations/__pycache__/
-conceptone/crudbasic/migrations/
+#conceptone/crudbasic/migrations/
+conceptone/salesApp/__pycache__/
+conceptone/salesApp/migrations/__pycache__/
+#conceptone/salesApp/migrations/
+conceptone/purchaseApp/__pycache__/
+conceptone/purchaseApp/migrations/__pycache__/
+#conceptone/purchaseApp/migrations/
 __pycache__/
 *.py[cod]
 *$py.class
@@ -58,7 +64,7 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
-db.sqlite3
+# db.sqlite3
 
 # Flask stuff:
 instance/

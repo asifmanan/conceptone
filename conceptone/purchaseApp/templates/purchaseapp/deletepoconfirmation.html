@@ -1,0 +1,15 @@
+{% extends 'purchaseapp/base.html' %}
+{% block bodyblock %}
+<div class="container">
+  <form method="post">{% csrf_token %}
+      <h2 style="margin-top: 8px; margin-bottom: 4px">
+        Are you Sure?</h2>
+      <p>
+        Are you sure you want to delete the draft Purchase Order for
+        <b>"{{object.supplier.supplier_name}}"</b>?
+      </p>
+      <input class="btn btn-danger" type="submit" value="Yes, I'm Sure">
+      <a class="btn btn-secondary" href={% url 'purchaseApp:CreatePurchaseOrderItems' object.pk %}>No, Take me back</a>
+  </form>
+</div>
+{% endblock bodyblock %}

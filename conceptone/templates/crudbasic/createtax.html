@@ -19,6 +19,10 @@
           {{ form.tax_value.label }}
           {{ form.tax_value }}
         </div>
+        <div class="col-md-6">
+          {{ form.tax_jurisdiction.label }}
+          {{ form.tax_jurisdiction }}
+        </div>
       </div>
       <div class="row mb-4">
         {% url 'crudbasic:taxrates' as back_url %}
